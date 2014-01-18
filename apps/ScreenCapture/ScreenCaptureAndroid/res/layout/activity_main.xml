@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScreenViewerActivity" >
+ 
+<!-- 
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+	    <ScrollView android:id="@+id/scroll_view"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent">
+	        --> 
+	        
+		    <com.niuan.screencapture.client.android.view.ScreenView
+		        android:id="@+id/screen_root"
+		        android:scaleType="matrix"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"/>
+		<!--         
+		        
+		        
+	    </ScrollView>
+        
+
+    </HorizontalScrollView>
+    
+     -->
+</RelativeLayout>
