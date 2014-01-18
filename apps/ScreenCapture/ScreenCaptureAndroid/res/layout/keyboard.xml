@@ -1,0 +1,371 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/keyboard_wave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="~\n`" />
+        
+        <Button
+            android:id="@+id/keyboard_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="!\n1" />
+
+        <Button
+            android:id="@+id/keyboard_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@\n2" />
+
+        <Button
+            android:id="@+id/keyboard_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#\n3" />
+
+        <Button
+            android:id="@+id/keyboard_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$\n4" />
+
+        <Button
+            android:id="@+id/keyboard_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%\n5" />
+
+        <Button
+            android:id="@+id/keyboard_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="^\n6" />
+
+        <Button
+            android:id="@+id/keyboard_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&amp;\n7" />
+
+        <Button
+            android:id="@+id/keyboard_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*\n8" />
+
+        <Button
+            android:id="@+id/keyboard_9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(\n9" />
+
+        <Button
+            android:id="@+id/keyboard_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=")\n0" />
+
+        <Button
+            android:id="@+id/keyboard_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-\n_" />
+
+        <Button
+            android:id="@+id/keyboard_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+\n=" />
+
+        <Button
+            android:id="@+id/keyboard_bsp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="←\n退格" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/keyboard_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="制表\nTAB" />
+
+        <Button
+            android:id="@+id/keyboard_q"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Q\n" />
+
+        <Button
+            android:id="@+id/keyboard_w"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="W\n" />
+
+        <Button
+            android:id="@+id/keyboard_e"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E\n" />
+
+        <Button
+            android:id="@+id/keyboard_r"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R\n" />
+
+        <Button
+            android:id="@+id/keyboard_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T\n" />
+
+        <Button
+            android:id="@+id/keyboard_y"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Y\n" />
+
+        <Button
+            android:id="@+id/keyboard_u"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="U\n" />
+
+        <Button
+            android:id="@+id/keyboard_i"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I\n" />
+
+        <Button
+            android:id="@+id/keyboard_o"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O\n" />
+
+        <Button
+            android:id="@+id/keyboard_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P\n" />
+
+        <Button
+            android:id="@+id/keyboard_lbracket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="{\n[" />
+
+        <Button
+            android:id="@+id/keyboard_rbracket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="}\n]" />
+
+        <Button
+            android:id="@+id/keyboard_bslash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|\n\\" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/keyboard_cpslk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大写\nCpsLk" />
+
+        <Button
+            android:id="@+id/keyboard_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A\n" />
+
+        <Button
+            android:id="@+id/keyboard_s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S\n" />
+
+        <Button
+            android:id="@+id/keyboard_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D\n" />
+
+        <Button
+            android:id="@+id/keyboard_f"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="F\n" />
+
+        <Button
+            android:id="@+id/keyboard_g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="G\n" />
+
+        <Button
+            android:id="@+id/keyboard_h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="H\n" />
+
+        <Button
+            android:id="@+id/keyboard_j"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="J\n" />
+
+        <Button
+            android:id="@+id/keyboard_k"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="K\n" />
+
+        <Button
+            android:id="@+id/keyboard_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="L\n" />
+
+        <Button
+            android:id="@+id/keyboard_semicolon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":\n;" />
+
+        <Button
+            android:id="@+id/keyboard_quote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&apos;&apos;\n&apos;" />
+
+        <Button
+            android:id="@+id/keyboard_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回车\nENTER" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/keyboard_shift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上档\nSHIFT↑" />
+
+        <Button
+            android:id="@+id/keyboard_z"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Z\n" />
+
+        <Button
+            android:id="@+id/keyboard_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X\n" />
+
+        <Button
+            android:id="@+id/keyboard_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C\n" />
+
+        <Button
+            android:id="@+id/keyboard_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="V\n" />
+
+        <Button
+            android:id="@+id/keyboard_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B\n" />
+
+        <Button
+            android:id="@+id/keyboard_n"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N\n" />
+
+        <Button
+            android:id="@+id/keyboard_m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M\n" />
+
+        <Button
+            android:id="@+id/keyboard_comma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;\n," />
+
+        <Button
+            android:id="@+id/keyboard_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">\n." />
+
+        <Button
+            android:id="@+id/keyboard_slash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n/" />
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/keyboard_ctrl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="控制\nCTRL" />
+        
+        <Button
+            android:id="@+id/keyboard_alt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="换档\nALT" />
+        
+        <Button
+            android:id="@+id/keyboard_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="                       \n" />
+
+    </LinearLayout>
+
+</LinearLayout>
