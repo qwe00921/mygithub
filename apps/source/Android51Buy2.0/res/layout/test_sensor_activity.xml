@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.icson.lib.ui.MyScrollLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffff0000"
+        android:scaleType="fitEnd" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ff00ff00" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ff0000ff"
+        android:scaleType="fitEnd" />
+
+</com.icson.lib.ui.MyScrollLayout>

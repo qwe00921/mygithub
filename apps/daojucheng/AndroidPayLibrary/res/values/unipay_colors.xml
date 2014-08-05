@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="unipay_btn_color">#FF333333</color>
+    <color name="unipay_btn_high_color">#FFFF6600</color>
+    <color name="unipay_thin_color">#FF999999</color>
+    <color name="unipay_thin1_color">#FFcccccc</color>
+    <color name="unipay_thin2_color">#FF666666</color>
+    <color name="unipay_thin3_color">#FFf0f0f0</color>
+    <color name="unipay_thin4_color">#FFffffff</color>
+    <color name="unipay_em_color">#FFe64646</color>
+    <color name="unipay_em1_color">#FF000000</color>
+    <color name="unipay_em2_color">#FF559900</color>
+    <color name="unipay_em3_color">#FFff6600</color>
+    <color name="unipay_em4_color">#ffe33215</color>
+    <color name="unipay_link_color">#FF3c78b4</color>
+    <color name="unipay_wavebg_color">#FFf0f0f0</color>
+    <color name="unipay_trans_color">#90000000</color>
+    <color name="unipay_red_color">#f00</color>
+    <color name="unipay_green_color">#0f0</color>
+</resources>

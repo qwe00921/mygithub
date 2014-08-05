@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/listview_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/my_vp_order" />
+
+    <ListView
+        android:id="@+id/list_container"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/margin_size_15xp"
+        android:layout_below="@id/listview_navigation_bar"
+        android:background="@color/background_color"
+        android:cacheColorHint="@android:color/transparent"
+        android:dividerHeight="0dip"
+        android:fadingEdge="none"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" />
+
+</RelativeLayout>

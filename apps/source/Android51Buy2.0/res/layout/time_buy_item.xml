@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color"
+        android:baselineAligned="false"
+        android:paddingBottom="1dip" >
+
+        <LinearLayout
+            android:id="@+id/time_buy_container_1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dip"
+            android:layout_weight="1"
+            android:background="@drawable/global_white_shadow_click_state"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_size_10xp" >
+
+            <RelativeLayout
+                android:id="@+id/time_buy_img_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/time_buy_image_1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="90dip"
+                    android:contentDescription="@string/app_name"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="@dimen/margin_size_10xp"
+                    android:scaleType="fitCenter" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/time_buy_image_sale_out_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/timebuy_sale_out" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/time_buy_image_not_sale_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/timebuy_not_sale" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_size_10xp"
+                android:paddingRight="@dimen/margin_size_10xp"
+                android:paddingTop="@dimen/margin_size_10xp" >
+
+                <com.icson.lib.ui.AlphaTextView
+                    android:id="@+id/time_buy_price_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/front_size_36xp" >
+                </com.icson.lib.ui.AlphaTextView>
+
+                <TextView
+                    android:id="@+id/reference_content_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:singleLine="true"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="@dimen/front_size_26xp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/product_name_height"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/time_buy_title_1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_size_10xp"
+                    android:paddingRight="@dimen/margin_size_10xp"
+                    android:textColor="@color/time_buy_show_price_color"
+                    android:textSize="14dp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/time_buy_promoword_1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_size_10xp"
+                    android:paddingRight="@dimen/margin_size_10xp"
+                    android:paddingTop="@dimen/margin_size_2xp"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="14dp" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_buy_container_2"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dip"
+            android:layout_weight="1"
+            android:background="@drawable/global_white_shadow_click_state"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_size_10xp" >
+
+            <RelativeLayout
+                android:id="@+id/time_buy_img_ll_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/time_buy_image_2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="90dp"
+                    android:contentDescription="@string/app_name"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="@dimen/margin_size_10xp"
+                    android:scaleType="fitCenter" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/time_buy_image_sale_out_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/timebuy_sale_out" >
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/time_buy_image_not_sale_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/timebuy_not_sale" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_size_10xp"
+                android:paddingRight="@dimen/margin_size_10xp"
+                android:paddingTop="@dimen/margin_size_10xp" >
+
+                <com.icson.lib.ui.AlphaTextView
+                    android:id="@+id/time_buy_price_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/front_size_36xp" >
+                </com.icson.lib.ui.AlphaTextView>
+
+                <TextView
+                    android:id="@+id/reference_content_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:singleLine="true"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="@dimen/front_size_26xp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/product_name_height"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/time_buy_title_2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_size_10xp"
+                    android:paddingRight="@dimen/margin_size_10xp"
+                    android:textColor="@color/time_buy_show_price_color"
+                    android:textSize="14dp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/time_buy_promoword_2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_size_10xp"
+                    android:paddingRight="@dimen/margin_size_10xp"
+                    android:paddingTop="@dimen/margin_size_2xp"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="14dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="0px"
+        android:layout_height="0px" />
+
+</RelativeLayout>

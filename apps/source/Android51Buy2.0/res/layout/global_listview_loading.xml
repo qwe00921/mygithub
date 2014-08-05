@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/global_bg"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="8dip" >
+
+    <com.icson.lib.ui.LoadingBar
+        android:id="@+id/global_loading_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        icson:size="small" >
+    </com.icson.lib.ui.LoadingBar>
+
+    <TextView android:id="@+id/global_loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dip"
+        android:text="加载中..."
+        android:textColor="#ff7f7f7f"
+        android:textSize="13dp" />
+
+</LinearLayout>

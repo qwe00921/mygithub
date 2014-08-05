@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/orderdetail_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="@string/my_order_detail" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"/>
+        
+        
+    <include
+        android:layout_below="@id/orderdetail_navigation_bar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

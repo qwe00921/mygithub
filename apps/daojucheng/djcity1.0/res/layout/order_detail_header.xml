@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginBottom="@dimen/margin_size_20xp" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/orderdetail_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="我的订单" />
+
+    <RelativeLayout
+        android:id="@+id/orderdetail_gameinfo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/orderdetail_navbar"
+        android:background="@drawable/game_info_bg"
+        android:paddingBottom="@dimen/margin_size_30xp"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_30xp" >
+
+        <ImageView
+            android:id="@+id/game_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/dialog_list_button" />
+
+        <TextView
+            android:id="@+id/game_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_size_50xp"
+            android:layout_toRightOf="@id/game_icon"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_30xp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/orderdetail_line"
+        style="@style/global_line2"
+        android:layout_below="@id/orderdetail_gameinfo" />
+
+    <RelativeLayout
+        android:id="@+id/orderdetail_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/orderdetail_line"
+        android:background="@color/white"
+        android:padding="@dimen/margin_size_30xp" >
+
+        <TextView
+            android:id="@+id/orderdetail_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_28xp" />
+
+        <TextView
+            android:id="@+id/orderdetail_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderdetail_status"
+            android:paddingTop="@dimen/margin_size_10xp"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_28xp" />
+
+        <TextView
+            android:id="@+id/orderdetail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderdetail_num"
+            android:paddingTop="@dimen/margin_size_10xp"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_28xp" />
+
+        <View
+            android:id="@+id/orderdetail_line2"
+            style="@style/global_line2"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:layout_below="@id/orderdetail_time" />
+
+        <LinearLayout
+            android:id="@+id/orderdetail_package"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderdetail_line2"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/margin_size_20xp"
+            android:paddingTop="@dimen/margin_size_20xp" >
+
+            <ImageView
+                android:id="@+id/orderdetail_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/orderdetail_pg_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_size_20xp"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/font_size_28xp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/orderdetail_line3"
+            style="@style/global_line2"
+            android:layout_marginBottom="@dimen/margin_size_20xp"
+            android:layout_below="@id/orderdetail_package" />
+
+        <TextView
+            android:id="@+id/orderdetail_payprice_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderdetail_line3"
+            android:text="订单金额:"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_30xp" />
+
+        <TextView
+            android:id="@+id/orderdetail_payprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/orderdetail_line3"
+            android:textColor="@color/red"
+            android:textSize="@dimen/font_size_30xp" />
+
+        <TextView
+            android:id="@+id/orderdetail_price_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderdetail_payprice_label"
+            android:paddingTop="@dimen/margin_size_10xp"
+            android:text="商品总额:"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_26xp" />
+
+        <TextView
+            android:id="@+id/orderdetail_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/orderdetail_payprice_label"
+            android:paddingTop="@dimen/margin_size_10xp"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_26xp" />
+
+        <TextView
+            android:id="@+id/orderdetail_discount_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderdetail_price_label"
+            android:paddingTop="@dimen/margin_size_10xp"
+            android:text="优惠:"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_26xp" />
+
+        <TextView
+            android:id="@+id/orderdetail_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/orderdetail_price"
+            android:paddingTop="@dimen/margin_size_10xp"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_26xp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/orderdetail_line4"
+        style="@style/global_line2"
+        android:layout_below="@id/orderdetail_info" />
+
+</RelativeLayout>

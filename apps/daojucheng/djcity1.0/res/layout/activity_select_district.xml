@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="@string/select_game" />
+
+    <LinearLayout
+        android:id="@+id/title_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/navigation_bar"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title_select_role"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/global_bg_color"
+            android:paddingBottom="@dimen/margin_size_10xp"
+            android:paddingLeft="@dimen/margin_size_30xp"
+            android:paddingRight="@dimen/margin_size_30xp"
+            android:paddingTop="@dimen/margin_size_10xp"
+            android:text="请选择游戏角色"
+            android:textColor="#FFA1A1A1"
+            android:textSize="@dimen/font_size_30xp"
+            android:textStyle="bold" />
+
+        <View style="@style/global_line2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/select_area_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_container"
+        android:background="@drawable/global_white_shadow_click_state"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/select_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/arrow_2"
+            android:paddingBottom="@dimen/margin_size_60xp"
+            android:paddingLeft="@dimen/margin_size_30xp"
+            android:paddingRight="@dimen/margin_size_30xp"
+            android:paddingTop="@dimen/margin_size_60xp"
+            android:text="@string/select_area"
+            android:textAppearance="@style/global_label"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_36xp"
+            android:textStyle="bold" />
+
+        <View style="@style/global_line2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/select_server_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/select_area_container"
+        android:background="@drawable/global_white_shadow_click_state"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/select_server"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/arrow_2"
+            android:paddingBottom="@dimen/margin_size_60xp"
+            android:paddingLeft="@dimen/margin_size_30xp"
+            android:paddingRight="@dimen/margin_size_30xp"
+            android:paddingTop="@dimen/margin_size_60xp"
+            android:text="@string/select_server"
+            android:textAppearance="@style/global_label"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_36xp"
+            android:textStyle="bold" />
+
+        <View style="@style/global_line2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/select_role_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/select_server_container"
+        android:background="@drawable/global_white_shadow_click_state"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/select_role"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/arrow_2"
+            android:paddingBottom="@dimen/margin_size_60xp"
+            android:paddingLeft="@dimen/margin_size_30xp"
+            android:paddingRight="@dimen/margin_size_30xp"
+            android:paddingTop="@dimen/margin_size_60xp"
+            android:text="@string/select_role"
+            android:textAppearance="@style/global_label"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_36xp"
+            android:textStyle="bold" />
+
+        <View style="@style/global_line2" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		android:layout_below="@id/select_role_container"
+		android:padding="@dimen/margin_size_30xp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:background="@drawable/button_red_round"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:padding="@dimen/margin_size_30xp"
+            android:enabled="false"
+            android:textColor="@drawable/button_selector_color_white"
+            android:textSize="@dimen/font_size_36xp"
+            android:text="@string/btn_ok" >
+        </Button>
+		<TextView
+            android:id="@+id/btn_guangguang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_submit"
+            android:layout_alignParentRight="true"
+            android:paddingTop="@dimen/margin_size_20xp"
+            android:textColor="@color/global_hyper_link"
+            android:textSize="@dimen/font_size_28xp"
+            android:text="随便逛逛" />
+        
+    </RelativeLayout>
+	
+</RelativeLayout>

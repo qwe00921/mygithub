@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <include
+        android:id="@+id/my_collect_listview_loading"
+        layout="@layout/global_listview_loading" />
+
+    <include
+        android:id="@+id/my_collect_listview_clickmore"
+        layout="@layout/global_listview_clickmore" />
+	
+</RelativeLayout>

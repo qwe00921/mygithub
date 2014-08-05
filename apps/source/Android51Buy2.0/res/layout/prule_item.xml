@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    
+    <TextView
+        android:id="@+id/promo_item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/margin_size_30xp"
+        android:drawableLeft="@drawable/normal_promo_tag"
+        android:drawablePadding="@dimen/margin_size_20xp"
+        android:textColor="@color/global_text_color"
+        android:textSize="@dimen/front_size_30xp" >
+    </TextView>
+
+    <View style="@style/global_line2"
+        android:layout_below="@id/promo_item_name"/>
+</RelativeLayout>

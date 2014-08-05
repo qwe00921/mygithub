@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#12c07b" >
+
+    <ListView
+        android:id="@+id/tuan_listview"
+        style="@style/global_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/myCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tuan_right_drawer"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="全部"
+        android:textColor="#eee"
+        android:paddingRight="2dp"
+        android:textSize="18dp"
+        android:gravity="center"
+        />
+
+</RelativeLayout>

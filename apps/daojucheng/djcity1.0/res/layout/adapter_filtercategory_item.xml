@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filter_category_item_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/global_white_shadow_click_state"
+    android:paddingBottom="@dimen/margin_size_30xp"
+    android:paddingLeft="@dimen/margin_size_40xp"
+    android:paddingRight="@dimen/margin_size_30xp"
+    android:paddingTop="@dimen/margin_size_30xp" >
+
+    <TextView
+        android:id="@+id/filter_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/global_text_color"
+        android:textSize="@dimen/font_size_36xp" />
+
+    <TextView
+        android:id="@+id/filter_item_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/global_text_info_color"
+        android:textSize="@dimen/font_size_30xp" />
+
+</RelativeLayout>

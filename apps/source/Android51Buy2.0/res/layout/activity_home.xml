@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.icson.lib.ui.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:id="@+id/root_layout"
+    style="@style/global_scrollview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fadingEdge="vertical"
+    android:paddingTop="@dimen/container_marginTopOffset" >
+
+    <!-- Scroll view hont can have only one direct child -->
+
+    <LinearLayout
+        android:id="@+id/home_scrollvew_root_child"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/container_marginLeftOffset"
+        android:paddingRight="@dimen/container_marginRightOffset" >
+
+        <include
+            android:id="@+id/home_loading_layout"
+            layout="@layout/global_listview_loading"
+            android:visibility="gone" />
+
+        <!-- Banner layout -->
+
+        <RelativeLayout
+            android:id="@+id/home_banner_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <com.icson.lib.ui.SlideView
+                android:id="@+id/home_banner_slide_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4.5dp"
+                icson:animNextIn="@anim/in_rightleft"
+                icson:animNextOut="@anim/out_rightleft"
+                icson:animPrevIn="@anim/in_leftright"
+                icson:animPrevOut="@anim/out_leftright"
+                icson:referHeight="340"
+                icson:referWidth="680" />
+
+            <LinearLayout
+                android:id="@+id/home_logo_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/logo" />
+
+                <ImageView
+                    android:id="@+id/logo_shadow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/logo_shadow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/home_banner_bottom_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/home_banner_slide_view"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/seach_editview_marginBottom"
+                android:paddingLeft="@dimen/seach_editview_marginLeft"
+                android:paddingRight="@dimen/seach_editview_marginLeft" >
+
+                <!-- Indicator -->
+
+                <com.icson.lib.ui.PageIndicator
+                    android:id="@+id/home_banner_indicator"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="2dp" />
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <EditText
+                        android:id="@+id/home_search_box"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/seach_editview_height"
+                        android:background="@color/global_white"
+                        android:drawableLeft="@drawable/icon_search"
+                        android:focusable="false"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/container_widgetPaddingOffset_large"
+                        android:paddingRight="@dimen/container_widgetPaddingOffset_large" />
+
+                    <ImageView
+                        android:id="@+id/home_search_box_barcode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingRight="@dimen/container_widgetPaddingOffset_large"
+                        android:src="@drawable/icon_barcode" />
+                </FrameLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Announce -->
+
+        <com.icson.lib.ui.AnnounceView
+            android:id="@+id/home_app_announce"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/announceView_height"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/container_shortcut_topOffset" >
+
+            <!-- shotcurt for application -->
+
+            <com.icson.lib.ui.ShortcutView
+                android:id="@+id/home_shortcuts"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+        </RelativeLayout>
+        <!-- Entry for new introduction -->
+
+        <com.icson.lib.ui.FixedImageView
+            android:id="@+id/home_new_product"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="@dimen/container_views_topOffset"
+            android:scaleType="fitXY"
+            android:visibility="gone" />
+
+        <!-- Channel eQiang -->
+
+        <com.icson.lib.ui.TimeBuyPanel
+            android:id="@+id/home_panel_rush"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="@dimen/container_views_topOffset"
+            android:layout_marginTop="@dimen/container_views_topOffset"
+            icson:referHeight="512"
+            icson:referWidth="680" />
+
+        <com.icson.lib.ui.EventsPanel
+            android:id="@+id/home_panel_popular"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="@dimen/container_views_topOffset"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</com.icson.lib.ui.MyScrollView>

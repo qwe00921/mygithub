@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/order_coupon_list_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/use_coupon_title" />
+
+    <LinearLayout
+        android:id="@+id/input_LinearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_coupon_list_navigation_bar"
+        android:background="@color/background_color"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin_size_40xp"
+        android:paddingRight="@dimen/margin_size_40xp"
+        android:paddingTop="@dimen/margin_size_40xp" >
+
+        <EditText
+            android:id="@+id/code_EditText"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin_size_88xp"
+            android:layout_weight="1"
+            android:background="@drawable/input_bg_no_right"
+            android:hint="@string/add_coupon_code"
+            android:paddingLeft="@dimen/margin_size_20xp"
+            android:singleLine="true"
+            android:textColor="@color/global_text_color"
+            android:textColorHint="@color/global_text_info_color"
+            android:textSize="@dimen/front_size_30xp" >
+        </EditText>
+
+        <Button
+            android:id="@+id/useBtn"
+            style="@style/button_confirm_bg_white"
+            android:layout_width="@dimen/margin_size_180xp"
+            android:layout_height="@dimen/margin_size_88xp"
+            android:gravity="center"
+            android:text="@string/use_coupon"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/front_size_30xp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/selecte_label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/input_LinearLayout"
+        android:paddingLeft="@dimen/margin_size_40xp"
+        android:paddingTop="@dimen/margin_size_35xp"
+        android:paddingBottom="@dimen/margin_size_10xp"
+        android:text="@string/my_coupon"
+        android:textColor="@color/coupon_name_color"
+        android:textSize="@dimen/front_size_30xp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/selecte_label"
+        android:background="@color/background_color" >
+
+        <ListView
+            android:id="@+id/list_listview"
+            style="@style/global_listview_no_divider"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/list_relative_empty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_size_20xp"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:layout_marginTop="@dimen/margin_size_20xp"
+            android:background="@drawable/denom_off2"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_size_50xp"
+            android:paddingTop="@dimen/margin_size_50xp"
+            android:text="@string/no_coupon"
+            android:textColor="#ffababab"
+            android:textSize="@dimen/front_size_32xp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <include layout="@layout/global_loading" />
+
+</RelativeLayout>

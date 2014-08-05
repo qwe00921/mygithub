@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_linear" >
+
+    <!-- head cont -->
+
+    <LinearLayout style="@style/unipay_tenpay_head" >
+
+        <LinearLayout
+            android:id="@+id/pay_content"
+            style="@style/unipay_tenpay_linear"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                style="@style/unipay_tenpay_linear"
+                android:layout_weight="100"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/pay_title"
+                    style="@style/unipay_tenpay_text.headtitle" />
+
+                <TextView
+                    android:id="@+id/pay_amount_mark"
+                    style="@style/unipay_tenpay_text.headtitle"
+                    android:text="@string/unipay_tenpay_multiply" />
+
+                <TextView
+                    android:id="@+id/pay_amount"
+                    style="@style/unipay_tenpay_text.headtitle" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/unipay_tenpay_wrap"
+                android:gravity="bottom" >
+
+                <TextView
+                    style="@style/unipay_tenpay_text.big"
+                    android:text="@string/unipay_tenpay_rmb"
+                    android:textColor="@color/unipay_tenpay_em3_color" />
+
+                <TextView
+                    android:id="@+id/pay_yuan"
+                    style="@style/unipay_tenpay_text.big"
+                    android:textColor="@color/unipay_tenpay_em3_color" />
+
+                <TextView
+                    style="@style/unipay_tenpay_text.small"
+                    android:text="."
+                    android:textColor="@color/unipay_tenpay_em3_color" />
+
+                <TextView
+                    android:id="@+id/pay_fen"
+                    style="@style/unipay_tenpay_text.small"
+                    android:textColor="@color/unipay_tenpay_em3_color" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- drop info -->
+
+        <LinearLayout
+            android:id="@+id/pay_info"
+            style="@style/unipay_tenpay_linear"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/pay_price"
+                style="@style/unipay_tenpay_text.small"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/unipay_tenpay_thin_color" />
+
+            <LinearLayout
+                style="@style/unipay_tenpay_wrap"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/pay_vip_image"
+                    style="@style/unipay_tenpay_logovip.small"
+                    android:background="@drawable/unipay_tenpay_pic_huiyuan" />
+
+                <TextView
+                    android:id="@+id/pay_vip_price"
+                    style="@style/unipay_tenpay_text.small" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- drop info over -->
+    </LinearLayout>
+    <!-- head cont over -->
+
+</LinearLayout>

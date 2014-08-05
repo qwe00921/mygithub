@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="43dp"
+        android:layout_alignParentTop="true" >
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingLeft="10dip"
+            android:src="@drawable/nav_back_selector" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:text="@string/settings"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/mycity_line1"
+        style="@style/global_line2"
+        android:layout_below="@id/top_layout" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/top_layout"
+        android:fadeScrollbars="true" >
+
+        <LinearLayout
+            android:id="@+id/content_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sub_corner_round_mid_selector"
+                 >
+
+                <TextView
+                    android:id="@+id/action_notify"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/sub_corner_round_mid_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="20dip"
+                    android:text="@string/action_notify"
+                    android:textColor="@color/setting_item_font"
+                    android:textSize="16sp" />
+
+                <CheckBox
+                    android:id="@+id/action_notify_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingRight="40dp"
+                    android:layout_centerVertical="true"
+                    android:button="@drawable/switch_status" />
+            </RelativeLayout>
+
+            <View style="@style/global_line2" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sub_corner_round_mid_selector"
+                 >
+
+                <TextView
+                    android:id="@+id/sendgoods_notify"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/sub_corner_round_mid_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="20dip"
+                    android:text="@string/sendgoods_notify"
+                    android:textColor="@color/setting_item_font"
+                    android:textSize="16sp" />
+
+                <CheckBox
+                    android:id="@+id/sendgoods_notify_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingRight="40dp"
+                    android:button="@drawable/switch_status"
+                     />
+            </RelativeLayout>
+
+            <View style="@style/global_line2" />
+
+            <TextView
+                android:id="@+id/clear_cache"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:padding="20dip"
+                android:background="@drawable/sub_corner_round_mid_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:text="@string/settings_clear_cache"
+                android:textColor="@color/setting_item_font"
+                android:textSize="16sp" />
+
+            <View style="@style/global_line2" />
+
+            <TextView
+                android:id="@+id/check_newversion"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:padding="20dip"
+                android:background="@drawable/sub_corner_round_mid_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:text="@string/settings_check_version"
+                android:textColor="@color/setting_item_font"
+                android:textSize="16sp" />
+
+            <View style="@style/global_line2" />
+
+            <TextView
+                android:id="@+id/about_us"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:padding="20dip"
+                android:background="@drawable/sub_corner_round_mid_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:text="@string/settings_about_us"
+                android:textColor="@color/setting_item_font"
+                android:textSize="16sp" />
+
+            <View style="@style/global_line2" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

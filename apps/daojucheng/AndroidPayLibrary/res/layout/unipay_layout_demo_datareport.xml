@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21=iFormat, 24=Offerid, 26=pf, 8=extend, 47=buytype, 20=action, 37=sessionid, 43=sessiontype" />
+    
+		<ListView 
+	        android:id="@+id/dataReportList"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:divider="@color/unipay_green_color"
+	        android:dividerHeight="1dp">
+	    </ListView>
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/sort_buttons"
+    android:layout_marginBottom="10dip"
+    android:layout_marginTop="10dip"
+    android:gravity="center" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/i_list_empty_bg"
+        android:text="抱歉, 暂时没有符合条件的商品:(" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="抱歉, 暂时没有符合条件的商品:("
+        android:textColor="#ff999999"
+        android:textSize="16dp" />
+
+</RelativeLayout>

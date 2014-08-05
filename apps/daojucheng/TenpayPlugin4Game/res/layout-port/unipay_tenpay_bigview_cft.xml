@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_cont" >
+
+    <!-- cft begin -->
+
+    <ScrollView
+        android:id="@+id/pay_scroll"
+        style="@style/unipay_tenpay_fill"
+        android:fillViewport="true" >
+
+        <LinearLayout style="@style/unipay_tenpay_linear.srcollcont" >
+
+            <TextView
+                android:id="@+id/pay_discount"
+                style="@style/unipay_tenpay_text.middle"
+                android:layout_marginBottom="10dp" />
+
+            <!-- 分割线 -->
+
+            <View
+                style="@style/unipay_tenpay_horline"
+                android:layout_marginBottom="5dp" />
+            <!-- QQ账号 -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:paddingRight="5dp" >
+
+                <TextView
+                    style="@style/unipay_tenpay_text.middle"
+                    android:text="@string/unipay_tenpay_cft_account_name" />
+
+                <TextView
+                    android:id="@+id/pay_account"
+                    style="@style/unipay_tenpay_text.middle"
+                    android:layout_marginLeft="5dp" />
+
+                <TextView
+                    style="@style/unipay_tenpay_text.middle"
+                    android:text="@string/unipay_tenpay_yuan" />
+            </LinearLayout>
+            <!-- 输入框 -->
+
+            <com.tenpay.tenpayplugin.view.ClearableEditText
+                android:id="@+id/pay_pass"
+                style="@style/unipay_tenpay_edit"
+                android:hint="@string/unipay_tenpay_cft_pass"
+                android:inputType="textPassword"
+                android:maxLength="16" />
+            <!-- btn -->
+
+            <Button
+                android:id="@+id/pay_forget_pass"
+                style="@style/unipay_tenpay_text.forgetpwd"
+                android:background="@null"
+                android:paddingBottom="10dp" />
+
+            <LinearLayout style="@style/unipay_tenpay_bigviewbtn" >
+
+                <Button
+                    android:id="@+id/pay_confirm"
+                    style="@style/unipay_tenpay_btn"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/unipay_tenpay_pay" />
+
+                <TextView style="@style/unipay_tenpay_text.cft" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <!-- cft over -->
+
+</LinearLayout>

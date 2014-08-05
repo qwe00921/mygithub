@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="loadingbar">
+        <attr name="size" format="string" />
+    </declare-styleable>
+    
+    <declare-styleable name="icsonattrs">
+        <attr format="reference|string" name="caption" />
+        <attr format="reference|string" name="text" />
+        <attr format="reference|string" name="hint" />
+        <attr format="reference|string" name="info" />
+        <attr format="boolean" name="hasDrawableRight" />
+        <attr format="boolean" name="editable" />
+        <attr format="boolean" name="hasSlipButton"/>
+        <attr format="boolean" name="isChecked"/>
+        <attr format="reference|integer" name="checkboxImageOn" />
+        <attr format="reference|integer" name="checkboxImageOff" />
+        <attr format="reference|integer" name="drawableLeft" />
+        <attr format="reference|integer" name="drawableRight" />
+        <attr format="color" name="contentColor" />
+        <attr format="dimension" name="contentSize" />
+        <attr format="dimension" name="captionSize" />
+        <attr format="reference" name="animNextIn" />
+        <attr format="reference" name="animNextOut" />
+        <attr format="reference" name="animPrevIn" />
+        <attr format="reference" name="animPrevOut" />
+        <attr format="integer" name="referWidth" />
+        <attr format="integer" name="referHeight" />
+        <attr format="integer" name="minLines" />
+        <attr format="integer" name="maxLines" />
+        <attr format="integer" name="maxLength" />
+        <attr name="cellPosition">
+            <flag name="top" value="0x10" />
+            <flag name="middle" value="0x20" />
+            <flag name="bottom" value="0x40" />
+            <flag name="single" value="0x80" />
+        </attr>
+        <attr name="contentGravity">
+	        <flag name="top" value="0x30" />
+	        <flag name="bottom" value="0x50" />
+	        <flag name="left" value="0x03" />
+	        <flag name="right" value="0x05" />
+	        <flag name="center_vertical" value="0x10" />
+	        <flag name="fill_vertical" value="0x70" />
+	        <flag name="center_horizontal" value="0x01" />
+	        <flag name="fill_horizontal" value="0x07" />
+	        <flag name="center" value="0x11" />
+	        <flag name="fill" value="0x77" />
+	        <flag name="clip_vertical" value="0x80" />
+	        <flag name="clip_horizontal" value="0x08" />
+	    </attr>
+    </declare-styleable>
+    
+    <declare-styleable name = "loopscrollview">
+        <attr name = "imgMargin" format="integer"/>
+        <attr name = "windowFooter" format="float"/>
+    </declare-styleable>
+</resources>

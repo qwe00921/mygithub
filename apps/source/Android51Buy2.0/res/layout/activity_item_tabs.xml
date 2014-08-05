@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/global_bg" >
+
+    <RelativeLayout
+        android:id="@+id/global_title"
+        android:layout_width="fill_parent"
+        android:layout_height="43dp"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_size_10xp"
+        android:paddingLeft="@dimen/margin_size_10xp"
+        android:paddingTop="@dimen/margin_size_10xp" >
+
+        <RelativeLayout
+            android:id="@+id/navigationbar_drawable_left_view"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/global_transparent_shadow_click_state"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/margin_size_20xp"
+            android:paddingRight="@dimen/margin_size_20xp" >
+
+            <ImageView
+                android:id="@+id/navigationbar_drawable_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:contentDescription="@string/app_name"
+                android:gravity="center_vertical"
+                android:src="@drawable/arrow_back" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/shopping_cart_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_size_10xp" >
+
+            <ImageButton
+                android:id="@+id/shopping_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                android:paddingBottom="7dp"
+                android:paddingRight="7dp"
+                android:paddingLeft="4dp"
+                android:paddingTop="11dp"
+                android:src="@drawable/ic_shopping_car" />
+
+            <TextView
+                android:id="@+id/shopping_cart_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/shopping_cart"
+                android:background="@drawable/item_cart_bg"
+                android:gravity="center"
+                android:text="8"
+                android:textColor="#ffffff"
+                android:textSize="12dp" >
+            </TextView>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/navigationbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/navigationbar_drawable_left_view"
+            android:text="@string/item_title"
+            android:textSize="@dimen/front_size_36xp" />
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/item_radiogroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/global_title"
+        android:layout_marginRight="-2dip"
+        android:background="@drawable/tab_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/item_radio_detail"
+            style="@style/global_tab_item"
+            android:text="基本信息" />
+
+        <RadioButton
+            android:id="@+id/item_radio_param"
+            style="@style/global_tab_item"
+            android:text="规格参数" />
+
+        <RadioButton
+            android:id="@+id/item_radio_review"
+            style="@style/global_tab_item"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="评论" />
+
+        <RadioButton
+            android:id="@+id/item_radio_intro"
+            style="@style/global_tab_item"
+            android:text="图文详情" />
+    </RadioGroup>
+
+    <com.icson.item.CustomViewPager
+        android:id="@+id/item_relative_tab_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/back_wx_layout"
+        android:layout_below="@+id/item_radiogroup" >
+
+        <RelativeLayout
+            android:id="@+id/item_relative_tab_content_detail"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#f1f1f1" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/item_relative_tab_content_intro"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#f1f1f1" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/item_relative_tab_content_param"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#f1f1f1" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/item_relative_tab_content_review"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#f1f1f1" >
+        </RelativeLayout>
+    </com.icson.item.CustomViewPager>
+    
+    <RelativeLayout android:id="@+id/back_wx_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+        android:background="#ff3382ef"
+        android:paddingTop="@dimen/margin_size_2xp"
+		>
+		
+		<Button
+		    android:id="@+id/btn_back_wx"
+                android:layout_width="fill_parent"
+				android:background="@drawable/button_back_wx"
+                android:layout_height="@dimen/margin_size_110xp"
+                android:textSize="@dimen/front_size_36xp"
+                android:textColor="#ff3382ef"
+		    android:text="返回微信" />
+	</RelativeLayout>
+
+</RelativeLayout>

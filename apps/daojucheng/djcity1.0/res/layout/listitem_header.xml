@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/global_bg_color"
+    android:paddingBottom="@dimen/margin_size_20xp"
+    android:paddingLeft="@dimen/margin_size_30xp"
+    android:paddingRight="@dimen/margin_size_30xp"
+    android:paddingTop="@dimen/margin_size_20xp" >
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/game_icon"
+        android:layout_centerVertical="true"
+        android:textColor="#FFA1A1A1"
+        android:textStyle="bold"
+        android:textSize="@dimen/font_size_30xp" />
+
+</RelativeLayout>

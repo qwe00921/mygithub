@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   style="@style/unipay_linear">
+   <LinearLayout 
+       style="@style/unipay_itemchannel">
+   <ImageView
+    android:id="@+id/unipay_id_ChannelIcon"
+    style="@style/unipay_wrap.iconchannel" />
+    <LinearLayout
+      style="@style/unipay_linear"
+      android:layout_weight="100"
+      android:orientation="horizontal">
+      <TextView
+       android:id="@+id/unipay_id_ChannelText"
+       style="@style/unipay_text"
+       android:text="@string/unipay_qd_pay"/>
+      <ImageView
+       android:id="@+id/unipay_id_ChannelReco"
+       style="@style/unipay_icontuijian"/>
+    </LinearLayout>
+    <TextView
+     android:id="@+id/unipay_id_ChannelInfo"
+     style="@style/unipay_text.small"
+     android:textColor="@color/unipay_thin_color"
+     android:text="账户余额：100.00"/>
+     <ImageView 
+       style="@style/unipay_iconarrowr"/>
+     </LinearLayout>
+     <ImageView 
+	      style="@style/unipay_horline"/>
+</LinearLayout>
+
+
+     

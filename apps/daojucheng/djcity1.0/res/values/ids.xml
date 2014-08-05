@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item name="loadingbar" type="id"></item>
+    <item name="addressmodel" type="id"></item>
+    <item name="global_title" type="id"></item>
+    <item name="global_loading" type="id"></item>
+    <item name="global_container" type="id"></item>
+    
+    <!-- Messages IDs -->
+    <item name="auto_focus" type="id"/>
+    <item name="decode" type="id"/>
+    <item name="decode_failed" type="id"/>
+    <item name="decode_succeeded" type="id"/>
+    <item name="launch_product_query" type="id"/>
+    <item name="quit" type="id"/>
+    <item name="restart_preview" type="id"/>
+    <item name="return_scan_result" type="id"/>
+    <item name="search_book_contents_failed" type="id"/>
+    <item name="search_book_contents_succeeded" type="id"/>
+    
+    <item name="holder_pos" type="id"></item>
+    <item name="holder_obj" type="id"></item>
+    <item name="holder_status" type="id"></item>
+    <item name="holder_layout" type="id"></item>
+
+</resources>

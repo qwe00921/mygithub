@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    <com.icson.lib.ui.NavigationBar 
+        android:id="@+id/address_add_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/edit_address"/>
+
+    <ScrollView
+        android:id="@+id/address_scroll_body"
+        style="@style/global_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/address_add_navigation_bar"
+        android:background="@color/background_color" >
+
+        <LinearLayout
+            android:id="@+id/linear_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical" >
+            
+            <com.icson.lib.ui.EditField android:id="@+id/address_add_name"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="@dimen/margin_size_30xp"
+		        icson:caption="@string/address_person_name"
+		        icson:hint="@string/address_person_hint"
+		        icson:hasDrawableRight="false" />
+            
+            <com.icson.lib.ui.EditField android:id="@+id/address_add_phone"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="@dimen/margin_size_30xp"
+		        android:layout_marginBottom="@dimen/margin_size_30xp"
+		        icson:caption="@string/address_phone_num"
+		        icson:hint="@string/address_phone_hint"
+		        icson:hasDrawableRight="false" />
+            
+            <View
+	            android:id="@+id/imageview_line"
+	            style="@style/global_line2" >
+	        </View>
+            
+            <com.icson.lib.ui.EditField android:id="@+id/address_add_province"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="@dimen/margin_size_30xp"
+		        icson:caption="@string/address_province_name"
+		        icson:hint="@string/address_choose_hint"
+		        icson:hasDrawableRight="true"
+		        icson:editable="false" />
+            
+            <com.icson.lib.ui.EditField android:id="@+id/address_add_city"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="@dimen/margin_size_30xp"
+		        icson:caption="@string/address_city_name"
+		        icson:hint="@string/address_choose_hint"
+		        icson:hasDrawableRight="true"
+		        icson:editable="false" />
+            
+            <com.icson.lib.ui.EditField android:id="@+id/address_add_zone"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="@dimen/margin_size_30xp"
+		        icson:caption="@string/address_zone_name"
+		        icson:hint="@string/address_choose_hint"
+		        icson:hasDrawableRight="true"
+		        icson:editable="false" />
+            
+            <com.icson.lib.ui.EditField android:id="@+id/address_add_address_detail"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="@dimen/margin_size_30xp"
+		        icson:caption="@string/address_detail"
+		        icson:hint="@string/address_detail_hint"
+		        icson:hasDrawableRight="false"
+		        icson:minLines="3" />
+
+            <LinearLayout android:id="@+id/address_btn_layout"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="@dimen/margin_size_40xp">
+		        
+		        <TextView android:id="@+id/address_btn_okay"
+		            style="@style/button_confirm_bg_blue"
+		            android:layout_width="0dp"
+		            android:layout_height="@dimen/margin_size_88xp"
+		            android:layout_weight="2"
+		            android:layout_marginRight="@dimen/margin_size_10xp"
+		            android:gravity="center"
+		            android:text="@string/btn_ok"
+		            android:textSize="@dimen/front_size_36xp"
+		            android:textColor="@color/global_white" />
+		        
+		        <TextView android:id="@+id/address_btn_delete"
+		            style="@style/button_confirm_bg_white"
+		            android:layout_width="0dp"
+		            android:layout_height="@dimen/margin_size_88xp"
+		            android:layout_weight="1"
+		            android:gravity="center"
+		            android:layout_marginLeft="@dimen/margin_size_10xp"
+		            android:text="@string/btn_delete"
+		            android:textColor="@color/global_text_color"
+		            android:textSize="@dimen/front_size_36xp"/>
+		        
+		    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/global_loading" />
+
+</RelativeLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="@dimen/welcome_margin_page_top"
+    android:paddingBottom="@dimen/margin_size_70xp"
+    android:background="@color/transparent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <ImageView 
+        android:id="@+id/page_one_title"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_centerHorizontal="true"
+    	android:scaleType="fitXY"/>
+    
+    <ImageView 
+        android:id="@+id/page_one_content1"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@+id/page_one_title"
+    	android:layout_marginTop="@dimen/margin_size_50xp"
+    	android:layout_centerHorizontal="true"
+    	android:scaleType="fitXY"/>
+    
+    <ImageView 
+        android:id="@+id/page_one_content2"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@+id/page_one_content1"
+    	android:layout_centerHorizontal="true"
+    	android:scaleType="fitXY"/>
+    
+    <ImageView 
+        android:id="@+id/page_one_bottom"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentBottom="true"
+    	android:layout_centerHorizontal="true"
+    	android:scaleType="fitXY"/>
+
+</RelativeLayout>

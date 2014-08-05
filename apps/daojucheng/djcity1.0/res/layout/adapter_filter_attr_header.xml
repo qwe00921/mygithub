@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filter_relative_attr_item_header"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+     >
+
+     <RelativeLayout
+         android:id="@+id/filter_sale"
+         android:layout_width="fill_parent"
+    	 android:layout_height="wrap_content"
+    	 
+    	 android:paddingLeft="@dimen/margin_size_40xp"
+    	 android:paddingRight="@dimen/margin_size_30xp"
+    	
+    	 >
+         <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+	        android:ellipsize="end"
+	        android:singleLine="true"
+	        android:textColor="@color/global_text_color"
+	        android:textSize="@dimen/font_size_32xp"
+	        android:paddingTop="@dimen/margin_size_35xp"
+	        android:paddingBottom="@dimen/margin_size_35xp"
+	        android:text="@string/filter_hasGood"/>
+	
+	 	<ImageView
+	        android:id="@+id/filter_sale_status"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:src="@drawable/filter_sale_off"
+	        android:paddingTop="@dimen/margin_size_35xp"
+	        android:paddingBottom="@dimen/margin_size_35xp"
+	        android:contentDescription="@string/app_name"
+	        />
+       </RelativeLayout>
+       
+       <View
+            android:id="@+id/filter_select_topline"
+	 	    android:layout_width="fill_parent" 
+	   	 	android:layout_height="@dimen/line_size"
+	   	 	android:layout_below="@id/filter_sale"
+	    	android:background="@color/separator_line"/>
+       
+   	 <RelativeLayout
+   	     android:id="@+id/filter_select_class"
+         android:layout_width="fill_parent"
+    	 android:layout_height="wrap_content"
+    	 android:layout_below="@id/filter_sale"
+    	 android:paddingBottom="@dimen/margin_size_35xp"
+    	 android:paddingLeft="@dimen/margin_size_40xp"
+    	 android:paddingRight="@dimen/margin_size_30xp"
+    	 android:paddingTop="@dimen/margin_size_35xp"
+    	 >
+         <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+	        android:ellipsize="end"
+	        android:singleLine="true"
+	        android:textColor="@color/global_text_color"
+	        android:textSize="@dimen/font_size_32xp"
+	        android:text="@string/category_belong" />
+	
+	 	<ImageView
+	        android:id="@+id/filter_category_img"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:src="@drawable/arrow_2"
+	        android:contentDescription="@string/app_name"
+	        />
+	 	
+	     <TextView
+	        android:id="@+id/filter_category_selected"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+	        android:layout_toLeftOf="@id/filter_category_img"
+	        android:layout_marginRight="@dimen/margin_size_30xp"
+	        android:ellipsize="end"
+	        android:singleLine="true"
+	        android:textColor="@color/filter_item_checked"
+	        android:textSize="@dimen/font_size_32xp"
+	         />
+       </RelativeLayout>
+        
+
+</RelativeLayout>

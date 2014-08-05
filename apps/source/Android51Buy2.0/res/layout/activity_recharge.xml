@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/recharge_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/recharge" />
+    <!-- 充值活动 -->
+
+    <RelativeLayout
+        android:id="@+id/vp_news_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recharge_navbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/vp_tag"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/tp_arrow_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/vp_arrow"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/vp_tips_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:layout_toLeftOf="@id/tp_arrow_v"
+            android:drawableLeft="@drawable/vp_news"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/vp_news_ll"
+        android:background="@color/background_color" >
+
+        <RelativeLayout
+            android:id="@+id/recharge_phone_number_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_size_40xp"
+            android:layout_marginLeft="@dimen/margin_size_20xp"
+            android:layout_marginRight="@dimen/margin_size_20xp"
+            android:layout_marginTop="@dimen/margin_size_40xp" >
+
+            <ImageView
+                android:id="@+id/recharge_select_contact"
+                android:layout_width="40.8dp"
+                android:layout_height="40.8dp"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/select_contact_state" />
+
+            <EditText
+                android:id="@+id/recharge_num_input"
+                android:layout_width="fill_parent"
+                android:layout_height="40.8dp"
+                android:layout_toLeftOf="@id/recharge_select_contact"
+                android:background="@drawable/input_bg_no_right"
+                android:gravity="center_vertical"
+                android:hint="@string/no_phone_recharge"
+                android:inputType="number"
+                android:maxLength="11"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:textColor="@color/global_label"
+                android:textSize="@dimen/front_size_34xp" />
+        </RelativeLayout>
+
+        <!-- Value select panel -->
+
+        <com.icson.lib.ui.DenomPanel
+            android:id="@+id/recharge_denom_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recharge_phone_number_layout" />
+
+        <LinearLayout
+            android:id="@+id/recharge_number_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recharge_denom_panel"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_size_50xp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:text="@string/target_number"
+                android:textSize="@dimen/front_size_30xp" />
+
+            <TextView
+                android:id="@+id/recharge_target_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/front_size_30xp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/recharge_amount_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recharge_number_layout"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_size_50xp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:text="@string/need_pay_amount"
+                android:textColor="@color/global_label"
+                android:textSize="@dimen/front_size_30xp" />
+
+            <TextView
+                android:id="@+id/need_pay_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textColor="#ffe01e1e"
+                android:textSize="@dimen/front_size_40xp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/recharge_paytype_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recharge_amount_layout"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_size_50xp"
+            android:paddingRight="@dimen/margin_size_50xp" >
+
+            <com.icson.lib.ui.EditField
+                android:id="@+id/recharge_paytype"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                icson:caption="@string/orderconfirm_paytype_title"
+                icson:editable="false"
+                icson:text="@string/paytype_wxpay" />
+
+            <TextView
+                android:id="@+id/recharge_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_size_20xp"
+                android:text=""
+                android:textColor="#ffe51a1a"
+                android:textSize="@dimen/front_size_24xp"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/recharge_confirm"
+            android:layout_width="fill_parent"
+            android:layout_height="43.2dp"
+            android:layout_below="@id/recharge_paytype_layout"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/margin_size_50xp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/recharge_confirm_button"
+            android:text="@string/rechage_confirm"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <include layout="@layout/global_loading" />
+    </RelativeLayout>
+
+</RelativeLayout>

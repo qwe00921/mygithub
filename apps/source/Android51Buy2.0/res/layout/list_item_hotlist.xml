@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/global_white_shadow_click_state">
+    <ImageView
+        android:id="@+id/pro_img"
+        android:layout_width="110dp"
+    	android:layout_height="110dp"
+    	android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+    	android:layout_marginTop="20dp"
+    	android:layout_marginRight="20dp"/>
+    <com.icson.lib.ui.AlphaTextView
+        style="@style/text_caption"  
+        android:id="@+id/sort_num"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/tag_hotbg_80"
+        android:gravity="center"
+        android:text="NO.2"
+        android:textColor="#ffffff"
+        android:textSize="15dp" />
+    
+     <TextView
+        android:id="@+id/pro_detail"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentTop="true"
+    	android:layout_marginTop="20dp"
+    	android:layout_marginRight="12dp"
+    	android:layout_toRightOf="@id/pro_img"
+    	android:layout_alignParentRight="true"
+    	android:maxLines="3"
+    	android:lineSpacingExtra="1dp"
+    	android:ellipsize="end"
+    	android:textSize="15dp"
+    	android:textColor="#666666"
+    	android:text="infodetalinfodetalinfodetalinfodetalinfodetalinfodetalinfodetalinfodetalinfodetalinfodetalinfodetalinfodetal"/>
+
+     <com.icson.lib.ui.AlphaTextView
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:textColor="@android:color/black"
+        android:id="@+id/pro_price"
+        android:layout_alignBottom="@id/pro_img"
+        android:layout_alignLeft="@id/pro_detail"
+        android:ellipsize="end"
+        android:text="￥1234678"/>
+
+    <TextView
+        android:id="@+id/pro_buynum"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignTop="@id/pro_price"
+    	android:layout_alignRight="@id/pro_detail"
+    	android:layout_toRightOf="@id/pro_price"
+    	android:textSize="13dp"
+    	android:text="热销3333件"
+    	android:gravity="right"
+    	android:textColor="#666666"/>
+
+    <View
+	    android:layout_width="match_parent"
+	    android:layout_height="22dp"
+	    android:layout_below="@id/pro_price"/>    
+	    
+</RelativeLayout>
+    

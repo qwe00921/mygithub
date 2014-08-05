@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:id="@+id/root_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/msg_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="@string/message_center" />
+ 
+    
+    <ListView
+        android:id="@+id/msg_listview"
+        style="@style/global_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/global_white"
+        android:layout_below="@id/msg_navbar" />
+    
+    <include
+        android:id="@+id/msg_loading"
+        android:layout_alignParentTop="true"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+     >
+    
+    <!-- Title for panel -->
+    <TextView android:id="@+id/popular_panel_caption"
+        android:background="@color/caption_background"
+        android:layout_width="fill_parent"
+        android:text="@string/channel_popular"
+        style="@style/text_caption"
+        android:paddingLeft="@dimen/container_widgetPaddingOffset_larger"
+        android:paddingTop="@dimen/container_caption_topOffset"
+        android:paddingBottom="@dimen/container_caption_topOffset"
+        />
+
+    <TableLayout android:id="@+id/popular_panel_activities"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/global_white" />
+
+</LinearLayout>

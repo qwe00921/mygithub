@@ -1,0 +1,115 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/simpleorderlist_relative_order_container"
+   	android:background="@drawable/global_gray_shadow_click_state"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/margin_size_15xp"
+    android:paddingLeft="@dimen/margin_size_30xp"
+    android:paddingRight="@dimen/margin_size_30xp"
+    android:paddingTop="@dimen/margin_size_15xp" >
+
+    <RelativeLayout
+        android:id="@+id/simpleorderlist_relative_order_background"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/i_my_orderlist_item_bg_shape" 
+        android:paddingLeft="@dimen/margin_size_20xp"
+        android:paddingRight="@dimen/margin_size_20xp">
+
+        <RelativeLayout
+            android:id="@+id/simpleorderlist_textview_line"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin_size_25xp"
+            android:paddingTop="@dimen/margin_size_25xp" >
+
+            <TextView
+                android:id="@+id/simpleorderlist_textview_order_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="订单号: "
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/front_size_30xp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/simpleorderlist_textview_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/orderlist_textview_order_id"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/orderlist_textview_order_id"
+                android:gravity="center"
+                android:text="待支付"
+                android:textColor="#ff222222"
+                android:textSize="@dimen/front_size_30xp" 
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/simpleorderlist_seperator_top"
+            style="@style/global_line2"
+            android:layout_below="@+id/simpleorderlist_textview_line"/>
+
+        <RelativeLayout
+            android:id="@+id/simpleorderlist_relative_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/simpleorderlist_seperator_top"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/simpleorderlist_textview_suborder_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#ff222222"
+                android:textSize="@dimen/front_size_30xp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/simpleorderlist_pic_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_size_20xp"
+                android:paddingTop="@dimen/margin_size_20xp" >
+
+                <ImageView
+                    android:id="@+id/simpleorderlist_pic_1"
+                    android:layout_width="0dip"
+                    android:layout_height="@dimen/margin_size_160xp"
+                    android:layout_marginRight="@dimen/margin_size_20xp"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/simpleorderlist_pic_2"
+                    android:layout_width="0dip"
+                    android:layout_height="@dimen/margin_size_160xp"
+                    android:layout_marginRight="@dimen/margin_size_20xp"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/simpleorderlist_pic_3"
+                    android:layout_width="0dip"
+                    android:layout_height="@dimen/margin_size_160xp"
+                    android:layout_marginRight="0dip"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/simpleorderlist_imageview_right"
+                    style="@style/global_arrow_right"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_size_20xp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

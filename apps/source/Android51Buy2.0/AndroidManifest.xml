@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.icson"
+    android:versionCode="31"
+    android:versionName="v2.4.0" >
+	<uses-feature
+    	android:glEsVersion="0x00020000"
+    	android:required="true"/>
+	
+  	<permission
+    	android:name="com.icson.permission.MAPS_RECEIVE"
+    	android:protectionLevel="signature"/>
+  	<uses-permission android:name="com.icson.permission.MAPS_RECEIVE"/>
+  	<permission
+    	android:name="com.icson.permission.self_broadcast"
+    	android:protectionLevel="signature"/>"
+  	<uses-permission android:name="com.icson.permission.self_broadcast"/>
+  	
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    
+    
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+	
+	
+    <!-- 可选权限： -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!--
+    <permission
+        android:name="com.icson.permission.MMOAUTH_CALLBACK"
+        />
+    <permission
+        android:name="com.icson.permission.MM_MESSAGE"
+        />
+        
+    <uses-permission android:name="com.icson.permission.MMOAUTH_CALLBACK" />
+    <uses-permission android:name="com.icson.permission.MM_MESSAGE" />
+     -->
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <uses-sdk android:minSdkVersion="10"/>
+
+    <application
+        android:name=".util.IcsonApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="0ece0f45c7e3e9761082d94bfc6ba8e8" />
+        　　	<meta-data android:name="APPKEY_DENGTA" android:value="0E50029ESC0GJOOV"/>
+        <!-- 1aa72967149281af114a933a43df38ff  -->
+        <activity
+            android:name=".main.MainActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".portal.PortalActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.icson.push.message" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="wap2app" />
+                <data android:host="app.launch" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="wx6964eb0b10aa369b" />
+                <data android:host="app.launch" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.QQVerificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.LoginAliPayActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".login.LoginIcsonActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".login.LoginQQActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".category.CategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".more.MoreActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".more.ViewHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".more.AdviseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".more.FeedBackHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".more.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".more.SelectCityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".more.AppInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".welcome.WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.main.MyIcsonActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.main.MyPointsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.collect.MyCollectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.address.MyAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.coupon.MyCouponActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.coupon.CouponShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.order.evaluate.OrderEvaluateActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".my.orderdetail.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.icson.my.orderlist.VPOrderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.orderdetail.OrderDetailProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".order.coupon.CouponListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".list.ListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".filter.FilterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FilterAnimation"  />
+        <activity 
+            android:name=".filter.FilterCategoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FilterAnimation" />
+        <activity
+            android:name=".item.ItemActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".item.ItemCouponGiftActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".item.ItemImageActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".address.AddressListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".postsale.PostSaleRequestListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".postsale.PostSaleCenterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".postsale.PostSaleDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".address.AddressDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".invoice.InvoiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".invoice.InvoiceListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.HomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".amap.CargoMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".hotlist.HotlistActivity"
+            android:screenOrientation="portrait"/>
+        
+        <activity
+            android:name=".slotmachine.SlotMachineActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".slotmachine.CouponCollectionActivity"
+            android:screenOrientation="portrait" 
+            android:theme="@style/dropdown_translucent"/>
+        <activity
+            android:name=".home.HTML5LinkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".search.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".event.Event1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".event.Event2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".event.Event3Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".yiqiang.YiQiangActivity"
+            android:screenOrientation="portrait" />
+        
+        <activity
+            android:name=".shoppingcart.ShoppingCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shoppingcart.FreeGiftsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shoppingcart.LessPriceBuyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shoppingcart.ESShoppingCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".order.OrderConfirmActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".order.OrderPickListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".message.MessageActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".virtualpay.VirtualPayActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".lib.pay.cft.CFTPayActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".zxing.client.CaptureActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+
+        <service
+            android:name=".service.IcsonService"
+            android:process=":remote"
+            android:exported="false"/>
+        <service
+            android:name=".service.DownLoadService"
+            android:process=":remote"
+            android:exported="false"/>
+        <service android:name=".push.MessageService" android:exported="false"/>"
+
+        <receiver android:name=".push.BootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            	<action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            	<action android:name="android.intent.action.REBOOT" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver android:name=".push.PushAssistor"
+            android:process=":msgpush" android:exported="false">
+            <intent-filter>
+                <action android:name="com.icson.push.alarm" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 通过持续集成的apk会自动添加此参数
+        meta-data
+            android:name="com.tencent.rdm.uuid"
+            android:value="1234" / -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:exported="true"/>
+        <!--
+        <receiver
+        	android:name="com.tencent.mm.sdk.plugin.MMPluginOAuth$Receiver" 
+        	android:permission="com.tencent.mm.oauth.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.tencent.mm.sdk.plugin.Intent.ACTION_RESPONSE" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver
+            android:name="com.tencent.mm.sdk.channel.MMessage$Receiver"
+            android:permission="com.tencent.mm.plugin.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.tencent.mm.sdk.channel.Intent.ACTION_MESSAGE" />
+            </intent-filter>
+        </receiver>
+         -->
+    
+     	<!-- 请将value改为MTA分配的appkey < -->
+        <meta-data android:name="TA_APPKEY" android:value="AT4V1XV4WL29" />
+
+        <!-- 请将value改为app的发布渠道 < -->
+        <!-- 0.6.6之后的版本，若渠道为纯数字类型字符串，可直接填写数字，但数字的范围不要超过int能表示的范围！ < -->
+        <!-- <meta-data android:name="InstallChannel" android:value="1000" /> < -->
+        <!-- 0.6.5版本之前的SDK，若需填写纯数字类型字符串渠道，请在前添加"\ "，即"反斜杠+空格"，如"\ 1000" < -->
+        <!-- <meta-data android:name="InstallChannel" android:value="\ 1000" /> < -->
+        <!-- meta-data android:name="InstallChannel" android:value="play" /> < -->     
+	         
+    </application>
+
+</manifest>

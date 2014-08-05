@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/coupont_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/my_coupon" />
+
+    <ListView
+        android:id="@+id/coupon_listview"
+        style="@style/global_listview_no_divider"
+        android:background="@color/background_color"
+        android:layout_below="@+id/coupont_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <include layout="@layout/global_loading" />
+
+    <RelativeLayout
+        android:id="@+id/list_relative_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/coupont_navigation_bar"
+        android:background="@color/background_color"
+        android:gravity="center"
+        android:visibility="gone" >
+
+         <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/i_list_empty_bg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="您还没有优惠券哟！~"
+            android:textColor="@color/global_text_info_color"
+            android:textSize="@dimen/front_size_30xp" />
+        
+    </RelativeLayout>
+
+</RelativeLayout>

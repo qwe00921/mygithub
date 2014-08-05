@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   style="@style/unipay_linear">
+     <!-- head cont -->
+     <LinearLayout
+     android:id="@+id/unipay_id_HeadLayout"
+       style="@style/unipay_head">
+       <LinearLayout
+         style="@style/unipay_linear"
+         android:orientation="horizontal">
+       <LinearLayout 
+	       style="@style/unipay_linear"
+	       android:layout_weight="100"
+	       android:orientation="horizontal">
+
+         <TextView
+          android:id="@+id/unipay_id_tittleOfferName"
+	      style="@style/unipay_text.headtitle"
+	      />
+	     <TextView
+	       android:id="@+id/unipay_id_bd"
+	       style="@style/unipay_text.headtitle"
+	       android:text="@string/unipay_multiply"/>
+         <TextView 
+           android:id="@+id/unipay_id_tittleMount"
+	       style="@style/unipay_text.headtitle"
+	       /> 
+	   </LinearLayout>
+	   <LinearLayout
+	      android:id="@+id/unipay_id_PriceLayout"
+          style="@style/unipay_wrap"
+          android:gravity="bottom">
+          <TextView 
+            android:id="@+id/unipay_id_tittleUnit"
+		    style="@style/unipay_text.big"
+		    android:textColor="@color/unipay_em3_color"
+		    android:text="@string/unipay_rmb"/>
+	      <TextView
+	        android:id="@+id/unipay_id_tittleAmt" 
+	        style="@style/unipay_text.big"
+		    android:textColor="@color/unipay_em3_color"
+		    />
+	       <TextView
+	        android:id="@+id/unipay_id_tittlePoint" 
+	        style="@style/unipay_text.small"
+		    android:textColor="@color/unipay_em3_color"
+		    />
+       </LinearLayout>
+      </LinearLayout>
+       <!-- drop info -->
+         <LinearLayout
+          android:id="@+id/unipay_id_dropInfo"
+          style="@style/unipay_linear"
+          android:visibility="gone"
+	      android:gravity="center_vertical"
+          android:layout_marginTop="5dp"
+          android:orientation="horizontal">
+         <TextView 
+           android:id="@+id/unipay_id_PerPrice"
+	       style="@style/unipay_text.small"
+	       android:textColor="@color/unipay_thin_color"
+	       android:layout_marginRight="5dp"
+	       />
+         <LinearLayout
+            android:id="@+id/unipay_id_VIPLayout"
+	        style="@style/unipay_wrap"
+	        android:gravity="center_vertical">
+	        <ImageView
+	          android:id="@+id/unipay_id_VIPLogo"
+	          style="@style/unipay_logovip.small"
+	          android:background="@drawable/unipay_pic_huiyuan"/>
+	        <TextView 
+	            android:id="@+id/unipay_id_VIPPrice"
+		        style="@style/unipay_text.small"
+		        />
+        </LinearLayout>
+       </LinearLayout>
+       <!-- drop info over-->
+      </LinearLayout>
+     <!-- head cont over -->
+
+</LinearLayout>      	     

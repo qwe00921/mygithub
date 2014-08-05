@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <Button
+        android:id="@+id/button_share"
+        android:layout_below="@id/orderdetail_good"
+        android:layout_margin="@dimen/margin_size_30xp"
+        style="@style/button_confirm_bg_white"
+        android:text="晒单" />
+
+</RelativeLayout>

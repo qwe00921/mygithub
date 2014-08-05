@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    
+    <TextView 
+        android:id="@+id/orderconfirm_ship_title"
+        android:layout_width="fill_parent"
+   		android:layout_height="wrap_content"
+   		android:layout_marginLeft="@dimen/margin_size_30xp"
+   		android:layout_marginRight="@dimen/margin_size_30xp"
+   		android:layout_marginTop="@dimen/margin_size_30xp"
+   		android:text="包裹1"
+   		android:textSize="@dimen/front_size_30xp"
+        />
+    
+   	<com.icson.lib.ui.TextField
+   		android:id="@+id/orderconfirm_ship_type"
+   		android:layout_below="@id/orderconfirm_ship_title"
+   		android:layout_width="fill_parent"
+   		android:layout_height="wrap_content"
+   		android:layout_marginLeft="@dimen/margin_size_30xp"
+   		android:layout_marginRight="@dimen/margin_size_30xp"
+   		android:layout_marginTop="@dimen/margin_size_30xp"
+   		icson:editable="false"	
+   		icson:caption="@string/orderconfirm_shiptype_title"
+       />
+   	
+   	<com.icson.lib.ui.EditField
+   		android:id="@+id/orderconfirm_ship_time"
+   		android:layout_below="@id/orderconfirm_ship_type"
+   		android:layout_width="fill_parent"
+   		android:layout_height="wrap_content"
+   		android:layout_marginLeft="@dimen/margin_size_30xp"
+   		android:layout_marginRight="@dimen/margin_size_30xp"
+   		android:layout_marginTop="@dimen/margin_size_30xp"
+   		icson:editable="false"	
+       />
+   	
+</RelativeLayout>

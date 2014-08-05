@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/orderdetail_product_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/my_order" />
+
+    <ScrollView
+        android:id="@+id/global_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/background_color"
+        android:layout_below="@id/orderdetail_product_navigation_bar" >
+
+        <RelativeLayout
+            android:id="@+id/orderdetail_relative_order_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_size_20xp" >
+
+            <RelativeLayout
+                android:id="@+id/orderdetail_product_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_size_20xp"
+                android:background="@drawable/i_my_orderlist_item_bg_shape" >
+
+                <TextView
+                    android:id="@+id/orderdetail_textview_order_id"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_size_20xp"
+                    android:gravity="left|center_vertical"
+                    android:text="订单号: "
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" >
+                </TextView>
+
+                <com.icson.lib.ui.LinearListView
+                    android:id="@+id/orderdetail_linear_order_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/orderdetail_textview_order_id"
+                    android:orientation="vertical" >
+                </com.icson.lib.ui.LinearListView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/orderdetail_gift_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/orderdetail_product_info"
+                android:layout_marginTop="@dimen/margin_size_30xp"
+                android:padding="@dimen/margin_size_20xp"
+                android:background="@drawable/i_my_orderlist_item_bg_shape" >
+
+                <TextView
+                    android:id="@+id/orderdetail_textview_gift_count"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="赠品(2) "
+                    android:textColor="@color/global_label"
+                    android:layout_marginBottom="@dimen/margin_size_20xp"
+                    android:textSize="@dimen/front_size_30xp" >
+                </TextView>
+
+                <com.icson.lib.ui.LinearListView
+                    android:id="@+id/orderdetail_relative_gift_listview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/orderdetail_textview_gift_count"
+                    android:orientation="vertical" >
+                </com.icson.lib.ui.LinearListView>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

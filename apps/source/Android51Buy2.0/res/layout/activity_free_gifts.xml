@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/free_gifts_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:hasDrawableRight="true"
+        icson:text="@string/free_gifts_navigation" />
+
+    <LinearLayout
+        android:id="@+id/free_gifts_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/free_gifts_navbar"
+        android:background="@color/background_color"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/margin_size_20xp"
+            android:paddingLeft="@dimen/margin_size_30xp"
+            android:paddingRight="@dimen/margin_size_30xp"
+            android:paddingTop="@dimen/margin_size_20xp" >
+
+            <TextView
+                android:id="@+id/free_gifts_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/coupon_name_color"
+                android:textSize="@dimen/front_size_30xp" />
+
+            <TextView
+                android:id="@+id/free_gifts_choose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/coupon_name_color"
+                android:textSize="@dimen/front_size_30xp" />
+        </RelativeLayout>
+
+        <ExpandableListView
+            android:id="@+id/free_gifts_expandablelistview"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:childDivider="#ffc3c3c3"
+            android:divider="#ffe5e5e5"
+            android:dividerHeight="0px"
+            android:groupIndicator="@null" />
+
+        <Button
+            android:id="@+id/free_gifts_button"
+            style="@style/button_confirm_bg_blue"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:layout_marginBottom="@dimen/margin_size_30xp"
+            android:gravity="center"
+            android:text="完成" />
+    </LinearLayout>
+
+    <include
+        android:layout_below="@id/free_gifts_navbar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

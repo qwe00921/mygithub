@@ -1,0 +1,91 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/product_list_item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/order_imageview_pic"
+        android:layout_width="75.0dip"
+        android:layout_height="75.0dip"
+        android:padding="5.0dip"
+        android:src="@drawable/i_global_arrow_left" />
+
+    <TextView
+        android:id="@+id/order_textview_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="11.0dip"
+        android:layout_marginRight="15.0dip"
+        android:layout_toRightOf="@+id/order_imageview_pic"
+        android:ellipsize="end"
+        android:paddingBottom="8dip"
+        android:textColor="#ff000000"
+        android:textSize="15.0dip" />
+
+    <TextView
+        android:id="@+id/order_textview_paylabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_textview_name"
+        android:layout_marginLeft="10.0dip"
+        android:layout_toRightOf="@+id/order_imageview_pic"
+        android:paddingBottom="3dip"
+        android:text="实付: "
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/order_textview_show_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_textview_name"
+        android:layout_marginLeft="10.0dip"
+        android:layout_toRightOf="@+id/order_textview_paylabel"
+        android:text="3200.00 "
+        android:textColor="@color/global_price"
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/order_textview_countlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_textview_paylabel"
+        android:layout_marginLeft="10.0dip"
+        android:layout_toRightOf="@+id/order_imageview_pic"
+        android:paddingBottom="3dip"
+        android:text="数量: "
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/order_textview_show_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_textview_paylabel"
+        android:layout_marginLeft="10.0dip"
+        android:layout_toRightOf="@+id/order_textview_countlabel"
+        android:text="1件"
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/order_textview_timelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_textview_countlabel"
+        android:layout_marginLeft="10.0dip"
+        android:layout_toRightOf="@+id/order_imageview_pic"
+        android:text="成效时间: "
+        android:textColor="@color/global_gray"
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/order_textview_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_textview_countlabel"
+        android:layout_marginLeft="10.0dip"
+        android:layout_toRightOf="@+id/order_textview_timelabel"
+        android:text="2012-10-12"
+        android:textColor="@color/global_gray"
+        android:textSize="13dp" />
+
+</RelativeLayout>

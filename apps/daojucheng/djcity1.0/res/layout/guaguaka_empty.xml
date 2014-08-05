@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/margin_size_100xp"
+        android:src="@drawable/bg_nocard" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="您还没有刮刮卡"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/margin_size_30xp"
+        android:textSize="@dimen/font_size_48xp" />
+
+    <TextView
+        android:id="@id/guaguaka_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="如何获得刮刮卡？"
+        android:textColor="@color/global_hyper_link"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_36xp" />
+
+</LinearLayout>

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/postsale_detail_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/post_sale_request" />
+    <ScrollView
+        android:id="@+id/global_container"
+        style="@style/global_scrollview_gray"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/postsale_detail_navigation_bar">
+
+        <LinearLayout
+            android:id="@+id/scrollview_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/margin_size_25xp" 
+            android:paddingBottom="@dimen/margin_size_25xp"
+       	 	android:paddingLeft="@dimen/margin_size_30xp"
+        	android:paddingRight="@dimen/margin_size_30xp" 
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/product_info_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/i_my_orderlist_item_bg_shape"
+                android:layout_marginTop="@dimen/margin_size_15xp"
+                android:layout_marginBottom="@dimen/margin_size_15xp"
+                android:paddingBottom="@dimen/margin_size_30xp"
+                android:paddingLeft="@dimen/margin_size_20xp"
+                android:paddingRight="@dimen/margin_size_20xp"
+                android:paddingTop="@dimen/margin_size_30xp" >
+
+                <TextView
+                    android:id="@+id/order_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:paddingBottom="@dimen/margin_size_30xp"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <TextView
+                    android:id="@+id/order_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingBottom="@dimen/margin_size_30xp"
+                    android:textColor="#ff222222"
+                    android:textSize="@dimen/front_size_30xp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/order_seperator"
+                    style="@style/global_line2"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/order_info" />
+
+                <ImageView
+                    android:id="@+id/product_image"
+                    android:layout_width="@dimen/margin_size_160xp"
+                    android:layout_height="@dimen/margin_size_160xp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/order_seperator"
+                    android:layout_marginRight="@dimen/margin_size_30xp"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/chinauincom" />
+
+                <TextView
+                    android:id="@+id/product_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_seperator"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    android:layout_toRightOf="@id/product_image"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <TextView
+                    android:id="@+id/product_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/product_title"
+                    android:layout_marginTop="@dimen/margin_size_20xp"
+                    android:layout_toRightOf="@id/product_image"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <Button
+                    android:id="@+id/postsale_urgent_button"
+                    style="@style/button_confirm_bg_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/product_count"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="0dp"
+                    android:text="@string/textview_send_urgent" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/postsale_handle_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/i_my_orderlist_item_bg_shape"
+                android:layout_marginTop="@dimen/margin_size_15xp"
+                android:layout_marginBottom="@dimen/margin_size_15xp"
+                android:paddingBottom="@dimen/margin_size_30xp"
+                android:paddingLeft="@dimen/margin_size_20xp"
+                android:paddingRight="@dimen/margin_size_20xp"
+                android:paddingTop="@dimen/margin_size_30xp" >
+
+                <TextView
+                    android:id="@+id/handle_method_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="@dimen/margin_size_30xp"
+                    android:text="@string/textview_expected_handle_type"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <TextView
+                    android:id="@+id/handle_method_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_size_30xp"
+                    android:layout_toRightOf="@id/handle_method_title"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <View
+                    android:id="@id/order_seperator"
+                    style="@style/global_line2"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/handle_method_title" />
+
+                <TextView
+                    android:id="@+id/apply_reason_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_seperator"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/textview_apply_reason"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <TextView
+                    android:id="@+id/apply_reason_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_seperator"
+                    android:layout_toRightOf="@id/apply_reason_title"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" />
+            </RelativeLayout>
+
+            <!-- LinearLayout 
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_15xp"
+                android:layout_marginBottom="@dimen/margin_size_15xp"
+                android:paddingLeft="@dimen/margin_size_20xp"
+                android:paddingRight="@dimen/margin_size_20xp"
+                android:paddingBottom="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_30xp"
+                android:background="@drawable/input_bg_with_right"
+                >
+	            <com.icson.lib.ui.HorizontalListView
+	                android:id="@+id/item_pic_listview"
+	                android:layout_width="fill_parent"
+	                android:layout_height="@dimen/margin_size_115xp"
+	                />    
+            </LinearLayout-->
+            
+            <LinearLayout
+                android:id="@+id/postsale_pic_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_15xp"
+                android:layout_marginBottom="@dimen/margin_size_15xp"
+                android:background="@drawable/input_bg_with_right" >
+
+                <com.icson.lib.ui.AutoHeightImageView
+                    android:id="@+id/picImage1"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_size_10xp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+
+                <com.icson.lib.ui.AutoHeightImageView
+                    android:id="@+id/picImage2"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_size_10xp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+
+                <com.icson.lib.ui.AutoHeightImageView
+                    android:id="@+id/picImage3"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_size_10xp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+
+                <com.icson.lib.ui.AutoHeightImageView
+                    android:id="@+id/picImage4"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_size_10xp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+
+                <com.icson.lib.ui.AutoHeightImageView
+                    android:id="@+id/picImage5"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_size_10xp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/handle_detail_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_15xp"
+                android:layout_marginBottom="@dimen/margin_size_15xp"
+                android:background="@drawable/i_my_orderlist_item_bg_shape"
+                android:paddingBottom="@dimen/margin_size_30xp"
+                android:paddingLeft="@dimen/margin_size_20xp"
+                android:paddingRight="@dimen/margin_size_20xp"
+                android:paddingTop="@dimen/margin_size_30xp" >
+
+                <TextView
+                    android:id="@+id/handle_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="@dimen/margin_size_30xp"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <TextView
+                    android:id="@+id/handle_detail_method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_size_30xp"
+                    android:layout_toRightOf="@id/handle_detail_title"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <TextView
+                    android:id="@+id/handle_detail_method_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/margin_size_30xp"
+                    android:textColor="@color/global_gray"
+                    android:textSize="@dimen/front_size_30xp" />
+                
+                <com.icson.lib.ui.LinearListView
+                    android:id="@+id/handle_detail_methodform"
+                	android:layout_below="@id/handle_detail_method_detail"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="@dimen/margin_size_30xp"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </com.icson.lib.ui.LinearListView>
+
+                <View
+                    android:id="@id/order_seperator"
+                    style="@style/global_line2"
+                    android:layout_marginBottom="@dimen/margin_size_30xp"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/handle_detail_methodform" />
+
+                <com.icson.lib.ui.LinearListView
+                    android:id="@+id/handle_detail_textarea"
+                	android:layout_below="@id/order_seperator"
+                	android:layout_marginBottom="@dimen/margin_size_30xp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </com.icson.lib.ui.LinearListView>
+
+                <com.icson.lib.ui.LinearListView
+                    android:id="@+id/handle_detail_form"
+                	android:layout_below="@id/handle_detail_textarea"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </com.icson.lib.ui.LinearListView>
+
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:id="@+id/rev_addr_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+   	 			android:background="#ffffffff"
+                android:layout_marginTop="@dimen/margin_size_15xp"
+                android:layout_marginBottom="@dimen/margin_size_15xp"
+                android:paddingTop="@dimen/margin_size_30xp" 
+                android:paddingBottom="@dimen/margin_size_30xp"
+                android:paddingLeft="@dimen/margin_size_20xp"
+                android:paddingRight="@dimen/margin_size_20xp"
+                >
+
+                <TextView
+                    android:id="@+id/rev_addr_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp"
+                    android:text="@string/textview_address" />
+
+                <TextView
+                    android:id="@+id/rev_addr_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/rev_addr_title"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/front_size_30xp"/>
+
+            </RelativeLayout>
+            
+            <LinearLayout 
+                android:background="@drawable/i_my_orderlist_item_bg_shape"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin_size_15xp"
+                android:layout_marginBottom="@dimen/margin_size_15xp"
+                android:paddingLeft="@dimen/margin_size_20xp"
+                android:paddingRight="@dimen/margin_size_20xp"
+                >
+                <TextView
+	                android:id="@+id/orderdetail_textview_step_label"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="left|center_vertical"                
+	                android:paddingTop="@dimen/margin_size_25xp"
+	                android:paddingBottom="@dimen/margin_size_25xp"
+	                android:text="@string/textview_ordertracking"
+	                android:textColor="@color/global_label"
+	                android:textSize="@dimen/front_size_30xp"
+	                android:textStyle="bold" >
+	            </TextView>
+	            <View
+                    android:id="@id/order_seperator"
+                    style="@style/global_line2"
+                    android:layout_width="match_parent" />
+	            <com.icson.lib.ui.LinearListView
+	                android:id="@+id/orderdetail_linear_log"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical"
+	                android:paddingTop="@dimen/margin_size_30xp" 
+	                android:visibility="gone" >
+	            </com.icson.lib.ui.LinearListView>
+            </LinearLayout>
+            
+            
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:layout_below="@id/postsale_detail_navigation_bar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

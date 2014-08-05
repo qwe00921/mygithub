@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/margin_size_5xp"
+    android:paddingRight="@dimen/margin_size_15xp" >
+    
+    <RelativeLayout android:id="@+id/message_item_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/message_bk_normal"
+        android:layout_marginLeft="@dimen/margin_size_10xp"
+         >
+		
+		<TextView android:id="@+id/message_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="@dimen/font_size_28xp"
+	        android:textColor="@color/global_text_info_color"
+	        android:layout_marginTop="@dimen/margin_size_15xp"
+	        android:layout_marginRight="@dimen/margin_size_20xp"
+	        android:layout_alignParentRight="true" />
+	       
+	       <RelativeLayout android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:layout_below="@id/message_time"
+	           android:layout_marginTop="@dimen/margin_size_30xp"
+	           android:paddingBottom="@dimen/margin_size_30xp">
+	           
+	         <ImageView android:contentDescription="@string/app_name"
+		    	android:id="@+id/message_icon"  
+		    	android:layout_width="wrap_content"   
+		    	android:layout_height="wrap_content"
+		    	android:paddingTop="@dimen/margin_size_10xp"
+		    	android:paddingBottom="@dimen/margin_size_10xp"
+		    	android:paddingLeft="@dimen/margin_size_20xp"
+		        android:src="@null"/>
+	         
+	        <TextView android:id="@+id/message_text"
+	            android:layout_width="fill_parent"   
+		   		android:layout_height="wrap_content"
+		   		android:ellipsize="end"
+		   		android:maxLines="4"
+		   		android:focusable="false"
+		   		android:textSize="@dimen/font_size_30xp"
+		   		android:textColor="@color/coupon_name_color"
+		   		android:layout_marginLeft="@dimen/margin_size_25xp"
+		   		android:layout_marginRight="@dimen/margin_size_25xp"
+		   		android:layout_toRightOf="@id/message_icon" />
+	       </RelativeLayout>
+    	</RelativeLayout>
+    	
+    	<TextView android:id="@+id/message_caption"  
+			android:layout_width="wrap_content"   
+			android:layout_height="wrap_content"
+			android:layout_marginTop="15dp"
+			android:layout_marginLeft="10dp"
+			android:layout_alignTop="@id/message_item_layout"
+			android:textSize="@dimen/font_size_30xp"
+			android:textColor="@android:color/white"
+			android:singleLine="true"
+			android:gravity="center"
+			android:background="@drawable/message_title_bk_yellow" />
+</RelativeLayout>

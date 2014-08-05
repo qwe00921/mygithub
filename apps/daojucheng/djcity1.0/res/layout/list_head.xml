@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/global_title"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:paddingBottom="@dimen/margin_size_10xp"
+    android:paddingLeft="@dimen/margin_size_10xp"
+    android:paddingRight="@dimen/margin_size_10xp"
+    android:paddingTop="@dimen/margin_size_10xp" >
+
+    <RelativeLayout
+        android:id="@+id/list_head_back_view"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="@dimen/margin_size_10xp"
+        android:background="@drawable/global_transparent_shadow_click_state"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_size_20xp"
+        android:paddingRight="@dimen/margin_size_20xp" >
+
+        <ImageView
+            android:id="@+id/list_head_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:scaleType="center"
+            android:src="@drawable/arrow_back" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/list_button_right"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:background="@drawable/global_transparent_shadow_click_state"
+        android:drawablePadding="@dimen/margin_size_10xp"
+        android:layout_marginLeft="@dimen/margin_size_10xp"
+        android:paddingLeft="@dimen/margin_size_20xp"
+        android:paddingRight="@dimen/margin_size_20xp"
+        android:text="@string/search_list_filter"
+        android:textSize="@dimen/font_size_36xp" />
+
+    <EditText
+        android:id="@+id/list_editview_head_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/list_button_right"
+        android:layout_toRightOf="@+id/list_head_back_view"
+        android:background="#7fffffff"
+        android:drawableLeft="@drawable/i_search_icon"
+        android:drawablePadding="@dimen/margin_size_10xp"
+        android:gravity="center_vertical"
+        android:inputType="text"
+        android:paddingBottom="@dimen/margin_size_10xp"
+        android:paddingLeft="@dimen/margin_size_20xp"
+        android:paddingTop="@dimen/margin_size_10xp"
+        android:singleLine="true"
+        android:textColor="@color/global_text_info_color"
+        android:textSize="@dimen/font_size_32xp" />
+
+</RelativeLayout>

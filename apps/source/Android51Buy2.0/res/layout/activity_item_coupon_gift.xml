@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_size_20xp"
+    android:paddingRight="@dimen/margin_size_20xp"
+    android:paddingTop="@dimen/margin_size_60xp"
+    android:background="@color/background_color"
+    android:gravity="center_vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/coupon_gift_bg_big"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/coupon_gift_pic_rmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/rmb"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/coupon_gift_pic_amt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/coupon_gift_pic_rmb"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/coupon_gift_pic_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_toRightOf="@id/coupon_gift_pic_amt"
+            android:paddingTop="15dp"
+            android:text="@string/orderconfirm_coupon_title"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/coupon_gift_name"
+        android:layout_marginTop="@dimen/margin_size_60xp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/orderconfirm_coupon_title"
+        android:textColor="@color/global_text_color"
+        android:textSize="18sp" />
+
+</LinearLayout>

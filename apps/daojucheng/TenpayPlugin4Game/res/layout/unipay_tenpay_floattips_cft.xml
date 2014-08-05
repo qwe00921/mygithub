@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_linear"
+    android:background="#00000000" >
+
+    <LinearLayout
+        style="@style/unipay_tenpay_float"
+        android:gravity="center_horizontal"
+        android:paddingBottom="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <TextView
+            style="@style/unipay_tenpay_text.middlethin1"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@drawable/unipay_tenpay_icontenpay"
+            android:gravity="center_vertical"
+            android:text="@string/unipay_tenpay_supply"
+            android:textColor="@color/unipay_tenpay_link_color" />
+
+        <ImageView
+            android:id="@+id/float_image"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@anim/unipay_tenpay_floating_anim" />
+
+        <TextView
+            style="@style/unipay_tenpay_text.middlethin1"
+            android:layout_marginBottom="5dp"
+            android:text="@string/unipay_tenpay_safe_bank"
+            android:textColor="@color/unipay_tenpay_thin_color" />
+
+        <ImageView
+            style="@style/unipay_tenpay_wrap"
+            android:background="@drawable/unipay_tenpay_picsafe"
+            android:contentDescription="@string/unipay_tenpay_cd_safe" />
+    </LinearLayout>
+    <!-- cont over -->
+
+</LinearLayout>

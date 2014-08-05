@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_fill"
+    android:background="#90000000" >
+
+    <RelativeLayout
+        style="@style/unipay_tenpay_linear.tipframe.land"
+        android:layout_gravity="center" >
+
+        <LinearLayout style="@style/unipay_tenpay_linear.tipswrap" >
+
+            <!-- head -->
+
+            <include
+                layout="@layout/unipay_tenpay_tips_head"
+                android:visibility="visible" />
+
+            <!-- head over -->
+            <!-- cont -->
+
+            <LinearLayout style="@style/unipay_tenpay_cont.tips" >
+
+                <ScrollView
+                    android:id="@+id/main_scroll"
+                    style="@style/unipay_tenpay_fill"
+                    android:fillViewport="true" >
+
+                    <FrameLayout style="@style/unipay_tenpay_linear.tipsrcollcont" >
+
+                        <include
+                            android:id="@+id/pay_cft"
+                            layout="@layout/unipay_tenpay_tips_propnum_cft"
+                            android:visibility="gone" />
+
+                        <include
+                            android:id="@+id/pay_kuai"
+                            layout="@layout/unipay_tenpay_tips_cont"
+                            android:visibility="gone" />
+
+                        <include
+                            android:id="@+id/pay_yz"
+                            layout="@layout/unipay_tenpay_tips_propnum_yz"
+                            android:visibility="gone" />
+
+                        <include
+                            android:id="@+id/tenpay_bank_phone"
+                            layout="@layout/unipay_tenpay_tips_bank_phone"
+                            android:visibility="gone" />
+
+                        <include
+                            android:id="@+id/tenpay_youxiaoqi"
+                            layout="@layout/unipay_tenpay_tips_youxiaoqi"
+                            android:visibility="gone" />
+                    </FrameLayout>
+                </ScrollView>
+            </LinearLayout>
+            <!-- cont  over -->
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/pay_close_btn"
+            style="@style/unipay_tenpay_btnclose" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/feedback_list_item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/global_white_shadow_click_state"
+    android:paddingBottom="@dimen/margin_size_5xp"
+    android:paddingLeft="@dimen/margin_size_30xp"
+    android:paddingRight="@dimen/margin_size_30xp"
+    android:paddingTop="@dimen/margin_size_25xp" >
+
+    <LinearLayout
+        android:id="@+id/feedback_apply_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_bg_with_right"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_10xp" >
+
+        <TextView
+            android:id="@+id/feedbackOrderId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_20xp"
+            android:text="@string/advise_type_app"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/feedbackTextContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_20xp"
+            android:text="@string/advise_type_app"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <LinearLayout
+            android:id="@+id/feedback_pic_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_30xp" >
+            
+            <com.icson.lib.ui.AutoHeightImageView
+                android:id="@+id/picImage1"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/margin_size_10xp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/i_global_image_default" />
+
+            <com.icson.lib.ui.AutoHeightImageView
+                android:id="@+id/picImage2"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_size_10xp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/i_global_image_default" />
+
+            <com.icson.lib.ui.AutoHeightImageView
+                android:id="@+id/picImage3"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_size_10xp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/i_global_image_default" />
+
+            <com.icson.lib.ui.AutoHeightImageView
+                android:id="@+id/picImage4"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_size_10xp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/i_global_image_default" />
+
+            <com.icson.lib.ui.AutoHeightImageView
+                android:id="@+id/picImage5"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_size_10xp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/i_global_image_default" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/feedback_info_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_size_40xp"
+            android:layout_marginTop="@dimen/margin_size_20xp" >
+
+            <TextView
+                android:id="@+id/timeTextContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advise_type_app"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/typeTextContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:text="@string/advise_type_app"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/feedback_reply_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_bg_with_right"
+        android:layout_below="@id/feedback_apply_container"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_10xp" >
+
+        <TextView
+            android:id="@+id/feedbacReplayTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:text="@string/advise_replay_title"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/feedbackReplayContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_20xp"
+            android:text="@string/advise_type_app"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <LinearLayout
+            android:id="@+id/feedback_replay_info_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_size_30xp"
+            android:layout_marginTop="@dimen/margin_size_20xp" >
+
+            <TextView
+                android:id="@+id/timeTextReplayContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advise_type_app"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <ImageView
+                android:id="@+id/typeImageNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_20xp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fb_history_new" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <!-- Title for panel -->
+    <TextView android:id="@+id/eqiang_panel_caption"
+        android:background="@color/caption_background"
+        android:text="@string/channel_rush"
+        android:paddingLeft="@dimen/container_widgetPaddingOffset_larger"
+        android:paddingTop="@dimen/container_caption_topOffset"
+        android:paddingBottom="@dimen/container_caption_topOffset"
+        style="@style/text_caption"
+        android:layout_width="fill_parent"
+        />
+    
+    <!-- Layout for content -->
+    <LinearLayout android:id="@+id/eqiang_panel_content"
+        android:baselineAligned="false"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/global_white">
+        
+        <RelativeLayout android:id="@+id/eqiang_snapup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:paddingLeft="@dimen/container_widgetPaddingOffset_large"
+            android:paddingRight="@dimen/container_widgetPaddingOffset_normal_more"
+            android:paddingTop="@dimen/container_widgetPaddingOffset_normal_more"
+            android:paddingBottom="@dimen/container_widgetPaddingOffset_normal"
+            android:layout_marginRight="1dp"
+            android:background="@drawable/global_white_shadow_click_state">
+            
+            <!-- Information for Snap up -->
+            <TextView android:id="@+id/snapup_subtitle"
+                android:text="@string/snap_up"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/icon_snapup"
+                android:drawablePadding="4dp"
+                style="@style/text_caption"
+                android:textColor="#ff444444"/>
+            
+            <TextView android:id="@+id/snapup_info"
+                android:layout_below="@id/snapup_subtitle"
+                android:text="@string/snap_up_info"
+                style="@style/text_subtitle"
+                android:textColor="#ff666666"/>
+            
+            <!-- timing control -->
+            <!--  com.icson.lib.ui.ClockView android:id="@+id/snapup_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/snapup_info"
+                android:layout_marginTop="@dimen/container_widgetPaddingOffset_normal"
+                android:visibility="gone"
+                /-->
+            
+             
+            <ViewFlipper android:id="@+id/snapup_info_flipper"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/snapup_info"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/container_widgetPaddingOffset_normal"
+                android:paddingBottom="@dimen/container_widgetPaddingOffset_normal"
+               />
+        </RelativeLayout>
+        
+        <include layout="@layout/vertical_line"/>
+        
+        <!-- Layout for right part -->
+        <RelativeLayout android:id="@+id/eqiang_channels"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            >
+            
+            <View android:id="@+id/eqiang_line"
+		   	    android:layout_width="fill_parent" 
+			    android:layout_height="@dimen/line_size"
+			    android:background="@color/separator_line"
+			    android:layout_centerVertical="true"/>
+            
+            <RelativeLayout android:id="@+id/eqiang_channel_1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@id/eqiang_line"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/global_white_shadow_click_state">
+                
+                <LinearLayout android:id="@+id/eqiang_channel_1_subtitle_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical">
+					<ImageView android:id="@+id/eqiang_channel_1_icon"
+	                    android:contentDescription="@string/app_name"
+	                    android:src="@drawable/icon_sun"
+	                    style="@style/image_icon"
+	                    android:layout_height="fill_parent"
+	                    android:scaleType="fitCenter"
+	                    android:layout_gravity="center_vertical" />
+					<TextView android:id="@+id/eqiang_channel_1_subtitle"
+                        android:text="@string/time_buy"
+                        style="@style/text_caption"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+                
+                <TextView android:id="@+id/eqiang_channel_1_promotion" 
+                    android:text="@string/time_buy_promotion"
+                    android:layout_marginTop="4dp"
+                    android:layout_below="@id/eqiang_channel_1_subtitle_layout"
+                    android:layout_centerHorizontal="true"
+                    style="@style/text_subtitle"
+                    android:textColor="#ff666666"/>
+                
+                <TextView android:id="@+id/eqiang_channel_1_hint" 
+                    android:text="@string/time_buy_info"
+                    android:layout_marginTop="2dp"
+                    android:layout_below="@id/eqiang_channel_1_promotion"
+                    android:layout_centerHorizontal="true"
+                    style="@style/text_subtitle"
+                    android:textColor="#ff999999"/>
+                
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/eqiang_channel_2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="1dp"
+                android:layout_alignTop="@id/eqiang_line"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/global_white_shadow_click_state"
+                >
+                                
+                <LinearLayout android:id="@+id/eqiang_channel_2_subtitle_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerHorizontal="true"
+                   	>
+					<ImageView android:id="@+id/eqiang_channel_2_icon"
+	                    android:contentDescription="@string/app_name"
+	                    android:src="@drawable/icon_tuan"
+	                    android:scaleType="fitCenter"
+	                    android:layout_height="fill_parent"
+	                    style="@style/image_icon"
+	                    android:layout_gravity="center_vertical" />
+					<TextView android:id="@+id/eqiang_channel_2_subtitle"
+                        android:text="@string/groupon"
+                        style="@style/text_caption"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+                
+                <TextView android:id="@+id/eqiang_channel_2_promotion" 
+                    android:text="@string/groupon_promotion"
+                    android:layout_marginTop="4dp"
+                    android:layout_below="@id/eqiang_channel_2_subtitle_layout"
+                    android:layout_centerHorizontal="true"
+                    style="@style/text_subtitle"
+                    android:textColor="#ff666666"/>
+                
+                <TextView android:id="@+id/eqiang_channel_2_hint" 
+                    android:text="@string/groupon_info"
+                    android:layout_marginTop="2dp"
+                    android:layout_below="@id/eqiang_channel_2_promotion"
+                    android:layout_centerHorizontal="true"
+                    style="@style/text_subtitle"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="#ff999999"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/tablecell_leftOffset"
+    android:paddingRight="@dimen/tablecell_leftOffset"
+    android:paddingTop="@dimen/tablecell_topOffset"
+    android:paddingBottom="@dimen/tablecell_topOffset"
+    android:background="@drawable/x_global_item">
+    
+	<ImageView
+	    android:contentDescription="@string/app_name"
+    	android:id="@+id/app_icon"  
+    	android:layout_width="@dimen/appinfo_image_size"   
+    	android:layout_height="@dimen/appinfo_image_size"
+    	android:layout_centerVertical="true"/>
+	
+	<LinearLayout
+	    android:id="@+id/introduce"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingLeft="@dimen/tablecell_topOffset"
+	    android:layout_toRightOf="@+id/app_icon"
+	    android:orientation="vertical" >
+
+    	<TextView
+    		android:id="@+id/app_label"  
+    		android:layout_width="fill_parent"   
+    		android:layout_height="wrap_content"
+    		android:textSize="@dimen/cell_caption_size"
+            android:textColor="#ff222222"
+            android:singleLine="true" />
+		<TextView
+    		android:id="@+id/app_desc"
+    		android:layout_width="fill_parent"   
+    		android:layout_height="fill_parent"
+    		android:maxLines="2"
+    		android:textSize="@dimen/cell_subtitle_size"
+    		android:lineSpacingExtra="@dimen/text_line_distance_large"
+    		android:textColor="#ff999999"
+    		android:ellipsize="end" />
+	</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,98 @@
+# To enable ProGuard in your project, edit project.properties
+# to define the proguard.config property as described in that file.
+#
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in ${sdk.dir}/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the ProGuard
+# include property in project.properties.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# Add any project specific keep options here:
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+
+-printmapping bin/mapping.txt
+-libraryjars libs/alipay_plugin.jar
+-libraryjars libs/core.jar
+-libraryjars libs/camerautils.jar
+-libraryjars libs/beacon_android_all_v1.7.1.jar
+-libraryjars libs/wup_1.0.0.jar
+-libraryjars libs/libammsdk.jar
+-libraryjars libs/wlogin_sdk.jar
+-libraryjars libs/mta-sdk-1.1.0.jar
+
+-libraryjars libs/android-support-v4.jar
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep class  android.support.v4.** {*;}
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.app.Fragment
+
+
+-libraryjars libs/Android_Map_2.1.4.jar
+-libraryjars libs/Android_Services_2.1.4.jar
+-dontwarn com.amap.api.maps.*
+-keep class com.amap.api.**  {*;}      
+-keep class com.autonavi.**  {*;}
+-keep class com.a.a.**  {*;}
+		
+-keep public class *
+-keep public class com.icson.lib.ui.*{*;}
+-keep public class com.icson.item.ItemGallery{*;}
+-keep public class com.icson.login.*{*;}
+-keep public class com.icson.home.HTML5LinkActivity$HookInterface{*;}
+-keep public class * extends android.view.View
+-keep class com.tencent.mm.sdk.openapi.WXMediaMessage { *;}
+-keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
+	 
+-optimizationpasses 7
+-dontoptimize 
+-dontusemixedcaseclassnames  
+	               
+-libraryjars libs/camerautils.jar
+-dontwarn com.icson.camerautils.*
+
+-dontskipnonpubliclibraryclasses 
+-dontskipnonpubliclibraryclassmembers 
+
+#--------------------------beacon proguard begin----------------
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+-keeppackagenames com.tencent.feedback,exceptionupload.*,graystrategy.*,common.*,strategy.*,speedmonitor.*,mqq,eventrecord.*
+-renamesourcefileattribute RQDSRC
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends com.qq.taf.jce.JceStruct{*;}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+#for common & netConsume
+-keep public class com.tencent.feedback.upload.AbstractUploadDatas{
+	public **[] getUploadDatas(%);
+	public void done(%);
+}
+-keep public interface com.tencent.feedback.upload.UploadHandleListener{*;}
+#for eup
+-keep public interface com.tencent.feedback.eup.jni.NativeExceptionHandler*{*;}
+-keep public class com.tencent.feedback.eup.jni.NativeExceptionUpload*{
+	public *;
+	native <methods>;
+}
+-keep public class com.tencent.feedback.eup.CrashReport{
+	public * ;
+}
+-keep public class com.tencent.feedback.eup.CrashStrategyBean*{public *;}
+-keep public interface com.tencent.feedback.eup.CrashHandleListener{*;}
+#for ua
+-keep public class com.tencent.feedback.ua.UserAction{ *;}
+-keep public class com.tencent.feedback.ua.EventStrategyBean{public *;}
+-keep public class com.tencent.feedback.ua.CountItem{public *;}
+#--------------------------beacon proguard end----------------

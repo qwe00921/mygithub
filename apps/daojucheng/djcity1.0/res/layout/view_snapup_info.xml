@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    <TextView android:id="@+id/snapup_comment"
+		android:text="@string/snap_up_info"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:maxLines="1"
+		style="@style/text_message"
+		android:textSize="@dimen/textsize_smaller"
+		android:ellipsize="end"
+		android:textColor="#ff666666"/>
+    
+    <LinearLayout android:id="@+id/snapup_info_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+	    android:layout_above="@id/snapup_comment"
+	    android:orientation="horizontal">
+	    
+        <RelativeLayout android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/container_widgetPaddingOffset_largest"
+            android:paddingBottom="5dp"
+            android:layout_marginRight="@dimen/margin_size_15xp">
+             
+            <com.tencent.djcity.lib.ui.AlphaTextView android:id="@+id/snapup_msg"
+                android:layout_centerHorizontal="true"
+                style="@style/home_price_caption"
+                android:layout_alignParentRight="true"
+                android:ellipsize="end"
+                android:textColor="#ff000000"/>
+            <com.tencent.djcity.lib.ui.AlphaTextView
+                android:id="@+id/snapup_info"
+            	android:layout_below="@id/snapup_msg"
+            	android:layout_marginTop="2dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4dp"
+                android:layout_alignParentRight="true"
+                style="@style/text_info"
+                android:ellipsize="end"
+                android:textColor="#ff888888"/>
+           <com.tencent.djcity.lib.ui.AlphaTextView 
+                android:layout_toLeftOf="@id/snapup_msg"
+                android:layout_above="@id/snapup_info"
+                android:layout_marginBottom="1dp"
+                style="@style/text_caption"
+                android:textSize="@dimen/RMB_symbol_size"
+                android:text="@string/rmb"
+                android:textColor="#ff000000"/>
+           <com.tencent.djcity.lib.ui.AlphaTextView 
+                android:id="@+id/snapup_info_RMB"
+                android:layout_toLeftOf="@id/snapup_info"
+                android:layout_below="@id/snapup_msg"
+            	android:layout_marginTop="2dp"
+                android:layout_marginBottom="4dp"
+                style="@style/text_info"
+                android:textColor="#ff888888"
+                android:text="@string/rmb"/>
+        </RelativeLayout>
+        
+		<ImageView android:id="@+id/snapup_image"
+		    android:contentDescription="@string/app_name"
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="9"
+		    android:layout_margin="1dp"
+		    android:scaleType="fitCenter"
+		    android:src="@drawable/avatar"/>        
+        
+    </LinearLayout>
+</RelativeLayout>

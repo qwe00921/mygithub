@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_cont" >
+
+    <!-- kuai begin -->
+
+    <ScrollView
+        android:id="@+id/tenpay_kuai_scroll"
+        style="@style/unipay_tenpay_fill"
+        android:fillViewport="true" >
+
+        <LinearLayout style="@style/unipay_tenpay_linear.srcollcont" >
+
+            <!-- 提示 -->
+
+            <TextView
+                android:id="@+id/kuai_discount"
+                style="@style/unipay_tenpay_text.middle"
+                android:layout_marginBottom="10dp" />
+
+            <!-- 选择框 -->
+
+            <LinearLayout
+                android:id="@+id/kuai_bank"
+                style="@style/unipay_tenpay_edit" >
+
+                <TextView
+                    android:id="@+id/kuai_bank_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/kuai_bank_btn"
+                    style="@style/unipay_tenpay_wrap.iconchange" />
+            </LinearLayout>
+            <!-- 输入框 -->
+
+            <com.tenpay.tenpayplugin.view.ClearableEditText
+                android:id="@+id/kuai_pass"
+                style="@style/unipay_tenpay_edit"
+                android:hint="@string/unipay_tenpay_cft_pass"
+                android:inputType="textPassword"
+                android:maxLength="16" />
+            <!-- btn -->
+
+            <Button
+                android:id="@+id/kuai_forget_pass"
+                style="@style/unipay_tenpay_text.forgetpwd"
+                android:background="@null"
+                android:paddingBottom="10dp" />
+
+            <LinearLayout style="@style/unipay_tenpay_bigviewbtn" >
+
+                <Button
+                    android:id="@+id/kuai_confirm"
+                    style="@style/unipay_tenpay_btn"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/unipay_tenpay_pay" />
+
+                <LinearLayout
+                    android:id="@+id/kuai_nopwdnosms"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:visibility="gone" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/unipay_tenpay_dunpai" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:text="@string/unipay_tenpay_nopwdnosms"
+                        android:textColor="#808080"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <!-- kuai over -->
+
+</LinearLayout>

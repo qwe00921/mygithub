@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tenpay.tenpayplugin.view.TenpayResizeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tenpay_main_linear"
+    style="@style/unipay_tenpay_fill"
+    android:background="#90000000"
+    android:orientation="vertical"
+    android:paddingTop="10dp" >
+
+    <!-- head begin -->
+
+    <include layout="@layout/unipay_tenpay_head" />
+    <!-- head over -->
+    <!-- cont -->
+
+    <FrameLayout style="@style/unipay_tenpay_fill" >
+
+        <include
+            android:id="@+id/pay_cft"
+            layout="@layout/unipay_tenpay_bigview_cft"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/pay_kuai"
+            layout="@layout/unipay_tenpay_bigview_kuai"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/tenpay_card_bin"
+            layout="@layout/unipay_tenpay_bigview_card_bin"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/tenay_bigview_bank_setpwd_layout"
+            layout="@layout/unipay_tenpay_bigview_bank_setpwd"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/pay_yz"
+            layout="@layout/unipay_tenpay_bigview_bank_yz"
+            android:visibility="gone" /> <!-- title -->
+
+        <include
+            android:id="@+id/tenpay_bank_phone"
+            layout="@layout/unipay_tenpay_bigview_bank_phone"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/tenpay_youxiaoqi"
+            layout="@layout/unipay_tenpay_bigview_youxiaoqi"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</com.tenpay.tenpayplugin.view.TenpayResizeLinearLayout>

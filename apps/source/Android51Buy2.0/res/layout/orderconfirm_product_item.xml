@@ -1,0 +1,91 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/product_list_item"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_30xp"
+        android:layout_marginLeft="@dimen/margin_size_30xp"
+        android:layout_marginRight="@dimen/margin_size_30xp"
+        android:paddingBottom="@dimen/margin_size_30xp" >
+
+        <ImageView
+            android:id="@+id/order_imageview_pic"
+          	android:layout_width="@dimen/margin_size_115xp"
+            android:layout_height="@dimen/margin_size_115xp"
+            android:padding="@dimen/margin_size_5xp"
+            android:contentDescription="@string/app_name"
+            android:background="@drawable/i_gift_tab_bg"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/order_textview_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/margin_size_20xp"
+            android:layout_toRightOf="@+id/order_imageview_pic"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/front_size_24xp" />
+
+        <com.icson.lib.ui.AlphaTextView
+            android:id="@+id/order_textview_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_textview_name"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/margin_size_40xp"
+            android:textColor="@color/global_price"
+            android:textSize="@dimen/front_size_24xp" />
+        
+         <TextView
+            android:id="@+id/order_textview_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_textview_name"
+            android:layout_toLeftOf="@+id/order_textview_price"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:layout_marginBottom="@dimen/margin_size_30xp"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:text="共1件"
+            android:textSize="@dimen/front_size_24xp" />
+         
+         <LinearLayout
+            android:id="@+id/order_linear_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_textview_price"
+            android:layout_toRightOf="@+id/order_imageview_pic"
+            android:layout_marginLeft="@dimen/margin_size_20xp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/global_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingBottom="@dimen/margin_size_15xp"
+                android:text="@string/gift_string"
+                android:textSize="@dimen/front_size_24xp"
+                android:textColor="@color/global_text_color" />
+
+            <com.icson.lib.ui.HorizontalListView
+                android:id="@+id/item_gift_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/margin_size_120xp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/orderconfirm_product_line"
+        style="@style/global_line2"
+        android:layout_marginLeft="@dimen/margin_size_30xp"
+        android:layout_marginRight="@dimen/margin_size_30xp"
+        android:layout_below="@+id/product_list_item" >
+    </View>
+
+</RelativeLayout>

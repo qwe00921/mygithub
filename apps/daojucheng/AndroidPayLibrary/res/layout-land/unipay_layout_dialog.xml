@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   style="@style/unipay_wrap">
+   <View
+      android:id="@+id/unipay_id_apLayer"
+	  style="@style/unipay_fill.bg"/>
+   <!-- tips begin-->
+   <LinearLayout
+       android:id="@+id/unipay_id_DialogLayout"
+       style="@style/unipay_dialog.land">
+       <TextView
+         android:id="@+id/unipay_id_DialogTittle"
+         style="@style/unipay_tiptitle"
+         />
+       <TextView
+         android:id="@+id/unipay_id_DialogMessage"
+         style="@style/unipay_tiptitle.sub"
+         android:layout_margin="10dp"
+         /> 
+	     <!-- button -->
+          <LinearLayout
+           style="@style/unipay_tipbtn">
+		   <Button 
+		   	  android:id="@+id/unipay_id_DialogCancel"
+	   		  style="@style/unipay_btn.thinbtn"
+              android:layout_weight="100"
+              android:layout_marginRight="10dp"
+              android:text="@string/unipay_cancel"/>
+	       <Button 
+	          android:id="@+id/unipay_id_DialogEnsure"
+              style="@style/unipay_btn.thinbtn"
+              android:layout_weight="100" 
+              android:layout_marginLeft="10dp"
+              android:text="@string/unipay_sure"/>
+		</LinearLayout>
+		<LinearLayout 
+		    style="@style/unipay_tipbtn">
+		    <Button 
+	          android:id="@+id/unipay_id_DialogSure"
+              style="@style/unipay_btn.thinbtn"
+              android:layout_weight="100" 
+              android:visibility="gone"
+              android:text="@string/unipay_sure"/>
+		</LinearLayout>
+		<!-- button over-->
+    </LinearLayout>
+     <!-- tips over -->
+</RelativeLayout>

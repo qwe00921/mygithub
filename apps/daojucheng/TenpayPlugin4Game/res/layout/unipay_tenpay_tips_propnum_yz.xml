@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_linear" >
+
+    <!-- cft begin -->
+
+    <TextView
+        android:id="@+id/yz_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="7dp"
+        android:singleLine="true"
+        android:text="@string/unipay_tenpay_sms_add"
+        android:visibility="gone" />
+
+    <LinearLayout
+        style="@style/unipay_tenpay_wrap"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/yz_phone"
+            style="@style/unipay_tenpay_text.middle" />
+
+        <ImageButton
+            android:id="@+id/yz_reset_phone"
+            style="@style/unipay_tenpay_wrap.iconwen"
+            android:visibility="gone" />
+    </LinearLayout>
+    <!-- 输入框 -->
+
+    <LinearLayout
+        style="@style/unipay_tenpay_linear.margin"
+        android:orientation="horizontal" >
+
+        <com.tenpay.tenpayplugin.view.ClearableEditText
+            android:id="@+id/yz_code"
+            style="@style/unipay_tenpay_edit"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="100"
+            android:hint="@string/unipay_tenpay_sms_code"
+            android:inputType="number"
+            android:maxLength="6" />
+
+        <Button
+            android:id="@+id/yz_resend"
+            style="@style/unipay_tenpay_sendbtn" />
+    </LinearLayout>
+    <!-- btn -->
+
+    <LinearLayout style="@style/unipay_tenpay_tipbtn" >
+
+        <Button
+            android:id="@+id/yz_confirm"
+            style="@style/unipay_tenpay_btn"
+            android:text="@string/unipay_tenpay_ok" />
+    </LinearLayout>
+
+</LinearLayout>

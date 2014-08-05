@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/product_list_item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/x_global_item" >
+
+    <RelativeLayout
+        android:id="@+id/list_relative_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_size_25xp"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_25xp" >
+
+        <ImageView
+            android:id="@+id/list_image_pic"
+            android:layout_width="@dimen/margin_size_160xp"
+            android:layout_height="@dimen/margin_size_160xp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/water_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name" />
+        
+        <RelativeLayout
+            android:id="@+id/list_relative_right"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/margin_size_160xp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/list_image_pic" >
+
+            <TextView
+                android:id="@+id/list_textview_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/font_size_30xp" />
+
+            <TextView
+                android:id="@+id/list_textview_price_old"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_textview_name"
+                android:textColor="@color/global_gray"
+                android:textSize="@dimen/font_size_30xp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/list_textview_price_qq_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_textview_price_old"
+                android:text="@string/price_qq"
+                android:textColor="@color/global_gray"
+                android:textSize="@dimen/font_size_30xp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/list_textview_price_qq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_textview_price_old"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_toRightOf="@id/list_textview_price_qq_title"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/red"
+                android:textSize="@dimen/font_size_30xp" />
+
+            <TextView
+                android:id="@+id/list_textview_price_wechat_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_textview_price_old"
+                android:layout_toRightOf="@id/list_textview_price_qq"
+                android:text="@string/price_wechat"
+                android:textColor="@color/global_gray"
+                android:textSize="@dimen/font_size_30xp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/list_textview_price_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_textview_price_old"
+                android:layout_toRightOf="@id/list_textview_price_wechat_title"
+                android:textColor="@color/red"
+                android:textSize="@dimen/font_size_30xp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View 
+        android:layout_alignParentBottom="true"
+        style="@style/global_line1" />
+</RelativeLayout>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#f1f1f1"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/margin_size_40xp" >
+
+    <TextView
+        android:id="@+id/item_tab_review_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp"
+        android:textColor="#444"
+        android:textSize="@dimen/front_size_28xp" />
+
+    <LinearLayout
+        android:id="@+id/item_tab_review_content_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_30xp" >
+
+        <ImageView
+            android:id="@+id/item_tab_review_star_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            />
+
+        <ImageView
+            android:id="@+id/item_tab_review_star_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_size_10xp" />
+
+        <ImageView
+            android:id="@+id/item_tab_review_star_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_size_10xp" />
+
+        <ImageView
+            android:id="@+id/item_tab_review_star_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_size_10xp" />
+
+        <ImageView
+            android:id="@+id/item_tab_review_star_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_size_10xp" />
+
+        <TextView
+            android:id="@+id/item_tab_review_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_size_10xp"
+            android:textColor="#444"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <TextView
+            android:id="@+id/item_tab_review_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_size_20xp"
+            android:textColor="#444"
+            android:textSize="@dimen/front_size_26xp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_tab_review_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_30xp" >
+
+        <TextView
+            android:id="@+id/item_tab_review_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="#999"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <TextView
+            android:id="@+id/item_tab_review_level"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_size_40xp"
+            android:layout_weight="3"
+            android:textColor="#999"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <TextView
+            android:id="@+id/item_tab_review_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="#999"
+            android:textSize="@dimen/front_size_26xp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_size_40xp"
+        android:background="#DADADA" />
+
+</LinearLayout>

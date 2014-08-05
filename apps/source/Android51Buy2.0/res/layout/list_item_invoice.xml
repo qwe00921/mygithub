@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/global_transparent_shadow_click_state" 
+    android:paddingTop="@dimen/margin_size_15xp"
+    android:paddingBottom="@dimen/margin_size_15xp"
+    android:paddingLeft="@dimen/margin_size_30xp">
+    
+    <ImageView android:id="@+id/invoice_item_edit"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/margin_size_20xp"
+        android:padding="@dimen/margin_size_20xp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/global_transparent_shadow_click_state" 
+        android:src="@drawable/i_edit_item"/>
+    
+    <com.icson.lib.ui.ListItemView
+        android:id="@+id/invoice_item_content_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/invoice_item_edit"
+        android:orientation="vertical">
+        
+        <TextView android:id="@+id/invoice_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_25xp"
+            android:layout_marginBottom="@dimen/margin_size_10xp"
+            android:layout_marginLeft="@dimen/margin_size_40xp"
+            android:text="@string/app_name"
+            android:textSize="@dimen/front_size_30xp"
+            android:textColor="@color/global_text_color"/>
+        
+        <TextView android:id="@+id/invoice_item_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_size_25xp"
+            android:layout_marginLeft="@dimen/margin_size_40xp"
+            android:text="@string/app_name"
+            android:textSize="@dimen/front_size_24xp"
+            android:textColor="@color/global_text_info_color"/>
+        
+    </com.icson.lib.ui.ListItemView>
+
+</RelativeLayout>

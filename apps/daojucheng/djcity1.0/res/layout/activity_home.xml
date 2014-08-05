@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/home_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:drawableLeft="@drawable/ico_mail"
+        djcity:drawableRight="@drawable/ico_search"
+        djcity:text="@string/app_name" />
+    
+	<com.tencent.djcity.lib.ui.MyScrollView
+	    android:id="@+id/root_layout"
+	    style="@style/global_scrollview"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:fadingEdge="vertical"
+	    android:layout_below="@id/home_navigation_bar">
+	
+	 <!-- Scroll view hont can have only one direct child -->
+	
+	 <LinearLayout
+	        android:id="@+id/home_scrollvew_root_child"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:orientation="vertical">
+	
+	        <include
+	            android:id="@+id/home_loading_layout"
+	            layout="@layout/global_listview_loading"
+	            android:visibility="gone" />
+	
+	        <!-- Banner layout -->
+	
+	        <RelativeLayout
+	            android:id="@+id/home_banner_layout"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:orientation="vertical" >
+	
+	            <com.tencent.djcity.lib.ui.SlideView
+	                android:id="@+id/home_banner_slide_view"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                djcity:animNextIn="@anim/in_rightleft"
+	                djcity:animNextOut="@anim/out_rightleft"
+	                djcity:animPrevIn="@anim/in_leftright"
+	                djcity:animPrevOut="@anim/out_leftright"
+	                djcity:referHeight="180"
+	                djcity:referWidth="480" />
+	
+	            <LinearLayout
+	                android:id="@+id/home_banner_bottom_layout"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_alignBottom="@id/home_banner_slide_view"
+	                android:orientation="vertical"
+	                android:paddingBottom="@dimen/seach_editview_marginBottom"
+	                android:paddingLeft="@dimen/seach_editview_marginLeft"
+	                android:paddingRight="@dimen/seach_editview_marginLeft" >
+	
+	                <!-- Indicator -->
+	
+	                <com.tencent.djcity.lib.ui.PageIndicator
+	                    android:id="@+id/home_banner_indicator"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="10dp"
+	                    android:layout_gravity="bottom"
+	                    android:layout_marginBottom="2dp" />
+	
+	
+	            </LinearLayout>
+	        </RelativeLayout>
+	
+	        <!-- Announce -->
+	
+	        <com.tencent.djcity.lib.ui.AnnounceView
+	            android:id="@+id/home_app_announce"
+	            android:layout_width="fill_parent"
+	            android:layout_height="@dimen/announceView_height"
+	            android:visibility="gone" />
+	
+	        <RelativeLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="@dimen/container_shortcut_topOffset" >
+	
+	            <!-- shotcurt for application -->
+	
+	            <com.tencent.djcity.lib.ui.ShortcutView
+	                android:id="@+id/home_shortcuts"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="horizontal" />
+	
+	        </RelativeLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+	            
+	            <TextView 
+	                android:layout_width="fill_parent"
+	            	android:layout_height="wrap_content"
+	            	android:paddingLeft="@dimen/margin_size_30xp"
+	            	android:paddingRight="@dimen/margin_size_30xp"
+	            	android:paddingTop="@dimen/margin_size_10xp"
+	            	android:paddingBottom="@dimen/margin_size_10xp"
+	            	android:text="热门推荐"
+	            	android:textSize="@dimen/font_size_30xp"
+	            	android:textAppearance="@style/global_label"
+	            	android:background="@color/global_bg_color"
+	                />
+		        <com.tencent.djcity.lib.ui.LinearListView
+			        android:id="@+id/home_recommend_lv"
+			        android:background="@color/global_gray"
+			        android:orientation="vertical"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content" />
+	        </LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+	            
+	            <TextView 
+	                android:layout_width="fill_parent"
+	            	android:layout_height="wrap_content"
+	            	android:paddingLeft="@dimen/margin_size_30xp"
+	            	android:paddingRight="@dimen/margin_size_30xp"
+	            	android:paddingTop="@dimen/margin_size_10xp"
+	            	android:paddingBottom="@dimen/margin_size_10xp"
+	            	android:text="新品上架"
+	            	android:textSize="@dimen/font_size_30xp"
+	            	android:textAppearance="@style/global_label"
+	            	android:background="@color/global_bg_color"
+	                />
+		        <com.tencent.djcity.lib.ui.LinearListView
+			        android:id="@+id/home_new_products"
+			        android:orientation="vertical"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content" />
+	        </LinearLayout>
+       </LinearLayout>
+	
+	</com.tencent.djcity.lib.ui.MyScrollView>
+
+</RelativeLayout>

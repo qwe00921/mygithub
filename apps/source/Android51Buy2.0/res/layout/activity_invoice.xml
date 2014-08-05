@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/invoice_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/add_invoice" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/background_color" >
+
+        <LinearLayout
+            android:id="@+id/invoice_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:orientation="vertical" >
+
+            <com.icson.lib.ui.EditField
+                android:id="@+id/invoice_type"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                icson:caption="@string/invoice_type"
+                icson:editable="false"
+                icson:hint="@string/hint_invoice_select_type" />
+
+            <com.icson.lib.ui.EditField
+                android:id="@+id/invoice_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_30xp"
+                icson:caption="@string/invoice_content"
+                icson:editable="false"
+                icson:hint="@string/hint_invoice_select_content" />
+
+            <com.icson.lib.ui.EditField
+                android:id="@+id/invoice_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_30xp"
+                icson:caption="@string/invoice_title"
+                icson:hasDrawableRight="false"
+                icson:minLines="3"
+                icson:hint="@string/hint_invoice_fill_title" />
+
+            <!-- Fields for VAT -->
+
+            <LinearLayout
+                android:id="@+id/invoice_vad_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.icson.lib.ui.EditField
+                    android:id="@+id/invoice_company_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    icson:caption="@string/invoice_company_name"
+                    icson:hasDrawableRight="false" />
+
+                <com.icson.lib.ui.EditField
+                    android:id="@+id/invoice_company_addr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    icson:caption="@string/invoice_company_addr"
+                    icson:hasDrawableRight="false" />
+
+                <com.icson.lib.ui.EditField
+                    android:id="@+id/invoice_company_tel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    icson:caption="@string/invoice_company_tel"
+                    icson:hasDrawableRight="false" />
+
+                <com.icson.lib.ui.EditField
+                    android:id="@+id/invoice_tax_num"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    icson:caption="@string/invoice_tax_num"
+                    icson:hasDrawableRight="false" />
+
+                <com.icson.lib.ui.EditField
+                    android:id="@+id/invoice_bank_account"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    icson:caption="@string/invoice_bank_account"
+                    icson:hasDrawableRight="false" />
+
+                <com.icson.lib.ui.EditField
+                    android:id="@+id/invoice_bank_branch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_30xp"
+                    icson:caption="@string/invoice_bank_branch"
+                    icson:hasDrawableRight="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/invoice_btn_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_40xp" >
+
+                <TextView
+                    android:id="@+id/invoice_btn_okay"
+                    style="@style/button_confirm_bg_blue"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_size_90xp"
+                    android:layout_marginRight="@dimen/margin_size_10xp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:textColor="@color/global_white"
+                    android:text="@string/btn_ok"
+                    android:textSize="@dimen/front_size_36xp" />
+
+                <TextView
+                    android:id="@+id/invoice_btn_delete"
+                    style="@style/button_confirm_bg_white"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_size_90xp"
+                    android:layout_marginLeft="@dimen/margin_size_10xp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/btn_delete"
+                    android:textSize="@dimen/front_size_36xp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

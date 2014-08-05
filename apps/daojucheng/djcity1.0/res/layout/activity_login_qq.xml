@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_color" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/login_qq_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="@string/login_string" />
+
+    <ImageView
+        android:id="@+id/main_icson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_qq_navigation_bar"
+    	android:layout_marginTop="40dp"
+        android:src="@drawable/login_logo" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/main_icson"
+        android:background="@color/background_color"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_70xp"
+         >
+
+        <LinearLayout
+            android:id="@+id/login_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/i_my_orderlist_item_bg_shape"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/input_name"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:background="@null"
+                android:hint="@string/login_qq_name_hint"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:singleLine="true"
+                android:textColor="@color/global_text_color"
+                android:textColorHint="@color/global_text_hint_color"
+                android:textSize="@dimen/font_size_32xp" >
+            </EditText>
+
+            <View
+                style="@style/global_line2"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp" />
+
+            <EditText
+                android:id="@+id/input_pswd"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:background="@null"
+                android:hint="@string/login_qq_password_hint"
+                android:imeOptions="actionSend"
+                android:inputType="textPassword"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:singleLine="true"
+                android:textColor="@color/global_text_color"
+                android:textColorHint="@color/global_text_hint_color"
+                android:textSize="@dimen/font_size_32xp" >
+            </EditText>
+        </LinearLayout>
+
+        <com.tencent.djcity.lib.ui.CheckBox
+            android:id="@+id/login_checkbox_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_40xp"
+            djcity:checkboxImageOff="@drawable/choose_radio_off"
+            djcity:checkboxImageOn="@drawable/choose_radio_on"
+            djcity:contentColor="@color/global_text_color"
+            djcity:contentSize="@dimen/font_size_28xp"
+            djcity:isChecked="true"
+            djcity:text="@string/login_auto_save_psword" >
+        </com.tencent.djcity.lib.ui.CheckBox>
+
+        <!--  
+        <RelativeLayout
+            android:id="@+id/login_read_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_30xp" >
+
+            <com.tencent.djcity.lib.ui.CheckBox
+                android:id="@+id/login_checkbox_read"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                djcity:checkboxImageOff="@drawable/choose_radio_off"
+                djcity:checkboxImageOn="@drawable/choose_radio_on"
+                djcity:contentColor="@color/global_text_color"
+                djcity:contentSize="@dimen/font_size_28xp"
+                djcity:isChecked="true"
+                djcity:text="@string/login_agree_rule" >
+            </com.tencent.djcity.lib.ui.CheckBox>
+
+            <TextView
+                android:id="@+id/login_rules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/login_checkbox_read"
+                android:text="@string/login_rule"
+                android:textColor="#ff3382ef"
+                android:textSize="@dimen/font_size_28xp" />
+        </RelativeLayout>
+-->
+        <Button
+            android:id="@+id/login_button"
+            style="@style/button_bg_red_round"
+            android:layout_height="@dimen/margin_size_100xp"
+            android:layout_marginTop="@dimen/margin_size_40xp"
+            android:text="@string/login_string" >
+        </Button>
+    </LinearLayout>
+
+    <include layout="@layout/global_loading" />
+
+</RelativeLayout>

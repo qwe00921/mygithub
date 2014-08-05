@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+	文件名： build_common.xml
+	创建日期： 2010/4/8
+	描述：
+		 实际构建过程的定义。
+-->
+
+<project name="build_common" default=""  basedir=".">
+
+	<!-- ######属性定义部分###### -->
+	<!-- 项目的目录属性定义 -->
+	<property name="src" value="${project_path}/src"/>	<!-- 源代码 -->
+	<property name="tempsrc" value="${project_path}/tempsrc"/>	<!-- 源代码目录 -->
+	<property name="res" value="${project_path}/res"/>	<!-- 资源 -->
+	<property name="lib" value="${project_path}/libs"/>	<!-- 库 -->
+	<property name="assets" value="${project_path}/assets"/>		<!-- assets -->
+	<property name="bin" value="${project_path}/bin"/>	<!-- 包目录 -->
+	<property name="classes" value="${project_path}/classes"/>	<!-- classes -->
+	<property name="gen" value="${bin}/gen" />	<!-- 生成R.java -->
+
+	<property name="file_channel" value="${assets}/channel" />	<!-- 生成R.java -->
+
+	<!-- 时间戳属性定义，用于包的文件名 -->
+	<tstamp>
+		<format property="timestamp" pattern="yyyyMMddHHmmss"/>
+	</tstamp>
+	
+	<!-- 编码设置 -->
+	<property name="encoding" value="UTF-8"/>	
+	
+	<!-- 安装包文件名 -->
+	<property name="file_name" value="${file_name_prefix}_${timestamp}"/>
+
+	<!-- Android相关属性定义-->
+    <property name="android_framework" value="${android_tools}/lib/framework.aidl"/>
+	<property name="dex" value="${bin}/classes.dex"/>
+    <property name="aapt" value="${android_platform_tools}/aapt"/>
+    <property name="aidl" value="${android_platform_tools}/aidl" />
+    <property name="adb" value="${android_platform_tools}/adb"/>
+    <property name="dx" value="${android_platform_tools}/dx"/>
+	<property name="apkbuilder" value="${android_home}/tools/apkbuilder"/>
+	<property name="signer" value="jarsigner"/>
+	<property name="zipalign" value="${android_home}/tools/zipalign"/>
+	<!-- 注意，这里的android sdk的版本，请参考Android-versions.txt对应表进行设置-->
+	<property name="androidjar" value="${android_home}/platforms/android-10/android.jar"/>
+	<!-- ######属性定义部分结束###### -->
+
+    <!-- ###### Target定义部分 ###### -->
+    <target name="clean">
+		<echo>清理中...</echo>
+		<delete dir="${classes}"/>
+		<delete dir="${bin}"/>
+		<delete dir="${tempsrc}"/>
+		<echo>完成清理：</echo>
+	</target>
+	
+    <target name="init">
+		<echo>初始化中...</echo>
+		<mkdir dir="${bin}" />
+		<mkdir dir="${lib}" />
+		<mkdir dir="${classes}" />
+		<mkdir dir="${gen}" />
+		<mkdir dir="${tempsrc}" />
+		
+		<echo>copy source code to tempsrc...</echo>
+		<copy todir="${tempsrc}" filtering="true">
+			<fileset dir="${src}">
+				<include name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+    <!-- 为该项目资源生成R.java文件 -->
+    <target name="generate">
+        <echo>Generating R.java / Manifest.java from the resources...</echo>
+        <exec executable="${aapt}" failonerror="true">
+            <arg value="package" />
+            <arg value="-m" />
+            <arg value="-J" />
+            <arg value="${gen}" />
+            <arg value="-M" />
+            <arg value="AndroidManifest.xml" />
+            <arg value="-S" />
+            <arg value="${res}" />
+            <arg value="-I" />
+            <arg value="${androidjar}" />
+        </exec>
+		<echo>Generating R.java / Manifest.java from the resources...  done</echo>
+    </target>
+
+    <!-- 从*.aidl文件生成java classes -->
+    <target name="aidl">
+        <echo>Compiling aidl files into Java classes...</echo>
+        <apply executable="${aidl}" failonerror="true">
+            <arg value="-p${android_framework}" />
+            <arg value="-I${tempsrc}" />
+            <fileset dir="${tempsrc}">
+                <include name="**/*.aidl"/>
+            </fileset>
+        </apply>
+    </target>
+
+    <!-- 编译项目的.java文件为.class文件 -->
+    <target name="compile">
+    	<echo>开始编译...</echo>
+        <javac encoding="UTF-8" 
+        	debug="false" 
+        	extdirs="" 
+        	target="1.5" 
+            destdir="${classes}"
+            bootclasspath="${androidjar}">
+        	<src path="${tempsrc}"/>
+        	<src path="${gen}"/>
+            <classpath>
+                <fileset dir="${lib}" includes="*.jar"/>
+				<filelist>  
+                    <file name="${android-maps-jar}" />  
+                </filelist>
+            </classpath>
+         </javac>
+    	<echo>结束编译...</echo>
+    </target>
+
+	<!-- 打包 -->  
+	<target name="package">
+	    <jar basedir="${classes}" destfile="temp.jar"/>
+	</target> 
+
+	<!-- 对打包后的结果进行混淆 -->
+	<target name="obfuscate">
+	    <java jar="${proguard_home}/lib/proguard.jar" fork="true" failonerror="true">  
+	        <jvmarg value="-Dmaximum.inlined.code.length=32"/>  
+	        <arg value="-injars temp.jar"/>  
+	        <arg value="-outjars obfuscated.jar"/>  
+	        
+	        <arg value="-printmapping ${bin}/mapping.txt"/>
+	        <arg value="-dump ${bin}/class_files.txt"/>
+			<arg value="-printseeds ${bin}/seeds.txt"/>
+			<arg value="-printusage ${bin}/unused.txt"/>
+
+	        <arg value="-libraryjars ${androidjar}"/>
+			<arg value="-libraryjars ${lib}/alipay_plugin.jar"/>
+			<arg value="-libraryjars ${lib}/core.jar"/>
+			<arg value="-libraryjars ${lib}/camerautils.jar"/>
+			<arg value="-libraryjars ${lib}/beacon_android_all_v1.7.1.jar"/>
+			<arg value="-libraryjars ${lib}/wup_1.0.0.jar"/>
+			<arg value="-libraryjars ${lib}/libammsdk.jar"/>
+			<arg value="-libraryjars ${lib}/wlogin_sdk.jar"/>
+			<arg value="-libraryjars ${lib}/mta-sdk-1.1.0.jar"/>
+		
+			<!-- amap sdk about-->  	
+			<arg value="-libraryjars ${lib}/android-support-v4.jar"/>
+			<arg value="-keep public class * extends android.app.Activity" />
+			<arg value="-keep public class * extends android.app.Application" />
+			<arg value="-keep public class * extends android.app.Service" />
+			<arg value="-keep class  android.support.v4.** {*;}"/>
+			<arg value="-keep public class * extends android.support.v4.**" />
+			<arg value="-keep public class * extends android.app.Fragment" />
+			<arg value="-libraryjars ${lib}/Android_Map_2.1.4.jar"/>
+			<arg value="-libraryjars ${lib}/Android_Services_2.1.4.jar"/>
+			<arg value="-keep class com.amap.api.**  {*;}" />
+			<arg value="-keep class com.autonavi.**  {*;}" />
+			<arg value="-keep class com.a.a.**  {*;}" />
+			<arg value="-dontwarn com.amap.api.maps.*" />
+			
+
+	        <!-- <arg value="-libraryjars ${library-jar}/some_lib_used.jar"/> -->  
+	        <!-- <arg value="-dontpreverify"/> --> 
+	        <arg value="-optimizationpasses 7"/>
+	        <arg value="-dontoptimize"/>  
+	        <arg value="-dontusemixedcaseclassnames"/>  
+			<arg value="-keep public class *"/>
+			<arg value="-keep public class com.icson.lib.ui.*{*;}" />
+	        <arg value="-keep public class com.icson.item.ItemGallery{*;}" />
+	        <arg value="-keep public class com.icson.login.*{*;}" />
+	        <arg value="-keep public class com.icson.home.HTML5LinkActivity$HookInterface{*;}" />
+	        <arg value="-keep public class * extends android.view.View" />
+	        <arg value="-keep class com.tencent.mm.sdk.openapi.WXMediaMessage { *;}" />
+	        <arg value="-keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}" />
+	        
+			<!--beacon about -->
+			<arg value="-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod" />
+			<arg value="-keeppackagenames com.tencent.feedback,exceptionupload.*,graystrategy.*,common.*,strategy.*,speedmonitor.*,mqq,eventrecord.*"/>
+			<arg value="-renamesourcefileattribute RQDSRC"/>
+			<arg value="-keepattributes SourceFile,LineNumberTable"/>
+			<arg value="-keep public class * extends com.qq.taf.jce.JceStruct{*;}"/>
+			<arg value="-keepclassmembers enum * { public static **[] values();   public static ** valueOf(java.lang.String);}"/>
+			<!-- for common & netConsume -->
+			<arg value="-keep public class com.tencent.feedback.upload.AbstractUploadDatas{	public **[] getUploadDatas(%);	public void done(%);}"/>
+			<arg value="-keep public interface com.tencent.feedback.upload.UploadHandleListener{*;}"/>
+			<!-- for eup -->
+			<arg value="-keep public interface com.tencent.feedback.eup.jni.NativeExceptionHandler*{*;}"/>
+			<arg value="-keep public class com.tencent.feedback.eup.jni.NativeExceptionUpload*{	public *;	native &lt;methods&gt;; }" />
+			<arg value="-keep public class com.tencent.feedback.eup.CrashReport{	public * ;}"/>
+			<arg value="-keep public class com.tencent.feedback.eup.CrashStrategyBean*{public *;}"/>
+			<arg value="-keep public interface com.tencent.feedback.eup.CrashHandleListener{*;}"/>
+			<!-- for ua -->
+			<arg value="-keep public class com.tencent.feedback.ua.UserAction{ *;}"/>
+			<arg value="-keep public class com.tencent.feedback.ua.EventStrategyBean{public *;}"/>
+			<arg value="-keep public class com.tencent.feedback.ua.CountItem{public *;}"/>
+			<!-- end of beacon -->
+
+	        <arg value="-verbose"/>  
+	        <arg value="-dontskipnonpubliclibraryclasses"/>  
+	        <arg value="-dontskipnonpubliclibraryclassmembers"/>  
+	    </java>  
+	    <delete file="temp.jar"/>
+	    <delete dir="${classes}"/>
+	    <mkdir dir="${classes}"/>
+	    <unzip src="obfuscated.jar" dest="${classes}"/>
+	    <delete file="obfuscated.jar"/>
+	</target>  
+	
+    <!-- 将该项目经过混淆的.class文件转换为.dex文件 -->
+    <target name="dex">
+        <echo>Converting compiled files and external libraries into ${bin}/${dex}...</echo>
+        <apply executable="${dx}" failonerror="true" parallel="true">
+            <arg value="--dex" />
+            <arg value="--output=${dex}" />
+            <arg path="${classes}" />
+            <fileset dir="${lib}" includes="*.jar"/>
+        </apply>
+    </target>
+
+    <!-- 打包项目的资源文件 -->
+    <target name="package_res_with_assets">
+        <echo>Packaging resources and assets...</echo>
+        <exec executable="${aapt}" failonerror="true">
+            <arg value="package" />
+            <arg value="-f" />
+            <arg value="-M" />
+            <arg value="AndroidManifest.xml" />
+            <arg value="-S" />
+            <arg value="${res}" />
+            <arg value="-A" />
+            <arg value="${assets}" />
+            <arg value="-I" />
+            <arg value="${androidjar}" />
+            <arg value="-F" />
+            <arg value="${bin}/${project_name}.ap_" />
+        </exec>
+    </target>
+
+    <!-- 打包项目资源文件，但不包括assets -->
+    <target name="package_res_without_assets">
+        <echo>Packaging resources...</echo>
+        <exec executable="${aapt}" failonerror="true">
+            <arg value="package" />
+            <arg value="-f" />
+            <arg value="-M" />
+            <arg value="AndroidManifest.xml" />
+            <arg value="-S" />
+            <arg value="${res}" />
+            <!-- No assets directory -->
+            <arg value="-I" />
+            <arg value="${androidjar}" />
+            <arg value="-F" />
+            <arg value="${bin}/${project_name}.ap_" />
+        </exec>
+    </target>
+
+    <!-- 打包应用，此处不做签名，在后续的步骤中可以使用商业发布的密钥文件进行签名 -->
+    <target name="release">
+        <echo>Packaging ${out-unsigned-package} for release...</echo>
+        <exec executable="${apkbuilder}" failonerror="true">
+            <arg value="${bin}/${file_name}_unsigned.apk" />
+            <arg value="-u" />
+            <arg value="-z" />
+            <arg value="${bin}/${project_name}.ap_" />
+            <arg value="-f" />
+            <arg value="${dex}" />
+            <arg value="-rf" />
+            <arg value="${tempsrc}" />
+            <arg value="-rj" />
+            <arg value="${lib}" />
+			<arg value="-nf" />
+			<arg value="${lib}" />
+        </exec>
+        <echo>It will need to be signed with jarsigner before being published.</echo>
+		
+		
+    </target>
+
+	<!-- 签名 -->
+	<target name="sign">
+		<echo>begin sign...</echo>
+		<exec executable="${signer}" failonerror="false">
+			<arg value="-verbose"/>
+			<arg value="-keystore"/> 
+			<arg value="${keystore}"/>
+			<arg value="-storepass"/>
+			<arg value="${storepass}"/>
+			<arg value="-keypass"/>
+			<arg value="${key_pass}"/>
+			<arg value="-signedjar"/>
+			<arg value="${bin}/${file_name}_${param_ext}_unzip.apk"/>
+			<arg value="${bin}/${file_name}_unsigned.apk"/>
+			<arg value="${key_name}"/>
+		</exec>	
+		<echo>end sign...</echo>
+	</target>
+	
+	<target name="zipalign" depends="sign">
+        <echo>Aligning apk...</echo>
+        <exec executable="${zipalign}" logerror="true">
+            <arg value="-f"/>
+            <arg value="-v"/>
+            <arg value="4"/>
+            <arg value="${bin}/${file_name}_${param_ext}_unzip.apk"/>
+            <arg value="${bin}/${file_name}_${param_ext}.apk"/>
+        </exec>
+        <delete file="${bin}/${file_name}_${param_ext}_unzip.apk"/>
+    </target>
+
+</project>

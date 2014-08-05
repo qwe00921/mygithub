@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   style="@style/unipay_bigview_head_land">
+     <!-- head cont -->
+     <LinearLayout
+       style="@style/unipay_head_land">
+      <TextView
+          android:id="@+id/unipay_id_tittleOfferName"
+	      style="@style/unipay_text.headtitle"
+	      />
+       <View style="@style/unipay_dash"
+          android:layout_width="fill_parent"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp" />
+       <!-- drop info -->
+         <LinearLayout
+          style="@style/unipay_linear"
+	      android:gravity="center_vertical"
+          android:orientation="horizontal">
+         <TextView 
+           android:id="@+id/unipay_id_PerPrice"
+	       style="@style/unipay_text.smallthin"
+	       android:layout_marginRight="5dp"
+	       />
+         <LinearLayout
+            android:id="@+id/unipay_id_VIPLayout"
+	        style="@style/unipay_wrap"
+	        android:gravity="center_vertical">
+	        <ImageView
+              android:id="@+id/unipay_id_VIPLogo"
+	          style="@style/unipay_logovip.small"
+	          android:background="@drawable/unipay_pic_huiyuan"/>
+	        <TextView 
+                android:id="@+id/unipay_id_VIPPrice"
+		        style="@style/unipay_text.smallthin"
+		        />
+        </LinearLayout>
+       </LinearLayout>
+       <View style="@style/unipay_dash"
+          android:layout_width="fill_parent"
+          android:layout_marginTop="5dp"
+          android:layout_marginBottom="10dp"/>
+        <!-- 数量 -->
+        <LinearLayout
+            style="@style/unipay_wrap"
+            android:gravity="center_vertical">
+            <TextView
+	        android:id="@+id/unipay_id_TittleNum"
+                style="@style/unipay_text.small"
+                android:text="@string/unipay_num"/>
+			<TextView
+                style="@style/unipay_text.small"
+				android:id="@+id/unipay_id_bd"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="4dp"
+                android:text="@string/unipay_colon" />
+            <TextView
+	        	android:id="@+id/unipay_id_tittleMount"
+                style="@style/unipay_text.small"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/unipay_id_PriceLayout"
+            style="@style/unipay_wrap"
+            android:layout_marginTop="5dp">
+            <TextView
+                style="@style/unipay_text.small"
+                android:text="@string/unipay_total_price" />
+            <TextView
+                style="@style/unipay_text.small"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
+                android:text="@string/unipay_colon"/>
+            <TextView
+                style="@style/unipay_text.big"
+		android:id="@+id/unipay_id_tittleUnit"
+                android:textColor="@color/unipay_em3_color"
+                android:text="@string/unipay_rmb"/>
+            <TextView
+                style="@style/unipay_text.big"
+		        android:id="@+id/unipay_id_tittleAmt"
+                android:textColor="@color/unipay_em3_color"
+                />
+		
+		
+		<TextView
+                android:id="@+id/unipay_id_tittlePoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#f60"
+                android:textSize="12sp" />	
+        </LinearLayout>
+        <View style="@style/unipay_dash"
+          android:layout_width="fill_parent"
+          android:layout_marginTop="10dp"/>
+      </LinearLayout>
+     <!-- head cont over -->
+     
+<!--      wavebg
+     <LinearLayout
+       style="@style/unipay_linear_land">
+       <ImageView
+         style="@style/unipay_wrap"
+         android:background="@drawable/unipay_tips_wavbg_topicon"
+         android:contentDescription="@string/unipay_wavbgicon"/>
+       <LinearLayout
+         style="@style/unipay_wavebg_land">
+         <View style="@style/unipay_dash_land"/>
+       </LinearLayout>
+       <ImageView
+         style="@style/unipay_wrap"
+         android:background="@drawable/unipay_tips_wavbg_bottomicon"
+         android:contentDescription="@string/unipay_wavbgicon"/>
+     </LinearLayout>
+     vevebg over
+      -->
+</LinearLayout>      	     

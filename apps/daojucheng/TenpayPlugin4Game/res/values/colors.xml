@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="unipay_tenpay_list_color">#FFf5efde</color>
+    <color name="unipay_tenpay_btn_color">#FF333333</color>
+    <color name="unipay_tenpay_btn_high_color">#FFFF6600</color>
+    <color name="unipay_tenpay_thin_color">#FF999999</color>
+    <color name="unipay_tenpay_thin1_color">#FFcccccc</color>
+    <color name="unipay_tenpay_thin2_color">#FF666666</color>
+    <color name="unipay_tenpay_em_color">#FFe64646</color>
+    <color name="unipay_tenpay_em1_color">#FF000000</color>
+    <color name="unipay_tenpay_em2_color">#FF559900</color>
+    <color name="unipay_tenpay_em3_color">#FFff6600</color>
+    <color name="unipay_tenpay_link_color">#FF3c78b4</color>
+    <color name="unipay_tenpay_wavebg_color">#FFf0f0f0</color>
+</resources>

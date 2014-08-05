@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/off_mode_foreground" >
+
+    <ImageView
+        android:id="@+id/dialog_bg_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/dialog_content_img"
+        android:layout_marginTop="@dimen/margin_size_40xp"
+        android:background="@color/user_guide_bg"
+        android:contentDescription="@string/app_name" />
+
+    <ImageView
+        android:id="@+id/dialog_content_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:paddingBottom="@dimen/margin_size_30xp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/guide_first_open" />
+
+    <RelativeLayout
+        android:id="@+id/layout_positive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialog_content_img"
+        android:layout_alignRight="@+id/dialog_content_img"
+        android:layout_marginBottom="@dimen/margin_size_50xp"
+        android:layout_marginRight="@dimen/margin_size_50xp" >
+
+        <ImageView
+            android:id="@+id/dialog_btn_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/button_guide" />
+
+        <TextView
+            android:id="@+id/dialog_text_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/guide_login"
+            android:textColor="@color/global_white"
+            android:textSize="@dimen/front_size_36xp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/dialog_btn_negative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/dialog_bg_image"
+        android:layout_alignTop="@+id/dialog_bg_image"
+        android:layout_margin="@dimen/margin_size_20xp"
+        android:background="@drawable/guide_close_btn"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY" />
+
+</RelativeLayout>

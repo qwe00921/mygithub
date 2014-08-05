@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_fill.wrap_land"
+    android:paddingTop="0dp">
+    <RelativeLayout
+        android:id="@+id/sorrContent"
+        style="@style/unipay_linear.tipframe.land" >
+        <LinearLayout
+            style="@style/unipay_linear.tipswrap">
+     <!-- title -->
+     <LinearLayout
+       style="@style/unipay_head.tips">
+       <LinearLayout
+           style="@style/unipay_linear"
+           android:orientation="horizontal">
+	       <LinearLayout
+		       style="@style/unipay_linear"
+		       android:layout_weight="100"
+		       android:orientation="horizontal">
+	           <TextView
+	              android:id="@+id/unipay_id_tittleBuyInfo"
+		          style="@style/unipay_text.headtitle"
+		          />
+	              <!-- 营销充值的title -->
+	                  <LinearLayout
+	                      android:id="@+id/unipay_id_mpinfoIdView"
+	                      style="@style/unipay_actbg"
+	                      android:visibility="gone" >
+	                      <TextView
+	                          android:id="@+id/unipay_id_mpinfoIdText"
+	                          style="@style/unipay_text.smallthin"
+	                          android:textColor="@color/unipay_thin4_color"/>
+	                  </LinearLayout>
+	                  <!-- 营销充值的title -->
+		   </LinearLayout>	   
+        </LinearLayout>
+     </LinearLayout>
+    <!-- cont -->
+     <LinearLayout
+        style="@style/unipay_cont.tips" >
+         <!-- 中间滚动的内容 -->
+         <HorizontalScrollView
+             style="@style/unipay_wrap"
+             android:layout_marginBottom="10dp"
+             android:layout_marginLeft="5dp"
+             android:layout_marginRight="5dp"
+             android:layout_marginTop="7dp"
+             android:scrollbars="none"
+           	android:fillViewport="true" >
+             <LinearLayout
+                 android:id="@+id/sorrl"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal" >
+             </LinearLayout>
+         </HorizontalScrollView>
+		<CheckBox
+		     android:visibility="gone"
+		     android:id="@+id/unipay_id_ap_apAutoPayCheckBox"
+		     style="@style/unipay_agreecheck"
+		     android:layout_marginRight="25dp"
+		     android:layout_marginBottom="10dp"
+		     android:layout_gravity="right"
+		     android:text="@string/unipay_pay_auto"/>
+		
+         <LinearLayout
+             android:id="@+id/unipay_id_OtherChannel"
+             style="@style/unipay_otherbtn" 
+             android:layout_marginBottom="10dp">
+             <ImageView
+                 style="@style/unipay_iconwrite" />
+             <TextView
+                 android:id="@+id/unipay_id_ap_otherNum"
+                 style="@style/unipay_text"
+                 android:layout_marginRight="2dp"
+                 android:text="@string/unipay_else_num" />
+         </LinearLayout>
+     </LinearLayout>
+ </LinearLayout>
+<!-- 关闭按钮 -->
+<ImageButton
+    android:id="@+id/unipay_id_CloseBtn"
+    style="@style/unipay_btnclose" />
+</RelativeLayout>
+</LinearLayout>

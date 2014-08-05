@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/global_white_shadow_click_state">
+    
+    <RelativeLayout android:id="@+id/event_info_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        
+        <ImageView android:id="@+id/event_tag"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitCenter"
+            android:visibility="gone"/>
+        
+        <TextView android:id="@+id/event_caption"
+            android:paddingLeft="@dimen/container_widgetPaddingOffset_large"
+            android:paddingTop="@dimen/container_widgetPaddingOffset_large"
+            style="@style/popular_text_subcaption"
+            android:layout_toLeftOf="@id/event_tag"
+            android:layout_alignParentLeft="true"
+            android:maxLines="2"
+            android:text="@string/app_name"
+            android:textColor="#ff444444" />
+        
+        <TextView android:id="@+id/event_subtitle"
+            style="@style/text_subtitle"
+            android:paddingLeft="@dimen/container_widgetPaddingOffset_large"
+            android:layout_below="@id/event_caption"
+            android:text="@string/app_name"
+            android:singleLine="true"
+            android:textColor="#ff666666"  />
+    </RelativeLayout>
+    
+	<RelativeLayout android:id="@+id/event_product_flipper"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/container_widgetPaddingOffset_normal"
+		 />
+</LinearLayout>

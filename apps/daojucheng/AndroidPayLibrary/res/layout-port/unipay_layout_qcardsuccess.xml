@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+      style="@style/unipay_fill.wrap">
+     <LinearLayout
+	      android:id="@+id/unipay_id_ContentLayout"
+	      style="@style/unipay_cont"
+	      >
+     <ScrollView
+        android:id="@+id/pay_scroll"
+        style="@style/unipay_fill"
+        android:fillViewport="true" >
+        <LinearLayout
+            android:id="@+id/unipay_id_successTiplayout"
+            style="@style/unipay_linear.srcollcont"
+            android:paddingTop="50dp">
+            <ImageView
+                android:id="@+id/unipay_id_TipsImage"
+                style="@style/unipay_wrap.iconsuc"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"/>
+                <!-- 结果显示成功 -->
+                <LinearLayout
+                    android:id="@+id/unipay_id_SuccessLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical">
+                    <TextView
+		    			android:id="@+id/unipay_id_unipay_id_apTips1"
+                        style="@style/unipay_text.suc"
+                        android:layout_width="fill_parent"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/unipay_pay_succ"
+                        />
+                   
+                   <LinearLayout
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:gravity="center"
+                     android:layout_marginBottom="2dp">
+                     <TextView
+                        android:id="@+id/unipay_id_succtext"
+                        style="@style/unipay_text.big"
+                        android:textColor="@color/unipay_thin2_color"
+                        />
+                      <TextView
+                        android:id="@+id/unipay_id_succsavenum"
+                        style="@style/unipay_text.big"
+                        android:textColor="@color/unipay_em3_color"
+                        />
+                      <TextView
+                        android:id="@+id/unipay_id_succsaveunit"
+                        style="@style/unipay_text.big"
+                        android:textColor="@color/unipay_thin2_color"
+                        />
+                   </LinearLayout>
+                   <LinearLayout
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:gravity="center"
+                     android:layout_marginBottom="2dp">
+                      <TextView
+                        android:id="@+id/unipay_id_mpgive"
+                        style="@style/unipay_text.big"
+                        android:textColor="@color/unipay_thin2_color"
+                        />
+                      <TextView
+		                android:id="@+id/unipay_id_mpnum"
+                        style="@style/unipay_text.big"
+                        android:textColor="@color/unipay_em3_color"
+                        />
+                      <TextView
+                        android:id="@+id/unipay_id_mpunit"
+                        style="@style/unipay_text.big"
+                        android:textColor="@color/unipay_thin2_color"
+                        />
+                   </LinearLayout>
+                   
+                     <LinearLayout
+                     android:id="@+id/unipay_id_tenpay_succdash"
+                     android:visibility="gone"
+                     style="@style/unipay_wrap"
+                     android:background="@drawable/unipay_dashborder"
+                     android:layout_marginTop="10dp"
+                     android:gravity="center"
+                     android:paddingLeft="10dp"
+                     android:paddingRight="10dp"> 
+                     <ImageView
+                       style="@style/unipay_wrap"
+                       android:src="@drawable/unipay_pic_smallbank"
+                       android:layout_marginRight="5dp"/>
+                      <TextView
+                        android:id="@+id/unipay_id_tenpay_succTips"
+                        style="@style/unipay_text.smallthin"
+                        android:text="@string/unipay_bank_opened" />
+                   </LinearLayout>
+                   
+              </LinearLayout>
+                
+              <!-- btn -->
+              <LinearLayout
+                style="@style/unipay_bigviewbtn">
+                  
+                  <Button
+                    android:id="@+id/unipay_id_apBackGame"
+                    style="@style/unipay_btn"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/unipay_pay_back"/>
+                  
+                  <Button
+		            android:id="@+id/unipay_id_apBackBuy"
+                    style="@style/unipay_btn.thinbtn"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/unipay_continuesave"/>
+                  
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    </LinearLayout>
+    <!-- tips over -->
+</LinearLayout>

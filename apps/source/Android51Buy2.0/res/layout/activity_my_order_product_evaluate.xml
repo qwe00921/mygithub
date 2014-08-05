@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/my_order_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/my_comment" />
+
+    <ScrollView
+        android:id="@+id/global_container"
+        style="@style/global_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/my_order_navbar"
+        android:background="@color/background_color" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/product_list_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dip" >
+
+                <ImageView
+                    android:id="@+id/order_imageview_pic"
+                    android:layout_width="90dip"
+                    android:layout_height="90dip"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/order_textview_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_toRightOf="@+id/order_imageview_pic"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:paddingBottom="5dip"
+                    android:text=""
+                    android:textColor="@color/global_text_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/order_textview_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/order_textview_name"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_toRightOf="@+id/order_imageview_pic"
+                    android:textColor="@color/global_price"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/ordersuccess_view_line1"
+                style="@style/global_line2" >
+            </View>
+
+            <LinearLayout
+                android:id="@+id/order_rating_linearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/comment_product_price"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/comment_operation_title" />
+
+                <RatingBar
+                    android:id="@+id/evaluate_ratingBar"
+                    style="@style/starRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:stepSize="1" />
+
+                <LinearLayout
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/comment_operation_level_one" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="@string/comment_operation_level_two" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/comment_operation_level_three" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="center"
+                        android:text="@string/comment_operation_level_four" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/comment_operation_level_five" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ordersuccess_view_line2"
+                style="@style/global_line2"
+                android:layout_marginTop="5dp" >
+            </View>
+
+            <RelativeLayout
+                android:id="@+id/order_evaluate_linearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/evaluate_TextView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/comment_content_title"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/worldNum_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
+                    android:text="0/1000" />
+
+                <EditText
+                    android:id="@+id/evaluate_editText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/evaluate_TextView"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:background="@drawable/i_my_orderlist_item_bg_shape"
+                    android:gravity="top|left"
+                    android:hint="@string/comment_content_hint"
+                    android:lines="6" >
+                </EditText>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/evaluateBtn"
+                style="@style/button_confirm_bg_blue"
+                android:layout_marginTop="20dip"
+                android:layout_marginLeft="25dip"
+                android:layout_marginRight="25dip"
+                android:layout_marginBottom="25dip"
+                android:text="@string/confirm_string" >
+            </Button>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

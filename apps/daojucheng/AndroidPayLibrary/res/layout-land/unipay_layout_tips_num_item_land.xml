@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_linear">
+	<LinearLayout 
+	    android:id="@+id/payLay"
+	    style="@style/unipay_itemnumbg">
+	    <LinearLayout
+	        style="@style/unipay_linear"
+	        android:orientation="horizontal"
+	        android:layout_marginBottom="10dp"
+	        android:gravity="center" >
+	
+	        <ImageView
+	            android:id="@+id/unipay_id_apPayIcon"
+	            style="@style/unipay_iconres.land"
+	            android:background="@drawable/unipay_pic_channel_icon8" />
+	
+	        <TextView
+	            android:id="@+id/unipay_id_apPayNum"
+	            style="@style/unipay_text.small"
+	            android:ellipsize="end"
+	            android:singleLine="true" />
+	    </LinearLayout>
+	    <TextView
+	        android:id="@+id/unipay_id_mpNum"
+	        style="@style/unipay_text.smallthin2"
+	        android:layout_width="fill_parent"
+	        android:layout_marginBottom="10dp"
+	        android:gravity="center"
+	        android:visibility="gone" />
+	    <LinearLayout
+	       style="@style/unipay_btnround_land">
+	        <TextView
+	            style="@style/unipay_text"
+	            android:textColor="@color/unipay_thin4_color"
+	            android:text="@string/unipay_rmb" />
+	        <TextView
+	            android:id="@+id/unipay_id_apPayMoney"
+	            style="@style/unipay_text"
+	            android:textColor="@color/unipay_thin4_color"/>
+	
+	        <TextView
+	            android:id="@+id/unipay_id_moneyDecima"
+	            style="@style/unipay_text.smallthin"
+	            android:layout_height="18dp"
+	            android:textColor="@color/unipay_thin4_color"
+	            android:gravity="bottom" />
+	    </LinearLayout>
+	</LinearLayout>
+</LinearLayout>

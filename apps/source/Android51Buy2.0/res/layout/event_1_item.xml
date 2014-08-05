@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffcfcfcf"
+    android:paddingBottom="0.6dip"
+    android:baselineAligned="false" >
+
+    <LinearLayout
+        android:id="@+id/event_1_container_1"
+        android:layout_width="0dip"
+        android:layout_height="180dip"
+        android:layout_marginRight="0.6dip"
+        android:layout_weight="1"
+        android:background="@drawable/x_global_item"
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        android:padding="5dip" >
+
+        <ImageView
+            android:id="@+id/event_1_image_1"
+            android:layout_width="fill_parent"
+            android:layout_height="80dip"
+            android:layout_marginTop="4dip"
+            android:scaleType="fitCenter" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/event_1_price_1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dip"
+            android:singleLine="true"
+            android:textColor="@color/global_price"
+            android:textSize="17dp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/event_1_title_1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text=""
+            android:textColor="#ff000000"
+            android:textSize="15dp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/event_1_promo_word_1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/global_promo_word"
+            android:textSize="15dp" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/event_1_container_2"
+        android:layout_width="0dip"
+        android:layout_height="180dip"
+        android:layout_marginRight="0.6dip"
+        android:layout_weight="1"
+        android:background="@drawable/x_global_item"
+        android:orientation="vertical"
+        android:padding="5dip" >
+
+        <ImageView android:contentDescription="@string/app_name"
+            android:id="@+id/event_1_image_2"
+            android:layout_width="fill_parent"
+            android:layout_height="80dip"
+            android:layout_marginTop="4dip"
+            android:scaleType="fitCenter" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/event_1_price_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dip"
+            android:lineSpacingExtra="0dip"
+            android:singleLine="true"
+            android:textColor="@color/global_price"
+            android:textSize="17dp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/event_1_title_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#ff000000"
+            android:textSize="15dp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/event_1_promo_word_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/global_promo_word"
+            android:textSize="15dp" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/event_1_container_3"
+        android:layout_width="0dip"
+        android:layout_height="180dip"
+        android:layout_weight="1"
+        android:background="@drawable/x_global_item"
+        android:orientation="vertical"
+        android:padding="5dip" >
+
+        <ImageView
+            android:id="@+id/event_1_image_3"
+            android:layout_width="fill_parent"
+            android:layout_height="80dip"
+            android:layout_marginTop="4dip"
+            android:scaleType="fitCenter" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/event_1_price_3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dip"
+            android:singleLine="true"
+            android:textColor="@color/global_price"
+            android:textSize="17dp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/event_1_title_3"
+            android:lineSpacingExtra="0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#ff000000"
+            android:textSize="15dp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/event_1_promo_word_3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/global_promo_word"
+            android:textSize="15dp" >
+        </TextView>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+      >
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#DADADA" />
+        <TextView
+            android:id="@+id/item_param_sub_key"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="top"
+            android:layout_weight="4"
+            android:ellipsize="end"
+            android:paddingLeft="10dip"
+      		android:paddingRight="10dip" 
+      		android:paddingTop="@dimen/margin_size_10xp"
+      		android:paddingBottom="@dimen/margin_size_10xp"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/global_label"
+            android:textSize="@dimen/front_size_24xp">
+        </TextView>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#DADADA" />
+
+        <TextView
+            android:id="@+id/item_param_sub_value"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="10"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dip"
+       		android:paddingRight="10dip" 
+            android:textColor="@color/global_label"
+            android:textSize="@dimen/front_size_24xp" >
+        </TextView>
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#DADADA" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_param_tailline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#DADADA" />
+
+</LinearLayout>

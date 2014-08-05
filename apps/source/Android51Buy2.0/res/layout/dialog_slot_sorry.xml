@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#3e3e3e">
+    
+   <ImageView android:contentDescription="@string/app_name"
+		android:id="@+id/dialog_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/frog_mouth"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"/>
+
+	<!-- Message part -->
+	<TextView android:id="@+id/dialog_message"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="30dip"
+	    android:gravity="center_horizontal"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+	    android:textColor="#ffffff"
+	    android:textSize="18sp"
+	    android:text="@string/coin_inspire_fail"/>
+	
+	<!-- Button options -->
+	<LinearLayout android:id="@+id/dialog_btn_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:layout_margin="20dp">
+	    
+	    <TextView android:id="@+id/dialog_btn_positive"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:textSize="20sp"
+	        android:gravity="center"
+	        android:textStyle="bold"
+	        android:textColor="#ffffff"
+	        android:background="@drawable/slot_ok_btn_state"
+	        android:text="再试一次"
+	        android:layout_marginRight="10dp"/>
+	    
+	    <TextView android:id="@+id/dialog_btn_negative"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:layout_marginLeft="10dp"
+	        android:textSize="@dimen/coupon_collect_textsize"
+	        android:gravity="center"
+	        android:textColor="#444444"
+	        android:background="@drawable/slot_cancel_btn_state"
+	        android:text="残忍的离开"/>
+		</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout style="@style/unipay_tenpay_bankitem" >
+
+        <TextView
+            android:id="@+id/bank_name"
+            style="@style/unipay_tenpay_text"
+            android:layout_width="0dp"
+            android:layout_weight="100" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bank_drop"
+        style="@style/unipay_tenpay_linear" >
+
+        <LinearLayout
+            style="@style/unipay_tenpay_linear"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/unipay_tenpay_dropbankbg" >
+
+            <LinearLayout
+                android:id="@+id/bank_debit"
+                style="@style/unipay_tenpay_sbank"
+                android:clickable="true" >
+
+                <TextView
+                    android:id="@+id/bank_debit_txt"
+                    style="@style/unipay_tenpay_text.sbanktitle"
+                    android:text="@string/unipay_tenpay_debit"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/bank_debit_no"
+                    style="@style/unipay_tenpay_text.sbanktitle"
+                    android:text="@string/unipay_tenpay_debit"
+                    android:textColor="@color/unipay_tenpay_thin_color" />
+
+                <ImageView
+                    android:id="@+id/bank_debit_radio"
+                    style="@style/unipay_tenpay_wrap"
+                    android:background="@drawable/unipay_tenpay_radioicon" />
+
+                <TextView
+                    android:id="@+id/bank_debit_bind"
+                    style="@style/unipay_tenpay_text.smallthin" />
+
+                <TextView
+                    android:id="@+id/bank_debit_unsuport"
+                    style="@style/unipay_tenpay_text"
+                    android:text="@string/unipay_tenpay_card_no"
+                    android:textColor="@color/unipay_tenpay_thin_color" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/unipay_tenpay_thin1_color" />
+
+            <LinearLayout
+                android:id="@+id/bank_credit"
+                style="@style/unipay_tenpay_sbank"
+                android:clickable="true" >
+
+                <TextView
+                    android:id="@+id/bank_credit_txt"
+                    style="@style/unipay_tenpay_text.sbanktitle"
+                    android:text="@string/unipay_tenpay_credit" />
+
+                <TextView
+                    android:id="@+id/bank_credit_no"
+                    style="@style/unipay_tenpay_text.sbanktitle"
+                    android:text="@string/unipay_tenpay_credit"
+                    android:textColor="@color/unipay_tenpay_thin_color" />
+
+                <ImageView
+                    android:id="@+id/bank_credit_radio"
+                    style="@style/unipay_tenpay_wrap"
+                    android:background="@drawable/unipay_tenpay_radioicon" />
+
+                <TextView
+                    android:id="@+id/bank_credit_bind"
+                    style="@style/unipay_tenpay_text.smallthin" />
+
+                <TextView
+                    android:id="@+id/bank_credit_unsuport"
+                    style="@style/unipay_tenpay_text"
+                    android:text="@string/unipay_tenpay_card_no"
+                    android:textColor="@color/unipay_tenpay_thin_color" />
+            </LinearLayout>
+        </LinearLayout>
+        <ImageView
+            style="@style/unipay_tenpay_wrap"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/unipay_tenpay_arrowtop" />
+    </RelativeLayout>
+
+</LinearLayout>

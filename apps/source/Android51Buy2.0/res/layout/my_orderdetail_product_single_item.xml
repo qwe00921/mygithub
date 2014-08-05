@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/product_list_item"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_size_20xp"
+        android:paddingBottom="@dimen/margin_size_20xp" >
+
+        <ImageView
+            android:id="@+id/order_imageview_pic"
+            android:layout_width="@dimen/margin_size_160xp"
+            android:layout_height="@dimen/margin_size_160xp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/order_textview_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_toRightOf="@+id/order_imageview_pic"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingBottom="@dimen/margin_size_10xp"
+            android:text=""
+            android:textColor="#ff000000"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <TextView
+            android:id="@+id/order_textview_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_textview_name"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_toRightOf="@+id/order_imageview_pic"
+            android:textColor="@color/global_price"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <TextView
+            android:id="@+id/order_textview_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_textview_price"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_toRightOf="@+id/order_imageview_pic"
+            android:textColor="#ff7f7f7f"
+            android:textSize="@dimen/front_size_26xp" />
+    </RelativeLayout>
+
+</RelativeLayout>

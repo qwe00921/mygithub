@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    android:padding="10dip" >
+
+    <ImageView
+        android:id="@+id/notify_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon" />
+
+    <TextView
+        android:id="@+id/notify_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/notify_image"
+        android:text="易迅网"
+        android:textColor="#ff444444"
+        android:textSize="13dp" />
+
+    <ProgressBar
+        android:id="@+id/notify_progresbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dip"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notify_title"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="5dip"
+        android:layout_toRightOf="@+id/notify_image" />
+
+</RelativeLayout>

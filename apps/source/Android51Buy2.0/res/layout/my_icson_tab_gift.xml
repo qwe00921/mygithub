@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/margin_size_20xp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/i_gift_tab_bg">
+
+        <ImageView
+            android:id="@+id/item_detail_gift_image"
+            android:layout_width="@dimen/margin_size_115xp"
+            android:layout_height="@dimen/margin_size_115xp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter" />
+    </LinearLayout>
+
+</LinearLayout>

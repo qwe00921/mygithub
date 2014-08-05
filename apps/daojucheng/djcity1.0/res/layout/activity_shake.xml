@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+     <com.tencent.djcity.lib.ui.NavigationBar android:id="@+id/discover_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="@string/shake" />
+     
+     <include android:id="@+id/check_his"
+         layout="@layout/discover_head"/>
+         
+     <RelativeLayout
+        android:id="@+id/shake_area"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/check_his"
+        android:background="@drawable/bg_shake">
+        
+        <RelativeLayout
+            android:id="@+id/bingo_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_centerHorizontal="true"
+        	android:layout_marginTop="60dp"
+        	android:background="@drawable/bg_shake_box"
+        	android:paddingBottom="30dp">
+        	
+    	 	 <ImageView
+            	android:id="@+id/pro_img"
+            	android:layout_width="@dimen/margin_size_120xp"
+            	android:layout_height="@dimen/margin_size_120xp"
+            	android:layout_alignParentTop="true"
+            	android:layout_centerHorizontal="true"
+            	android:contentDescription="@string/app_name"
+            	android:scaleType="fitCenter" 
+            	android:layout_marginTop="20dp"
+            	android:layout_marginLeft="140dp"
+            	android:src="@drawable/i_global_image_none"/>"
+        	<TextView
+        	    android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:id="@+id/title"
+        		android:text="xxx"
+        		android:textSize="20dp"
+        		android:layout_centerHorizontal="true"
+        		android:layout_below="@id/pro_img"
+        		android:layout_marginTop="5dp"/>
+        	<LinearLayout
+        	   	android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:layout_centerHorizontal="true"
+        		android:orientation="horizontal"
+        		android:layout_below="@id/title"
+        		android:layout_marginTop="5dp">
+        		<TextView
+        	    android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="优惠价："
+        		android:textSize="16dp"
+        		android:layout_marginRight="2dp"/>
+        	    <TextView
+        	        android:id="@+id/price"
+        	    	android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"
+        			android:text="70.00"
+        			android:textColor="@color/red"
+        			android:textSize="20dp"/>
+        		<TextView
+        	    android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="qb"
+        		android:textSize="16dp"/>
+        	</LinearLayout>
+       </RelativeLayout>
+       <ImageView
+       		android:id="@+id/close_bingo"
+    	    android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:src="@drawable/share_close"
+        	android:layout_alignTop="@id/bingo_layout"
+        	android:layout_alignRight="@id/bingo_layout"
+        	android:layout_marginTop="-10dp"
+        	android:layout_marginRight="-10dp"
+        	android:padding="5dp"
+        	/>
+       <TextView
+           android:layout_marginTop="10dp"
+           android:layout_centerHorizontal="true"
+           android:layout_below="@id/bingo_layout"
+           android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:id="@+id/shake_buy_now"
+        	android:text="@string/btn_buy_now"
+        	android:gravity="center"
+        	android:paddingTop="10dp"
+        	android:paddingBottom="10dp"
+        	
+        	android:paddingLeft="25dp"
+        	android:paddingRight="25dp"
+        	android:background="@drawable/button_shake_round"/>"
+        
+ 	</RelativeLayout>
+ </RelativeLayout>

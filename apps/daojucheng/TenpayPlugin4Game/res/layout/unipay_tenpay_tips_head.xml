@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_linear" >
+
+    <!-- head cont -->
+
+    <LinearLayout style="@style/unipay_tenpay_head.tips" >
+
+        <LinearLayout
+            style="@style/unipay_tenpay_linear"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                style="@style/unipay_tenpay_linear"
+                android:layout_weight="100"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/pay_title"
+                    style="@style/unipay_tenpay_text.headtitle" />
+
+                <TextView
+                    android:id="@+id/pay_amount_mark"
+                    style="@style/unipay_tenpay_text.headtitle"
+                    android:text="@string/unipay_tenpay_multiply" />
+
+                <TextView
+                    android:id="@+id/pay_amount"
+                    style="@style/unipay_tenpay_text.headtitle"
+                    android:text="100" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/unipay_tenpay_wrap"
+                android:gravity="bottom" >
+
+                <TextView
+                    style="@style/unipay_tenpay_text.big"
+                    android:text="@string/unipay_tenpay_rmb"
+                    android:textColor="@color/unipay_tenpay_em3_color" />
+
+                <TextView
+                    android:id="@+id/pay_yuan"
+                    style="@style/unipay_tenpay_text.big"
+                    android:textColor="@color/unipay_tenpay_em3_color" />
+
+                <TextView
+                    style="@style/unipay_tenpay_text.small"
+                    android:text="."
+                    android:textColor="@color/unipay_tenpay_em3_color" />
+
+                <TextView
+                    android:id="@+id/pay_fen"
+                    style="@style/unipay_tenpay_text.small"
+                    android:textColor="@color/unipay_tenpay_em3_color" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <!-- head cont over -->
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/global_bg" >
+
+    <com.icson.lib.ui.NavigationBar android:id="@+id/event1_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/app_name" />
+
+    <ListView
+        android:id="@+id/event_1_listview"
+        style="@style/global_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/event1_navbar" />
+
+    <include
+        android:layout_below="@id/event1_navbar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

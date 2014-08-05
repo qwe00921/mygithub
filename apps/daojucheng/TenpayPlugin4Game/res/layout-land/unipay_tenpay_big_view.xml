@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/unipay_tenpay_fill"
+    tools:context=".TenpayPluginActivity" >
+
+    <LinearLayout
+        style="@style/unipay_tenpay_fill"
+        android:paddingTop="5dp" >
+
+        <!-- head -->
+
+        <include layout="@layout/unipay_tenpay_head" />
+        <!-- cont -->
+
+        <FrameLayout style="@style/unipay_tenpay_fill" >
+
+            <include
+                android:id="@+id/pay_cft"
+                layout="@layout/unipay_tenpay_bigview_cft"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/pay_kuai"
+                layout="@layout/unipay_tenpay_bigview_kuai"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/tenpay_card_bin"
+                layout="@layout/unipay_tenpay_bigview_card_bin"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/tenay_bigview_bank_setpwd_layout"
+                layout="@layout/unipay_tenpay_bigview_bank_setpwd"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/pay_yz"
+                layout="@layout/unipay_tenpay_bigview_bank_yz"
+                android:visibility="gone" /> <!-- title -->
+
+            <include
+                android:id="@+id/tenpay_bank_phone"
+                layout="@layout/unipay_tenpay_bigview_bank_phone"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/tenpay_youxiaoqi"
+                layout="@layout/unipay_tenpay_bigview_youxiaoqi"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bin_keyboard_layout"
+        style="@style/unipay_tenpay_fill"
+        android:background="#FFF"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <EditText
+            android:id="@+id/bin_keyboard_txt"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|left" />
+
+        <TableLayout
+            android:id="@+id/bin_keyboard"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/unipay_tenpay_keybg"
+            android:visibility="visible" >
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/bin_keyboard_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/bin_keyboard_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/bin_keyboard_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/bin_keyboard_x"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn_bottom"
+                    android:gravity="center"
+                    android:text="X"
+                    android:textColor="#FFF"
+                    android:textSize="22sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/bin_keyboard_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/bin_keyboard_5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/bin_keyboard_6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="6"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/bin_keyboard_0"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/bin_keyboard_7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="7"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/bin_keyboard_8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="8"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/bin_keyboard_9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn"
+                    android:gravity="center"
+                    android:text="9"
+                    android:textColor="@color/unipay_tenpay_btn_color"
+                    android:textSize="30sp" />
+
+                <ImageButton
+                    android:id="@+id/bin_keyboard_d"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/unipay_tenpay_keybtn_bottom"
+                    android:gravity="center"
+                    android:src="@drawable/unipay_tenpay_keybtn_delete" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.icson.lib.ui.NavigationBar android:id="@+id/message_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/message_center" />
+
+    <ListView android:id="@+id/message_list"
+        style="@style/global_listview"
+        android:dividerHeight="0dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/message_navbar"
+        android:background="@color/background_color" />
+    
+    <RelativeLayout android:id="@+id/message_empty_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/message_navbar"
+        android:background="@color/background_color"
+        android:visibility="gone">
+        
+        <ImageView android:id="@+id/message_empty_background"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/no_messages_background"/>
+        
+        <TextView android:id="@+id/message_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message_empty_background"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/front_size_34xp"
+            android:textColor="@color/global_text_color"
+            android:text="@string/no_messages_yet"/>
+        
+    </RelativeLayout>
+
+    <include
+        android:layout_below="@id/message_navbar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

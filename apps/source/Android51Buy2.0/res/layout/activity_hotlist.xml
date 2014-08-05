@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.icson.lib.ui.NavigationBar android:id="@+id/hot_list_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/hot_products" />
+
+    <RadioGroup
+        android:id="@+id/item_radiogroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hot_list_navigation_bar"
+        android:layout_marginRight="-2dip"
+        android:background="@drawable/tab_bg"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/item_radio_0"
+            style="@style/global_tab_hotlist" />
+
+        <RadioButton
+            android:id="@+id/item_radio_1"
+            style="@style/global_tab_hotlist" />
+
+        <RadioButton
+            android:id="@+id/item_radio_2"
+            style="@style/global_tab_hotlist" />
+
+        <RadioButton
+            android:id="@+id/item_radio_3"
+            style="@style/global_tab_hotlist" />
+
+        <RadioButton
+            android:id="@+id/item_radio_4"
+            style="@style/global_tab_hotlist" />
+    </RadioGroup>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/item_radiogroup"
+        android:background="#dbdbdb" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/hotlist_pager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="5dp" >
+
+            <ListView
+                android:id="@+id/hot_cate_0"
+                style="@style/list_hot_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+            <ListView
+                android:id="@+id/hot_cate_1"
+                style="@style/list_hot_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+            <ListView
+                android:id="@+id/hot_cate_2"
+                style="@style/list_hot_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#dbdbdb" />
+
+            <ListView
+                android:id="@+id/hot_cate_3"
+                style="@style/list_hot_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#dbdbdb" />
+
+            <ListView
+                android:id="@+id/hot_cate_4"
+                style="@style/list_hot_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#dbdbdb" />
+        </android.support.v4.view.ViewPager>
+    </RelativeLayout>
+
+    
+
+    <include layout="@layout/global_loading" />
+
+</RelativeLayout>

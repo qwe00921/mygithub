@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_color" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/login_qq" />
+
+    <RelativeLayout
+        android:id="@+id/global_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/navigation_bar"
+        android:background="@color/background_color"
+        android:fillViewport="true"
+        android:paddingTop="@dimen/login_text_topOffset"
+        android:paddingBottom="@dimen/login_container_paddingLeft"
+        android:paddingLeft="@dimen/login_container_paddingLeft"
+        android:paddingRight="@dimen/login_container_paddingLeft" >
+
+        <TextView
+            android:id="@+id/qq_login_warning"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/login_qq_ver_warning"
+            android:textColor="@color/global_text_color"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/qq_login_ver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/qq_login_warning"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/code"
+                android:layout_width="150dip"
+                android:layout_height="50dip"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/i_login_qq_refresh" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/inputCode"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/qq_login_ver"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/i_my_orderlist_item_bg_shape"
+            android:hint="@string/login_qq_ver_code_hint"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/global_text_hint_color"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnCode"
+            style="@style/button_confirm_bg_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputCode"
+            android:layout_marginTop="10dip"
+            android:text="@string/btn_ok" >
+        </Button>
+
+        <LinearLayout
+            android:id="@+id/login_footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_phone"
+                android:contentDescription="@string/app_name"
+                android:paddingRight="5dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/qq_ver_textview_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_contact_us"
+                android:textColor="@color/global_text_color"
+                android:textSize="15sp" >
+            </TextView>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/login_footer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/login_contact_bottomOffset"
+            android:contentDescription="@string/app_name"
+            android:scaleType="center"
+            android:src="@drawable/i_login_bg" />
+    </RelativeLayout>
+
+</RelativeLayout>

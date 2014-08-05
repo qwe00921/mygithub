@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:id="@+id/root_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/item_detail_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="@string/item_title" />
+
+    <com.tencent.djcity.lib.ui.MyScrollView
+        android:id="@+id/item_tab_detail_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/item_buy_layout"
+        android:layout_below="@id/item_detail_navbar"
+        android:background="#f1f1f1" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/list_relative_top"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_30xp"
+                android:background="#ffffffff"
+                android:paddingBottom="@dimen/margin_size_25xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_25xp" >
+
+                <ImageView
+                    android:id="@+id/water_mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:paddingBottom="@dimen/margin_size_30xp"
+                    android:paddingRight="@dimen/margin_size_30xp"
+                    android:paddingTop="@dimen/margin_size_30xp"
+                    android:src="@drawable/delete_item_btn"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/list_image_pic"
+                    android:layout_width="@dimen/margin_size_160xp"
+                    android:layout_height="@dimen/margin_size_160xp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="@dimen/margin_size_30xp"
+                    android:layout_toRightOf="@id/water_mark"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+
+                <RelativeLayout
+                    android:id="@+id/list_relative_right"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/margin_size_160xp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/list_image_pic" >
+
+                    <TextView
+                        android:id="@+id/list_textview_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/global_text_color"
+                        android:textSize="@dimen/font_size_30xp" />
+
+                    <TextView
+                        android:id="@+id/list_textview_price_old"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/list_textview_name"
+                        android:textColor="@color/global_gray"
+                        android:textSize="@dimen/font_size_30xp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/list_textview_price_qq_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/list_textview_price_old"
+                        android:text="@string/price_qq"
+                        android:textColor="@color/global_gray"
+                        android:textSize="@dimen/font_size_30xp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/list_textview_price_qq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/list_textview_price_old"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/margin_size_30xp"
+                        android:layout_toRightOf="@id/list_textview_price_qq_title"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/font_size_30xp" />
+
+                    <TextView
+                        android:id="@+id/list_textview_price_wechat_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/list_textview_price_old"
+                        android:layout_toRightOf="@id/list_textview_price_qq"
+                        android:text="@string/price_wechat"
+                        android:textColor="@color/global_gray"
+                        android:textSize="@dimen/font_size_30xp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/list_textview_price_wechat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/list_textview_price_old"
+                        android:layout_toRightOf="@id/list_textview_price_wechat_title"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/font_size_30xp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_30xp"
+                android:background="#ffffffff"
+                android:paddingBottom="@dimen/margin_size_25xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_25xp" >
+
+                <TextView
+                    android:id="@+id/item_detail_propdesc_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_descript"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/font_size_30xp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/item_detail_propdesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_size_30xp"
+                    android:layout_toRightOf="@id/item_detail_propdesc_title" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_30xp"
+                android:background="#ffffffff"
+                android:paddingBottom="@dimen/margin_size_25xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_25xp" >
+
+                <TextView
+                    android:id="@+id/item_detail_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_date"
+                    android:textColor="@color/global_label"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/font_size_30xp"
+                    android:textStyle="bold" />
+
+                <com.tencent.djcity.lib.ui.FlowLayout
+                    android:id="@+id/item_linear_attrs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_size_30xp"
+                    android:layout_toRightOf="@id/item_detail_date"
+                    android:gravity="center_vertical" >
+                </com.tencent.djcity.lib.ui.FlowLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_30xp"
+                android:background="#ffffffff"
+                android:paddingBottom="@dimen/margin_size_25xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_25xp" >
+
+                <TextView
+                    android:id="@+id/item_detail_buy_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buy_count"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/font_size_30xp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/item_detail_downBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_size_30xp"
+                    android:background="@drawable/down_btn" >
+                </Button>
+
+                <EditText
+                    android:id="@+id/item_detail_edittext_buy_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/input_buy_count_bg"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="1"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_30xp" />
+
+                <Button
+                    android:id="@+id/item_detail_upBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/up_btn" >
+                </Button>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_30xp"
+                android:background="#ffffffff"
+                android:paddingBottom="@dimen/margin_size_25xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_25xp" >
+
+                <TextView
+                    android:id="@+id/item_detail_paytype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/orderconfirm_paytype_title"
+                    android:textColor="@color/global_label"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/font_size_30xp"
+                    android:textStyle="bold" />
+
+                <com.tencent.djcity.lib.ui.FlowLayout
+                    android:id="@+id/item_linear_paytypes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_size_30xp"
+                    android:layout_toRightOf="@id/item_detail_paytype"
+                    android:gravity="center_vertical" >
+                </com.tencent.djcity.lib.ui.FlowLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/item_detail_role_info_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_30xp"
+                android:background="#ffffffff"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_size_25xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_25xp" >
+
+                <TextView
+                    android:id="@+id/item_detail_select_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/role_info"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/font_size_30xp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/item_detail_role_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_detail_select_area"
+                    android:textColor="@color/global_gray"
+                    android:textSize="@dimen/font_size_24xp" />
+
+                <TextView
+                    android:id="@+id/item_detail_change_area_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/item_detail_select_area"
+                    android:text="@string/item_detail_change_info"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/font_size_24xp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </com.tencent.djcity.lib.ui.MyScrollView>
+
+    <LinearLayout
+        android:id="@id/item_buy_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="@dimen/margin_size_25xp"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_25xp" >
+
+        <Button
+            android:id="@+id/buy_now_btn"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_size_10xp"
+            android:layout_weight="1"
+            android:background="@drawable/button_red_round"
+            android:padding="@dimen/margin_size_30xp"
+            android:text="@string/btn_buy_now"
+            android:textColor="@drawable/button_selector_color_white"
+            android:textSize="@dimen/font_size_30xp" />
+
+        <Button
+            android:id="@+id/send_present"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_10xp"
+            android:layout_weight="1"
+            android:background="@drawable/button_yellow_round"
+            android:padding="@dimen/margin_size_30xp"
+            android:text="@string/btn_handsel"
+            android:textColor="@drawable/button_selector_color_white"
+            android:textSize="@dimen/font_size_30xp" />
+    </LinearLayout>
+
+</RelativeLayout>

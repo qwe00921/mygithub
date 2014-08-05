@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/wuliu_line_past" >
+
+    <ImageView
+        android:id="@+id/orderflow_img"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY" />
+    
+    <TextView
+        android:id="@+id/orderdetail_textview_flow_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/orderflow_img"
+        android:layout_marginLeft="@dimen/margin_size_60xp"
+        android:singleLine="false"
+        android:textColor="@color/global_label"
+        android:textSize="@dimen/font_size_28xp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/orderdetail_textview_flow_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/orderdetail_textview_flow_content"
+        android:layout_toRightOf="@+id/orderflow_img"
+        android:layout_marginLeft="@dimen/margin_size_60xp"
+        android:layout_marginTop="@dimen/margin_size_10xp"
+        android:paddingBottom="@dimen/margin_size_50xp"
+        android:gravity="left"
+        android:text="2013-5-6"
+        android:textColor="@color/global_label"
+        android:textSize="@dimen/font_size_24xp" >
+    </TextView>
+
+</RelativeLayout>

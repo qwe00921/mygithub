@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.tencent.pay.sdklibrary"
+      android:versionCode="1"
+      android:versionName="1.0">
+      
+<uses-sdk android:minSdkVersion="10" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
+	<supports-screens 
+	android:largeScreens="true"
+	android:normalScreens="true" 
+	android:anyDensity="true" />
+
+    <application>
+    
+    <activity 
+    android:name=".test.wtlogin_sdk_demo" 
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:alwaysRetainTaskState="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+    </activity>
+
+	<!--Test  -->
+  	<activity android:name=".test.AndroidPaySDKDemo" 
+  	    	  android:windowSoftInputMode="stateAlwaysHidden"
+  	    	  android:screenOrientation="landscape"
+  			  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+  			  />
+  
+  <!--  version 2 begin  -->
+  <activity android:name="com.pay.ui.common.APActivity" 
+  			android:theme="@android:style/Theme.NoTitleBar"
+  			android:configChanges="orientation|keyboardHidden"
+  			/>
+
+  <activity android:name="com.pay.ui.payCenter.APPayGameListNumActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+    		 />
+	
+  <activity android:name="com.pay.ui.payCenter.APPayGameInputNumActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		/>
+    		   
+  <activity android:name="com.pay.ui.saveAccount.APSaveAccountListNumActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden"
+    		 />
+    		  
+  <activity android:name="com.pay.ui.saveAccount.APSaveAccountInputNumActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		 />		  
+    		  
+  <activity android:name="com.pay.ui.payExpress.APPayExpressActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden"
+    		 />
+    		  
+  <activity android:name="com.pay.ui.channel.APChannelActivity"
+        	android:launchMode="singleTask"
+    		android:exported="true"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:windowSoftInputMode="stateAlwaysHidden" />
+    		  		 
+  <activity android:name="com.pay.ui.channel.APRecoChannelActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden"
+    	   /> 
+
+  <activity android:name="com.pay.ui.channel.APMCardPayActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden"
+    		/> 
+
+  <activity android:name="com.pay.ui.channel.APQCardPayActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden"
+    		/>  
+    		  
+  <activity android:name="com.pay.ui.common.APQCardSuccessActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    	    android:windowSoftInputMode="stateAlwaysHidden"
+    		/>
+ 
+  <activity android:name="com.pay.ui.common.APMcardSuccessActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		 />
+    		  
+  <activity android:name="com.pay.ui.common.APDialogActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden"
+    		 />	
+    		  
+  <activity android:name="com.pay.ui.common.APPayVerifyCodeActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    	     /> 
+
+  <activity android:name="com.pay.login.APLoginActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    	     /> 
+    		  
+  <activity android:name="com.pay.login.APLoginVerifyCodeActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden"
+    		/> 
+
+        <activity
+            android:name="com.tenpay.tenpayplugin.TenpayPluginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="stateUnchanged" >
+        </activity>
+        <activity
+            android:name="com.tenpay.tenpayplugin.TenpayPluginSelectBankActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="com.tenpay.tenpayplugin.TenpayNewCardActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+  <activity android:name="com.pay.ui.login.APLoginActivity"
+    		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		android:configChanges="orientation|keyboardHidden"
+    		android:windowSoftInputMode="stateAlwaysHidden" /> 	
+
+   <activity android:name="com.pay.ui.common.APPayPasswordActivity"
+    		 android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		 android:configChanges="orientation|keyboardHidden"
+    		 android:windowSoftInputMode="stateAlwaysHidden" /> 
+
+   <activity android:name="com.pay.ui.qdsafe.APSafeCenterWebActivity"
+    		 android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		 android:configChanges="orientation|keyboardHidden" />
+
+   <activity android:name="ui.common.APSuccessActivity"
+             android:configChanges="orientation|keyboardHidden"
+    		 android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		 android:windowSoftInputMode="stateAlwaysHidden" />
+   
+   <activity android:name="com.pay.ui.channel.APHFPayActivity"
+    		 android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		 android:configChanges="orientation|keyboardHidden" />
+   	<activity	android:name="com.pay.ui.qdsafe.APSmmActivity" 
+				android:theme="@android:style/Theme.Translucent.NoTitleBar"
+				android:configChanges="orientation|keyboardHidden"
+			/>
+   <activity android:name="com.pay.ui.common.APHFPaySuccessActivity"
+    		 android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    		 android:configChanges="orientation|keyboardHidden" />
+   
+   <activity android:name="com.pay.ui.marketing.APWebMarketActivity"
+    		 android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+    		 android:configChanges="orientation|keyboardHidden" />
+		 
+	
+    </application>
+</manifest>

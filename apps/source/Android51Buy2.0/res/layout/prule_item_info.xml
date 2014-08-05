@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	>
+    
+     <View
+        android:id="@+id/bottomline"
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+		android:layout_alignParentBottom="true"
+		android:layout_marginLeft="@dimen/margin_size_20xp"
+		android:layout_marginRight="@dimen/margin_size_20xp"
+ 	    android:background="#ffDADADA" />
+ 
+   
+    <ImageView
+        android:id="@+id/arrowImage"
+        android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerVertical="true"
+	    android:layout_alignParentRight="true"
+	    android:layout_marginRight="@dimen/margin_size_20xp"
+	    android:background="@drawable/i_global_arrow_right"
+	    />
+     <TextView
+        android:id="@+id/prule_text"
+        android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerVertical="true"
+	    android:layout_alignParentLeft="true"
+	    android:layout_toLeftOf="@id/arrowImage"
+	    android:layout_marginTop="@dimen/margin_size_35xp"
+	    android:layout_marginBottom="@dimen/margin_size_35xp"
+	    android:layout_marginLeft="@dimen/margin_size_20xp"
+	    android:layout_marginRight="@dimen/margin_size_20xp"
+	    android:text=""
+	    android:textColor="@color/global_text_color"
+        android:textSize="@dimen/front_size_30xp" 
+        />
+  
+
+</RelativeLayout>

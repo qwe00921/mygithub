@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="30dip"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/event_header_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:visibility="gone" >
+    </ImageView>
+
+    <com.icson.lib.ui.HeaderClock
+        android:id="@+id/event_time_buy_clock"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-30dp" />
+
+</LinearLayout>

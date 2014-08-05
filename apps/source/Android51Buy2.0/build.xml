@@ -1,0 +1,1361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	filename:build.xml
+	desc    :call target in common_build.xml
+-->
+<project name="DailyBuild" default="buildAll" basedir=".">
+ <!-- load build_option.xml -->
+<import file="build_option.xml" />
+
+<!-- load common_build.xml -->
+<import file="build_common.xml" />
+
+<!-- call target in common_build.xml -->
+<target name="buildAll" depends="">
+<antcall target="clean" />
+	<antcall target="init" />
+	<antcall target="generate" />
+	<antcall target="aidl" />
+	<antcall target="compile" />
+	<antcall target="package" />
+	<antcall target="obfuscate" />
+	<antcall target="dex" />
+
+		<!-- channels -->
+		<!--
+	<replace file = "${file_channel}">
+	<replacefilter token = "debug" value="wandoujia"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="wandoujia"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="wandoujia"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "wandoujia" value="hiapk"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="hiapk"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="hiapk"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "hiapk" value="91zhushou"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="91zhushou"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="91zhushou"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "91zhushou" value="yingyonghui"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="yingyonghui"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="yingyonghui"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "yingyonghui" value="anzhi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="anzhi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="anzhi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "anzhi" value="jifeng"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="jifeng"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="jifeng"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "jifeng" value="mumayi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="mumayi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="mumayi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "mumayi" value="tompad"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="tompad"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="tompad"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "tompad" value="nduo"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="nduo"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="nduo"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "nduo" value="google"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="google"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="google"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "google" value="360"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="360"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="360"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "360" value="tencent"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="tencent"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="tencent"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "tencent" value="qqguanjia"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="qqguanjia"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="qqguanjia"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "qqguanjia" value="guanjiapc"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="guanjiapc"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="guanjiapc"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "guanjiapc" value="baidu"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="baidu"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="baidu"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "baidu" value="wangyi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="wangyi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="wangyi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "wangyi" value="sogou"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="sogou"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="sogou"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "sogou" value="yidongmm"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="yidongmm"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="yidongmm"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "yidongmm" value="tianyi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="tianyi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="tianyi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "tianyi" value="chinaunicom"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="chinaunicom"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="chinaunicom"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "chinaunicom" value="zte"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="zte"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="zte"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "zte" value="meizu"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="meizu"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="meizu"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "meizu" value="shizimao"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="shizimao"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="shizimao"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "shizimao" value="huawei"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="huawei"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="huawei"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "huawei" value="xiaomi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="xiaomi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="xiaomi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "xiaomi" value="jinli"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="jinli"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="jinli"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "jinli" value="lenovo"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="lenovo"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="lenovo"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "lenovo" value="coolpad"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="coolpad"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="coolpad"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "coolpad" value="jd"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="jd"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="jd"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "jd" value="suning"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="suning"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="suning"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "suning" value="ad"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="ad"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="ad"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "ad" value="game_aoshi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="game_aoshi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="game_aoshi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "game_aoshi" value="game_buluo"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="game_buluo"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="game_buluo"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "game_buluo" value="game_jianglong"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="game_jianglong"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="game_jianglong"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "game_jianglong" value="game_yujian"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="game_yujian"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="game_yujian"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "game_yujian" value="qqdianyingpiao"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="qqdianyingpiao"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="qqdianyingpiao"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "qqdianyingpiao" value="samsung"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="samsung"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="samsung"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "samsung" value="sosomap"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="sosomap"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="sosomap"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "sosomap" value="taobao"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="taobao"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="taobao"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "taobao" value="tcl"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="tcl"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="tcl"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "tcl" value="tencentnews"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="tencentnews"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="tencentnews"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "tencentnews" value="tuanad"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="tuanad"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="tuanad"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "tuanad" value="wanlida"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="wanlida"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="wanlida"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "wanlida" value="wap"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="wap"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="wap"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "wap" value="shenqiwenhua"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="shenqiwenhua"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="shenqiwenhua"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "shenqiwenhua" value="xuniweixin"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="xuniweixin"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="xuniweixin"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "xuniweixin" value="shoujitips"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="shoujitips"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="shoujitips"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "shoujitips" value="guangdiantong"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="guangdiantong"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="guangdiantong"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "guangdiantong" value="amazon"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="amazon"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="amazon"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "amazon" value="3gjiayouzhan"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="3gjiayouzhan"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="3gjiayouzhan"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "3gjiayouzhan" value="qqreader"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="qqreader"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="qqreader"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "qqreader" value="weixinwo"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="weixinwo"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="weixinwo"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "weixinwo" value="smzdm"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="smzdm"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="smzdm"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "smzdm" value="zzton"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="zzton"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="zzton"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "zzton" value="others"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="others"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="others"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "others" value="pc"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="pc"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="pc"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "pc" value="alipay"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="alipay"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="alipay"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "alipay" value="189mail"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="189mail"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="189mail"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "189mail" value="newman"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="newman"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="newman"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "newman" value="danpin"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="danpin"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="danpin"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "danpin" value="sugar"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="sugar"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="sugar"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "sugar" value="zhimei"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="zhimei"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="zhimei"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "zhimei" value="kufang"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="kufang"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="kufang"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "kufang" value="kaiping"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="kaiping"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="kaiping"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "kaiping" value="qqmusic"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="qqmusic"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="qqmusic"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "qqmusic" value="touch"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="touch"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="touch"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "touch" value="touchtest"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="touchtest"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="touchtest"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "touchtest" value="dongrun1"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="dongrun1"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="dongrun1"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "dongrun1" value="dongrun2"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="dongrun2"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="dongrun2"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "dongrun2" value="dongrun3"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="dongrun3"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="dongrun3"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "dongrun3" value="kule1"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="kule1"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="kule1"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "kule1" value="kule2"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="kule2"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="kule2"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "kule2" value="kule3"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="kule3"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="kule3"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "kule3" value="kule4"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="kule4"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="kule4"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "kule4" value="caitu"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="caitu"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="caitu"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "caitu" value="qqbrowser"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="qqbrowser"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="qqbrowser"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "qqbrowser" value="daoyoudao"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="daoyoudao"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="daoyoudao"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "daoyoudao" value="sohu"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="sohu"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="sohu"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "sohu" value="cft"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="cft"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="cft"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "cft" value="lanzuan"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="lanzuan"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="lanzuan"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "lanzuan" value="hongmi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="hongmi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="hongmi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "hongmi" value="xiaomihezi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="xiaomihezi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="xiaomihezi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "xiaomihezi" value="txshipin"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="txshipin"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="txshipin"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "txshipin" value="qbi"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="qbi"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="qbi"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "qbi" value="quan"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="quan"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="quan"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "quan" value="lol"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="lol"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="lol"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "lol" value="xiaomi3pc"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="xiaomi3pc"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="xiaomi3pc"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "xiaomi3pc" value="xiaomi3wap"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="xiaomi3wap"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="xiaomi3wap"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "xiaomi3wap" value="mig"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="mig"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="mig"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "mig" value="dingkai"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="dingkai"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="dingkai"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "dingkai" value="zhoubian"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="zhoubian"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="zhoubian"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "zhoubian" value="0yuan"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="0yuan"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="0yuan"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "0yuan" value="touchchong"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="touchchong"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="touchchong"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "touchchong" value="touchac"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="touchac"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="touchac"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "touchac" value="weixin"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="weixin"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="weixin"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "weixin" value="huadong"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="huadong"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="huadong"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "huadong" value="qqcamera"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="qqcamera"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="qqcamera"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "qqcamera" value="shikong"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="shikong"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="shikong"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "shikong" value="xiaojiadian"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="xiaojiadian"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="xiaojiadian"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "xiaojiadian" value="gzmtr"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="gzmtr"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="gzmtr"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "gzmtr" value="wap_sms"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="wap_sms"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="wap_sms"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "wap_sms" value="aoshixiyou"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="aoshixiyou"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="aoshixiyou"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "aoshixiyou" value="wanggou"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="wanggou"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="wanggou"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "wanggou" value="honor3x"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="honor3x"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="honor3x"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "honor3x" value="cf"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="cf"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="cf"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "cf" value="tencentweibo"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="tencentweibo"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="tencentweibo"/>
+	</antcall>
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "tencentweibo" value="edm"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="edm"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="edm"/>
+	</antcall>
+-->
+		<!--end -->
+
+	<replace file = "${file_channel}">
+	<replacefilter token = "debug" value="wap"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="wap"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="wap"/>
+	</antcall>	
+	
+	<replace file = "${file_channel}">
+	<replacefilter token = "wap" value="pc"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="pc"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="pc"/>
+	</antcall>
+	
+		<replace file = "${file_channel}">
+	<replacefilter token = "pc" value="honor3x"/>
+	</replace>
+	<antcall target="package_res_with_assets" />
+	<antcall target="release" />
+	<antcall target="sign" >
+	<param name="param_ext" value="honor3x"/>
+	</antcall>
+	<antcall target="zipalign" >
+	<param name="param_ext" value="honor3x"/>
+	</antcall>
+	
+		<replace file = "${file_channel}">
+        <replacefilter token = "honor3x" value = "debug"/>
+         </replace>
+
+		<echo>save apk file only</echo>
+
+		<delete includeemptydirs="true">
+			<fileset dir="${tempsrc}"/>
+			<fileset dir="${classes}"/>
+			<fileset dir="${bin}" excludes="*.apk *.txt"/>
+		</delete>
+
+	</target>
+</project>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_cont" >
+
+    <!-- 短信验证码  begin -->
+
+    <ScrollView
+        android:id="@+id/tenpay_setpwd_scroll"
+        style="@style/unipay_tenpay_fill"
+        android:fillViewport="true" >
+
+        <LinearLayout style="@style/unipay_tenpay_linear.srcollcont" >
+
+            <TextView
+                android:id="@+id/setpwd_pass_txt"
+                style="@style/unipay_tenpay_text.middle"
+                android:layout_marginBottom="10dp"
+                android:text="@string/unipay_tenpay_set_pass" />
+
+            <!-- 分割线 -->
+
+            <View
+                style="@style/unipay_tenpay_horline"
+                android:layout_marginBottom="5dp" />
+
+            <TextView
+                android:id="@+id/setpwd_pass_txt_hint"
+                style="@style/unipay_tenpay_text.middle"
+                android:layout_marginBottom="10dp"
+                android:text="@string/unipay_tenpay_set_pass_next_hint"
+                android:textColor="@color/unipay_tenpay_em3_color" />
+            <!-- 输入框 -->
+
+            <com.tenpay.tenpayplugin.view.TenpaySecureEditText
+                android:id="@+id/setpwd_setpass"
+                style="@style/unipay_tenpay_edit.pwd"
+                android:hint="@string/unipay_tenpay_cft_pass"
+                android:inputType="number"
+                android:maxLength="6"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/setpwd_pass"
+                style="@style/unipay_tenpay_edit"
+                android:inputType="textPassword"
+                android:maxLength="16" />
+            <!-- btn -->
+
+            <LinearLayout style="@style/unipay_tenpay_bigviewbtn" >
+
+                <Button
+                    android:id="@+id/setpwd_next"
+                    style="@style/unipay_tenpay_btn.thinbtn"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/unipay_tenpay_next" />
+
+                <TextView style="@style/unipay_tenpay_text.cft" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <!-- 短信验证码 over -->
+
+</LinearLayout>

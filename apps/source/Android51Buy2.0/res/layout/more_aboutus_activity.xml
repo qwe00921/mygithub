@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/aboutus_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/settings_about_us" />
+
+    <ScrollView
+        android:id="@+id/address_scroll_body"
+        style="@style/global_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/aboutus_navbar"
+        android:background="#fff1f1f1" >
+
+        <RelativeLayout
+            android:id="@+id/more_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/copytight_container_bottomPadding"
+            android:paddingLeft="@dimen/more_container_paddingleft"
+            android:paddingRight="@dimen/more_container_paddingleft"
+            android:paddingTop="@dimen/more_contactus_logo_padding_h" >
+
+            <ImageView
+                android:id="@+id/more_contactus_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="@dimen/more_contactus_logo_padding_w"
+                android:paddingRight="@dimen/more_contactus_logo_padding_w"
+                android:scaleType="centerInside"
+                android:src="@drawable/i_global_logo" />
+
+            <LinearLayout
+                android:id="@+id/more_linear_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_contactus_logo"
+                android:layout_marginTop="@dimen/more_container_textviewpaddingTop"
+                android:background="@drawable/i_gift_tab_bg"
+                android:orientation="vertical"
+                android:padding="@dimen/more_container_textviewpaddingLeft" >
+
+                <TextView
+                    android:id="@+id/more_contactus_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="@dimen/text_line_distance"
+                    android:text="@string/more_aboutus_text_part1"
+                    android:textColor="#ff444444"
+                    android:textSize="@dimen/about_textsize" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="@dimen/text_line_distance"
+                    android:text="@string/more_aboutus_text_part2"
+                    android:textColor="#ff444444"
+                    android:textSize="@dimen/about_textsize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/copytight_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/more_linear_content"
+                android:layout_alignParentBottom="true"
+                android:paddingTop="@dimen/copytight_container_bottomPadding"
+                android:layout_marginBottom="@dimen/copytight_container_bottomPadding"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/more_contactus_version"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#ff666666"
+                    android:textSize="@dimen/textsize_smaller" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/more_contactus_copyright_time"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/copyright_line_distance"
+                    android:gravity="center"
+                    android:textColor="#ff666666"
+                    android:textSize="@dimen/textsize_smaller" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/more_contactus_copyright"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/copyright_line_distance"
+                    android:gravity="center"
+                    android:textColor="#ff666666"
+                    android:textSize="@dimen/textsize_smaller" >
+                </TextView>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

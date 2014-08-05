@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/margin_size_20xp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/i_gift_tab_bg"
+        android:gravity="center" >
+
+        <RelativeLayout
+            android:id="@+id/order_coupon_gift_pic"
+            android:layout_width="@dimen/margin_size_115xp"
+            android:layout_height="@dimen/margin_size_115xp"
+            android:background="@drawable/coupon_gift_bg_small"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/order_detail_coupon_gift_pic_rmb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="3dp"
+                android:text="@string/rmb"
+                android:textColor="@color/white"
+                android:textSize="@dimen/front_size_24xp" />
+
+            <TextView
+                android:id="@+id/order_detail_coupon_gift_pic_amt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/order_detail_coupon_gift_pic_rmb"
+                android:textColor="@color/white"
+                android:textSize="@dimen/front_size_34xp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_detail_coupon_gift_pic_rmb"
+                android:text="@string/orderconfirm_coupon_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/front_size_24xp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

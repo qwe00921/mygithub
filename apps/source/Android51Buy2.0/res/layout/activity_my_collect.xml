@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    
+    <com.icson.lib.ui.NavigationBar 
+        android:id="@+id/my_collect_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/my_favor" />
+
+    <ListView
+        android:id="@+id/collect_listview"
+        style="@style/global_listview"
+        android:background="@color/background_color"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+       />
+
+    <RelativeLayout
+        android:id="@+id/collect_relative_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="invisible"
+        android:background="@color/background_color"
+        android:gravity="center_horizontal">
+
+        <ImageView android:id="@+id/collect_empty_image"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_size_100xp"
+            android:src="@drawable/collect_kong" />
+
+        <TextView
+            android:id="@+id/collect_textview_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/collect_empty_image"
+            android:layout_marginTop="@dimen/margin_size_55xp"
+            android:text="@string/collect_no_products"
+            android:textColor="@color/global_text_info_color"
+            android:textSize="@dimen/front_size_30xp" />
+        
+        <Button
+            android:id="@+id/collect_button_redirect"
+            style="@style/button_confirm_bg_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/collect_textview_label"
+            android:layout_marginLeft="25dip"
+            android:layout_marginRight="25dip"
+            android:layout_marginTop="@dimen/margin_size_85xp" 
+            android:text="@string/cart_emtpy_redirect"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+</LinearLayout>

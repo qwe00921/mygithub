@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/orderconfirm_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/orderconfirm_title" />
+
+    <ScrollView
+        android:id="@+id/global_container"
+        style="@style/global_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/orderconfirm_navigation_bar"
+        android:background="@color/background_color" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_size_40xp" >
+
+            <!-- 地址 -->
+
+            <com.icson.lib.ui.TextField
+                android:id="@+id/orderconfirm_address"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                android:paddingBottom="@dimen/margin_size_25xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_25xp"
+                icson:caption="@string/orderconfirm_address_title"
+                icson:contentColor="@color/global_label"
+                icson:contentGravity="left"
+                icson:contentSize="@dimen/front_size_30xp"
+                icson:drawableRight="@drawable/i_global_arrow_right" />
+
+            <View
+                android:id="@+id/orderconfirm_line1"
+                style="@style/global_line2" />
+
+            <!-- 配送方式 -->
+
+            <!-- com.icson.lib.ui.EditField
+                android:id="@+id/orderconfirm_ship_type"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_marginTop="@dimen/margin_size_30xp"
+                icson:caption="@string/orderconfirm_shiptype_title"
+                icson:editable="false" /-->
+
+            <!-- 配送时间 -->
+
+            <!-- RelativeLayout
+                android:id="@+id/shipping_time_opt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_marginTop="@dimen/margin_size_30xp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/orderconfirm_ship_time_title"
+                    android:textColor="#ff444444"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <LinearLayout
+                    android:id="@+id/combine_shipping_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:id="@+id/check_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_size_20xp"
+                        android:src="@drawable/choose_radio_off" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/orderconfirm_combineship_time_title"
+                        android:textColor="@color/global_text_color"
+                        android:textSize="@dimen/front_size_30xp" />
+                </LinearLayout>
+            </RelativeLayout-->
+            
+            <com.icson.lib.ui.TextField
+                android:id="@+id/pre_ship_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_marginTop="@dimen/margin_size_30xp"
+                icson:caption="@string/orderconfirm_pre_ship_time_title"
+                icson:contentColor="@color/global_label"
+                icson:contentGravity="left"
+                icson:contentSize="@dimen/front_size_30xp" />
+
+            <com.icson.lib.ui.EditField
+                android:id="@+id/combine_ship_time"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_marginTop="@dimen/margin_size_30xp"
+                icson:editable="false" />
+
+            <com.icson.lib.ui.LinearListView
+                android:id="@+id/split_ship_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!-- 支付方式 -->
+
+            <com.icson.lib.ui.EditField
+                android:id="@+id/orderconfirm_paytype"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_30xp"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_marginTop="@dimen/margin_size_30xp"
+                icson:caption="@string/orderconfirm_paytype_title"
+                icson:editable="false" />
+
+            <LinearLayout 
+                android:id="@+id/orderconfirm_pricetips_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffdfdccd"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/margin_size_1xp"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_marginBottom="@dimen/margin_size_30xp">
+                <TextView 
+                    android:id="@+id/orderconfirm_pricetips"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/margin_size_30xp"
+                    android:paddingTop="@dimen/margin_size_30xp"
+                    android:paddingRight="@dimen/margin_size_20xp"
+                    android:paddingLeft="@dimen/margin_size_20xp"
+                    android:background="#fffdfbe9"
+	                android:textColor="@color/global_label"
+	                android:textSize="@dimen/front_size_30xp"
+                    />
+                
+            </LinearLayout>
+            <View
+                android:id="@+id/orderconfirm_line2"
+                style="@style/global_line2" />
+
+            <!-- 发票 -->
+
+            <com.icson.lib.ui.TextField
+                android:id="@+id/orderconfirm_invoice"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                android:paddingBottom="@dimen/margin_size_25xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_25xp"
+                icson:caption="@string/orderconfirm_invoice_title"
+                icson:contentColor="@color/global_label"
+                icson:contentGravity="left"
+                icson:contentSize="@dimen/front_size_30xp"
+                icson:drawableRight="@drawable/i_global_arrow_right" />
+
+            <View
+                android:id="@+id/orderconfirm_line3"
+                style="@style/global_line2" />
+
+            <!-- 优惠券 -->
+
+            <com.icson.lib.ui.TextField
+                android:id="@+id/orderconfirm_coupon"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                android:paddingBottom="@dimen/margin_size_30xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_30xp"
+                icson:caption="@string/orderconfirm_coupon_title"
+                icson:contentColor="@color/global_price"
+                icson:contentGravity="right"
+                icson:contentSize="@dimen/front_size_30xp"
+                icson:drawableRight="@drawable/i_global_arrow_right" />
+
+            <View
+                android:id="@+id/orderconfirm_line4"
+                style="@style/global_line2" />
+
+            <!-- 积分 -->
+
+            <RelativeLayout
+                android:id="@+id/orderconfirm_point_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_color"
+                android:paddingBottom="@dimen/margin_size_30xp"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_30xp" >
+
+                <TextView
+                    android:id="@+id/orderconfirm_point_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/orderconfirm_point_title"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/front_size_30xp" />
+
+                <TextView
+                    android:id="@+id/orderconfirm_point_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/orderconfirm_point_label"
+                    android:layout_marginRight="@dimen/margin_size_160xp"
+                    android:text="@string/orderconfirm_point_warning"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="@dimen/front_size_24xp" />
+
+                <EditText
+                    android:id="@+id/orderconfirm_point_value"
+                    android:layout_width="@dimen/margin_size_120xp"
+                    android:layout_height="@dimen/margin_size_70xp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_size_30xp"
+                    android:background="@drawable/input_bg_with_right"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:text="@string/orderconfirm_point_default_num"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/front_size_24xp" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/orderconfirm_line5"
+                style="@style/global_line2" />
+
+            <!-- 备注 -->
+
+            <RelativeLayout
+                android:id="@+id/orderconfirm_beizhu_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_color"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_30xp" >
+
+                <EditText
+                    android:id="@+id/orderconfirm_beizhu_editText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input_bg_with_right"
+                    android:gravity="center_vertical|left"
+                    android:hint="@string/orderconfirm_beizhu_title"
+                    android:maxLines="4"
+                    android:minLines="1"
+                    android:paddingBottom="@dimen/margin_size_15xp"
+                    android:paddingLeft="@dimen/margin_size_10xp"
+                    android:paddingTop="@dimen/margin_size_15xp"
+                    android:textColorHint="#999"
+                    android:textSize="@dimen/front_size_30xp" >
+                </EditText>
+            </RelativeLayout>
+
+            <!-- 商品列表 -->
+
+            <TextView
+                android:id="@+id/orderconform_productlist_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_15xp"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginTop="@dimen/margin_size_25xp"
+                android:text="@string/orderconfirm_product_title"
+                android:textColor="@color/global_text_color" />
+
+            <com.icson.lib.ui.LinearListView
+                android:id="@+id/orderconfirm_product_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:background="@drawable/orderconfirm_productlist_bg"
+                android:orientation="vertical" >
+            </com.icson.lib.ui.LinearListView>
+
+            <!-- 结算 -->
+
+            <LinearLayout
+                android:id="@+id/orderconfirm_price_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_25xp"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_marginTop="@dimen/margin_size_15xp"
+                android:background="@drawable/orderconfirm_price_total_bg"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_size_30xp"
+                android:paddingRight="@dimen/margin_size_30xp"
+                android:paddingTop="@dimen/margin_size_15xp" >
+
+                <com.icson.lib.ui.TextField
+                    android:id="@+id/orderconfirm_total_price"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_45xp"
+                    icson:caption="@string/orderconfirm_total_price"
+                    icson:captionSize="@dimen/front_size_24xp"
+                    icson:contentColor="@color/global_price"
+                    icson:contentGravity="right"
+                    icson:contentSize="@dimen/front_size_24xp" />
+
+                <com.icson.lib.ui.TextField
+                    android:id="@+id/orderconfirm_shipping_cost"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_20xp"
+                    icson:caption="@string/orderconfirm_carriage_price"
+                    icson:captionSize="@dimen/front_size_24xp"
+                    icson:contentColor="@color/global_price"
+                    icson:contentGravity="right"
+                    icson:contentSize="@dimen/front_size_24xp" />
+
+                <com.icson.lib.ui.TextField
+                    android:id="@+id/orderconfirm_coupon_price"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_20xp"
+                    android:visibility="gone"
+                    icson:caption="@string/orderconfirm_coupon_title"
+                    icson:captionSize="@dimen/front_size_24xp"
+                    icson:contentColor="@color/global_blue"
+                    icson:contentGravity="right"
+                    icson:contentSize="@dimen/front_size_24xp" />
+
+                <com.icson.lib.ui.TextField
+                    android:id="@+id/orderconfirm_point_cost"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_20xp"
+                    android:visibility="gone"
+                    icson:caption="@string/orderconfirm_point_price"
+                    icson:captionSize="@dimen/front_size_24xp"
+                    icson:contentColor="@color/global_blue"
+                    icson:contentGravity="right"
+                    icson:contentSize="@dimen/front_size_24xp" />
+
+                <com.icson.lib.ui.TextField
+                    android:id="@+id/orderconfirm_total_discount"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_20xp"
+                    android:visibility="gone"
+                    icson:caption="@string/orderconfirm_discount"
+                    icson:captionSize="@dimen/front_size_24xp"
+                    icson:contentColor="@color/global_blue"
+                    icson:contentGravity="right"
+                    icson:contentSize="@dimen/front_size_24xp" />
+
+                <com.icson.lib.ui.TextField
+                    android:id="@+id/orderconfirm_promo_discount"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_size_20xp"
+                    android:visibility="gone"
+                    icson:caption="@string/orderconfirm_promo_price"
+                    icson:captionSize="@dimen/front_size_24xp"
+                    icson:contentColor="@color/global_blue"
+                    icson:contentGravity="right"
+                    icson:contentSize="@dimen/front_size_24xp" />
+
+                <View
+                    style="@style/global_line2"
+                    android:layout_marginTop="@dimen/margin_size_25xp" />
+
+                <RelativeLayout
+                    android:id="@+id/orderconfirm_amt_container"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/margin_size_25xp"
+                    android:layout_marginTop="@dimen/margin_size_25xp"
+                    android:background="@color/background_color" >
+
+                    <TextView
+                        android:id="@+id/orderconfirm_amt_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/orderconfirm_total"
+                        android:textColor="@color/global_text_color"
+                        android:textSize="@dimen/front_size_30xp" />
+
+                    <com.icson.lib.ui.AlphaTextView
+                        android:id="@+id/orderconfirm_amt_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text=""
+                        android:textColor="@color/global_price"
+                        android:textSize="@dimen/front_size_42xp" />
+
+                    <com.icson.lib.ui.AlphaTextView
+                        android:id="@+id/orderconfirm_amt_value_symbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/orderconfirm_amt_value"
+                        android:text="@string/rmb"
+                        android:textColor="@color/global_price"
+                        android:textSize="@dimen/front_size_36xp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/orderconfirm_button_submit"
+                style="@style/button_confirm_bg_blue"
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="@dimen/margin_size_60xp"
+                android:layout_marginRight="@dimen/margin_size_60xp"
+                android:layout_marginTop="@dimen/margin_size_40xp"
+                android:text="@string/orderconfirm_submit_order"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:layout_below="@+id/orderconfirm_navigation_bar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

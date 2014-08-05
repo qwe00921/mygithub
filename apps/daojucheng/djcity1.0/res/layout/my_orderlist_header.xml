@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_main_top"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/my_djcity_user_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_size_40xp"
+        android:paddingLeft="@dimen/margin_size_40xp"
+        android:paddingTop="@dimen/margin_size_40xp" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent" >
+
+            <ImageView
+                android:id="@+id/my_main_image_user_pic"
+                android:layout_width="@dimen/margin_size_120xp"
+                android:layout_height="@dimen/margin_size_120xp"
+                android:scaleType="fitCenter" />
+
+            <LinearLayout
+                android:id="@+id/user_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_40xp"
+                android:layout_toRightOf="@+id/my_main_image_user_pic"
+                android:background="@android:color/transparent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/my_main_textview_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="QQ 用户"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_32xp"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/my_main_textview_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_size_20xp"
+                    android:text="会员"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_24xp" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_info"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_size_40xp"
+                android:layout_marginTop="@dimen/margin_size_25xp"
+                android:layout_toRightOf="@+id/my_main_image_user_pic"
+                android:background="#4cffffff"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/my_main_user_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/global_transparent_shadow_click_state"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_size_20xp"
+                    android:text="积分：0"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/font_size_24xp" >
+                </TextView>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="@dimen/margin_size_20xp"
+                    android:layout_marginTop="@dimen/margin_size_20xp"
+                    android:background="#4c444444" />
+
+                <TextView
+                    android:id="@+id/my_main_user_cash_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/global_transparent_shadow_click_state"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_size_20xp"
+                    android:text="余额：￥0"
+                    android:textColor="@color/global_label"
+                    android:textSize="@dimen/font_size_24xp" >
+                </TextView>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_size_40xp"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:background="#4cffffff"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_size_20xp"
+            android:paddingRight="@dimen/margin_size_20xp" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/my_djcity_coupon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/global_transparent_shadow_click_state"
+                    android:drawableLeft="@drawable/i_my_coupon"
+                    android:drawablePadding="@dimen/margin_size_20xp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/margin_size_30xp"
+                    android:paddingLeft="@dimen/margin_size_60xp"
+                    android:paddingTop="@dimen/margin_size_30xp"
+                    android:text="优惠券"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_28xp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="@dimen/margin_size_20xp"
+                    android:background="#4c444444" />
+
+                <TextView
+                    android:id="@+id/my_djcity_favor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/global_transparent_shadow_click_state"
+                    android:drawableLeft="@drawable/i_my_collect"
+                    android:drawablePadding="@dimen/margin_size_20xp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/margin_size_30xp"
+                    android:paddingLeft="@dimen/margin_size_60xp"
+                    android:paddingTop="@dimen/margin_size_30xp"
+                    android:text="收藏"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_28xp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#4c444444" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/my_djcity_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/global_transparent_shadow_click_state"
+                    android:drawableLeft="@drawable/i_my_address"
+                    android:drawablePadding="@dimen/margin_size_20xp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/margin_size_30xp"
+                    android:paddingLeft="@dimen/margin_size_60xp"
+                    android:paddingTop="@dimen/margin_size_30xp"
+                    android:text="收货地址"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_28xp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="@dimen/margin_size_20xp"
+                    android:background="#4c444444" />
+
+                <TextView
+                    android:id="@+id/my_djcity_history"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/global_transparent_shadow_click_state"
+                    android:drawableLeft="@drawable/i_service_center"
+                    android:drawablePadding="@dimen/margin_size_20xp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/margin_size_30xp"
+                    android:paddingLeft="@dimen/margin_size_60xp"
+                    android:paddingTop="@dimen/margin_size_30xp"
+                    android:text="@string/service_center_title"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_28xp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/my_orderlist_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/margin_size_10xp"
+        android:background="@drawable/global_transparent_shadow_click_state"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/margin_size_20xp"
+        android:src="@drawable/i_settings_button" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_djcity_user_info"
+        android:background="@color/background_color"
+        android:paddingBottom="@dimen/margin_size_5xp"
+        android:paddingLeft="@dimen/margin_size_20xp"
+        android:paddingTop="@dimen/margin_size_20xp" >
+
+        <TextView
+            android:id="@+id/my_orderlist_num"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/i_my_orderlist"
+            android:gravity="center_vertical"
+            android:text="我的订单"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_34xp" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,501 @@
+<resources>
+
+    <style name="unipay_tenpay_translucent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="unipay_tenpay_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="unipay_tenpay_wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="unipay_tenpay_fill">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="unipay_tenpay_linear">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="unipay_tenpay_linear_hori">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.margin">
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_fill.center">
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">#90000000</item>
+    </style>
+
+    <style name="unipay_tenpay_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_btn_color</item>
+    </style>
+
+    <style name="unipay_tenpay_text.middle">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="unipay_tenpay_text.small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="unipay_tenpay_text.middlethin">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_thin_color</item>
+    </style>
+
+    <style name="unipay_tenpay_text.middlethin1">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_thin1_color</item>
+    </style>
+
+    <style name="unipay_tenpay_text.smallthin">
+        <item name="android:textSize">9sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_thin_color</item>
+    </style>
+
+    <style name="unipay_tenpay_text.cft">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/unipay_tenpay_service</item>
+        <item name="android:textColor">@color/unipay_tenpay_thin1_color</item>
+    </style>
+
+    <style name="unipay_tenpay_text.forgetpwd">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_link_color</item>
+        <item name="android:autoLink">all</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:text">@string/unipay_tenpay_forget_pass</item>
+    </style>
+
+    <style name="unipay_tenpay_text.suc">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_em2_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/unipay_tenpay_forget_pass</item>
+    </style>
+
+    <style name="unipay_tenpay_text.big">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="unipay_tenpay_tiptitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_em1_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="unipay_tenpay_tiptitle.sub">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_thin2_color</item>
+    </style>
+
+    <style name="unipay_tenpay_dash">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@drawable/unipay_tenpay_dashline</item>
+    </style>
+
+    <style name="unipay_tenpay_edit">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/unipay_tenpay_btn_color</item>
+        <item name="android:textColorHint">@color/unipay_tenpay_thin_color</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/unipay_tenpay_inputbg</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_edit.nofocus">
+        <item name="android:background">@drawable/unipay_tenpay_inputbg_normal</item>
+    </style>
+
+    <style name="unipay_tenpay_edit.nobottom">
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="unipay_tenpay_edit.inputtop">
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:background">@drawable/unipay_tenpay_inputbg_top</item>
+    </style>
+
+    <style name="unipay_tenpay_edit.inputmiddle">
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:background">@drawable/unipay_tenpay_inputbg_middle</item>
+    </style>
+
+    <style name="unipay_tenpay_edit.inputbottom">
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:background">@drawable/unipay_tenpay_inputbg_bottom</item>
+    </style>
+
+    <style name="unipay_tenpay_edit.pwd">
+        <item name="android:background">@drawable/unipay_tenpay_inputbg_pwd</item>
+    </style>
+
+    <style name="unipay_tenpay_edit.noborder">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="unipay_tenpay_horline">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@drawable/unipay_tenpay_line</item>
+    </style>
+
+    <style name="unipay_tenpay_iconarrowr">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/unipay_tenpay_iconarrowr</item>
+    </style>
+
+    <style name="unipay_tenpay_iconchange2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">right</item>
+        <item name="android:background">@null</item>
+        <item name="android:text">@string/unipay_tenpay_more</item>
+        <item name="android:textColor">#FF6600</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="unipay_tenpay_agreecheck">
+        <item name="android:layout_width">16dp</item>
+        <item name="android:layout_height">16dp</item>
+        <item name="android:button">@drawable/unipay_tenpay_check_btn</item>
+        <item name="android:checked">true</item>
+        <item name="android:paddingLeft">22dp</item>
+        <item name="android:textColor">@color/unipay_tenpay_btn_color</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="unipay_tenpay_btn">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/unipay_tenpay_embtn</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="unipay_tenpay_btn.thinbtn">
+        <item name="android:background">@drawable/unipay_tenpay_thinbtn</item>
+        <item name="android:textColor">#333</item>
+    </style>
+
+    <style name="unipay_tenpay_sendbtn">
+        <item name="android:layout_width">110dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/unipay_tenpay_inputbtn</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:text">@string/unipay_tenpay_resend</item>
+        <item name="android:textColor">@color/unipay_tenpay_em1_color</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="unipay_tenpay_sendbtn.re">
+        <item name="android:background">@drawable/unipay_tenpay_inputbtnbg_dis</item>
+        <item name="android:textColor">@color/unipay_tenpay_thin_color</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="unipay_tenpay_wrap.iconchange">
+        <item name="android:background">@drawable/unipay_tenpay_iconchange</item>
+    </style>
+
+    <style name="unipay_tenpay_wrap.iconwen">
+        <item name="android:background">@drawable/unipay_tenpay_iconwen</item>
+        <item name="android:contentDescription">@string/unipay_tenpay_iconwen</item>
+    </style>
+
+    <style name="unipay_tenpay_sbank">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="unipay_tenpay_text.sbanktitle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">100</item>
+        <item name="android:textColor">@color/unipay_tenpay_thin2_color</item>
+    </style>
+
+    <style name="unipay_tenpay_bankitem">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/unipay_tenpay_list_selector</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
+
+    <style name="unipay_tenpay_text.headtitle">
+        <item name="android:textColor">@color/unipay_tenpay_em1_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="unipay_tenpay_head">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/unipay_tenpay_tips_head</item>
+        <item name="android:paddingLeft">25dp</item>
+        <item name="android:paddingRight">25dp</item>
+        <item name="android:paddingTop">13dp</item>
+    </style>
+
+    <style name="unipay_tenpay_head.tips">
+        <item name="android:paddingLeft">25dp</item>
+        <item name="android:paddingRight">25dp</item>
+    </style>
+
+    <style name="unipay_tenpay_cont">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_weight">100</item>
+        <item name="android:background">@drawable/unipay_tenpay_bigbg_cont</item>
+    </style>
+
+    <style name="unipay_tenpay_cont.srcollcont">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.srcollcont">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.srcollcont_land">
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.tipsrcollcont">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.tipswrap">
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="unipay_tenpay_cont.tips">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/unipay_tenpay_tipsbg_cont</item>
+    </style>
+
+    <style name="unipay_tenpay_wavebg">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">100</item>
+        <item name="android:background">@color/unipay_tenpay_wavebg_color</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="unipay_tenpay_logovip">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:contentDescription">@string/unipay_tenpay_viplogo</item>
+    </style>
+
+    <style name="unipay_tenpay_logovip.small">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+    <style name="unipay_tenpay_btnclose">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/unipay_tenpay_iconclose_v2</item>
+        <item name="android:contentDescription">@string/unipay_tenpay_closebtn</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.editts">
+        <item name="android:layout_marginLeft">1dp</item>
+        <item name="android:layout_marginRight">1dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_bigviewbtn">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center|bottom</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="unipay_tenpay_tipbtn">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="unipay_tenpay_float">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/unipay_tenpay_loginbg</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingLeft">25dp</item>
+        <item name="android:paddingRight">25dp</item>
+        <item name="android:paddingBottom">25dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="unipay_tenpay_bigview_head_land">
+        <item name="android:layout_width">160dp</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="unipay_tenpay_head_land">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_weight">100</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/unipay_tenpay_tips_head_land</item>
+        <item name="android:paddingLeft">22dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_linear_land">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="unipay_tenpay_wavebg_land">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">100</item>
+        <item name="android:background">@color/unipay_tenpay_wavebg_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="unipay_tenpay_dash_land">
+        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@drawable/unipay_tenpay_dashline_land</item>
+    </style>
+
+    <style name="unipay_tenpay_cont_land">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">100</item>
+        <item name="android:background">@drawable/unipay_tenpay_bigbg_cont_land</item>
+    </style>
+
+    <style name="unipay_tenpay_bigviewbtn_land">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center|bottom</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="unipay_tenpay_edit.nobg">
+        <item name="android:background">@null</item>
+        <item name="android:layout_weight">100</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+
+    <style name="unipay_tenpay_toast">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/unipay_tenpay_tipsbg_thin</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="unipay_tenpay_iconwarn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:contentDescription">@string/unipay_tenpay_warnpic</item>
+        <item name="android:background">@drawable/unipay_tenpay_icon_warn</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.banklist">
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.drop">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.tipframe">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="unipay_tenpay_linear.tipframe.land">
+        <item name="android:layout_marginLeft">60dp</item>
+        <item name="android:layout_marginRight">60dp</item>
+    </style>
+
+    <style name="unipay_tenpay_float.land">
+        <item name="android:layout_marginLeft">60dp</item>
+        <item name="android:layout_marginRight">60dp</item>
+    </style>
+
+</resources>

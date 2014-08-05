@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/global_white_shadow_click_state"
+    android:paddingBottom="@dimen/margin_size_30xp"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:paddingTop="@dimen/margin_size_30xp" >
+
+    <ImageView android:id="@+id/city_tick"
+        android:contentDescription="@string/app_name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/dialog_list_button"
+	    android:layout_alignParentRight="true"
+	    android:layout_centerVertical="true"/>
+    
+    <TextView
+        android:id="@+id/city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/global_text_color"
+        android:textSize="@dimen/front_size_30xp" />
+
+</RelativeLayout>

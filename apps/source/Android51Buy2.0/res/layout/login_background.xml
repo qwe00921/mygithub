@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    android:padding="5dp"
+    tools:context=".MainActivity" >
+
+    <!-- 中部居中 -->
+    <ImageView
+        android:id="@+id/center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/login_yixun_logo" />
+
+    <!-- 左上角 -->
+    <ImageView
+        android:id="@+id/one"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="left_top"
+        android:src="@drawable/one" />
+
+    <!-- 右上角 -->
+    <ImageView
+        android:id="@+id/three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/center"
+        android:contentDescription="right_top"
+        android:src="@drawable/three" />
+    
+    <!-- 右下角 -->
+    <ImageView
+        android:id="@+id/nine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/center"
+        android:contentDescription="right_buttom"
+        android:src="@drawable/nine" />
+
+    <!-- 左下角 -->
+    <ImageView
+        android:id="@+id/seven"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:contentDescription="left_buttom"
+        android:src="@drawable/seven" />
+
+    <!-- 顶部居中 -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="50dp"
+        android:layout_toLeftOf="@id/three"
+        android:layout_toRightOf="@id/one"
+        android:contentDescription="center_top"
+        android:src="@drawable/two" />
+
+    <!-- 左部居中 -->
+    <ImageView
+        android:id="@+id/left_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/seven"
+        android:layout_below="@id/one"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/center"
+        android:contentDescription="left_center"
+        android:src="@drawable/four" />
+
+    <!-- 右部居中 -->
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/nine"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/three"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/center"
+        android:contentDescription="right_center"
+        android:src="@drawable/six" />
+
+    <!-- 底部居中 -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/center"
+        android:layout_margin="30dp"
+        android:layout_toLeftOf="@id/nine"
+        android:layout_toRightOf="@id/seven"
+        android:contentDescription="center_buttom"
+        android:src="@drawable/eight" />
+
+</RelativeLayout>

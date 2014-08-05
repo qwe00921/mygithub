@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_color" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/login_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:drawableRight="@drawable/i_settings_button"
+        icson:text="@string/login_string" />
+
+    <RelativeLayout
+        android:id="@+id/login_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/login_navigation_bar"
+        android:background="#ffeeeeee" >
+
+        <RelativeLayout
+            android:id="@+id/login_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:background="@drawable/login_view_bg_shape" >
+
+            <TextView
+                android:id="@+id/login_welcome"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_size_40xp"
+                android:gravity="center"
+                android:text="@string/login_welcome"
+                android:textColor="#ff77a3e0"
+                android:textSize="@dimen/front_size_28xp" />
+
+            <LinearLayout
+                android:id="@+id/login_buttons"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_welcome"
+                android:layout_marginLeft="@dimen/margin_size_30xp"
+                android:layout_marginRight="@dimen/margin_size_30xp"
+                android:layout_marginTop="@dimen/margin_size_30xp"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/login_wechat"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_size_100xp"
+                    android:layout_marginRight="@dimen/margin_size_10xp"
+                    android:layout_weight="1"
+                    android:background="@drawable/wechatlogin_button"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/login_wechat_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_size_10xp"
+                        android:text="@string/login_wechat"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/front_size_30xp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/login_qq"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_size_100xp"
+                    android:layout_marginLeft="@dimen/margin_size_10xp"
+                    android:layout_weight="1"
+                    android:background="@drawable/qqlogin_button"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/login_qq_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_size_10xp"
+                        android:text="@string/login_qq"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/front_size_30xp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/login_textviews"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_buttons"
+                android:layout_marginLeft="@dimen/margin_size_20xp"
+                android:layout_marginRight="@dimen/margin_size_20xp"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_size_40xp"
+                android:paddingTop="@dimen/margin_size_40xp" >
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="2px"
+                    android:layout_height="@dimen/margin_size_40xp"
+                    android:layout_centerInParent="true"
+                    android:background="#ffdcddde" />
+
+                <TextView
+                    android:id="@+id/login_yixun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/line"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/global_transparent_shadow_click_state"
+                    android:drawableRight="@drawable/i_global_arrow_right"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:padding="@dimen/margin_size_20xp"
+                    android:layout_marginRight="@dimen/margin_size_20xp"
+                    android:text="@string/login_yixun"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="@dimen/front_size_28xp" />
+
+                <TextView
+                    android:id="@+id/login_alipay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/line"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/global_transparent_shadow_click_state"
+                    android:drawableRight="@drawable/i_global_arrow_right"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:padding="@dimen/margin_size_20xp"
+                    android:layout_marginLeft="@dimen/margin_size_20xp"
+                    android:text="@string/login_ali_button_text"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="@dimen/front_size_28xp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <!-- <RelativeLayout
+            android:id="@+id/login_top_bg"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/login_view"
+            android:layout_marginLeft="@dimen/margin_size_20xp"
+            android:layout_marginRight="@dimen/margin_size_20xp"
+            android:background="@drawable/login_bg" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/login_yixun_logo" />
+        </RelativeLayout>  -->
+        <RelativeLayout android:id="@+id/login_top_bg"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/login_view">
+            <include layout="@layout/login_background"/> 
+        </RelativeLayout>
+         
+    </RelativeLayout>
+	
+    <include layout="@layout/global_loading" />
+
+</RelativeLayout>

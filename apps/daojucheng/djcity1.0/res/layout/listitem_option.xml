@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/x_global_item"
+    android:gravity="center_vertical" >
+
+    <TextView
+        android:id="@+id/opt_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/delete_item_icon"
+        android:drawablePadding="@dimen/margin_size_30xp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_size_30xp"
+        android:text="英雄联盟"
+        android:layout_toLeftOf="@+id/img_arrow"
+        android:textSize="@dimen/font_size_30xp" />
+	<ImageView
+	    android:id="@id/img_arrow"
+	    android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:src="@drawable/arrow_2"
+        android:layout_centerVertical="true"
+        android:paddingRight="@dimen/margin_size_30xp"
+        />
+	
+</RelativeLayout>

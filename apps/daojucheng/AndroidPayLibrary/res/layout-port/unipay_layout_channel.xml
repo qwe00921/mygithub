@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/unipay_fill.wrap">
+  <include layout="@layout/unipay_layout_head" />
+<!-- cont  -->
+  <LinearLayout
+    style="@style/unipay_cont">
+     <LinearLayout
+       style="@style/unipay_linear.srcollcont">
+          <LinearLayout
+            android:id="@+id/unipay_id_PayTypeLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical">
+            <TextView
+                style="@style/unipay_text"
+                android:textColor="@color/unipay_em1_color"
+                android:gravity="center_vertical"
+                android:text="@string/unipay_pay_channel"/>
+			</LinearLayout>
+			    <View style="@style/unipay_horline" />
+			    <LinearLayout
+                	android:id="@+id/unipay_id_RecoChannleLayout"
+                	android:layout_width="fill_parent"
+      				android:layout_height="wrap_content"
+       				android:gravity="center_vertical"
+        			android:background="@drawable/unipay_drawable_itembtn"
+			       >
+            		<GridView
+			    		android:id="@+id/unipay_id_ChannelReco"
+			            android:layout_width="fill_parent" 
+			            android:layout_height="wrap_content"
+			            android:cacheColorHint="@android:color/transparent"
+			            android:listSelector="@android:color/transparent"  
+			            android:fadingEdge="none" /> 
+
+			     </LinearLayout>
+			  <LinearLayout
+		         android:id="@+id/unipay_id_MoreChannelLayout"
+		         android:layout_height="40dp"
+		         style="@style/unipay_itemchannel"
+		         android:gravity="center">
+		         <TextView 
+		             android:id="@+id/unipay_id_MoreText"
+			         android:text="@string/unipay_more_channel"
+			         style="@style/unipay_text.middle"
+			         android:textColor="@color/unipay_thin2_color" />
+		       </LinearLayout>
+ 
+	            <LinearLayout
+	                android:id="@+id/unipay_id_ChannelBottomLayout"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center_vertical" >
+	
+	                <GridView
+	                    android:id="@+id/unipay_id_ChannelBottom"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:cacheColorHint="@android:color/transparent"
+	                    android:fadingEdge="none"
+	                    android:listSelector="@android:color/transparent"
+	                    android:scrollbars="@null" />
+	            </LinearLayout>
+       </LinearLayout>    
+         </LinearLayout> 
+ 
+</LinearLayout>

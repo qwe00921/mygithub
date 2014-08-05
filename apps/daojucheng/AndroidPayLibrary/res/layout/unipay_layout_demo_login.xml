@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:paddingLeft="50.0dp" android:paddingRight="50.0dp"
+		android:layout_marginTop="30.0dp">
+		<RelativeLayout android:layout_weight="1"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<EditText android:id="@+id/login_edit_account"
+				android:textColor="#334D06" android:layout_centerVertical="true"
+				android:paddingLeft="55.0dp" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:maxLength="25" android:inputType="textNoSuggestions"
+				android:text="" android:singleLine="true" />
+			<TextView android:textSize="18.0dp" android:textColor="#999999"
+				android:text="帐号" android:layout_centerVertical="true"
+				android:paddingLeft="2.0dp" android:layout_width="wrap_content"
+				android:layout_marginRight="5.0dp" android:layout_height="wrap_content" />
+		</RelativeLayout>
+		<RelativeLayout android:layout_weight="1"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<EditText android:id="@+id/login_edit_password"
+				android:paddingLeft="55.0dp" android:layout_width="fill_parent"
+				android:textColor="#334D06" android:layout_height="wrap_content"
+				android:layout_centerVertical="true" android:maxLength="20"
+				android:text="" android:password="true" />
+			<TextView android:textSize="18.0dp" android:textColor="#999999"
+				android:text="密码" android:layout_centerVertical="true"
+				android:paddingLeft="2.0dp" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:layout_marginRight="5.0dp" />
+		</RelativeLayout>
+
+		<Button android:layout_gravity="fill" android:id="@+id/button_login"
+			android:text="登录" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:layout_marginTop="20.0dp"></Button>
+		
+		
+		    <View
+			         android:layout_width="fill_parent"
+			         android:layout_height="2dp"
+			         android:layout_marginTop="20dp"
+			         android:layout_marginBottom="5dp"
+			         android:background="@drawable/unipay_drawable_dashline"/> 
+			         
+		<RelativeLayout 
+		    android:layout_weight="1"
+		    android:layout_marginTop="20dp"
+			android:orientation="vertical" 
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<EditText 
+			    android:id="@+id/openid_edit"
+				android:paddingLeft="55.0dp" 
+				android:layout_width="fill_parent"
+				android:textColor="#334D06" 
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true" 
+				android:maxLength="20"
+				android:text="" 
+				android:password="true" />
+			<TextView 
+			    android:textSize="18.0dp" 
+			    android:textColor="#999999"
+				android:text="openid" 
+				android:layout_centerVertical="true"
+				android:paddingLeft="2.0dp" 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" 
+				android:layout_marginRight="5.0dp" />
+		</RelativeLayout>
+		<RelativeLayout 
+		    android:layout_weight="1"
+			android:orientation="vertical" 
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<EditText 
+			    android:id="@+id/openkey_edit"
+				android:paddingLeft="55.0dp" 
+				android:layout_width="fill_parent"
+				android:textColor="#334D06" 
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true" 
+				android:maxLength="20"
+				android:text="" 
+				android:password="true" />
+			<TextView 
+			    android:textSize="18.0dp" 
+			    android:textColor="#999999"
+				android:text="openkey" 
+				android:layout_centerVertical="true"
+				android:paddingLeft="2.0dp" 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" 
+				android:layout_marginRight="5.0dp" />
+		</RelativeLayout>
+		<Button 
+		    android:layout_gravity="fill" 
+		    android:id="@+id/button1"
+			android:text="微信登录" 
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" 
+			android:layout_marginTop="20.0dp">
+		</Button>
+		
+	</LinearLayout>
+</LinearLayout>

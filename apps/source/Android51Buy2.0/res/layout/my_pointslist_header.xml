@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/balance_navbar"
+    android:orientation="vertical"
+    android:background="@color/background_color"
+    android:paddingTop="@dimen/margin_size_20xp"
+    android:paddingBottom="@dimen/margin_size_20xp"
+    android:paddingRight="@dimen/margin_size_30xp"
+    android:paddingLeft="@dimen/margin_size_30xp">
+
+    <TextView
+        android:id="@+id/mypoint_tv_total_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/margin_size_10xp"
+        android:text="@string/my_icson_no_cash"
+        android:textColor="@color/global_label"
+        android:textSize="@dimen/front_size_30xp" />
+
+    <TextView
+        android:id="@+id/mypoint_tv_total_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/global_text_info_color"
+        android:textSize="@dimen/front_size_26xp" />
+
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/listview_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/my_vp_order" />
+
+    <ListView
+        android:id="@+id/list_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/listview_navigation_bar"
+        android:background="@color/background_color"
+        android:dividerHeight="0dip"
+        android:fadingEdge="none"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" />
+
+    <TextView
+        android:id="@+id/empty_textview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/listview_navigation_bar"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@color/background_color"
+        android:text="@string/no_postsale_record"
+        android:textColor="@color/global_label"
+        android:textSize="@dimen/front_size_30xp" />
+    
+    <include
+        android:layout_below="@id/listview_navigation_bar"
+        layout="@layout/global_loading" />
+</RelativeLayout>

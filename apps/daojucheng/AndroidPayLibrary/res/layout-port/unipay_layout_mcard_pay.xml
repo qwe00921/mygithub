@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_fill.wrap">
+   <!-- include 大页面head头 -->
+   <include layout="@layout/unipay_layout_head" />
+   
+  <!-- cont  -->
+  <LinearLayout
+    android:id="@+id/unipay_id_down"
+    style="@style/unipay_cont">
+     <com.pay.ui.common.APScrollView
+     android:id="@+id/unipay_id_ScrollView"
+     style="@style/unipay_fill"
+     android:fillViewport="true">
+     <LinearLayout
+       style="@style/unipay_linear.srcollcont">
+      
+	   <TextView
+	       style="@style/unipay_text.middle"
+	       android:layout_marginBottom="5dp" 
+	       android:text="@string/unipay_mcard" />
+	   <View  
+	       style="@style/unipay_horline"
+	       android:layout_marginBottom="10dp" />
+	   <TextView
+	      android:id="@+id/unipay_mcard_valuePrompt"
+	      style="@style/unipay_text.middle"
+	      android:layout_marginBottom="10dp"
+	      android:textColor="@color/unipay_em3_color"
+	      android:text="@string/unipay_mcard_prompt"/>
+	   <RadioGroup
+	      style="@style/unipay_linear"
+	      android:layout_marginBottom="10dp"
+	      android:orientation="horizontal"
+	      android:id="@+id/unipay_id_MardNumGrp">
+	      
+	      <RadioButton 
+	          android:id="@+id/unipay_id_apNum1"
+	          style="@style/unipay_tabitem"
+	          android:text="@string/unipay_mcardvalue1"/> 
+		   <RadioButton 
+		      android:id="@+id/unipay_id_apNum2"
+		      style="@style/unipay_tabitem"
+		      android:text="@string/unipay_mcardvalue2"/> 
+		   <RadioButton
+		      android:id="@+id/unipay_id_apNum3"
+		      style="@style/unipay_tabitem"
+		      android:text="@string/unipay_mcardvalue3"/> 
+		   <RadioButton 
+		      android:id="@+id/unipay_id_apNum4"
+		      style="@style/unipay_tabitem"
+		      android:text="@string/unipay_mcardvalue4"/>
+		   <RadioButton 
+		      android:id="@+id/unipay_id_apNum5"
+		      style="@style/unipay_tabitem"
+		      android:text="@string/unipay_mcardvalue5"/>  
+	     </RadioGroup>
+	     
+	   <LinearLayout
+	               android:id="@+id/unipay_id_PayInputLayout"
+			       android:layout_width="fill_parent"
+			       android:layout_height="wrap_content"
+			       android:orientation="vertical">
+			   <!-- 输入框 -->
+				   <LinearLayout
+					  android:id="@+id/unipay_id_TelCardNumLayout"
+				      style="@style/unipay_inputbg">
+					  <EditText
+					     android:id="@+id/unipay_id_TelCardNumEdit" 
+					     style="@style/unipay_edit"
+				         android:inputType="number"
+				         android:digits="0123456789\n"
+				         android:imeOptions="actionNext"
+				         android:hint="@string/unipay_mcard_num"/>
+				         <ImageButton
+				              android:visibility="gone"
+						      android:id="@+id/unipay_id_CardNumDel"
+				     		  style="@style/unipay_icondel"/>
+					</LinearLayout>
+				
+				   <!-- 输入框 -->
+				   <LinearLayout
+					  android:id="@+id/unipay_id_TelCardPWDLayout"
+				      style="@style/unipay_inputbg">
+					  <EditText
+						 android:id="@+id/unipay_id_TelCardPWDEdit" 
+					     style="@style/unipay_edit"
+				         android:inputType="number"
+				         android:digits="0123456789\n"
+				         android:imeOptions="actionDone"
+				         android:hint="@string/unipay_mcard_pwd"/>
+				         <ImageButton
+				              android:visibility="gone"
+							  android:id="@+id/unipay_id_CardPWDDel"
+				     		  style="@style/unipay_icondel"/>
+					</LinearLayout>
+		   </LinearLayout>
+		   
+			    <!-- btn -->
+		       <LinearLayout
+                    style="@style/unipay_bigviewbtn">
+                <Button
+                    android:id="@+id/unipay_id_BuyBottomBtn"
+                    style="@style/unipay_btn"
+		            android:text="@string/unipay_pay_rightnow"/>
+            </LinearLayout>
+   
+     </LinearLayout>
+	</com.pay.ui.common.APScrollView>
+  </LinearLayout>
+</LinearLayout>

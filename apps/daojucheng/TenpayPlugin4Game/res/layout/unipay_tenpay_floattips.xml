@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_linear"
+    android:background="#00000000" >
+
+    <!-- cont -->
+
+    <LinearLayout style="@style/unipay_tenpay_float" >
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tenpay_alert_title"
+                    style="@style/unipay_tenpay_tiptitle" />
+
+                <TextView
+                    android:id="@+id/tenpay_alert_message"
+                    style="@style/unipay_tenpay_tiptitle.sub"
+                    android:layout_margin="10dp" />
+                <!-- btn -->
+
+                <LinearLayout style="@style/unipay_tenpay_tipbtn" >
+
+                    <Button
+                        android:id="@+id/tenpay_alert_ok"
+                        style="@style/unipay_tenpay_btn.thinbtn"
+                        android:layout_weight="100"
+                        android:text="@string/unipay_tenpay_ok" />
+
+                    <Button
+                        android:id="@+id/tenpay_alert_cancle"
+                        style="@style/unipay_tenpay_btn.thinbtn"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="100"
+                        android:text="@string/unipay_tenpay_cancel"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <!-- cont over -->
+
+</LinearLayout>

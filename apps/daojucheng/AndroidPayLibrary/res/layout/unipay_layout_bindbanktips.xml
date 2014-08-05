@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/unipay_id_tenpay_succdash"
+    style="@style/unipay_wrap"
+    android:background="@drawable/unipay_dashborder"
+    android:layout_marginTop="10dp"
+    android:gravity="center"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
+    <ImageView
+       style="@style/unipay_wrap"
+       android:src="@drawable/unipay_pic_smallbank"
+       android:contentDescription="@string/unipay_smallbank"
+       android:layout_marginRight="5dp"/>
+    <TextView
+      android:id="@+id/unipay_id_tenpay_succTips"
+      style="@style/unipay_text.small"
+      android:textColor="@color/unipay_thin_color"
+      android:visibility="gone"/>
+</LinearLayout>

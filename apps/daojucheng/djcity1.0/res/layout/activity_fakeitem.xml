@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <TextView
+	    android:id="@+id/submit_btn"
+	    android:layout_width="match_parent"
+    	android:layout_margin="20dp"
+    	android:layout_marginTop="40dp"
+		android:layout_height="@dimen/margin_size_100xp"
+		android:gravity="center"
+		android:textColor="@color/white"
+        android:text="Buy"
+        android:textSize="@dimen/font_size_30xp" 
+		android:background="@drawable/qqlogin_button"
+	    android:layout_alignParentBottom="true"/>
+    <TextView
+	    android:id="@+id/share_btn"
+	    android:layout_width="match_parent"
+    	android:layout_margin="20dp"
+    	android:layout_marginTop="40dp"
+		android:layout_height="@dimen/margin_size_100xp"
+		android:gravity="center"
+		android:textColor="@color/white"
+        android:text="Share"
+        android:textSize="@dimen/font_size_30xp" 
+		android:background="@drawable/qqlogin_button"
+	    android:layout_above="@id/submit_btn"/>
+	
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+	    android:layout_above="@id/share_btn">
+	<TextView
+	    android:id="@+id/fake_info" 
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:textSize="30dp"
+	    android:text="XXX"/>
+	</ScrollView>
+	    </RelativeLayout>

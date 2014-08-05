@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/more_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="@string/settings_title" />
+
+    <ScrollView
+        android:id="@+id/address_scroll_body"
+        style="@style/global_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/more_navbar"
+        android:background="@color/background_color"
+        android:paddingBottom="20dp" >
+
+        <RelativeLayout
+            android:id="@id/global_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/more_settings_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_color_settings_title"
+                android:paddingBottom="@dimen/margin_size_15xp"
+                android:paddingLeft="@dimen/setting_cell_leftPadding"
+                android:paddingRight="@dimen/setting_cell_leftPadding"
+                android:paddingTop="@dimen/margin_size_15xp"
+                android:text="@string/settings_option"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/font_size_28xp" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_address"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_settings_title"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_choose_address"
+                djcity:cellPosition="top" />
+
+            <RelativeLayout
+                android:id="@+id/more_relative_settings_non_image"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_address"
+                android:paddingBottom="@dimen/margin_size_20xp"
+                android:paddingLeft="@dimen/setting_cell_leftPadding"
+                android:paddingRight="10dp"
+                android:paddingTop="@dimen/margin_size_20xp" >
+
+                <TextView
+                    android:id="@+id/more_relative_settings_non_image_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/settings_non_image"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_32xp" />
+
+                <TextView
+                    android:id="@+id/more_relative_settings_non_image_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/more_relative_settings_non_image_title"
+                    android:text="@string/non_image_hint"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="@dimen/font_size_26xp" />
+
+                <com.tencent.djcity.lib.ui.CheckBox
+                    android:id="@+id/more_relative_settings_non_image_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" 
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    djcity:checkboxImageOff="@drawable/i_filter_checkbox"
+                    djcity:checkboxImageOn="@drawable/i_filter_checkbox_s" >
+                </com.tencent.djcity.lib.ui.CheckBox>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/settings_line"
+                style="@style/global_line2"
+                android:layout_below="@+id/more_relative_settings_non_image" />
+
+            <RelativeLayout
+                android:id="@+id/more_relative_settings_open_message"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_line"
+                android:paddingBottom="@dimen/margin_size_20xp"
+                android:paddingLeft="@dimen/setting_cell_leftPadding"
+                android:paddingRight="10dp"
+                android:paddingTop="@dimen/margin_size_20xp" >
+
+                <TextView
+                    android:id="@+id/more_relative_settings_open_message_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/settings_open_message"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="@dimen/font_size_32xp" />
+
+                <TextView
+                    android:id="@+id/more_relative_settings_open_message_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/more_relative_settings_open_message_title"
+                    android:text="@string/settings_open_message_hint"
+                    android:textColor="@color/global_text_info_color"
+                    android:textSize="@dimen/font_size_26xp" />
+
+                <com.tencent.djcity.lib.ui.CheckBox
+                    android:id="@+id/more_relative_settings_open_message_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" 
+                    android:padding="10dp"
+                    djcity:checkboxImageOff="@drawable/i_filter_checkbox"
+                    djcity:checkboxImageOn="@drawable/i_filter_checkbox_s"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/more_settings_other"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_settings_open_message"
+                android:background="@color/background_color_settings_title"
+                android:paddingBottom="@dimen/margin_size_15xp"
+                android:paddingLeft="@dimen/setting_cell_leftPadding"
+                android:paddingRight="@dimen/setting_cell_leftPadding"
+                android:paddingTop="@dimen/margin_size_15xp"
+                android:text="@string/settings_more"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/font_size_28xp" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_history"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_settings_other"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_view_history" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_clear"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_history"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_clear_cache" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_recommend_apps"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_clear"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_app_recomment" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_version"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_recommend_apps"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_check_version" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_messages"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_version"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_message_center" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_advise"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_messages"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_advise" />
+
+            <!--
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_welcome"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_advise"
+                djcity:caption="@string/settings_welcome" />            -->
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_rules"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/more_relative_advise"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_rules" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_aboutus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/more_relative_rules"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_about_us" />
+
+            <com.tencent.djcity.lib.ui.SettingCellView
+                android:id="@+id/more_relative_contactus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_relative_aboutus"
+                android:background="@drawable/global_transparent_shadow_click_state"
+                djcity:caption="@string/settings_contact_us" />
+
+            <Button
+                android:id="@+id/more_relative_logout"
+                style="@style/button_confirm_bg_blue"
+                android:layout_width="fill_parent"
+                android:layout_below="@+id/more_relative_contactus"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="34dp"
+                android:layout_marginRight="34dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/logout_setting"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_36xp" >
+            </Button>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

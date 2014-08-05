@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/global_bg" >
+
+
+    <com.icson.lib.ui.NavigationBar android:id="@+id/history_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/settings_view_history" />
+
+    <RelativeLayout
+        android:id="@id/global_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/history_navbar"
+        android:background="@color/background_color" >
+
+        <ListView
+            android:id="@+id/more_history_listview"
+            style="@style/global_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <RelativeLayout
+            android:id="@+id/more_history_relative_empty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="25dip"
+            android:paddingTop="10dip">
+
+            <ImageView android:id="@+id/history_empty_image"
+                android:contentDescription="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_size_100xp"
+                android:src="@drawable/history_empty" />
+
+            <TextView
+                android:id="@+id/list_textview_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_size_55xp"
+                android:layout_below="@id/history_empty_image"
+                android:text="@string/message_no_history"
+                android:textColor="@color/global_text_info_color"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/more_history_button_redirect"
+                style="@style/button_confirm_bg_blue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_textview_label"
+                android:layout_marginLeft="25dip"
+                android:layout_marginRight="25dip"
+                android:layout_marginTop="@dimen/margin_size_85xp" 
+                android:text="@string/cart_emtpy_redirect"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <include
+        android:layout_below="@id/history_navbar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

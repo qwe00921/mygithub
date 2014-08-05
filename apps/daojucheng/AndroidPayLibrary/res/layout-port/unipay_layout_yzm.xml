@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   style="@style/unipay_fill.wrap">
+     <!-- cont -->
+     <LinearLayout
+         android:id="@+id/unipay_id_apContent"
+         style="@style/unipay_dialog">
+	     <ScrollView
+	        style="@style/unipay_fill">
+		    <LinearLayout
+		      style="@style/unipay_linear">
+			     <LinearLayout
+			       style="@style/unipay_linear"
+			       android:orientation="horizontal">
+		           <ImageView
+		             android:id="@+id/unipay_id_apVeryCodeImg"
+		    	     android:layout_width="130dp"
+			         android:layout_height="53dp"
+			         android:layout_marginBottom="5dp"
+			         android:contentDescription="@string/unipay_codeimg"/>
+		           <TextView
+		            android:id="@+id/unipay_id_change"
+		            style="@style/unipay_text.small"
+				    android:autoLink="all"
+		            android:textColor="@color/unipay_link_color"
+		            android:layout_gravity="bottom"
+		            android:layout_marginBottom="2dp"
+		            android:layout_marginLeft="2dp"
+		            android:text="@string/unipay_yzm_change"/> 
+                </LinearLayout>    
+		        <!-- 输入框 -->
+		        <LinearLayout
+		           android:id="@+id/unipay_id_apVerifyLayout"
+			       style="@style/unipay_inputbg" >
+				   <EditText
+				      android:id="@+id/unipay_id_apVeryCodeEdit"
+			          style="@style/unipay_edit"
+		      		  android:hint="@string/unipay_yzm_prompt"/> 
+		      		<ImageButton
+		      		  android:visibility="gone"
+		      		  android:id="@+id/unipay_id_apCodeDel"
+		      		  style="@style/unipay_icondel"/>
+				</LinearLayout>
+			     <!-- btn -->
+		        <LinearLayout
+		         style="@style/unipay_tipbtn">
+	             <Button
+	              android:id="@+id/unipay_id_apVeryCodeSureBtn"
+	              style="@style/unipay_btn"
+	              android:text="@string/unipay_sure"/> 
+		        </LinearLayout>
+		       </LinearLayout>
+	          </ScrollView>
+	       </LinearLayout>
+  </LinearLayout>

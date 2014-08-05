@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   style="@style/unipay_fill.wrap_land"
+   android:paddingTop="0dp">
+        <!-- cont -->
+        <LinearLayout
+            android:id="@+id/unipay_id_ContentLayout"
+            style="@style/unipay_dialog.land">
+            <ScrollView
+               style="@style/unipay_fill">
+               <LinearLayout
+                  style="@style/unipay_linear">
+                  <!-- Q币支付 -->
+		          <!-- <TextView 
+                            android:id="@+id/apLoginTitle"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:text=""
+                            android:textColor="#333"
+		                    android:textSize="12sp"/> -->
+                   <!-- 输入框 -->
+                   <LinearLayout
+                       android:id="@+id/unipay_id_LoginUinLayout"
+                       style="@style/unipay_inputbg">
+                       <EditText
+                           android:id="@+id/unipay_id_LoginUin"
+                           style="@style/unipay_edit"
+                           android:inputType="number"
+ 		                    android:hint="@string/unipay_uin_hint"/> 
+                   </LinearLayout>
+                   <!-- 输入框 -->
+                   <LinearLayout
+                       android:id="@+id/unipay_id_LoginPWDLayout"
+                       style="@style/unipay_inputbg" >
+                       <EditText
+                        android:id="@+id/unipay_id_LoginPWD"
+                        style="@style/unipay_edit"
+                        android:inputType="textPassword"
+ 		                android:hint="@string/unipay_pwd_hint"/>
+                       <CheckBox
+                        android:id="@+id/unipay_id_PWDLock"
+                        style="@style/unipay_wrap"
+                        android:background="@null"
+                        android:paddingLeft="30dp"
+                        android:checked="true"
+                        android:button="@drawable/unipay_drawable_lock_btn"/>
+                   </LinearLayout>
+                   <!-- btn -->
+                   <LinearLayout
+                       style="@style/unipay_tipbtn" >
+                       <Button
+                          android:id="@+id/unipay_id_LoginCancel"
+                          style="@style/unipay_btn.thinbtn"
+			              android:layout_weight="100"
+			              android:layout_marginRight="10dp"
+			              android:text="@string/unipay_cancel" />
+                       <Button
+                          android:id="@+id/unipay_id_LoginBtn"
+                          style="@style/unipay_btn"
+			              android:layout_weight="100"
+			              android:layout_marginLeft="10dp"
+			              android:text="@string/unipay_sure"/>
+                   </LinearLayout>
+                 </LinearLayout>
+              </ScrollView>
+        </LinearLayout>
+       <!-- cont over -->
+</RelativeLayout>

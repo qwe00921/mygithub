@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/address_list_relative_con"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingTop="@dimen/margin_size_15xp"
+    android:paddingBottom="@dimen/margin_size_15xp"
+    android:paddingLeft="@dimen/margin_size_30xp"
+    android:background="@drawable/global_transparent_shadow_click_state" >
+
+    <ImageView
+        android:id="@+id/address_item_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/margin_size_20xp"
+        android:layout_margin="@dimen/margin_size_20xp"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/global_transparent_shadow_click_state"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/i_edit_item" />
+
+    <com.icson.lib.ui.ListItemView
+        android:id="@+id/address_list_item_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/address_item_edit"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_40xp" 
+            android:layout_marginTop="@dimen/margin_size_25xp" 
+            android:layout_marginRight="@dimen/margin_size_40xp" >
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:id="@+id/textview_name"
+                android:layout_height="wrap_content"
+              	android:textSize="@dimen/front_size_32xp"
+                android:textColor="@color/global_text_color" />
+            
+            <TextView
+                android:id="@+id/textview_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_size_40xp"
+                android:textSize="@dimen/front_size_32xp"
+                android:textColor="@color/global_text_color"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textview_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_40xp" 
+            android:layout_marginRight="@dimen/margin_size_40xp"
+            android:layout_marginBottom="@dimen/margin_size_25xp"
+            android:layout_marginTop="@dimen/margin_size_10xp"
+            android:lineSpacingExtra="@dimen/margin_size_5xp"
+            android:textColor="@color/global_text_info_color"
+            android:textSize="@dimen/front_size_28xp"/>
+	</com.icson.lib.ui.ListItemView>
+
+</RelativeLayout>

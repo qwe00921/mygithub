@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/off_mode_foreground" >
+
+    <ImageView
+        android:id="@+id/dialog_bg_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialog_content_img"
+        android:layout_alignTop="@+id/dialog_content_img"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/margin_size_25xp"
+        android:background="@color/user_guide_bg"
+        android:contentDescription="@string/app_name" />
+
+    <ImageView
+        android:id="@+id/dialog_content_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/margin_size_15xp"
+        android:layout_marginRight="@dimen/margin_size_15xp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:paddingBottom="@dimen/margin_size_30xp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/guide_second_open" />
+
+    <RelativeLayout
+        android:id="@+id/layout_positive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialog_content_img"
+        android:layout_alignLeft="@+id/dialog_content_img"
+        android:layout_marginBottom="@dimen/margin_size_55xp"
+        android:layout_marginLeft="@dimen/margin_size_60xp" >
+
+        <ImageView
+            android:id="@+id/dialog_btn_positive"
+            android:layout_width="@dimen/margin_size_320xp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/button_guide_slot" />
+
+        <TextView
+            android:id="@+id/dialog_text_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/dialog_btn_positive"
+            android:paddingLeft="@dimen/margin_size_60xp"
+            android:paddingBottom="@dimen/margin_size_20xp"
+            android:adjustViewBounds="true"
+            android:text="@string/guide_try"
+            android:textColor="@color/global_white"
+            android:textSize="@dimen/front_size_32xp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/dialog_btn_negative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/dialog_bg_image"
+        android:layout_alignTop="@+id/dialog_bg_image"
+        android:layout_margin="@dimen/margin_size_10xp"
+        android:background="@drawable/guide_close_btn"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY" />
+
+</RelativeLayout>

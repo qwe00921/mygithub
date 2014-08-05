@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:visibility="gone" >
+
+    <ImageView android:contentDescription="@string/app_name"
+        android:id="@+id/event_3_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" >
+    </ImageView>
+
+</RelativeLayout>

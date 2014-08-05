@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/lessprice_buy_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:hasDrawableRight="true"
+        icson:text="@string/less_price_buy_navigation" />
+
+    <LinearLayout
+        android:id="@+id/free_gifts_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/lessprice_buy_navbar"
+        android:background="@color/background_color"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/lessprice_buy_intro"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/margin_size_20xp"
+            android:paddingLeft="@dimen/margin_size_30xp"
+            android:paddingRight="@dimen/margin_size_30xp"
+            android:paddingTop="@dimen/margin_size_20xp"
+            android:textColor="@color/coupon_name_color"
+            android:textSize="@dimen/front_size_30xp" />
+
+        <ExpandableListView
+            android:id="@+id/lessprice_buy_expandablelistview"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:childDivider="#ffc3c3c3"
+            android:divider="#ffe5e5e5"
+            android:dividerHeight="0px"
+            android:groupIndicator="@null" />
+    </LinearLayout>
+
+    <include
+        android:layout_below="@id/lessprice_buy_navbar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

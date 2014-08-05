@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/global_bg"
+    android:baselineAligned="false"
+    android:orientation="vertical" >
+    
+    <FrameLayout
+        android:id="@+id/main_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/main_menu" >
+    </FrameLayout>
+    
+    <FrameLayout android:id="@id/main_menu"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_marginTop="-15dip" >
+	
+	    <RadioGroup
+	        android:id="@+id/main_radiogroup"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:paddingTop="15dip" >
+	
+	        <RadioButton
+	            android:id="@+id/radio_home"
+	            style="@style/main_tab"
+	            android:layout_weight="97"
+	            android:background="@drawable/x_main_menu_home" />
+	        
+	        <RadioButton
+	            android:id="@+id/radio_category"
+	            style="@style/main_tab"
+	            android:layout_weight="96"
+	            android:background="@drawable/x_main_menu_category" />
+	        
+	        <RadioButton
+	            android:id="@+id/radio_event"
+	            style="@style/main_tab"
+	            android:layout_weight="96"
+	            android:background="@drawable/x_main_menu_event" />
+	
+	        <RadioButton
+	            android:id="@+id/radio_discover"
+	            style="@style/main_tab"
+	            android:layout_weight="96"
+	            android:background="@drawable/x_main_menu_discover" />
+	
+	        <RadioButton
+	            android:id="@+id/radio_my"
+	            style="@style/main_tab"
+	            android:layout_weight="96"
+	            android:background="@drawable/x_main_menu_my" />
+	    </RadioGroup>
+	   
+	</FrameLayout>
+
+</RelativeLayout>

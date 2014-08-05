@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_fill"
+    android:background="#90000000"
+    android:orientation="vertical"
+    android:paddingTop="10dp" >
+
+    <!-- head begin -->
+
+    <LinearLayout style="@style/unipay_tenpay_head" >
+
+        <TextView
+            android:id="@+id/pay_title"
+            style="@style/unipay_tenpay_text.headtitle"
+            android:text="@string/unipay_tenpay_select_card" />
+    </LinearLayout>
+    <!-- head over -->
+
+    <LinearLayout
+        style="@style/unipay_tenpay_cont.srcollcont"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/select_list"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@drawable/unipay_tenpay_line"
+            android:dividerHeight="1dp"
+            android:fadingEdgeLength="0dp"
+            android:listSelector="@android:color/transparent" >
+        </ListView>
+
+        <!--
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/select_cancel"
+                style="@style/unipay_tenpay_btn.thinbtn"
+                android:text="@string/unipay_tenpay_cancel" />
+
+            <TextView style="@style/unipay_tenpay_text.cft" />
+        </LinearLayout>
+        -->
+    </LinearLayout>
+
+</LinearLayout>

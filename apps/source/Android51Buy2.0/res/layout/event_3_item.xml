@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:paddingBottom="1dip" >
+
+        <LinearLayout
+            android:id="@+id/event_3_container_1"
+            android:layout_width="0dip"
+            android:layout_height="155dip"
+            android:layout_marginRight="1dip"
+            android:layout_weight="1"
+            android:background="@drawable/x_global_item"
+            android:orientation="vertical"
+            android:padding="5dip" >
+
+            <ImageView android:contentDescription="@string/app_name"
+                android:id="@+id/event_3_image_1"
+                android:layout_width="fill_parent"
+                android:layout_height="75dip"
+                android:scaleType="fitCenter" >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/event_3_price_1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@color/global_price"
+                android:textSize="15dp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/event_3_title_1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="#ff000000"
+                android:textSize="15dp" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/event_3_container_2"
+            android:layout_width="0dip"
+            android:layout_height="155dip"
+            android:layout_marginRight="1dip"
+            android:layout_weight="1"
+            android:background="@drawable/x_global_item"
+            android:orientation="vertical"
+            android:padding="5dip" >
+
+            <ImageView
+                android:id="@+id/event_3_image_2"
+                android:layout_width="fill_parent"
+                android:layout_height="75dip"
+                android:scaleType="fitCenter" >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/event_3_price_2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@color/global_price"
+                android:textSize="15dp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/event_3_title_2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="#ff000000"
+                android:textSize="15dp" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/event_3_container_3"
+            android:layout_width="0dip"
+            android:layout_height="155dip"
+            android:layout_weight="1"
+            android:background="@drawable/x_global_item"
+            android:orientation="vertical"
+            android:padding="5dip" >
+
+            <ImageView
+                android:id="@+id/event_3_image_3"
+                android:layout_width="fill_parent"
+                android:layout_height="75dip"
+                android:scaleType="fitCenter" >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/event_3_price_3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@color/global_price"
+                android:textSize="15dp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/event_3_title_3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="#ff000000"
+                android:textSize="15dp" >
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="0px"
+        android:layout_height="0px" />
+
+</RelativeLayout>

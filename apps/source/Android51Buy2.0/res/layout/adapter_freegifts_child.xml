@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_size_30xp"
+    android:paddingRight="@dimen/margin_size_30xp" >
+
+    <RelativeLayout
+        android:id="@+id/freegifts_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_size_20xp" >
+
+        <View
+            android:id="@+id/freegifts_line"
+            style="@style/global_line2" />
+
+        <ImageView
+            android:id="@+id/freegifts_product_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_size_20xp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/choose_radio_off" />
+
+        <ImageView
+            android:id="@+id/freegifts_product_pic"
+            android:layout_width="@dimen/margin_size_160xp"
+            android:layout_height="@dimen/margin_size_160xp"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:layout_marginTop="@dimen/margin_size_20xp"
+            android:layout_toRightOf="@id/freegifts_product_checkbox"
+            android:layout_below="@id/freegifts_line"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/choose_radio_off" />
+
+        <TextView
+            android:id="@+id/freegifts_product_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/freegifts_product_pic"
+            android:layout_below="@id/freegifts_line"
+            android:layout_marginTop="@dimen/margin_size_20xp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <com.icson.lib.ui.AlphaTextView
+            android:id="@+id/freegifts_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/margin_size_20xp"
+            android:layout_toRightOf="@id/freegifts_product_pic"
+            android:paddingBottom="@dimen/margin_size_5xp"
+            android:textColor="@color/global_price"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <com.icson.lib.ui.AlphaTextView
+            android:id="@+id/freegifts_product_promoprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/margin_size_20xp"
+            android:layout_toRightOf="@id/freegifts_product_price"
+            android:paddingBottom="@dimen/margin_size_5xp"
+            android:textColor="@color/global_text_info_color"
+            android:textSize="@dimen/front_size_26xp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/freegifts_product_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/margin_size_20xp"
+            android:layout_toRightOf="@id/freegifts_product_price"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <TextView
+            android:id="@+id/freegifts_product_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_size_20xp"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/front_size_26xp" />
+
+        <TextView
+            android:id="@+id/freegifts_product_add_button"
+            style="@style/button_confirm_bg_blue"
+            android:layout_width="@dimen/margin_size_180xp"
+            android:layout_height="@dimen/margin_size_60xp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_size_20xp"
+            android:contentDescription="@string/app_name"
+            android:text="@string/add_to_cart"
+            android:gravity="center"
+            android:textSize="@dimen/front_size_26xp" />
+    </RelativeLayout>
+
+</LinearLayout>

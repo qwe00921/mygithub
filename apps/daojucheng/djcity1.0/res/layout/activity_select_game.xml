@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:text="@string/select_game" />
+
+    <EditText
+        android:id="@+id/search_edittext"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/search_edittext_bg"
+        android:drawableLeft="@drawable/icon_search"
+        android:hint="@string/search_game_hint"
+        android:drawablePadding="@dimen/margin_size_10xp"
+        android:imeOptions="actionSearch"
+        android:inputType="textAutoComplete"
+        android:maxLength="100"
+        android:paddingBottom="@dimen/margin_size_20xp"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingTop="@dimen/margin_size_20xp"
+        android:singleLine="true"
+        android:textColor="@color/global_text_color"
+        android:textColorHint="@color/global_text_info_color"
+        android:textSize="@dimen/font_size_32xp" >
+
+    </EditText>
+    
+    <View style="@style/global_line1"/>
+
+    <ListView
+        android:id="@+id/city_list_view"
+        style="@style/global_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" />
+
+</LinearLayout>

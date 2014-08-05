@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="80dp" >
+
+    <RelativeLayout
+        android:id="@+id/item_detail_coupon_gift_pic"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/coupon_gift_bg_small"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/item_detail_coupon_gift_pic_rmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="@string/rmb"
+            android:textColor="@color/white"
+            android:textSize="@dimen/front_size_32xp" />
+
+        <TextView
+            android:id="@+id/item_detail_coupon_gift_pic_amt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/item_detail_coupon_gift_pic_rmb"
+            android:textColor="@color/white"
+            android:text="@string/num_fifty"
+            android:textSize="@dimen/front_size_48xp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_detail_coupon_gift_pic_rmb"
+            android:layout_marginTop="3dp"
+            android:text="@string/orderconfirm_coupon_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/front_size_32xp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_detail_coupon_gift_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@id/item_detail_coupon_gift_pic"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:paddingLeft="@dimen/margin_size_10xp"
+        android:paddingRight="@dimen/margin_size_10xp"
+        android:paddingTop="@dimen/margin_size_10xp"
+        android:textColor="@color/coupon_name_color"
+        android:textSize="@dimen/front_size_28xp" />
+
+    <TextView
+        android:id="@+id/item_detail_coupon_gift_amt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_detail_coupon_gift_pic"
+        android:layout_toRightOf="@id/item_detail_coupon_gift_pic"
+        android:padding="@dimen/margin_size_10xp"
+        android:textColor="@color/coupon_name_color"
+        android:textSize="@dimen/front_size_28xp" />
+
+</RelativeLayout>

@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffcbcbcb"
+    android:paddingBottom="@dimen/margin_size_1xp" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:background="#fff6f6f6"
+    	android:layout_height="45dp"
+        android:paddingLeft="@dimen/margin_size_30xp"
+        android:paddingRight="@dimen/margin_size_30xp">
+
+        <TextView
+            android:id="@+id/category_role_info"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/font_size_28xp" />
+
+        <Button
+            android:id="@+id/category_change_area_btn"
+            android:layout_width="wrap_content"
+            android:background="@drawable/button_red_round_frame_shape"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/margin_size_30xp"
+            android:paddingRight="@dimen/margin_size_30xp"
+            android:paddingTop="@dimen/margin_size_20xp"
+            android:paddingBottom="@dimen/margin_size_20xp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/red"
+            android:text="@string/change_area" />
+    </RelativeLayout>
+
+</RelativeLayout>

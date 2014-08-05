@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/global_title"
+    style="@style/global_header"
+    android:layout_marginBottom="-2dip"
+    android:padding="5.0dip" >
+
+    <TextView
+        android:id="@+id/global_textview_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:singleLine="true"
+        android:textColor="#ffffffff"
+        android:textSize="22dp" />
+
+</RelativeLayout>

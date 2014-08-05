@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/product_list_item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/global_white_shadow_click_state"
+   >
+	
+	<ImageView
+	    android:id="@+id/stockStatus"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:padding="@dimen/margin_size_10xp"
+	    android:visibility="gone"
+	    android:contentDescription="@string/app_name"/>
+	
+    <RelativeLayout
+        android:id="@+id/list_relative_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_size_30xp"
+    	android:paddingRight="@dimen/margin_size_30xp"
+    	android:paddingTop="@dimen/margin_size_25xp"
+    	android:paddingBottom="@dimen/margin_size_25xp" >
+        
+        <ImageView 
+            android:id="@+id/my_collect_delete"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/margin_size_30xp"
+    		android:paddingTop="@dimen/margin_size_30xp"
+    		android:paddingBottom="@dimen/margin_size_30xp"
+            android:src="@drawable/delete_item_btn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/list_image_pic"
+            android:layout_width="@dimen/margin_size_200xp"
+            android:layout_height="@dimen/margin_size_200xp"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/app_name"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:layout_toRightOf="@id/my_collect_delete" 
+            android:scaleType="fitCenter" />
+
+        <RelativeLayout
+            android:id="@+id/list_relative_right"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/margin_size_200xp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/list_image_pic" >
+
+            <TextView
+                android:id="@+id/list_textview_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textSize="@dimen/front_size_30xp"
+                android:textColor="@color/global_text_color" />
+
+            <TextView
+                android:id="@+id/list_textview_promo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_textview_name"
+                android:layout_gravity="center_vertical"
+                android:drawableRight="@drawable/i_list_activity_gift"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/filter_item_checked"
+                android:textSize="@dimen/front_size_24xp" />
+            
+            <TextView
+	            android:id="@+id/list_textview_show_price"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true"
+	            android:layout_alignParentLeft="true"
+	            android:textColor="@color/global_tab"
+	            android:textStyle="bold"
+	            android:textSize="@dimen/front_size_30xp" />
+            <TextView
+	            android:id="@+id/list_textview_discuss"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentBottom="true"
+	            android:textColor="@color/coupon_name_color"
+	            android:textSize="@dimen/front_size_24xp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_detail_option_block"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin_size_30xp"
+    >
+    
+    <TextView
+        android:id="@+id/item_detail_textview_attr_label_long"
+        style="@style/global_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="颜色"
+        android:paddingBottom="@dimen/margin_size_20xp"
+        android:textColor="@color/global_text_color"
+        android:textSize="@dimen/front_size_30xp" />
+
+    <TextView
+        android:id="@+id/item_detail_textview_attr_label_short"
+        style="@style/global_label"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_size_76xp"
+        android:layout_below="@id/item_detail_textview_attr_label_long"
+        android:text="颜色"
+        android:gravity="center_vertical"
+        android:textColor="@color/global_text_color"
+        android:textSize="@dimen/front_size_30xp" />
+
+    <com.icson.lib.ui.FlowLayout
+        android:id="@+id/item_linear_attrs"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_detail_textview_attr_label_long"
+        android:layout_toRightOf="@id/item_detail_textview_attr_label_short"
+        android:layout_marginLeft="@dimen/margin_size_30xp"
+        android:gravity="center_vertical" >
+    </com.icson.lib.ui.FlowLayout>
+
+    <LinearLayout
+        android:id="@+id/item_detail_linear_attr_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_detail_textview_attr_label_long"
+        android:layout_toRightOf="@id/item_linear_attrs"
+        android:layout_marginLeft="@dimen/margin_size_30xp" >
+
+        <TextView
+            android:id="@+id/item_detail_textview_attr_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner_left_bg"
+            android:gravity="left|center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:text="黑色"
+            android:textSize="@dimen/front_size_30xp" />
+
+        <ImageButton
+            android:id="@+id/item_detail_button_attr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:clickable="false"
+            android:background="@drawable/spinner_bg" />
+    </LinearLayout>
+
+</RelativeLayout>

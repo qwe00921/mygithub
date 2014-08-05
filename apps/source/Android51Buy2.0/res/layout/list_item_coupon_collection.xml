@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal">
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+		android:id="@+id/card_img_layout"
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true">
+    	<ImageView
+        	android:id="@+id/card_img"
+        	android:layout_width="wrap_content"
+          	android:layout_height="wrap_content"
+           	/>
+    	<TextView 
+			android:id="@+id/card_name"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_alignLeft="@id/card_img"
+    		android:layout_alignRight="@id/card_img"
+    		android:layout_centerHorizontal="true"
+    		android:gravity="center_horizontal"
+    		android:singleLine="true"
+    		android:ellipsize="end"
+    		android:layout_marginLeft="20dp"
+    		android:layout_marginRight="20dp"
+    		android:layout_marginTop="50dp"
+    		android:textSize="20dp"
+    		android:text="什么什么奖券"
+    		android:textColor="#ffffff"/>
+        </RelativeLayout>
+        
+    
+    <TextView
+        android:id="@+id/expire_info_v"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignBottom="@id/card_img_layout"
+    	android:layout_alignRight="@id/card_img_layout"
+    	android:text="2014-01-01"
+    	android:gravity="bottom"
+    	android:visibility="invisible"/>
+    <RelativeLayout
+        android:layout_below="@id/card_img_layout"
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/coupon_info_ll"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:layout_centerHorizontal="true">
+
+		<TextView
+		    android:id="@+id/cdkey"
+		    android:layout_width="184dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:text="兑换券:ALVZRAAAABAZMUXU"
+		    android:textColor="#b0b0b0"
+		    android:textSize="@dimen/coupon_item_cdkey_textsize"/>
+		<TextView
+			android:id="@+id/copy_cdkey"
+			android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentTop="true"
+        	android:layout_alignParentRight="true"
+        	android:gravity="right"
+        	android:layout_marginRight="3dp"
+        	android:layout_toRightOf="@id/cdkey"
+        	android:textColor="#b0b0b0"
+        	android:textSize="15dp"
+        	android:text="@string/copy_cdk"/>
+		
+		<ImageView
+		    android:id="@+id/check_cdkey"
+	    	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_margin="12dp"
+        	android:layout_centerHorizontal="true"
+        	android:src="@drawable/check_cdk_btn"
+        	android:layout_below="@id/copy_cdkey"/>
+	
+	</RelativeLayout>
+	<View
+	    android:layout_below="@id/coupon_info_ll"
+	   	android:layout_width="wrap_content"
+        android:layout_height="40dp"/>
+</RelativeLayout>
+    

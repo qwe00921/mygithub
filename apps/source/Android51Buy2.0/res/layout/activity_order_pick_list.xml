@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar 
+        android:id="@+id/order_list_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/my_order" />
+        
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+	    	>
+    <ListView
+        android:id="@+id/orderlist_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+    	android:background="@android:color/transparent"
+		android:cacheColorHint="@android:color/transparent"
+        android:dividerHeight="0dip"
+        android:fadingEdge="none"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" 
+        />
+     <TextView
+ 	    android:id="@+id/no_order_text"
+ 	    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingTop="80dp"
+        android:text="@string/no_order_record"
+        android:background="#ffffffff"
+   	 	android:textColor="#ababab"
+        android:textSize="@dimen/front_size_40xp"
+        android:visibility="invisible" /> 
+    </RelativeLayout>
+
+</LinearLayout>

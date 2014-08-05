@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/wuliu_line_past" >
+
+    <ImageView
+        android:id="@+id/orderflow_img"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY" />
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/margin_size_60xp"
+        android:layout_toRightOf="@+id/orderflow_img"
+        >
+            
+    <com.icson.postsale.SizeChangeNotifyingTextView
+        android:id="@+id/postsale_textview_log_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:textColor="@color/global_label"
+        android:textSize="@dimen/front_size_28xp">
+    </com.icson.postsale.SizeChangeNotifyingTextView>
+    
+    <TextView
+        android:id="@+id/postsale_textview_showall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="@color/my_order_phone_color"
+        android:textSize="@dimen/front_size_28xp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/postsale_textview_log_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_10xp"
+        android:paddingBottom="@dimen/margin_size_50xp"
+        android:gravity="left"
+        android:textColor="@color/global_label"
+        android:textSize="@dimen/front_size_24xp" >
+    </TextView>
+        
+    </LinearLayout>
+
+
+</RelativeLayout>

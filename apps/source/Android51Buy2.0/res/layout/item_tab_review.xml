@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <RadioGroup
+            android:id="@+id/item_review_tab"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/item_review_tab_satisfy"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/top_tab_1"
+                android:button="@drawable/none"
+                android:gravity="center"
+                android:text="满意"
+                android:textSize="@dimen/front_size_30xp"
+                android:textColor="@color/global_text_color" />
+
+            <RadioButton
+                android:id="@+id/item_review_tab_general"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/top_tab_2"
+                android:button="@drawable/none"
+                android:gravity="center"
+                android:text="一般"
+                android:textSize="@dimen/front_size_30xp"
+                android:textColor="@color/global_text_color"/>
+
+            <RadioButton
+                android:id="@+id/item_review_tab_unsatisfy"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/top_tab_3"
+                android:button="@drawable/none"
+                android:gravity="center"
+                android:text="不满意"
+                android:textSize="@dimen/front_size_30xp"
+                android:textColor="@color/global_text_color"/>
+        </RadioGroup>
+
+        <ListView
+            android:id="@+id/item_review_listview"
+            style="@style/global_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        </ListView>
+    </LinearLayout>
+
+</merge>

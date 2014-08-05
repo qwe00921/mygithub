@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     style="@style/unipay_fill.wrap_land">
+      <LinearLayout
+	       style="@style/unipay_fill"
+	       android:baselineAligned="false">
+           <include layout="@layout/unipay_layout_head" />
+           <!-- cont -->
+           <LinearLayout
+             android:id="@+id/unipay_id_down"
+             style="@style/unipay_cont_land">
+	         <!-- qqcard begin -->
+		     <com.pay.ui.common.APScrollView
+		     android:id="@+id/unipay_id_ScrollView"            
+		     style="@style/unipay_fill"
+	         android:fillViewport="true">
+	         <LinearLayout
+		       style="@style/unipay_linear.srcollcont_land">
+		       <TextView 
+		         style="@style/unipay_text.middle"
+                 android:layout_marginBottom="10dp"
+		         android:text="@string/unipay_qcard_pay"/>
+		         <!-- 输入框 -->
+		         <LinearLayout
+		           android:id="@+id/unipay_id_apQCardNumLayout"
+			       style="@style/unipay_inputbg">
+			       <EditText
+			          android:id="@+id/unipay_id_apQCardNumEdit"
+		              style="@style/unipay_edit"
+	                  android:inputType="number"
+		              android:digits="0123456789\n"
+		              android:imeOptions="actionNext"
+		      		  android:hint="@string/unipay_qcard_num"/>
+			        <ImageButton
+			          android:id="@+id/unipay_id_CardNumDel"
+		      		  style="@style/unipay_icondel"/>
+				 </LinearLayout>
+			     <!-- 输入框 -->
+			     <LinearLayout
+		           android:id="@+id/unipay_id_apQCardPWDLayout"
+			       style="@style/unipay_inputbg">
+				   <EditText
+				    android:id="@+id/unipay_id_apQCardPWDEdit"
+				    style="@style/unipay_edit"
+		            android:inputType="number"
+		            android:digits="0123456789\n"
+		            android:imeOptions="actionDone"
+		      		android:hint="@string/unipay_qcard_pwd"/>
+			        <ImageButton
+			          android:id="@+id/unipay_id_CardPWDDel"
+			          style="@style/unipay_icondel"/>
+				</LinearLayout>
+				 <!-- btn-->
+				<LinearLayout
+		          style="@style/unipay_bigviewbtn_land">
+		          <Button
+		            android:id="@+id/unipay_id_BuyBottomBtn"
+	                style="@style/unipay_btn"
+	                android:text="@string/unipay_pay_rightnow"/>
+	            </LinearLayout>
+			 </LinearLayout>
+			</com.pay.ui.common.APScrollView>
+	      </LinearLayout>
+		</LinearLayout>
+</LinearLayout>

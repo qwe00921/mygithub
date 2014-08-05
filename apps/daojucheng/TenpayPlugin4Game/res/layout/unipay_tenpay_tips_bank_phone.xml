@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_linear" >
+
+    <!-- cft begin -->
+
+    <LinearLayout style="@style/unipay_tenpay_linear_hori" >
+
+        <TextView
+            style="@style/unipay_tenpay_text.middle"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:text="@string/unipay_tenpay_set_newphone" />
+
+        <TextView
+            android:id="@+id/reset_phone_card"
+            style="@style/unipay_tenpay_text.middlethin"
+            android:layout_marginBottom="10dp" />
+    </LinearLayout>
+    <!-- 输入框 -->
+
+    <LinearLayout
+        style="@style/unipay_tenpay_linear.margin"
+        android:orientation="horizontal" >
+
+        <com.tenpay.tenpayplugin.view.ClearableEditText
+            android:id="@+id/reset_phone_edit"
+            style="@style/unipay_tenpay_edit"
+            android:hint="@string/unipay_tenpay_change_phone_hint"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="11" />
+    </LinearLayout>
+    <!-- btn -->
+
+    <LinearLayout style="@style/unipay_tenpay_tipbtn" >
+
+        <Button
+            android:id="@+id/reset_phone_confirm"
+            style="@style/unipay_tenpay_btn"
+            android:text="@string/unipay_tenpay_next" />
+    </LinearLayout>
+
+</LinearLayout>

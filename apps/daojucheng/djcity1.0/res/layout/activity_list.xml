@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/category_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:drawableRight="@drawable/ico_search"
+        djcity:text="@string/title_product_list" />
+    
+	<!-- com.tencent.djcity.lib.ui.RoleInfoView 
+        android:layout_below="@id/category_navbar"
+        android:id="@+id/category_role_info_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        /-->
+	
+    <include
+        android:id="@+id/list_sort_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/category_navbar"
+        layout="@layout/list_sort_bar" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/list_sort_buttons"
+        android:background="@color/background_color" >
+
+        <ListView
+            android:id="@+id/list_listview"
+            style="@style/global_listview_no_divider"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        
+        <RelativeLayout
+            android:id="@+id/list_relative_empty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone" >
+
+            <ImageView android:contentDescription="@string/app_name"
+                android:id="@+id/filter_relative_empty_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/margin_size_50xp"
+                android:layout_marginTop="@dimen/margin_size_120xp"
+                android:src="@drawable/search_empty" />
+
+            <TextView
+                android:id="@+id/filter_relative_empty_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/filter_relative_empty_img"
+                android:layout_centerHorizontal="true"
+                android:text="@string/filter_no_products"
+                android:textColor="#ff999999"
+                android:textSize="@dimen/font_size_30xp" />
+
+            <Button
+                android:id="@+id/list_button_redirect"
+                style="@style/button_confirm_bg_blue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/filter_relative_empty_text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/margin_size_140xp"
+                android:layout_marginRight="@dimen/margin_size_140xp"
+                android:layout_marginTop="@dimen/margin_size_76xp"
+                android:text="@string/filter_again" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

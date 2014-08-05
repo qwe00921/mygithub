@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#CC000000">
+
+    <ImageView
+        android:id="@+id/toast_img"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/frog_mouth_happy"
+        android:layout_centerHorizontal="true"/>
+    
+    <TextView
+        android:layout_below="@id/toast_img"
+		android:id="@+id/toast_title"
+		android:layout_marginTop="16dp"
+       	android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:text="@string/share_succ_title"/>
+	<TextView
+	    android:id="@+id/toast_message"
+	    android:layout_margin="15dp"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/toast_title"
+	    android:layout_centerHorizontal="true"
+	    android:gravity="center_horizontal"
+	    android:maxWidth="250dp"
+	    android:paddingLeft="10dp"
+	    android:paddingRight="10dp"
+	    android:paddingBottom="15dp"
+	    android:textColor="#999999"
+	    android:lineSpacingExtra="3dp"
+	    android:text="@string/share_succ_empty"/>
+
+</RelativeLayout>

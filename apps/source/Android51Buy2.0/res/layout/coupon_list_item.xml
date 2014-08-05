@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/global_transparent_shadow_click_state"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_size_15xp"
+    android:paddingLeft="@dimen/margin_size_40xp"
+    android:paddingRight="@dimen/margin_size_40xp"
+    android:paddingTop="@dimen/margin_size_15xp" >
+
+    <com.icson.lib.ui.ListItemView
+        android:id="@+id/coupon_list_item_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.icson.lib.ui.AlphaTextView
+            android:id="@+id/coupon_code_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_20xp"
+            android:layout_marginLeft="@dimen/margin_size_50xp"
+       		android:layout_marginRight="@dimen/margin_size_50xp"
+            android:text="@string/default_coupon"
+            android:textColor="@color/red"
+            android:textSize="@dimen/front_size_48xp" />
+
+        <TextView
+            android:id="@+id/coupon_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_15xp"
+            android:layout_marginLeft="@dimen/margin_size_50xp"
+       		android:layout_marginRight="@dimen/margin_size_50xp"
+       		android:lineSpacingExtra="@dimen/margin_size_5xp"
+            android:textColor="@color/coupon_name_color"
+            android:textSize="@dimen/front_size_24xp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_10xp"
+            android:layout_marginLeft="@dimen/margin_size_50xp"
+       		android:layout_marginRight="@dimen/margin_size_50xp"
+            android:layout_marginBottom="@dimen/margin_size_25xp" >
+
+            <TextView
+                android:id="@+id/coupon_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coupon_validity"
+                android:textColor="@color/global_text_info_color"
+                android:textSize="@dimen/front_size_24xp" />
+
+            <TextView
+                android:id="@+id/coupon_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/global_text_info_color"
+                android:textSize="@dimen/front_size_24xp" />
+        </LinearLayout>
+    </com.icson.lib.ui.ListItemView>
+
+</LinearLayout>

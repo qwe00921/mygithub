@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/filter_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/btn_filter" />
+
+    <LinearLayout
+        android:id="@id/global_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/filter_navigation_bar"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <ExpandableListView
+            android:id="@+id/filter_expandablelistview"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:childDivider="#ffc3c3c3"
+            android:divider="#ffe5e5e5"
+            android:dividerHeight="1px"
+            android:groupIndicator="@null" />
+
+        <LinearLayout
+            android:id="@+id/filter_buttons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_size_20xp" >
+
+            <Button
+                android:id="@+id/filter_button_confirm"
+                style="@style/button_confirm_bg_blue"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/margin_size_90xp"
+                android:layout_marginRight="@dimen/margin_size_10xp"
+                android:layout_weight="1.5"
+                android:textSize="@dimen/front_size_36xp"
+                android:text="@string/btn_ok"/>
+
+            <Button
+                android:id="@+id/filter_button_clear"
+                style="@style/button_confirm_bg_white"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/margin_size_90xp"
+                android:layout_marginLeft="@dimen/margin_size_10xp"
+                android:layout_weight="1"
+                android:textSize="@dimen/front_size_36xp"
+                android:text="@string/button_clear" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/filter_relative_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/filter_navigation_bar"
+        android:background="@color/background_color"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <ImageView android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_120xp"
+            android:src="@drawable/filter_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_45xp"
+            android:text="@string/filter_product_no_attrs"
+            android:textColor="#ff999999"
+            android:textSize="@dimen/front_size_32xp" />
+         <Button
+            android:id="@+id/filter_button_redirect"
+            style="@style/button_confirm_bg_blue"
+            android:layout_marginLeft="@dimen/margin_size_140xp"
+            android:layout_marginRight="@dimen/margin_size_140xp"
+            android:layout_marginTop="@dimen/margin_size_76xp"
+            android:text="@string/refilter"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <include
+        android:layout_below="@id/filter_navigation_bar"
+        layout="@layout/global_loading" >
+    </include>
+
+</RelativeLayout>

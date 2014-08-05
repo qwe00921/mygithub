@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/vp_order_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:text="@string/my_vp_order" />
+    
+    <ListView
+        android:id="@+id/vp_orderlist_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+    	android:background="@android:color/transparent"
+		android:cacheColorHint="@android:color/transparent"
+        android:dividerHeight="0dip"
+        android:fadingEdge="none"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" />
+
+</LinearLayout>

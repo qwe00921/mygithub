@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/yiqiang_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:hasDrawableRight="true"
+        icson:text="@string/yiqiang_title" />
+    
+    <RadioGroup
+        android:id="@+id/item_radiogroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/yiqiang_navbar"
+        android:layout_marginRight="-2dip"
+        android:background="@drawable/tab_bg"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/item_radio_qianggou"
+            style="@style/global_tab_qianggou"
+            android:text="@string/snap_up" />
+
+        <RadioButton
+            android:id="@+id/item_radio_zaowanshi"
+            style="@style/global_tab_zaowanshi"
+            android:text="@string/time_buy" />
+
+        <RadioButton
+            android:id="@+id/item_radio_tuangou"
+            style="@style/global_tab_tuangou"
+            android:text="@string/groupon" />
+    </RadioGroup>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/item_relative_tab_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/item_radiogroup" >
+
+        <RelativeLayout
+            android:id="@+id/item_relative_tab_content_qianggou"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#77a8eb"
+            >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/item_relative_tab_content_zaowanshi"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#f1f1f1"
+             >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/item_relative_tab_content_tuangou"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#12c07b"
+            >
+        </RelativeLayout>
+    </android.support.v4.view.ViewPager>
+
+  
+    
+    <include layout="@layout/global_loading" />
+
+</RelativeLayout>

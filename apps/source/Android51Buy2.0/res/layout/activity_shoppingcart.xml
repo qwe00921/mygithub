@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:id="@+id/root_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/shoppingcart_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:hasDrawableRight="true"
+        icson:text="@string/shoppingcart" />
+
+    <ScrollView
+        android:id="@+id/shopping_cart_scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/shoppingcart_navbar"
+        android:background="@color/white" >
+
+        <LinearLayout
+            android:id="@+id/shoppingcart_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/shoppingcart_choose_address"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                
+                 <LinearLayout
+                    android:id="@+id/shoppingcart_choose_address_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/global_white_shadow_click_state"
+                    android:padding="@dimen/margin_size_30xp" >
+
+                    <TextView
+                        android:id="@+id/shoppingcart_choose_address_label"
+                        style="@style/global_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/margin_size_30xp"
+                        android:text="送至"
+                        android:textColor="@color/global_text_color"
+                        android:textSize="@dimen/front_size_30xp" />
+
+                    <TextView
+                        android:id="@+id/shoppingcart_choose_address_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="left|center"
+                        android:singleLine="true"
+                        android:paddingRight="@dimen/margin_size_30xp"
+                        android:textColor="@color/global_text_color"
+                        android:textSize="@dimen/front_size_30xp" />
+
+                    <ImageButton
+                        android:id="@+id/shoppingcart_choose_address_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:background="@drawable/i_global_arrow_right"
+                        android:contentDescription="@string/app_name" />
+                    </LinearLayout>
+
+                <View
+                    style="@style/global_line2"/>
+            </LinearLayout>
+
+		
+            <com.icson.lib.ui.LinearListView
+                android:id="@+id/cart_list_listView"
+                style="@style/global_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </com.icson.lib.ui.LinearListView>
+            
+            <include
+                android:id="@+id/error_item_headerview"
+                layout="@layout/shoppingcart_activity_error_item_header" />
+			
+            <FrameLayout
+                android:id="@+id/coverErrorListView"
+                android:layout_width="fill_parent"
+	            android:layout_height="wrap_content">
+	            <com.icson.lib.ui.LinearListView
+	                android:id="@+id/cart_errorlist_listView"
+	                style="@style/global_listview"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical" >
+	            </com.icson.lib.ui.LinearListView>
+            </FrameLayout>
+            
+            <include
+                android:layout_marginBottom="@dimen/margin_size_25xp"
+                android:layout_marginTop="@dimen/margin_size_25xp"
+                layout="@layout/shoppingcart_footer" />
+
+            <RelativeLayout
+                android:id="@+id/cart_list_linear_empty"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dip"
+                android:layout_marginTop="10dip"
+                android:gravity="center"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/cart_list_empty_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="30dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/cart_empty_icon" />
+
+                <TextView
+                    android:id="@+id/cart_list_empty_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cart_list_empty_img"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/cart_empty"
+                    android:textColor="@color/global_text_color"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/cart_list_button_index"
+                    style="@style/button_confirm_bg_blue"
+                    android:layout_below="@+id/cart_list_empty_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginRight="45dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="0dp"
+                    android:text="@string/cart_emtpy_redirect" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:layout_below="@+id/shoppingcart_navbar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

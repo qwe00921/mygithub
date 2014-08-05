@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_color"
+    android:paddingBottom="@dimen/margin_size_20xp"
+    android:paddingLeft="@dimen/margin_size_30xp"
+    android:paddingRight="@dimen/margin_size_30xp"
+    android:paddingTop="@dimen/margin_size_20xp" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_size_20xp"
+    	android:paddingRight="@dimen/margin_size_20xp"
+        android:background="@drawable/i_gift_tab_bg" >
+
+        <TextView
+            android:id="@+id/mypointslist_textview_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:paddingTop="@dimen/margin_size_20xp"
+            android:paddingBottom="@dimen/margin_size_20xp"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/front_size_30xp"
+            android:textStyle="bold" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/mypointslist_textview_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/mypointslist_textview_title"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/mypointslist_textview_title"
+            android:gravity="center"
+            android:textSize="@dimen/front_size_30xp"
+            android:textStyle="bold" />
+        
+        <View 
+            android:id="@+id/seperator_line"
+            android:layout_below="@+id/mypointslist_textview_points"
+            style="@style/global_line2"/>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seperator_line"
+            android:paddingTop="@dimen/margin_size_20xp"
+            android:paddingBottom="@dimen/margin_size_20xp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/mypointslist_textview_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_size_10xp"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/front_size_26xp" />
+
+            <TextView
+                android:id="@+id/mypointslist_textview_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mypointslist_textview_msg"
+                android:textColor="@color/global_text_info_color"
+                android:textSize="@dimen/front_size_26xp" >
+            </TextView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

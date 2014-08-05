@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_color" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/feedback_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:drawableRight="@drawable/i_add_item"
+        icson:text="@string/settings_advise" />
+
+    <RelativeLayout
+        android:id="@id/global_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/feedback_navbar"
+        android:background="@color/background_color" >
+
+        <ListView
+            android:id="@+id/feedback_listview"
+            style="@style/global_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:dividerHeight="0dip" />
+
+        <RelativeLayout
+            android:id="@+id/feedback_empty"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/background_color"
+            android:gravity="center_horizontal"
+            android:visibility="invisible" >
+
+            <ImageView
+                android:id="@+id/feedback_empty_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_size_100xp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/list_kong" />
+
+            <TextView
+                android:id="@+id/feedback_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/feedback_empty_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_size_55xp"
+                android:text="@string/advise_feedback_empty"
+                android:textColor="@color/global_text_info_color"
+                android:textSize="@dimen/front_size_30xp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

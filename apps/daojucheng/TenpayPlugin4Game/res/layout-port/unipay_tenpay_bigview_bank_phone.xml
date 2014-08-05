@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/unipay_tenpay_cont" >
+
+    <!-- 短信验证码  begin -->
+
+    <ScrollView
+        android:id="@+id/yz_scroll"
+        style="@style/unipay_tenpay_fill"
+        android:fillViewport="true" >
+
+        <LinearLayout style="@style/unipay_tenpay_linear.srcollcont" >
+
+            <LinearLayout style="@style/unipay_tenpay_linear_hori" >
+
+                <TextView
+                    style="@style/unipay_tenpay_text.middle"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/unipay_tenpay_set_newphone" />
+
+                <TextView
+                    android:id="@+id/reset_phone_card"
+                    style="@style/unipay_tenpay_text.middlethin"
+                    android:layout_marginBottom="10dp" />
+            </LinearLayout>
+            <!-- 输入框 -->
+
+            <LinearLayout
+                style="@style/unipay_tenpay_linear.margin"
+                android:orientation="horizontal" >
+
+                <com.tenpay.tenpayplugin.view.ClearableEditText
+                    android:id="@+id/reset_phone_edit"
+                    style="@style/unipay_tenpay_edit"
+                    android:hint="@string/unipay_tenpay_change_phone_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="11" />
+            </LinearLayout>
+
+            <!-- btn -->
+
+            <LinearLayout style="@style/unipay_tenpay_bigviewbtn" >
+
+                <Button
+                    android:id="@+id/reset_phone_confirm"
+                    style="@style/unipay_tenpay_btn"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/unipay_tenpay_next" />
+
+                <TextView style="@style/unipay_tenpay_text.cft" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <!-- 短信验证码 over -->
+
+</LinearLayout>

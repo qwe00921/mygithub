@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">道聚城</string>
+    
+    
+    <string name="discover">发现</string>
+    <string name="scratch_card">刮刮卡</string>
+    <string name="shake">摇一摇</string>
+    <string name="gift_center">领取中心</string>
+    <string name="gift_box">道具礼盒</string>
+    <string name="shake_welcome">欢迎来到摇一摇，快来试试您今天手气吧</string>
+    <string name="shake_count">您今天在道聚城 %1$s 还能摇 %2$s 次</string>
+    <string name="fetch">领取</string>
+    <string name="already_fetched">已领取</string>
+    
+    <string name="settings">全局设置</string>
+    <string name="action_notify">活动消息提醒</string>
+    <string name="sendgoods_notify">发货消息提醒</string>
+    <string name="settings_clear_cache">清除缓存</string>
+    <string name="settings_check_version">检查版本更新</string>
+    <string name="settings_about_us">关于我们</string>
+    
+    <string name="message_center">消息中心</string>
+    <string name="message_num">(%1$s)</string>
+    <string name="view_detail">查看详情</string>
+    
+    <string name="login_use_passwd">使用账号密码登陆</string>
+    <string name="no_more_hint">不再提醒</string>
+    <!-- 配送地址 -->
+    <string name="guide_login">去登录</string>
+    <string name="guide_slot">去摇一摇</string>
+    <string name="guide_try">去试试</string>
+    <string name="guide_coupon">去领奖</string>
+    
+    <!-- 配送地址 -->
+    <string name="select_area">请选择大区...</string>
+    <string name="select_server">请选择服务器...</string>
+    <string name="select_role">请选择角色...</string>
+    <string name="area_init_error">初始化地区错误</string>
+    <string name="address_not_exist">配送地址信息不存在</string>
+    <string name="select_game">请选择游戏</string>
+    <string name="select_province_first">请先选择省份</string>
+    <string name="select_city">选择县市</string>
+    <string name="select_city_first">请先选择县市</string>
+    <string name="select_area_first">请先选择地区</string>
+    <string name="phone_number_error">联系电话有误</string>
+    <string name="no_recipient">请输入收货人!</string>
+    <string name="no_phone">请输入联系电话!</string>
+    <string name="no_phone_recharge">请输入你的手机号码</string>
+    <string name="phone_format_error">联系电话格式有误(11位手机号码或021–12345678格式)</string>
+    <string name="address_first">请输入您的详细地址!</string>
+    <string name="params_error">参数错误</string>
+    <string name="params_empty">数据为空，请稍后重试</string>
+    <string name="btn_filter">筛选</string>
+    <string name="category_belong">选择分类</string>
+    <string name="filter_hasGood">只显示有货商品</string>
+    <string name="filter_selfmarket">只显示自营商品</string>
+    <string name="btn_ok">确定</string>
+    <string name="btn_continue_buy">继续购买</string>
+    <string name="btn_go">跳转</string>
+    <string name="btn_guangguang">随便逛逛</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_reselect">重新选择</string>
+    <string name="btn_retry">重试</string>
+    <string name="btn_delete">删除</string>
+    <string name="btn_exit">退出</string>
+    <string name="btn_edit">编辑</string>
+    <string name="btn_done">完成</string>
+    <string name="btn_back">返回</string>
+    <string name="btn_refresh">刷新重试</string>
+    <string name="btn_change_num">修改手机号</string>
+    <string name="btn_stay">继续逛逛</string>
+    <string name="server_error">服务器端错误</string>
+    <string name="need_login">请先登录</string>
+    <string name="del_favorite">删除收藏</string>
+    <string name="add_favorite_error">收藏失败</string>
+    <string name="add_favorite_succ">收藏成功</string>
+    <string name="had_favorite_msg">您已收藏过该商品</string>
+    <string name="remove_favorite_error">取消收藏失败</string>
+    <string name="remove_favorite_success">取消收藏成功</string>
+    <string name="add_to_cart">加入购物车</string>
+    <string name="add_cart_done">已加入购物车</string>
+    <string name="add_cart_ok">加入购物车成功</string>
+    <string name="add_cart_msg">商品已加入购物车</string>
+    <string name="add_cart_error">加入购物车失败,请重试</string>
+    <string name="go_checkout">去结算</string>
+    <string name="not_checkout">再逛逛</string>
+    <string name="custom_phone">您购买的是定制机, 从网站下单可获得更多优惠</string>
+    <string name="buy_max">限购%d件</string>
+    <string name="buy_max_msg">此商品限购%1$d件, 购物车中已有%2$d件</string>
+    <string name="buy_max_msg_short">此商品最多可以购买%d件</string>
+    <string name="buy_min_msg_short">本商品%d件起售&#160;</string>
+    <string name="distribution_city">配送城市</string>
+    <string name="review_star">%d分</string>
+    <string name="satisfy">满意</string>
+    <string name="general">一般</string>
+    <string name="unsatisfy">不满意</string>
+    <string name="satisfy_num">满意(%d)</string>
+    <string name="general_num">一般(%d)</string>
+    <string name="unsatisfy_num">不满意(%d)</string>
+    <string name="parser_error">解析错误</string>
+    <string name="parser_error_msg">抱歉，服务暂时抛锚了，小易正在奋力解决！</string>
+    <string name="all_userPoint">本次最多可用 %1$d 积分,最多可抵用 %2$.1f 元</string>
+    <string name="non_image_hint">在WIFI网络下不生效</string>
+    <string name="network_error">请检查您的网络情况</string>
+    <string name="network_error_info">如果网络正常，建议稍后片刻再试</string>
+    <string name="title_network_error">网络错误</string>
+    <string name="es_info">1. 请在收货时提供&lt;u&gt;&lt;font color=\&quot;#444444\&quot;&gt;身份证复印件&lt;/font&gt;&lt;/u&gt;（正反面复印于同一纸面上）；若您提供的信息不符或不全，送货员将收回商品。&lt;br /&gt;2. 请在易迅提供的《“节能产品惠民工程”用户承诺书》上签字承诺。&lt;br /&gt;3. 购买后您需配合国家展开的“节能产品惠民工程”相关专项核查，不配合核查工作将追回补贴。</string>
+
+    <string name="arrival_notify">到货提醒</string>
+    <string name="add_notify_success">已添加到货通知</string>
+    <string name="add_notify_failed">添加到货通知出错</string>
+    <string name="vp_phone_number_empty">请输入手机号码</string>
+    <string name="vp_phone_error">获取信息失败，请尝试重新输入手机号！</string>
+    <string name="vp_get_phone_msg_error">抱歉，获取充值信息失败，请尝试刷新或修改手机号</string>
+    <string name="share_title">分享给朋友</string>
+    <string name="share_content">我在 @%1$s 看到%2$s，易迅价只要%3$s，大家快来抢吧！ %4$s</string>
+    <string name="weibo_account">易迅网官网</string>
+    <string name="icson_account">易迅网</string>
+    <string name="recommend_apps">应用推荐</string>
+    <string name="call_support">立即拨打</string>
+    <string name="resend_sms">重新发送</string>
+    <string name="smscode_empty">请输入您收到的手机验证码</string>
+    <string name="getting_smscode">正在获取验证码&#8230;</string>
+    <string name="get_smscode_failed">获取手机验证码失败, 请稍后重试</string>
+    <string name="bind_mobile_now">立即绑定</string>
+    <string name="mobile_input_error">请输入正确的手机号码</string>
+    <string name="icson_copyright_time">©2006-%1$d</string>
+    <string name="icson_copyright">上海易迅电子商务发展有限公司</string>
+    
+    <string name="call_service">拨打客服电话</string>
+    <string name="reviews_count">%1$d个评论</string>
+    <string name="no_reviews">暂无评论</string>
+    <string name="no_messages_yet">暂时没有新消息, 祝您购物愉快</string>
+    <string name="icson_gjp_jgbh_title">支持服务</string>
+    <string name="share_loading">分享</string>
+    <string name="initializing_content">正在生成分享信息, 请稍后...</string>
+    
+    <string name="button_google_shopper">谷歌购物</string>
+    <string name="msg_camera_framework_bug">抱歉，Android相机出现问题。您可能需要重启设备。</string>
+    <string name="msg_default_format">格式</string>
+    <string name="msg_default_meta">元数据</string>
+    <string name="msg_default_status">请将二维码置于取景框内扫描。  </string>
+    <string name="msg_default_time">时间</string>
+    <string name="msg_default_type">类型</string>
+    <string name="preferences_copy_to_clipboard_title">复制到剪切板</string>
+    <string name="scan_result">二维码内容</string>
+	<!-- 登录页面文字 -->
+    <string name="login_activity_error">登录异常，请稍候重试</string>
+    <string name="login_activity_input_username">请输入易迅帐号</string>
+    <string name="login_activity_input_QQ">请输入QQ号码</string>
+    <string name="login_activity_input_pwd">请输入密码</string>
+    <string name="login_activity_input_pwd_error">密码错误</string>
+    <string name="login_activity_input_name_error">帐号不存在</string>
+    <string name="login_activity_loading">正在登录，请稍候...</string>
+    <string name="login_activity_tel">易迅客服：&lt;u&gt;&lt;font color="#4f96f8">400-828-1878&lt;/font>&lt;/u&gt;</string>
+    
+    
+    <!-- cargo track string -->
+	<string name="call_devliver_prefix">是否拨打快递员电话:</string>
+	<string name="call_receiver_prefix">是否拨打收件人电话:</string>
+	<string name="btn_call">拨打</string>
+	<string name="item_count">共%1$d件</string>
+	<string name="distance_hint_header">快递员距收货地仅剩</string>
+	<string name="cargo_map_fail">暂时无法获取订单地图信息.\n如急需了解包裹位置,请联系配送师傅 </string>
+	
+	<!-- 订单列表页面操作文字 -->
+	<string name="btn_text_pay_now">去支付</string>
+	<string name="btn_text_comment_now">去评论</string>
+	<string name="btn_text_cancel_order">取消订单</string>
+	<string name="btn_text_view_map">查看快递员位置</string>
+	
+	<string name="my_points_title">我的积分</string>
+	<string name="my_balance_title">我的余额</string>
+	
+	<string name="default_slogan">我们够用心, 你们购放心!</string>
+	
+	<!-- 51Buy2.0 -->
+	<string name="select_invoice">选择发票</string>
+	<string name="add_invoice">增加新发票</string>
+	<string name="is_sure_del_invoice">确认删除此发票?</string>
+	<string name="edit_invoice">编辑发票</string>
+	<string name="invoice_type">发票类型</string>
+	<string name="invoice_content">发票内容</string>
+	<string name="invoice_title">发票抬头</string>
+	<string name="hint_invoice_select_type">请选择发票类型</string>
+	<string name="hint_invoice_select_content">请选择发票内容</string>
+	<string name="hint_invoice_fill_title">请填写发票抬头</string>
+	<string name="invoice_type_personal">商业零售发票(个人)</string>
+	<string name="invoice_type_vad">增值税专用发票</string>
+	<string name="invoice_type_company">商业零售发票(单位)</string>
+	<string name="invoice_type_retail">普通发票</string>
+	<string name="invoice_company_name">公司名称</string>
+	<string name="invoice_company_addr">公司地址</string>
+	<string name="invoice_company_tel">公司电话</string>
+	<string name="invoice_tax_num">税号</string>
+	<string name="invoice_bank_account">银行账号</string>
+	<string name="invoice_bank_branch">开户行</string>
+	<string name="invoice_company_name_empty">请输入单位名称</string>
+	<string name="invoice_company_addr_empty">请输入公司地址</string>
+	<string name="invoice_company_tel_empty">请输入公司电话</string>
+	<string name="invoice_tax_num_empty">请输入公司税号</string>
+	<string name="invoice_bank_account_empty">请输入银行帐号</string>
+	<string name="invoice_bank_branch_empty">请输入开户行信息</string>
+	<string name="invoice_info_error">发票信息不合法，请检查确认</string>
+	<string name="invoice_delete_success">发票删除成功</string>
+	<string name="invoice_default_vad_content">商品明细</string>
+	
+	<string name="use_coupon_title">使用优惠券</string>
+	<string name="add_coupon_code">请填写优惠券代码</string>
+	<string name="use_coupon">使用</string>
+	<string name="my_coupon">我的优惠券</string>
+	<string name="no_coupon">您还没有优惠券</string>
+	<string name="coupon_validity">有效期</string>
+	<string name="default_coupon">$100</string>
+	<string name="my_address_title">我的地址</string>
+	<string name="edit_address">编辑地址</string>
+	<string name="is_sure_del_address">确认删除此地址?</string>
+	<string name="address_person_name">收货人</string>
+	<string name="address_person_hint">请填写收货人姓名</string>
+	<string name="address_phone_num">手机号码</string>
+	<string name="address_phone_hint">请填写手机号码</string>
+	<string name="address_province_name">选择省份</string>
+	<string name="address_choose_hint">请选择</string>
+	<string name="address_city_name">城市</string>
+	<string name="address_zone_name">选择区/县</string>
+	<string name="address_detail">详细地址</string>
+	<string name="address_detail_hint">请填写详细地址</string>
+	
+	<string name="orderconfirm_title">确认订单</string>
+	<string name="orderconfirm_shiptype_title">配送方式</string>
+	<string name="package_no_x">包裹%d </string>
+	<string name="orderconfirm_ship_time_title">配送时间</string>
+	<string name="orderconfirm_pre_ship_time_title">预计发货时间</string>
+	<string name="orderconfirm_combineship_time_title">统一配送时间</string>
+	<string name="orderconfirm_paytype_title">支付方式</string>
+	<string name="orderconfirm_address_title">收货地址</string>
+	<string name="orderconfirm_invoice_title">发票信息</string>
+	<string name="orderconfirm_coupon_title">优惠券</string>
+	<string name="orderconfirm_point_title">使用积分</string>
+	<string name="orderconfirm_beizhu_title">若您对订单有特殊要求，可在此备注</string>
+	<string name="orderconfirm_product_title">商品列表</string>
+	<string name="orderconfirm_point_warning">本次最多使用0积分</string>
+	<string name="orderconfirm_point_default_num">0</string>
+	<string name="orderconfirm_total_price">商品总价</string>
+	<string name="orderconfirm_carriage_price">运费金额</string>
+	<string name="orderconfirm_point_price">积分抵扣</string>
+	<string name="orderconfirm_discount">返现优惠</string>
+	<string name="orderconfirm_promo_price">促销优惠</string>
+	<string name="orderconfirm_total">合计</string>
+	
+	<string name="channel_rush">易抢频道</string>
+	<string name="channel_popular">热门活动</string>
+	<string name="snap_up">抢购</string>
+	<string name="snap_up_info">每日精选 全网最低</string>
+	<string name="time_buy">早晚市</string>
+	<string name="time_buy_promotion">早上买 下午到</string>
+	<string name="time_buy_info">7:00 - 23:00</string>
+	<string name="groupon">团购</string>
+	<string name="groupon_promotion">特价商品大集合</string>
+	<string name="groupon_info">n人 已参团</string>
+	<string name="time_buy_morning">早市</string>
+	<string name="time_buy_black">天黑黑</string>
+	<string name="time_buy_weekend">周末清仓</string>
+	
+	<string name="search_game_hint">搜索游戏</string>
+	<string name="search_item_hint">搜索道具</string>
+	<string name="search_history_words">热门搜索词</string>
+	<string name="clear_history_words">清除历史搜索词</string>
+	<string name="hot_products">热销榜</string>
+	
+	<string name="settings_view_history">浏览历史</string>
+	<string name="settings_title">设置</string>
+	<string name="settings_option">选项</string>
+	<string name="settings_more">更多</string>
+	<string name="settings_choose_address">地点选择</string>
+	<string name="settings_app_recomment">应用推荐</string>
+	
+	<string name="settings_message_center">消息中心</string>
+	<string name="settings_advise">意见反馈</string>
+	
+	<string name="settings_rules">用户协议</string>
+	<string name="settings_welcome">功能介绍</string>
+	<string name="settings_contact_us">服务热线： 400-828-1878</string>
+	
+	<string name="settings_non_image">开启无图模式</string>
+	<string name="settings_open_message">开启消息通知</string>
+	<string name="settings_open_message_hint">开启后可收到促销、优惠等提醒</string>
+	<string name="settings_current_city">当前城市：</string>
+	
+	<string name="logout_setting">退出登录</string>
+	<string name="search_list_filter">筛选</string>
+	<string name="search_list_buy_count">销量</string>
+	<string name="search_list_time">上架时间</string>
+	<string name="search_list_price">价格</string>
+	<string name="search_list_discuss">评价</string>
+	<string name="button_clear">清空</string>
+	<string name="filter_no_products">抱歉，暂时没有符合条件的商品</string>
+	<string name="filter_again">重新搜索</string>
+	<string name="refilter">重新筛选</string>
+	<string name="filter_product_no_attrs">该商品暂无筛选条件</string>
+	<string name="collect_no_products">您暂时没有任何收藏</string>
+	<string name="my_address">我的地址</string>
+	<string name="my_favor">我的收藏</string>
+	<string name="my_order_detail">订单详情</string>
+	<string name="my_order">我的订单</string>
+	<string name="my_vp_order">话费充值订单</string>
+	<string name="deliver_free">￥29包邮</string>
+	<string name="three_times_a_day">一日三送</string>
+	<string name="pay_on_arrival">货到付款</string>
+	
+	<string name="login_string">登录</string>
+	<string name="login_qq">QQ帐号登录</string>
+	<string name="login_ali">支付宝登录</string>
+	<string name="login_yixun">易迅帐号登录</string>
+	<string name="login_wechat">微信登录</string>
+	<string name="login_name_hint">请输入易迅帐号</string>
+	<string name="login_password_hint">密码</string>
+	<string name="login_auto_save_psword">自动保存密码</string>
+	<string name="login_qq_name_hint">请输入QQ号码</string>
+	<string name="login_qq_password_hint">请输入QQ密码</string>
+	<string name="login_qq_warning">温馨提示：购买彩票仅支持QQ登录</string>
+	<string name="login_qq_ver_warning">您的帐号异常请输入验证码验证</string>
+	<string name="login_qq_ver_code_hint">请输入验证码</string>
+    <string name="login_ali_button_text">支付宝帐号登录</string>
+    <string name="login_welcome">Hi, 亲爱的易迅会员，请选择登录方式</string>
+    <string name="login_agree_rule">已阅读并同意</string>
+    <string name="login_rule">《易迅网用户服务协议》</string>
+	
+	<string name="recharge">话费充值</string>
+	<string name="denom_10">10元</string>
+	<string name="denom_20">20元</string>
+	<string name="denom_30">30元</string>
+	<string name="denom_50">50元</string>
+	<string name="denom_100">100元</string>
+	<string name="denom_300">300元</string>
+	<string name="recharge_choose_phone">选择充值号码</string>
+	
+	<string name="need_pay_amount">实付金额</string>
+	<string name="paytype_alipay">支付宝</string>
+	<string name="paytype_midas">Q币财付通</string>
+	<string name="paytype_wxpay">微信支付</string>
+	<string name="rechage_confirm">立即充值</string>
+	<string name="target_number">充值号码</string>
+	
+	<string name="orderconfirm_use_point">您已使用%1$d个积分,可抵用&lt;font color="#ff0000">%2$.1f&lt;/font>元</string>
+	<string name="orderconfirm_point_popup">可抵用%.1f元</string>
+	<string name="orderconfirm_submit_order">提交订单</string>
+	<string name="orderconfirm_choose_paytype">选择支付方式</string>
+	<string name="orderconfirm_choose_shippingtype">选择配送方式</string>
+	<string name="orderconfirm_choose_shippingtime">选择配送时间</string>
+	<string name="gift_string">赠品</string>
+	<string name="gift_noBigPicture">该赠品无大图</string>
+	
+	<string name="item_title">商品详情</string>
+	<string name="yiqiang_title">易抢</string>
+	
+	<string name="category">商品类目</string>
+	<string name="shoppingcart">购物车</string>
+	
+	<string name="advise_feedback_empty">您暂时没有提交过意见反馈</string>
+	<string name="advise_type">选择类型</string>
+	<string name="advise_type_app">APP功能</string>
+	<string name="advise_type_network">网络问题</string>
+	<string name="advise_type_login">登录问题</string>
+	<string name="advise_type_order">订单问题</string>
+	<string name="advise_type_other">其他</string>
+	<string name="advise_order_choose">选择订单</string>
+	<string name="advise_pic_hint">添加照片说明（可选）</string>
+	<string name="advise_content">反馈内容</string>
+	<string name="advise_content_hint">请填写反馈内容</string>
+	<string name="confirm_string">提交</string>
+	<string name="advise_replay_title">客服回复：</string>
+	
+	<string name="btn_pay_notnow">暂不支付</string>
+	<string name="btn_pay_now">去支付</string>
+	<string name="btn_upgrade">更新</string>
+	<string name="btn_continue">继续</string>
+	<string name="btn_install">安装</string>
+	<string name="btn_later">下次再说</string>
+	<string name="caption_hint">提醒</string>
+	<string name="caption_google_voice">谷歌语音搜索</string>
+	<string name="caption_delete_item">删除商品</string>
+	<string name="caption_new_version">发现新版本</string>
+	<string name="caption_pay_failed">支付不成功:(</string>
+	<string name="caption_submit_failed">提交失败</string>
+	<string name="caption_order_success">下单成功</string>
+	<string name="caption_select_action">选择操作</string>
+	<string name="message_exit">确定要退出吗?</string>
+	<string name="gift_info_error">获取赠品数据出错</string>
+	<string name="message_system_busy">系统繁忙，请稍候再试</string>
+	<string name="message_server_error">服务器端错误，请稍后重试</string>
+	<string name="message_pay_success">支付成功, 订单状态稍有迟延，请稍等.</string>
+	<string name="message_product_mismatch">对不起，购物车商品与订单商品不一致，请重新提交</string>
+	<string name="message_price_changed">对不起, 由于您长时间未操作等原因,商品价格已发生变化, 请核查</string>
+	<string name="message_order_cancel">如果您使用了优惠券或积分，取消订单后优惠券或积分稍后才能返还到您帐户，是否确定取消订单?</string>	
+	<string name="message_order_success">订单生成成功</string>
+	<string name="message_pay_order">您的订单已生成，请尽快完成支付</string>
+	<string name="message_logout">确定要退出登录吗?</string>
+	<string name="message_install_finish">确定安装完成后点击继续</string>
+	<string name="message_not_support_google_voice">您的手机暂不支持语音搜索，\n请安装谷歌语音搜索软件！\n\n1.系统要求android2.2+\n2.手机有SD卡或内置存储卡</string>
+	<string name="message_delete_failed">删除失败</string>
+	<string name="message_load_address_failed">加载收货地址失败, 请重试</string>
+	<string name="message_latest_version">您已经是最新版本了哟</string>
+	<string name="message_download_failed">下载失败, 请稍后重试</string>
+	<string name="message_address_undeliverable">商品无法送达到该地区，请修改收货地址</string>
+	<string name="message_load_deliver_failed">加载配送方式失败</string>
+	<string name="message_no_history">您暂时没有任何浏览历史</string>
+	<string name="message_coupon_not_match">此优惠券不满足使用规则</string>
+	<string name="message_clear_history_success">浏览历史已成功清除</string>
+	<string name="message_qq_login_failed">QQ登录失败，请稍候重试！</string>
+	
+	<string name="cart_empty">您的购物车里空空如也</string>
+	<string name="cart_emtpy_redirect">去首页逛逛吧</string>
+	<string name="cart_promo_title">您可以参加以下促销活动</string>
+	<string name="cart_promo_warning">提示：若参加促销活动就不能使用优惠券</string>
+	<string name="promo_no_coupon">参加促销活动不可同享优惠券</string>
+	<string name="cart_price_title">总价（不计运费）</string>
+	<string name="cart_buy">去结算</string>
+	<string name="cart_product_num">1</string>
+	<string name="cart_add_collect">移入收藏夹</string>
+	
+	<string name="points_rule">积分规则</string>
+	<string name="item_choose_color">选择颜色</string>
+	<string name="item_choose_size">选择尺寸</string>
+	
+		<!-- Slotmachine about -->
+	<string name="slot_share_reward_chance">当天首次分享可额外摇奖2次</string>
+	<string name="billboard_pre0">天天摇等你来试试手气哦！ </string>
+	<string name="billboard_pre1">分享中奖每天可额外获摇奖机会！ </string>
+	<string name="billboard_pre2">每天都有3次免费摇奖机会哦！ </string>
+	<string name="billboard_get">:获得了 </string>
+	<string name="coupon_shopping">优惠券 </string>
+	<string name="coupon_qq">会员试用卡 </string>
+	<string name="coupon_gold">金币 </string>
+	<string name="coupon_other">奖品</string>
+	<string name="copy_cdk">复制</string>
+	
+	<string name="wx_share_thumb_fail">分享缩略图生成失败</string>
+	<string name="wx_share_default_title">易迅客户端，天天免费摇奖！</string>
+	<string name="wx_share_default_content">价格一降再降，买贵就赔还不爽？那就猛摇手机吧！天天摇每天3次摇奖，免费送您神秘礼包哦！5元，10元还有更给力神秘大奖等着您！</string>
+	<string name="slot_rolling_too_often">摇奖不能过于频繁哦，请稍后再尝试！</string>
+	<string name="request_too_often">操作过于频繁请稍后再尝试!</string>
+	<string name="no_prize_hint_text">没中奖是中奖的前奏\n快去摇奖，等待人品爆发吧</string>
+	<string name="no_prize_yet">您还没有奖品</string>
+	<string name="reward_from_coin_title">恭喜您！您已获得5枚金币！</string>
+	
+	<string name="no_support_weixin">手机未安装最新版本微信</string>
+	<string name="install_newest_weixin">是否前往安装最新版本的微信?</string>
+	<string name="install_weixin_yes">立即安装</string>
+	<string name="share_succ_title">分享成功！</string>
+	<string name="share_fail_title">分享失败！</string>
+	<string name="share_succ_reward">恭喜你,获得额外摇奖机会!</string>
+	<string name="share_succ_empty">您的好运真令大家羡慕,再接再厉!</string>
+	<string name="share_fail_net">由于网络原因，您此次未成功分享</string>
+	<string name="share_auth_denied">由于权限不足，您此次未成功分享</string>
+	<string name="share_user_cancel">您取消了此次分享</string>
+	<string name="no_chance_today">您今天已用完摇奖机会，请明天再来</string>
+	<string name="no_reward">\n很遗憾！没有中奖！\n</string>
+	
+	<string name="cdkey">兑换券:</string>
+	<string name="coin_inspire">集齐5枚金币自动兑换优惠券！</string>
+	<string name="coin_inspire_fail">很抱歉，兑换优惠券异常...\n客服mm会尽快为您补券，请于24小时后查看您优惠券帐户！</string>
+	<string name="try_again">再试一次</string>
+	<string name="left_away">残忍的离开</string>
+	<string name="sorry_fail">很抱歉，加载失败了...</string>
+	
+	<string name="slot_not_login">您还没有登录哦!</string>
+	<string name="slot_login_now">立即登录</string>
+	<string name="slot_login_info">登录之后,您将享受到:\n1. 优惠券、天天摇独享折扣等丰厚奖品等你拿;\n2. 每天3次摇奖机会;\n3.微信分享成功后再加2次额外摇奖机会;\n4. 奖品查看so easy!\n</string>
+	
+	<!-- Weixin 支付 -->
+	<string name="pay_succ">支付成功, 订单状态稍有迟延，请稍候查看.</string>
+	<string name="pay_auth_denied">支付失败: 权限不足,请确认后重试.</string>
+	<string name="pay_unsupport">支付失败: 不支持的请求,请确认后重试.</string>
+	<string name="pay_send_failed">支付请求发送失败，请重试.</string>
+	<string name="pay_cancel">您取消了支付.</string>
+	
+	<string name="close_string">关闭</string>
+	<string name="shanghai_city">上海</string>
+	<string name="my_icson_no_cash">您当前账户收支记录为空</string>
+	
+	<string name="add_es_cart">参加节能补贴</string>
+	<string name="es_cart">节能补贴</string>
+	<string name="es_cart_personal_info">请填写个人信息</string>
+	<string name="es_cart_name_hint">请输入姓名</string>
+	<string name="es_cart_idcard_hint">请输入身份证号码</string>
+	<string name="es_cart_rule_title">节能补贴商品规则</string>
+	<string name="my_comment">我的评论</string>
+	<string name="comment_product_price">商品评分</string>
+	<string name="comment_operation_title">请点击相应的星级进行评分</string>
+	<string name="comment_operation_level_one">非常不满意</string>
+	<string name="comment_operation_level_two">不满意</string>
+	<string name="comment_operation_level_three">一般</string>
+	<string name="comment_operation_level_four">满意</string>
+	<string name="comment_operation_level_five">非常满意</string>
+	<string name="comment_content_title">评论内容</string>
+	<string name="comment_content_hint">字数长度请在5-1000字之间</string>
+	<string name="select_category">选择类别</string>
+	<string name="pay_via_tenpay">财付通支付</string>
+	
+	<string name="rmb">￥ </string>
+	<string name="qb"> Q币</string>
+	<string name="rmb_yuan">%s元</string>
+	
+	<string name="hot_sale">热销%d件 </string>
+	<string name="more_aboutus_text_part1">易迅网由上海易迅电子商务发展有限公司于2006年创建， 并通过强大的大规模集约采购优势、丰富的电子商务管理服务经验和最先进的互联网技术为用户提供最新最好的时尚精选商品。</string>
+	<string name="more_aboutus_text_part2">易迅网一直以来以“诚信”作为公司和每位员工的行为准则， 以“超越客户期望”为目标， 致力于为用户提供丰富的商品选择、便捷的购物方式和完善的售后服务， 打造更好的E时代购物体验。</string>
+	
+	<string name="virtualpay_no_card">暂时无货,请选择其他面值</string>
+	<string name="message_delete_history_confirm">您确定删除浏览历史吗？</string>
+	<string name="amap_current_location">快递员位置</string>
+	<string name="clear_history">清除历史</string>
+	<string name="review_with_num">评论(%d)</string>
+	<string name="menu_search">搜索</string>
+	<string name="split_tips">您购物车中的部分商品需要时间备货，我们为您分配成不同包裹，您可以选择统一配送或者分开配送。</string>
+	<string name="prole_tips">还未满足的活动</string>
+	
+	<string name="tuan_time_warnings">每周二/五10:00更新</string>
+	<string name="tuan_buynum_word">人团购</string>
+	<string name="num_zero">0</string>
+	<string name="num_fifty">50</string>
+	<string name="weixin_circle">朋友圈</string>
+	<string name="weixin_someone">微信好友</string>
+	<string name="global_error_warning">出错了，请稍后重试</string>
+	
+	<string name="slot_share_bingo_pro">获得天天摇专享价特权!</string>
+	<string name="slot_share_pro_expire">购买有效期：%s 前</string>
+	<string name="slot_price_delta">%s折</string>
+	<string name="exclusive_price_only_for_you">此价格唯你独享:</string>
+	<string name="i_know">我知道了</string>
+	
+	<string name="phone_app_not_found">未找到拨号程序</string>
+	<string name="cart_error_items_tips">以下商品在你的送货区域无法购买，请确认</string>
+	
+	<string name="post_sale_request">报修/退换货</string>
+	<string name="message_send_success">消息发送成功</string>
+	<string name="message_send_fail">消息发送失败</string>
+	<string name="no_vp_order_record">您还没有话费充值订单</string>
+	<string name="no_order_record">您暂时还没有购物记录</string>
+	<string name="no_postsale_record">您还没有申请过报修退换货</string>
+	<string name="service_center_title">服务中心</string>
+	<string name="cancelorder_btn_primary">取消订单</string>
+	<string name="cancelorder_btn_secondary">我要取消订单/服务进度查询</string>	
+	<string name="postsale_req_btn_primary">报修退换货</string>
+	<string name="text_view_history">查看历史记录</string>
+	<string name="feedback_btn_primary">意见反馈</string>
+	<string name="feedback_btn_secondary">历史反馈/我要反馈</string>
+	<string name="contactus_btn_primary">电话客服咨询</string>
+	<string name="contactus_btn_secondary">400&#8211;828&#8211;1878</string>
+	<string name="textview_showall">显示全部</string>
+	<string name="textview_collapse">收起</string>
+	<string name="textview_ordertracking">订单跟踪</string>
+	<string name="textview_address">收货地址：</string>
+	<string name="textview_apply_reason">申请原因：</string>
+	<string name="textview_expected_handle_type">期望处理方式：</string>
+	<string name="textview_send_urgent">催一催</string>
+	
+	<!-- cancel order -->
+	<string name="cancel_order_title">取消订单</string>
+	<string name="hint_leave_msg">填写您的留言，方便我们了解您的需求</string>
+	
+	<!-- wechat login -->
+	<string name="login_fail_title">登录失败！</string>
+	<string name="login_auth_denied">由于权限不足，您此次登录失败</string>
+	<string name="login_fail_net">由于网络原因，您此次登录失败</string>
+	<string name="login_user_cancel">您取消了此次登录！</string>
+	<string name="login_qq_quick_fail">手Q登录失败，请重新尝试</string>
+	
+	<string name="list_no_address">您还没有填写收货地址</string>
+	<string name="list_no_invoice">您还没有填写发票</string>
+	
+	<string name="correct_amap_pos">位置纠错</string>
+	<string name="done_correct_amap_pos">完成纠错</string>
+	<string name="correct_amap_dest_pos">纠正送货地址位置</string>
+	<string name="correct_amap_deliver_pos">快递员位置错误</string>
+	<string name="correct_amap_ing">正在计算地址，请稍后</string>
+	<string name="correct_amap_too_far_away">快递员与您纠正的收货地址距离有点远，确认修改?</string>
+	<string name="continue_to_correct">继续修改</string>
+	<string name="submit_redress_succ">提交成功,感谢您的反馈!我们会尽快审核处理您纠错建议!</string>
+	<string name="submit_redress_fail">抱歉，提交失败，请稍后再试吧</string>
+	<string name="redress_hint">位置不靠谱\n点这里修改!</string>
+	
+	<string name="free_gifts_navigation">领取赠品</string>
+	<string name="free_gifts_title">每个促销活动可领取&lt;font color="#e01e1e">1件&lt;/font>赠品</string>
+	<string name="free_gifts_success">添加赠品成功</string>
+	<string name="free_gifts_fail">添加赠品失败，请重试</string>
+	<string name="less_price_buy_navigation">选择换购商品</string>
+	<string name="less_price_buy_title">您可以购买&lt;font color="#e01e1e">多件&lt;/font>换购商品</string>
+	<string name="cart_promo_checkbox_text">我要使用优惠券(使用优惠券就不能参加促销规则)</string>
+
+	<string name="permission_title_honor3">欢迎使用易迅网客户端</string>
+	<string name="permission_hint_honor3">1. 欢迎使用易迅网客户端软件，本软件完全免费，使用过程中会产生数据流量，流量费用由运营商收取请参考运营商公布的收费标准。\n2. 本客户端尊重用户个人隐私。对用户在易迅网进行浏览、下单购物等活动时，涉及的用户真实姓名（名称）、通信地址、联系电话、电子邮箱等隐私信息的，易迅将予以严格保密，除非得到用户的授权或法律另有规定，易迅不会向外界披露用户隐私信息。\n3. 为提升体验减少流量，部分图片和数据会缓存在系统内或者sd卡上，可通过客户端内设置可以清空。\n4.用户接受push消息、在客户端内更新版本过程中，会启动后台service，并会使用发送持久广播等权限。</string>
+
+	<string name="permission_title">授权提示</string>
+	<string name="permission_hint_barcode">是否允许易迅网打开摄像头？</string>
+	<string name="permission_hint_contact">是否允许易迅网获取和展示联系人数据？</string>
+	<string name="permission_hint_cargomap">是否允许易迅网使用手机定位功能？</string>
+	<string name="permission_hint_call">是否允许易迅网使用拨号功能？</string>
+	
+	
+	<string name="permission_agree">同意</string>
+	<string name="permission_disagree">拒绝</string>
+
+	<string name="btn_yes">是</string>
+	<string name="btn_no">否</string>
+	
+	
+	<string name="not_for_sale">暂不销售</string>
+	<string name="search_in_one_category"> 在  &lt;font color=\&quot;#4f97f8\&quot;&gt;%s&lt;/font&gt; 分类下搜索</string>
+	<string name="search_into_category">直接进入分类  &lt;font color=\&quot;#4f97f8\&quot;&gt;%s&lt;/font&gt;</string>
+	<string name="wtlogin_errinfo_default">输入参数错误，请检查</string>
+	<string name="settings_ok">设置成功</string>
+	
+	
+	<string name="price_old">原价：</string>
+    <string name="price_qq">Q币价：</string>
+    <string name="change_area">切换大区</string>
+    <string name="price_wechat">微信价：</string>
+    <string name="item_descript">道具介绍</string>
+    <string name="select_date">选择期限</string>
+    <string name="buy_count">购买数量</string>
+    <string name="select_area">选择大区：</string>
+    <string name="btn_buy_now">立即购买</string>
+    <string name="btn_handsel">赠送</string>
+    <string name="guaguaka_amount_text">您还有 %1$s张穿越火线道聚城刮刮卡</string>
+    <string name="show_history">查询历史记录</string>
+    <string name="role_info">角色信息</string>
+    
+    <string name="item_detail_change_info">更换</string>
+    <string name="item_detail_no_info">请选择您所在的大区</string>
+	<string name="title_product_list">商品列表</string>
+	<string name="pay_info">支付信息</string>
+	<string name="recommand_to_you">您可能还喜欢</string>
+	<string name="pay_succ_info">购买成功！道具将在1小时内发货到游戏中,请注意查收。</string>
+	
+	<string name="prepare_for_pay">正在获取订单信息， 请稍候...</string>
+	<string name="wait_for_submit">正在提交, 请稍候...</string>
+	
+	<string name="guaguaka_next_tips">手指向右滑动，切换到下一张刮刮卡</string>
+	<string name="guaguaka_cant_next">请先刮开本张，再进入下一张</string>
+</resources>

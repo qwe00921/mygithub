@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/product_list_item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
+
+    <FrameLayout
+        android:id="@+id/list_left"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:background="@drawable/global_white_shadow_click_state">
+
+        <ImageView
+            android:id="@+id/list_image_pic"
+            android:layout_width="190dp"
+            android:layout_height="180dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/avatar" />
+
+        <ImageView
+            android:id="@+id/list_image_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/qiang1" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/list_relative_right"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/qiang_item_left"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/list_textview_name"
+            style="@style/text_subtitle"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:ellipsize="end"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="3"
+            android:textColor="#6d6d6d"
+            android:textSize="@dimen/front_size_30xp"
+            android:textStyle="bold" />
+
+        <com.icson.lib.ui.AlphaTextView
+            android:id="@+id/list_textview_show_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ae2c0f"
+            android:textSize="@dimen/margin_size_40xp" />
+
+        <LinearLayout
+            android:id="@+id/qiang_view_kucun_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="0dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:text="库存: "
+                android:textColor="#c0c0c0"
+                android:textSize="14sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/qiang_view_container"
+                android:layout_width="0dip"
+                android:layout_height="10dip"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="#c0c0c0"
+                android:gravity="right"
+                android:padding="1dip" >
+
+                <View
+                    android:id="@+id/qiang_view_full"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:background="#c0c0c0" >
+                </View>
+
+                <View
+                    android:id="@+id/qiang_view_white"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:background="#fff" >
+                </View>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

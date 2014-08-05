@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin_size_15xp"
+    android:paddingLeft="@dimen/margin_size_30xp"
+    android:paddingRight="@dimen/margin_size_30xp"
+    android:paddingTop="@dimen/margin_size_15xp" 
+    android:background="@drawable/global_gray_shadow_click_state"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/text_my_vp_orderlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:drawableRight="@drawable/i_global_arrow_right"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/margin_size_25xp"
+        android:paddingLeft="@dimen/margin_size_20xp"
+        android:paddingRight="@dimen/margin_size_20xp"
+        android:paddingTop="@dimen/margin_size_25xp"
+        android:text="@string/my_vp_order"
+   	 	android:background="#ffffffff"
+        android:textColor="@color/global_text_color"
+        android:textSize="@dimen/front_size_30xp" >
+    </TextView>
+
+</LinearLayout>

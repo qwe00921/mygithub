@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     style="@style/unipay_fill.wrap">
+	  
+	  <include layout="@layout/unipay_layout_head" />
+      
+      <!-- cont -->
+	  <LinearLayout
+	      android:id="@+id/unipay_id_ContentLayout"
+	      style="@style/unipay_cont">
+	     <com.pay.ui.common.APScrollView
+	      style="@style/unipay_fill"
+	      android:fillViewport="true">
+	      <LinearLayout
+	        style="@style/unipay_linear.srcollcont">             
+         
+		        <!-- 手机支付密码 -->
+		        <TextView 
+		       		 style="@style/unipay_text.middle"
+			   		 android:layout_marginBottom="5dp"
+			   		 android:textColor="@color/unipay_em4_color"
+			         android:text="@string/unipay_qd_protect"/>
+		         <View  style="@style/unipay_horline"
+	                    android:layout_marginBottom="10dp" />
+			    <!-- 输入框 -->
+		         <LinearLayout
+		           android:id="@+id/unipay_id_apEdit"
+			       style="@style/unipay_inputbg">
+				   <EditText
+				     android:id="@+id/unipay_id_apPayPWDEdit" 
+			         style="@style/unipay_edit"
+			         android:imeOptions="actionNext"
+			         android:hint="@string/unipay_qcard_num"/>
+			        <ImageButton
+			          android:id="@+id/unipay_id_apDelBtn"
+		      		  style="@style/unipay_icondel"/>
+				</LinearLayout>
+				 <!-- btn -->
+	         <LinearLayout
+	         style="@style/unipay_bigviewbtn">
+	         <Button
+	             android:id="@+id/unipay_id_apSubmitBottom"
+	             style="@style/unipay_btn"
+         		 android:text="@string/unipay_sure"/>
+	        </LinearLayout>
+	            <!-- tips over -->
+		       </LinearLayout>
+	       </com.pay.ui.common.APScrollView>
+	      
+	        <!-- cft over -->
+	    </LinearLayout>
+</LinearLayout>

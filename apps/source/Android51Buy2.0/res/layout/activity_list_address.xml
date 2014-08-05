@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:icson="http://schemas.android.com/apk/res/com.icson"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/global_bg" >
+
+    <com.icson.lib.ui.NavigationBar
+        android:id="@+id/address_list_navigation_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        icson:drawableRight="@drawable/i_add_item"
+        icson:text="@string/my_address_title" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/address_list_navigation_bar"
+        android:background="@color/background_color" >
+
+        <ListView
+            android:id="@+id/address_list_listView"
+            style="@style/global_listview_no_divider"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/address_list_listView_empty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_size_20xp"
+            android:layout_marginLeft="@dimen/margin_size_30xp"
+            android:layout_marginRight="@dimen/margin_size_30xp"
+            android:layout_marginTop="@dimen/margin_size_20xp"
+            android:background="@drawable/denom_off2"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_size_50xp"
+            android:paddingTop="@dimen/margin_size_50xp"
+            android:text="@string/list_no_address"
+            android:textColor="#ffababab"
+            android:textSize="@dimen/front_size_30xp"
+            android:visibility="gone"  />
+    </RelativeLayout>
+
+    <include
+        android:layout_below="@id/address_list_navigation_bar"
+        layout="@layout/global_loading" />
+
+</RelativeLayout>

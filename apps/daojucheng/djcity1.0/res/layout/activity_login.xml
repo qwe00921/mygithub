@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_color" >
+	<View
+	    android:layout_width="0dp"
+	    android:layout_height="1px"
+	    android:id="@+id/center_poi"
+	    android:layout_centerInParent="true"/>
+	<RelativeLayout
+	    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/center_poi">
+    <ImageView
+        android:id="@+id/main_icson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/login_logo" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_below="@id/center_poi"
+     	android:id="@+id/quick_login"
+    	android:layout_width="match_parent"
+    	android:layout_margin="20dp"
+    	android:layout_marginTop="40dp"
+		android:layout_height="@dimen/margin_size_100xp"
+		android:background="@drawable/button_red_round_shape"
+		android:gravity="center">
+		<ImageView
+		 	android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/login_qq_icon" />
+		<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_size_10xp"
+            android:text="@string/login_qq"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_30xp" />
+ 	</LinearLayout>
+ 	<TextView
+ 	    android:id="@+id/login_with_passwd_tv"
+ 	    android:layout_height="wrap_content"
+ 	    android:layout_width="wrap_content"
+ 	    android:text="@string/login_use_passwd"
+ 	    android:layout_alignRight="@id/quick_login"
+ 	    android:layout_below="@id/quick_login"/>"
+    <include layout="@layout/global_loading" />
+
+</RelativeLayout>

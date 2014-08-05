@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="fill"
+    tools:context=".MainActivity" >
+    
+    <ImageButton
+        android:id="@+id/btn_training"
+        android:onClick="onClick"
+        android:background="@drawable/training"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp" />
+    <ImageButton
+        android:id="@+id/btn_test"
+        android:onClick="onClick"
+        android:background="@drawable/test"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <ImageButton
+        android:id="@+id/btn_takephoto"
+        android:onClick="onClick"
+        android:background="@drawable/takephoto"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <ImageButton
+        android:id="@+id/btn_bulletin"
+        android:onClick="onClick"
+        android:background="@drawable/bulletin"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <ImageButton
+        android:id="@+id/btn_logout"
+        android:onClick="onClick"
+        android:background="@drawable/logout"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <ImageButton
+        android:id="@+id/btn_exit"
+        android:onClick="onClick"
+        android:background="@drawable/exit"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp" />
+</LinearLayout>

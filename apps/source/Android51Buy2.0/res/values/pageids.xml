@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 页面区域点击 标签，每次被点击时触发，统计到服务器 -->
+
+
+    <!-- 0级页面 -->
+    <!-- 渠道：PUSH消息 -->
+    <string name="tag_push_message">100000</string>
+    <!-- 渠道：cps -->
+    <string name="tag_cps">100001</string>
+    <!-- 渠道：微信 -->
+    <string name="tag_weixin">100002</string>
+    <!-- 渠道：Touch -->
+    <string name="tag_touch">100003</string>
+
+    <!-- 一级页面 -->
+    <string name="tag_menu">1000</string>
+    <string name="tag_Home">1000</string>
+
+    <!-- 二级页面 -->
+    <string name="tag_SearchActivity">103620100</string>
+    <string name="tag_QiangActivity">780</string>
+    <string name="tag_TuanActivity">170</string>
+    <string name="tag_EventMorningActivity">120</string>
+    <string name="tag_EventThhActivity">150</string>
+    <string name="tag_EventWeekendActivity">160</string>
+    <string name="tag_HotlistActivity">130</string>
+    <string name="tag_ViewHistoryActivity">750</string>
+    <string name="tag_MessageActivity">760</string> <!-- not find -->
+    
+    <!-- 三级页面 -->
+    <string name="tag_ItemTabIntroView">120001310</string>
+    <string name="tag_ItemTabParamView">120001210</string>
+    <string name="tag_ItemTabReviewView">120001110</string>
+    <string name="tag_OrderConfirmActivity">250</string>
+    <string name="tag_FilterActivity">120000030</string>
+    <string name="tag_CouponShowActivity">11708430</string>
+    <string name="tag_AppInfoActivity">120000110</string>	<!-- 应用推荐 -->
+    <string name="tag_MyPointsActivity">120000120</string>	<!-- 我的积分 -->
+    <string name="tag_AboutUsActivity">120000180</string>	<!-- 关于我们 -->
+    <string name="tag_MyAddressActivity">11709000</string> <!-- 收货地址 -->
+    <string name="tag_VPOrderListActivity">120001090</string> <!-- 充值订单列表 -->
+    <string name="tag_PostSaleCenterActivity">600</string> 	<!-- 服务中心 -->
+    <string name="tag_ItemImageActivity">120001410</string>
+    <string name="tag_LoginActivity">11703230</string>
+    <string name="tag_MyCouponActivity">11708430</string>
+    <string name="tag_PostSaleRequestListActivity">120004740</string>		<!--APP报修退换货 -->
+    <string name="tag_PostSaleDetailActivity">120005740</string> 		<!-- APP报修退换货详情 -->
+    <string name="tag_MyCollectActivity">11703220</string>
+  	<string name="tag_ListActivity">210</string>
+	<string name="tag_MoreActivity">770</string>
+    <string name="tag_MyIcsonActivity">11649770</string>
+    <string name="tag_OrderDetailActivity">120000090</string>
+    <string name="tag_ShoppingCartActivity">220</string>
+     <string name="tag_VirtualPayActivity">720</string>
+    <string name="tag_SlotMachineActivity">730</string>
+    <string name="tag_AdviseActivity">740</string> 
+    <string name="tag_LoginQQActivity">11703250</string>
+    <string name="tag_LoginAliPayActivity">11703270</string>
+    <string name="tag_LoginIcsonActivity">11703260</string> 
+    <string name="tag_HTML5LinkActivity">6000</string>
+     
+     
+    <!-- 没确认的 -->
+    <string name="tag_YiQiangActivity">1990230</string>
+    <string name="tag_ItemActivity">1990810</string>
+    <string name="tag_ItemTabDetailView">1990820</string>
+    <string name="tag_CategoryActivity">1990040</string>
+    <string name="tag_OrderEvaluateActivity">1990060</string>
+    <string name="tag_LotteryActivity">1990120</string>
+    <string name="tag_CargoMapActivity">1990140</string>
+    <string name="tag_FilterCategoryActivity">1990150</string>
+    <string name="tag_ESShoppingCartActivity">1990170</string>
+    <string name="tag_SelectCityActivity">1990200</string>
+    <string name="tag_WelcomeActivity">1990220</string>
+    <string name="tag_OrderDetailProductActivity">1990240</string>
+    <string name="tag_CouponListActivity">1990250</string>
+    <string name="tag_AddressDetailActivity">1990270</string>
+    <string name="tag_AddressListActivity">1990280</string>
+    <string name="tag_InvoiceListActivity">1990290</string>
+    <string name="tag_InvoiceActivity">1990300</string>
+    <string name="tag_EventBaseActivity">1990310</string>
+    <string name="tag_FBHistoryActivity">1990320</string>
+   
+
+</resources>

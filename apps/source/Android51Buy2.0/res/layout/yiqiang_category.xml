@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_corner"
+    android:padding="@dimen/margin_size_30xp"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/yiqiang_category_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/yiqiang_category_current_title" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textStyle="bold"
+            android:textColor="#ff444444"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/front_size_28xp"
+            android:text="全部" />
+        
+        <TextView
+            android:id="@+id/yiqiang_category_current_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/yiqiang_category_current_title"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:textColor="#ff444444"
+            android:textSize="@dimen/front_size_28xp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/yiqiang_category_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#ff444444"
+            android:textSize="@dimen/front_size_28xp"
+            android:layout_toLeftOf="@+id/yiqiang_category_filter_btn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_size_10xp"
+            android:text="分类筛选" />
+
+        <ImageButton
+            android:id="@+id/yiqiang_category_filter_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/arrow_up"/>
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/category_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_30xp"
+        android:visibility="gone" >
+
+        <View
+            android:id="@id/order_seperator"
+            style="@style/global_line2"
+            android:layout_width="match_parent" />
+        <com.icson.lib.ui.MultiLineLayout
+            android:id="@+id/category_detail_list_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_seperator"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            >
+            
+            
+        </com.icson.lib.ui.MultiLineLayout>
+        <!-- com.icson.lib.ui.FlowLayout
+            android:id="@+id/category_detail_list_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_seperator"
+            android:layout_marginTop="@dimen/margin_size_30xp"
+            android:gravity="center_vertical" >
+        </com.icson.lib.ui.FlowLayout-->
+
+    </RelativeLayout>
+
+</LinearLayout>

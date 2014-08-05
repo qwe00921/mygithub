@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/amap_info_bubble"
+    android:orientation="horizontal">
+
+    <ImageView android:contentDescription="@string/app_name"
+        android:id="@+id/headimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/avatar_bg"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp">
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textSize="14dp"
+            android:layout_margin="2dp"
+            android:textStyle="bold"/>
+        <RelativeLayout
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:orientation="horizontal"
+        	android:layout_margin="2dp">
+         <TextView
+            android:id="@+id/phone_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff000000"
+            android:background="@drawable/phone_icon"/>	
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="3dp"
+            android:layout_toRightOf="@id/phone_title"
+            android:layout_alignParentBottom="true"
+            android:textColor="#ff4d8cff"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="16dp" />
+        </RelativeLayout>
+         <TextView
+            android:id="@+id/dynamic_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:maxEms="12"
+            android:lineSpacingExtra="2dp"
+            android:textColor="@android:color/white"
+            android:layout_margin="2dp"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+</LinearLayout>

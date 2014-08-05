@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:djcity="http://schemas.android.com/apk/res/com.tencent.djcity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.tencent.djcity.lib.ui.NavigationBar
+        android:id="@+id/payinfo_navbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        djcity:drawableRight="@drawable/ico_search"
+        djcity:text="@string/pay_info" />
+    
+	<TextView
+	    android:layout_marginLeft="@dimen/margin_size_80xp"
+	    android:layout_marginTop="@dimen/margin_size_30xp"
+	    android:id="@+id/pay_info_hint"
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/payinfo_navbar"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="@string/pay_succ_info"/>
+    <TextView
+	    android:id="@+id/share_btn"
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pay_info_hint"
+        android:layout_marginTop="@dimen/margin_size_30xp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:background="@drawable/button_red_frame_round"
+        android:text="@string/share_loading"
+        android:textColor="@color/red"
+        android:paddingLeft="@dimen/margin_size_120xp"
+        android:paddingRight="@dimen/margin_size_120xp"
+        android:paddingTop="@dimen/margin_size_20xp"
+        android:paddingBottom="@dimen/margin_size_20xp"/>	
+	<LinearLayout 
+	    android:layout_marginTop="@dimen/margin_size_30xp"
+	    android:id="@+id/recommand_title_layout"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/global_gray"
+        android:layout_below="@id/share_btn"
+        >
+	<TextView
+	    android:padding="@dimen/margin_size_20xp"
+	    android:id="@+id/recommand_title"
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recommand_to_you"/>
+	</LinearLayout>
+	
+    <ListView
+        android:id="@+id/list_listview"
+        style="@style/global_listview_no_divider"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/recommand_title_layout" />
+ 
+</RelativeLayout>
