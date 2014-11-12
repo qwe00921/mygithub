@@ -1,0 +1,202 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gamenews="http://schemas.android.com/apk/res/com.yy.android.sportbrush"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.yy.android.gamenews.ui.view.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        gamenews:drawableLeft="@drawable/ic_person_default"
+        gamenews:isLeftImageRound="true"
+        gamenews:leftBorderColor="@color/global_white"
+        gamenews:title="@string/main_info_banner" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/actionbar" >
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="45dip" />
+
+        <LinearLayout
+            android:id="@+id/main_radio"
+            android:layout_width="match_parent"
+            android:layout_height="74.66dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:clickable="true" >
+
+            <FrameLayout
+                android:id="@+id/info_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/main_menu_bg_selector"
+                android:paddingBottom="@dimen/home_my_favor_padding_bottom" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:drawablePadding="1.33dp"
+                    android:drawableTop="@drawable/main_my_info_btn_selector"
+                    android:gravity="center"
+                    android:text="@string/square"
+                    android:textColor="@drawable/main_my_info_text_selector"
+                    android:textSize="10dp" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/brush_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:layout_width="74.66dp"
+                    android:layout_height="74.66dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/main_brush_btn_selector" />
+
+                <ImageView
+                    android:id="@+id/main_radio_center_indicator"
+                    android:layout_width="74.66dp"
+                    android:layout_height="74.66dp"
+                    android:layout_gravity="center_horizontal" />
+            </RelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/news_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/main_menu_bg_selector"
+                android:paddingBottom="@dimen/home_my_favor_padding_bottom" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:drawablePadding="1.33dp"
+                    android:drawableTop="@drawable/main_my_favor_btn_selector"
+                    android:gravity="center"
+                    android:text="@string/mine"
+                    android:textColor="@drawable/main_my_info_text_selector"
+                    android:textSize="10dp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/extra_btn_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/main_menu_bg_selector"
+                android:paddingBottom="@dimen/home_my_favor_padding_bottom"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:drawablePadding="1.33dp"
+                    android:drawableTop="@drawable/main_extra1_btn_selector"
+                    android:gravity="center"
+                    android:text="@string/main_info_extra1"
+                    android:textColor="@drawable/main_my_info_text_selector"
+                    android:textSize="10dp" />
+            </FrameLayout>
+            
+            <FrameLayout
+                android:id="@+id/extra_btn_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/main_menu_bg_selector"
+                android:paddingBottom="@dimen/home_my_favor_padding_bottom"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:drawablePadding="1.33dp"
+                    android:drawableTop="@drawable/main_extra2_btn_selector"
+                    android:gravity="center"
+                    android:text="@string/main_info_extra2"
+                    android:textColor="@drawable/main_my_info_text_selector"
+                    android:textSize="10dp" />
+            </FrameLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.yy.android.gamenews.ui.view.WelcomeChannelView
+        android:id="@+id/welcome_channel_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/welcome_pager_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/welcome_image_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/welcome_pager_game_bg_bottom"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/welcome_image_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/welcome_image_one"
+            android:scaleType="fitCenter"
+            android:src="@drawable/welcome_pager_game_bg_up"
+            android:visibility="gone" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/welcome_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/welcome_hint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/welcome_main_hint"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="#ff1d1a1a"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="@string/welcom_hint_2"
+            android:textColor="#ffffffff"
+            android:textSize="15sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>

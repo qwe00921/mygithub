@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gamenews="http://schemas.android.com/apk/res/com.yy.android.sportbrush"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp"
+    android:paddingTop="6dp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/list_article_img_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <com.yy.android.gamenews.ui.view.AutoAdjustImageView
+                android:id="@+id/list_article_img1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/article_list_item_loading_big"
+                android:visibility="gone"
+                gamenews:adjustType="auto_adjust_height" />
+
+            <com.yy.android.gamenews.ui.view.AutoAdjustImageView
+                android:id="@+id/list_article_mask_img1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_list_video_mask"
+                android:visibility="gone"
+                gamenews:adjustType="auto_adjust_height" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/article_banner_bg" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/btn_video_play" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/list_article_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_article_img_layout"
+            android:background="@drawable/mask_video_text"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:singleLine="false"
+            android:text="测试"
+            android:textColor="@color/global_text_color"
+            android:textIsSelectable="false"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/article_list_item_transparent_selector" />
+
+</FrameLayout>
