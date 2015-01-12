@@ -31,30 +31,21 @@
         <com.yy.android.gamenews.ui.view.ExtendedScrollView
             android:id="@+id/scroll"
             android:layout_width="fill_parent"
-            android:layout_marginBottom="40dip"
             android:layout_height="fill_parent"
             android:scrollbars="@null" >
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/global_bg_light"
                 android:orientation="vertical" >
 
                 <com.yy.android.gamenews.ui.view.ExtendedWebView
                     android:id="@+id/article_body"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="wrap_content" />
 
-                <com.yy.android.gamenews.ui.view.ExtendedListView
-                    android:id="@+id/comment_list"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:divider="@null"
-                    android:paddingLeft="9.33dp"
-                    android:paddingRight="9.33dp"
-                    android:scrollbarStyle="outsideOverlay"
-                    tools:listitem="@layout/article_detail_comment_list_item" />
+                <include layout="@layout/article_detail_comment_header"/>
             </LinearLayout>
         </com.yy.android.gamenews.ui.view.ExtendedScrollView>
 
@@ -96,103 +87,12 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/menu"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            android:background="@drawable/article_detail_menu_bg"
-            android:gravity="center" >
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:id="@+id/keep_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:src="@drawable/article_detail_keep_normal" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/comment_btn"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:src="@drawable/article_detail_comment_selector" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/jump_btn"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1" >
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:src="@drawable/article_detail_jump_selector" />
-
-                    <TextView
-                        android:id="@+id/comment_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|top"
-                        android:background="@drawable/article_detail_red_small"
-                        android:gravity="center"
-                        android:minWidth="18dp"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="2dp"
-                        android:text="0"
-                        android:textColor="@color/global_white"
-                        android:textSize="10sp" />
-                </FrameLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/shared_btn"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:src="@drawable/article_detail_shared_selector" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/report_btn"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:src="@drawable/article_detail_report_selector" />
-            </FrameLayout>
-        </LinearLayout>
     </FrameLayout>
+
+    <com.yy.android.gamenews.ui.view.ArticleCommentView
+        android:id="@+id/comment_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.yy.android.gamenews.ui.view.ArticleCommentView>
 
 </LinearLayout>

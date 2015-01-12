@@ -3,13 +3,13 @@ package com.yy.android.gamenews.ui;
 import java.util.ArrayList;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -20,6 +20,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -37,8 +38,8 @@ import com.yy.android.gamenews.ui.common.RefreshListWrapper;
 import com.yy.android.gamenews.ui.common.RefreshableViewWrapper;
 import com.yy.android.gamenews.ui.common.RefreshableViewWrapper.OnListViewEventListener;
 import com.yy.android.gamenews.ui.common.RefreshableViewWrapper.OnRefreshCompleteListener;
-import com.yy.android.gamenews.ui.view.BannerView;
-import com.yy.android.gamenews.ui.view.BannerView.OnBannerItemClickListener;
+import com.yy.android.gamenews.ui.view.BaseBannerView.OnBannerItemClickListener;
+import com.yy.android.gamenews.ui.view.InfiniteBannerView;
 import com.yy.android.gamenews.util.IPageCache;
 import com.yy.android.gamenews.util.StatsUtil;
 import com.yy.android.gamenews.util.Util;
@@ -62,9 +63,9 @@ import de.greenrobot.event.EventBus;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public abstract class BaseListFragment<DATA> extends BaseFragment implements
 		OnListViewEventListener, OnItemClickListener,
-		OnBannerItemClickListener, OnRefreshCompleteListener, OnClickListener {
+		OnBannerItemClickListener, OnRefreshCompleteListener {
 
-	private static final String LOG_TAG = "BaseListFragment";
+	public static final String LOG_TAG = "BaseListFragment";
 
 	protected DataViewConverter<?> mDataViewConverter;
 
@@ -83,15 +84,13 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 	/**
 	 * 置顶banner view
 	 */
-	private BannerView mBannerView;
+	private InfiniteBannerView mBannerView;
 	private View mBannerLayout;
 
 	/**
 	 * 顶端置顶banner的adapter
 	 */
 	private ImageAdapter<DATA> mBannerAdapter;
-
-	private View bottomBarView; // 底部支持view
 
 	private static final String KEY_HIDE_LOADING_BAR = "is_hide_loading_bar";
 	private static final String KEY_DATA_SOURCE = "list_datasource";
@@ -100,12 +99,9 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 
 	private IPageCache mPageCache;
 
+	protected Resources mRes;
+
 	public ArrayList<DATA> getDataSource() {
-		Log.d(LOG_TAG, "[TestSaveInstance],[getDataSource] mChannel = "
-				+ getLastRefreshTimeKey() + ", mDataSource.size = "
-				+ (mDataSource == null ? -1 : mDataSource.size())
-				+ ", mBannerAdapter.size = "
-				+ (mBannerDataSource == null ? -1 : mBannerDataSource.size()));
 		return mDataSource;
 	}
 
@@ -127,6 +123,18 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 
 	public int getType() {
 		return mType;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		mRes = activity.getResources();
+		super.onAttach(activity);
+	}
+
+	@Override
+	public void onDetach() {
+		mRes = null;
+		super.onDetach();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -160,16 +168,6 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 							ViewGroup.LayoutParams.MATCH_PARENT));
 		}
 
-		if (needShowBottomBarView()) {
-			bottomBarView = mInflater
-					.inflate(R.layout.union_support_view, null);
-			bottomBarView.setOnClickListener(this);
-			bottomBarView.setVisibility(View.GONE);
-			parentView.addView(bottomBarView, new FrameLayout.LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
-		}
-
 		mViewWrapper = getViewWrapper();
 
 		if (mViewWrapper != null) {
@@ -181,10 +179,10 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 			View layout = inflater.inflate(R.layout.article_list_bannerview,
 					null);
 			mBannerLayout = layout.findViewById(R.id.root);
-			mBannerView = (BannerView) mBannerLayout
+			mBannerView = (InfiniteBannerView) mBannerLayout
 					.findViewById(R.id.article_list_banner);
 			mBannerLayout.setVisibility(View.GONE);
-			mBannerView.setAdapter(mBannerAdapter);
+			mBannerView.setListAdapter(mBannerAdapter);
 			mBannerView.startScroll();
 			mBannerView.setOnItemClickListener(this);
 			mDataViewConverter.addHeader(layout);
@@ -209,42 +207,17 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 			if (hasLoadingBar) {
 				mViewWrapper.showLoadingBar();
 			} else {
-				mViewWrapper.hideLoadingBar();
+				mViewWrapper.showNoMoreLoadingBar();
 			}
 		}
 
-		Log.d(LOG_TAG, "[TestSaveInstance],[onCreate] mChannel = "
-				+ getLastRefreshTimeKey() + ", mDataSource.size = "
-				+ (mDataSource == null ? -1 : mDataSource.size())
-				+ ", mBannerAdapter.size = "
-				+ (mBannerDataSource == null ? -1 : mBannerDataSource.size()));
-
 		super.onCreateView(inflater, container, savedInstanceState);
 		return parentView;
-	}
-	
-	protected void showSupportView(boolean show){
-		if(bottomBarView != null){
-			bottomBarView.setVisibility(show ? View.VISIBLE : View.GONE);
-		}
-	}
-	
-	protected void enbaleSupport(boolean enable) {
-		if (bottomBarView != null) {
-			((TextView) bottomBarView.findViewById(R.id.tv_support))
-					.setText(getResources().getString(
-							enable ? R.string.support : R.string.supported));
-			bottomBarView.setEnabled(enable);
-		}
 	}
 
 	protected void customizeView(ViewGroup viewGroup) {
 
 	}
-
-	protected String strEmptyReload;
-	protected String strEmptyNoData;
-	protected String strEmptyAddChannel;
 
 	private String strUpdatedCount;
 	private String strUpdatedCountZero;
@@ -296,7 +269,7 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 		return view;
 	}
 
-	protected BannerView getBannerView() {
+	protected InfiniteBannerView getBannerView() {
 		return mBannerView;
 	}
 
@@ -304,9 +277,7 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
 		View dataView = getDataView();
-		strEmptyAddChannel = getString(R.string.main_add_fav);
-		strEmptyReload = getString(R.string.global_empty_reload);
-		strEmptyNoData = getString(R.string.global_empty_no_data);
+
 		strUpdatedCount = getString(R.string.global_update_count);
 		strUpdatedCountZero = getString(R.string.global_update_count_zero);
 		setContainer((ViewGroup) dataView.getParent());
@@ -333,12 +304,6 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-
-		Log.d(LOG_TAG, "[TestSaveInstance],[onSave] mChannel = "
-				+ getLastRefreshTimeKey() + ", mDataSource.size = "
-				+ (mDataSource == null ? -1 : mDataSource.size())
-				+ ", mBannerAdapter.size = "
-				+ (mBannerDataSource == null ? -1 : mBannerDataSource.size()));
 		if (mViewWrapper != null) {
 			outState.putBoolean(KEY_HIDE_LOADING_BAR,
 					mViewWrapper.hasLoadingBar());
@@ -371,10 +336,15 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 	 */
 	@Override
 	public void onScrollStateChanged(View view, int scrollState) {
+		if ((scrollState == OnScrollListener.SCROLL_STATE_FLING || scrollState == OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)) {
+			mAdapter.pause();
+		} else {
+			mAdapter.resume();
+		}
 		if ((scrollState == SCROLL_STATE_IDLE)) {
 			if (mDataViewConverter.getFirstVisiblePosition() != 0) {
-				notifyListener(FragmentCallbackEvent.FRGMT_LIST_SCROLL_END,
-						null);
+				// notifyListener(FragmentCallbackEvent.FRGMT_LIST_SCROLL_END,
+				// null);
 			}
 		}
 	}
@@ -434,13 +404,15 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 		if (getDataView() == null) {
 			return;
 		}
+		mDataViewConverter.stopScroll();
 		mDataViewConverter.setSelection(0);
 		// mDataView.setSelection(0);
-		notifyListener(FragmentCallbackEvent.FRGMT_LIST_SCROLL_TO_HEAD, null);
+		// notifyListener(FragmentCallbackEvent.FRGMT_LIST_SCROLL_TO_HEAD,
+		// null);
 		if (mViewWrapper != null) {
 			mViewWrapper.onRefreshing();
 		}
-		refreshData();
+		// refreshData();
 	}
 
 	/**
@@ -551,29 +523,39 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 		if (mBannerAdapter != null) {
 			mBannerAdapter.setDataSource(mBannerDataSource);
 		}
-		Log.d(LOG_TAG, "[TestSaveInstance],[updateBanner] mChannel = "
-				+ getLastRefreshTimeKey() + ", mDataSource.size = "
-				+ (mDataSource == null ? -1 : mDataSource.size())
-				+ ", mBannerAdapter.size = "
-				+ (mBannerDataSource == null ? -1 : mBannerDataSource.size()));
 	}
 
 	/**
-	 * 获取上次更新时间的key，视图会根据当前的key来获取上次更新的时间并展示
+	 * 获取上次更新时间的key，视图会根据当前的key来获取上次更新的时间并展示 默认实现为
+	 * {@link Constants#CACHE_KEY_LAST_REFRSH_TIME} + "_" + FULL_CLASS_NAME
 	 * 
 	 * @return
 	 */
 	protected String getLastRefreshTimeKey() {
-		return Constants.CACHE_KEY_LAST_REFRSH_TIME;
+		return Constants.CACHE_KEY_LAST_REFRSH_TIME + "_"
+				+ getClass().getName(); // 每个页面有不同的key
 	}
 
 	private int mLastEvent; // 防止多余的刷新
 
+	private Handler mUIHandler = new Handler();
+	private static final int CLEAR_EVENT_DURATION = 2000;
+	private Runnable mClearEventRunnable = new Runnable() {
+
+		@Override
+		public void run() {
+			mLastEvent = -1;
+		}
+	};
+
 	protected void notifyListener(int eventType, Object params) {
 
-		Log.d(LOG_TAG, "eventType = " + eventType + ", params = " + params);
+		// Log.d(LOG_TAG, "eventType = " + eventType + ", params = " + params);
 		if (mLastEvent != eventType) {
 			mLastEvent = eventType;
+
+			// 自动清除event type，防止同一事件只能发送一次
+			mUIHandler.postDelayed(mClearEventRunnable, CLEAR_EVENT_DURATION);
 			FragmentCallbackEvent event = new FragmentCallbackEvent();
 			event.mEventType = eventType;
 			event.mParams = params;
@@ -581,10 +563,6 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 			event.mFragment = this;
 			EventBus.getDefault().post(event);
 		}
-	}
-
-	protected boolean needShowBottomBarView() {
-		return false;
 	}
 
 	protected boolean needShowUpdatedCount() {
@@ -607,9 +585,11 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 	 *            是否还有数据，如果是false，则上拉加载功能被禁用
 	 * @param replace
 	 *            是否替换之前的数据
+	 * @param error
+	 *            是否加载出错
 	 */
 	protected void requestFinish(int refresh, ArrayList<DATA> data,
-			boolean hasMore, boolean replace) {
+			boolean hasMore, boolean replace, boolean error) {
 
 		BaseAdapter adapter = mAdapter;
 		if (adapter == null) {
@@ -627,24 +607,26 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 					mDataSource.clear();
 				}
 				mDataSource.addAll(0, data);
-				Log.d("test", "mmDataSource.addAll(0, data)");
 			} else {
 				mDataSource.addAll(data);
-				Log.d("test", "mDataSource.addAll(data)");
 			}
 			adapter.notifyDataSetChanged();
-			Log.d(LOG_TAG, "notifyDataSetChanged");
 		}
 
 		if (mViewWrapper != null) {
 			if (refresh == RefreshType._REFRESH_TYPE_REFRESH) {
 				mViewWrapper.onRefreshComplete(updateCount);
 			}
-			if (!hasMore) {
-				mViewWrapper.hideLoadingBar();
+			if (error) {
+				mViewWrapper.showErrorLoadingBar();
 			} else {
-				mViewWrapper.showLoadingBar();
+				if (!hasMore) {
+					mViewWrapper.showNoMoreLoadingBar();
+				} else {
+					mViewWrapper.showLoadingBar();
+				}
 			}
+
 		} else {
 			if (refresh == RefreshType._REFRESH_TYPE_REFRESH
 					&& needShowUpdatedCount()) {
@@ -654,11 +636,6 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 		}
 
 		checkShowEmptyView();
-		Log.d(LOG_TAG, "[TestSaveInstance],[requestFinish] mChannel = "
-				+ getLastRefreshTimeKey() + ", mDataSource.size = "
-				+ (mDataSource == null ? -1 : mDataSource.size())
-				+ ", mBannerAdapter.size = "
-				+ (mBannerDataSource == null ? -1 : mBannerDataSource.size()));
 	}
 
 	// private Animation mAlphaAnimOut;
@@ -691,7 +668,6 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 
 				@Override
 				public void onAnimationRepeat(Animation animation) {
-					// TODO Auto-generated method stub
 
 				}
 
@@ -756,7 +732,7 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 		return animSet;
 	}
 
-	private Animation mAlphaAnimOut;
+	// private Animation mAlphaAnimOut;
 	private Animation mAlphaAnimIn;
 
 	protected void showUpdateTv(int count) {
@@ -788,7 +764,6 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 
 			@Override
 			public void onAnimationRepeat(Animation animation) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -861,14 +836,6 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 	}
 
 	/**
-	 * 底部view点击事件
-	 */
-	@Override
-	public void onClick(View v) {
-		// For child implementation
-	};
-
-	/**
 	 * 数据视图点击事件，默认不处理
 	 */
 	@Override
@@ -890,6 +857,18 @@ public abstract class BaseListFragment<DATA> extends BaseFragment implements
 	public void onComplete(int updateCount) {
 		if (needShowUpdatedCount()) {
 			showUpdatedToast(updateCount);
+		}
+
+		notifyListener(FragmentCallbackEvent.FRGMT_LIST_REFRESH_DONE, null);
+	}
+
+	protected boolean isExpire() {
+		return false;
+	}
+
+	public final void checkExpire() {
+		if (isExpire()) {
+			callRefresh();
 		}
 	}
 

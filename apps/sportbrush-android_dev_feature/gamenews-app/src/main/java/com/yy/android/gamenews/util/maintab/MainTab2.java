@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.yy.android.gamenews.event.SecondButtomTabEvent;
+import com.yy.android.gamenews.event.MainTabEvent;
 import com.yy.android.gamenews.ui.MainActivity;
 import com.yy.android.gamenews.ui.NewsFragment;
 import com.yy.android.gamenews.ui.ViewPagerFragmentFactory;
@@ -12,17 +12,20 @@ import com.yy.android.gamenews.ui.ViewPagerFragmentFactory.PageType;
 import com.yy.android.gamenews.ui.view.ActionBar;
 import com.yy.android.sportbrush.R;
 
-public class MainTab2 extends MainFragmentTab {
+public class MainTab2 extends MainTab {
 
-	public MainTab2(MainActivity context, View button, ActionBar actionbar,
+	public MainTab2(MainActivity context, ActionBar actionbar,
 			Bundle savedInstance) {
-		super(context, button, actionbar, SecondButtomTabEvent.ORDER_INFO,
-				savedInstance);
-		// TODO Auto-generated constructor stub
+		super(context, actionbar, MainTabEvent.TAB_ORDER_INFO, savedInstance);
+	}
+
+	public MainTab2(MainActivity context, ActionBar actionbar, String fromTab,
+			Bundle savedInstance) {
+		super(context, actionbar, fromTab, savedInstance);
 	}
 
 	@Override
-	protected void customizeActionbar() {
+	protected void onChildCustActionBar() {
 		mActionBar.setRightTextVisibility(View.GONE);
 		mActionBar.setOnRightClickListener(null);
 		mActionBar.getRightImageView().setImageResource(0);
@@ -39,14 +42,26 @@ public class MainTab2 extends MainFragmentTab {
 	}
 
 	@Override
-	public String getTabName() {
+	public String getDisplayName() {
 		return mContext.getString(R.string.mine);
 	}
 
 	@Override
 	public void refresh() {
-		NewsFragment fragment = (NewsFragment) mFragment;
+		NewsFragment fragment = (NewsFragment) getFragment();
 		fragment.refreshChannelPager();
 		fragment.showTab(0);
+	}
+
+	@Override
+	protected int getButtonDrawableResource() {
+		return R.drawable.main_my_favor_btn_selector;
+	}
+
+	public static final int INDEX = 1;
+
+	@Override
+	public int getId() {
+		return INDEX;
 	}
 }

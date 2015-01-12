@@ -9,6 +9,8 @@ import android.util.SparseArray;
 import com.duowan.gamenews.ArticleFlag;
 import com.duowan.gamenews.ArticleInfo;
 import com.duowan.gamenews.ArticleType;
+import com.duowan.gamenews.GetRacePortalReq;
+import com.duowan.gamenews.GetRacePortalRsp;
 import com.duowan.gamenews.GetUnionInfoReq;
 import com.duowan.gamenews.GetUnionInfoRsp;
 import com.duowan.gamenews.GetUnionListReq;
@@ -21,23 +23,28 @@ import com.yy.android.gamenews.util.ToastUtil;
 import com.yy.android.gamenews.util.Util;
 import com.yy.android.sportbrush.R;
 
+/**
+ * 游戏刷子赛事
+ * 
+ * @author lcq, ldx, yyl
+ * 
+ */
 public class UnionModel extends CommonModel {
 
 	public static void getUnionList(
 			final ResponseListener<GetUnionListRsp> listener,
-			final int unionType, final String attachInfo) {
+			final int unionType, final String attachInfo, int refreType) {
 		if (!Util.isNetworkConnected()) {
 			ToastUtil.showToast(R.string.http_not_connected);
 			listener.onError(null);
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetUnionList");
-
 		GetUnionListReq req = new GetUnionListReq();
 		req.setUnionType(unionType);
 		req.setAttachInfo(attachInfo);
-		uniPacket.put("request", req);
+		req.setRefreshType(refreType);
+		UniPacket uniPacket = createUniPacket("GetUnionList", req);
 
 		new Request(listener.get(), uniPacket) {
 			@Override
@@ -53,6 +60,7 @@ public class UnionModel extends CommonModel {
 		}.setShowProgressDialog(false).execute();
 	}
 
+	@SuppressWarnings("unused")
 	private static GetUnionListRsp getUnions(int unionType) {
 		GetUnionListRsp rsp = new GetUnionListRsp();
 		ArrayList<UnionInfo> unionList = new ArrayList<UnionInfo>();
@@ -72,19 +80,18 @@ public class UnionModel extends CommonModel {
 
 	public static void getUnionInfo(
 			final ResponseListener<GetUnionInfoRsp> listener,
-			final long unionId, String attachInfo) {
+			final long unionId, String attachInfo, int refresh) {
 		if (!Util.isNetworkConnected()) {
 			ToastUtil.showToast(R.string.http_not_connected);
 			listener.onError(null);
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetUnionInfo");
-
 		GetUnionInfoReq req = new GetUnionInfoReq();
 		req.setUnionId(unionId);
 		req.setAttachInfo(attachInfo);
-		uniPacket.put("request", req);
+		req.setRefreshType(refresh);
+		UniPacket uniPacket = createUniPacket("GetUnionInfo", req);
 
 		new Request(listener.get(), uniPacket) {
 			@Override
@@ -100,6 +107,7 @@ public class UnionModel extends CommonModel {
 		}.setShowProgressDialog(false).execute();
 	}
 
+	@SuppressWarnings("unused")
 	private static GetUnionInfoRsp getUnion(long unionId) {
 		GetUnionInfoRsp rsp = new GetUnionInfoRsp();
 		ArrayList<ArticleInfo> articleInfos = new ArrayList<ArticleInfo>();
@@ -181,30 +189,63 @@ public class UnionModel extends CommonModel {
 	}
 
 	public static void supportUnion(
-			final ResponseListener<SparseArray<String>> listener, final long unionId) {
+			final ResponseListener<SparseArray<String>> listener,
+			final long unionId) {
 		if (!Util.isNetworkConnected()) {
 			ToastUtil.showToast(R.string.http_not_connected);
 			listener.onError(null);
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("UnionVote");
-
 		UnionVoteReq req = new UnionVoteReq();
 		req.setUnionId(unionId);
-		uniPacket.put("request", req);
+
+		UniPacket uniPacket = createUniPacket("UnionVote", req);
 
 		new Request(listener.get(), uniPacket) {
 			@Override
 			public void onResponse(UniPacket response) {
 				int code = response.getByClass("subcode", Integer.valueOf(1));
-				if(code != 0){
+				if (code != 0) {
 					code = 1;
 				}
 				String msg = response.getByClass("msg", String.valueOf(""));
 				SparseArray<String> data = new SparseArray<String>();
 				data.put(code, msg);
 				listener.onResponse(data);
+			}
+
+			public void onError(Exception e) {
+				listener.onError(e);
+			};
+		}.setShowProgressDialog(false).execute();
+	}
+
+	public static void getRacePortalList(
+			final ResponseListener<GetRacePortalRsp> listener,
+			String attachInfo, int refresh) {
+
+		// if(true) {
+		// GetRacePortalRsp rsp = new GetRacePortalRsp();
+		//
+		// rsp.setHasMore(true);
+		// rsp.setArticleList(ArticleModel.getData());
+		// listener.onResponse(rsp);
+		//
+		// return;
+		// }
+
+		GetRacePortalReq req = new GetRacePortalReq();
+		req.setAttachInfo(attachInfo);
+		req.setRefreshType(refresh);
+		UniPacket uniPacket = createUniPacket("GetRacePortal", req);
+
+		new Request(listener.get(), uniPacket) {
+			@Override
+			public void onResponse(UniPacket response) {
+				GetRacePortalRsp rsp = new GetRacePortalRsp();
+				rsp = response.getByClass("result", rsp);
+				listener.onResponse(rsp);
 			}
 
 			public void onError(Exception e) {

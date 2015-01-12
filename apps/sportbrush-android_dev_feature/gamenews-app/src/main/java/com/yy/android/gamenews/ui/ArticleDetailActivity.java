@@ -22,30 +22,23 @@ import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,14 +47,14 @@ import com.duowan.android.base.model.BaseModel.ResponseListener;
 import com.duowan.android.base.util.LocalLog;
 import com.duowan.gamenews.ArticleDetail;
 import com.duowan.gamenews.ArticleInfo;
+import com.duowan.gamenews.ArticleType;
 import com.duowan.gamenews.Channel;
-import com.duowan.gamenews.Comment;
 import com.duowan.gamenews.ExtraInfoType;
 import com.duowan.gamenews.FavType;
 import com.duowan.gamenews.GetArticleDetailRsp;
-import com.duowan.gamenews.GetCommentListRsp;
 import com.duowan.gamenews.Image;
 import com.duowan.gamenews.ImageType;
+import com.duowan.gamenews.Like;
 import com.duowan.gamenews.LikeType;
 import com.duowan.gamenews.PicInfo;
 import com.duowan.gamenews.User;
@@ -74,59 +67,59 @@ import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.GameNewsApplication;
 import com.yy.android.gamenews.event.CommentEvent;
 import com.yy.android.gamenews.event.LikeEvent;
+import com.yy.android.gamenews.exception.UserException;
 import com.yy.android.gamenews.model.ArticleDetailModel;
-import com.yy.android.gamenews.model.CommentModel;
 import com.yy.android.gamenews.model.ReportModel;
 import com.yy.android.gamenews.ui.common.SwitchImageLoader;
 import com.yy.android.gamenews.ui.view.ActionBar;
-import com.yy.android.gamenews.ui.view.ExtendedListView;
+import com.yy.android.gamenews.ui.view.ArticleCommentView;
 import com.yy.android.gamenews.ui.view.ExtendedScrollView;
 import com.yy.android.gamenews.ui.view.ExtendedScrollView.OnFlipListener;
 import com.yy.android.gamenews.ui.view.ExtendedWebView;
+import com.yy.android.gamenews.util.ArticleDetailSwitcher;
+import com.yy.android.gamenews.util.ArticleUtil;
+import com.yy.android.gamenews.util.DropDownHelper;
+import com.yy.android.gamenews.util.DropDownHelper.DropDownItem;
+import com.yy.android.gamenews.util.DropDownHelper.OnDropDownClickListener;
 import com.yy.android.gamenews.util.IPageCache;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.StatsUtil;
 import com.yy.android.gamenews.util.TimeUtil;
 import com.yy.android.gamenews.util.ToastUtil;
 import com.yy.android.gamenews.util.Util;
+import com.yy.android.gamenews.util.WebViewMonitor;
+import com.yy.android.gamenews.util.maintab.MainTab2;
 import com.yy.android.sportbrush.R;
 
 import de.greenrobot.event.EventBus;
 
 public class ArticleDetailActivity extends BaseActivity implements
-		OnClickListener, OnFlipListener {
+		OnClickListener, OnFlipListener, OnGestureListener {
 	public static String CURRENT_ARTICLE_TAB = "我的最爱";// 来自于哪个tab
-	public static String CURRENT_BUTTON_TAB = MainActivity.TAG_NAME_NEWS;// 来自于哪个tab
+	public static int CURRENT_BUTTON_TAB = MainTab2.INDEX;// 来自于哪个tab
 	public static final String KEY_ARTICLE_INFO = "article_info";
+	public static final String KEY_ARTICLE_LIST = "article_list";
 	public static final String KEY_ARTICLE_ID = "article_id";
 	public static final String KEY_COMMENT = "article_comment";
-	public static final String TAG_SOCIAL_DIALOG = "article_social_dialog";
-	public static final String TAG_REPORT_DIALOG = "article_report_dialog";
 	private static final int ARTICLE_UNCERTAIN = -1;
 	private static final String TAG = "ArticleDetailActivity";
 	private ExtendedWebView mBody;
-	private ExtendedListView mCommentList;
 	private ExtendedScrollView mScrollView;
-	private ListAdapter mListAdapter;
-	// private ArticleReportDialog mArticleReportDialog;
-	// private ArticleSocialDialog mArticleSocialDialog;
 	private SharedPreferences msharedPre;
 	private ArticleDetail mArticleDetail = null;
-	private View mHeaderView;
+	private ArrayList<ArticleInfo> recommendArticleList = null;
 	private ActionBar mActionBar;
-	private View mJump;
+	private ArticleCommentView mCommentView;
+	private View commentCountView;
 	private TextView mLikeCount;
 	private TextView mDislikeCount;
 	private ImageView mLikeArticle;
 	private ImageView mDislikeArticle;
 	private TextView[] mTag;
 	private TextView mCommentCount;
-	// private ArrayList<ArticleInfo> mMyFavorite;
-	private Set<String> mMyCommentsLike;
 	private Set<Long> mMyArticlesLike;
 	private Set<Long> mMyArticlesDislike;
 	private ArticleInfo mArticleInfo;
-	private ImageView mKeep;
 	private boolean mKept = false;
 	private View mTitleCommentNewest;
 	private View mTitleCommentEmpty;
@@ -134,14 +127,14 @@ public class ArticleDetailActivity extends BaseActivity implements
 	private Handler mHandler = new Handler();
 	private String mSocialImgUrl;
 
+	private View[] mArticleViews;
+	private ImageView[] mArticleImageViews;
+	private TextView[] mArticleTitleTextViews;
+
 	// for progress
-	private View mLoadingView;
-	private ProgressBar mFooterProgressBar;
-	private TextView mFooterTipsTv;
 	private View mProgressBar;
 	private View mProgressBarInner;
 	private View mRetryArticle;
-	private View mBodyContainer;
 	private Animation mLoadingAnimation;
 
 	// for video
@@ -153,41 +146,14 @@ public class ArticleDetailActivity extends BaseActivity implements
 	private FrameLayout mCustomViewContainer;
 	private WebChromeClient.CustomViewCallback mCustomViewCallback;
 	private MyWebChromeClient mWebChromeClient;
+	private static final int UNDEFINE = 0;
+	private static final int HORIZIONTAL = 1;
+	private static final int VERTICAL = 2;
 
 	// for
 	private Map<Integer, String> mExtraInfo = null;
-	// for menu
-	private View mMenu;
-	private Animation mAnimRadioIn;
-	private Animation mAnimRadioOut;
-	private boolean isAnimating;
-	private boolean mIsRadioVisible = true; // 初始化时为显示状态
-	private AnimationListener mAnimListener = new AnimationListener() {
 
-		@Override
-		public void onAnimationStart(Animation animation) {
-			isAnimating = true;
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation animation) {
-
-		}
-
-		@Override
-		public void onAnimationEnd(Animation animation) {
-			if (animation == mAnimRadioIn) {
-				mIsRadioVisible = true;
-				mMenu.setVisibility(View.VISIBLE);
-			} else {
-				mIsRadioVisible = false;
-				mMenu.setVisibility(View.GONE);
-			}
-			isAnimating = false;
-		}
-	};
-
-	public static void startArticleDetailActivity(Context context,
+	public static void startArticleDetailActivityFromNotice(Context context,
 			long articleId) {
 		Intent intent = new Intent(context, ArticleDetailActivity.class);
 		ArticleInfo info = new ArticleInfo();
@@ -199,8 +165,14 @@ public class ArticleDetailActivity extends BaseActivity implements
 
 	public static void startArticleDetailActivity(Context context,
 			ArticleInfo articleInfo) {
+		startArticleDetailActivityWithList(context, null, articleInfo);
+	}
+
+	public static void startArticleDetailActivityWithList(Context context,
+			ArrayList<ArticleInfo> list, ArticleInfo info) {
 		Intent intent = new Intent(context, ArticleDetailActivity.class);
-		intent.putExtra(ArticleDetailActivity.KEY_ARTICLE_INFO, articleInfo);
+		intent.putExtra(ArticleDetailActivity.KEY_ARTICLE_INFO, info);
+		intent.putExtra(ArticleDetailActivity.KEY_ARTICLE_LIST, list);
 		context.startActivity(intent);
 	}
 
@@ -208,7 +180,6 @@ public class ArticleDetailActivity extends BaseActivity implements
 
 		@Override
 		public void onLoadingStarted(String imageUri, View view) {
-			// TODO Auto-generated method stub
 
 		}
 
@@ -226,9 +197,6 @@ public class ArticleDetailActivity extends BaseActivity implements
 			File cache = ImageLoader.getInstance().getDiscCache().get(imageUri);
 			if (cache.exists()) {
 				String destFileName = String.format("file:///%s", cache);
-				// Toast.makeText(ArticleDetailActivity.this,
-				// "cache.exists() " + destFileName, Toast.LENGTH_SHORT)
-				// .show();
 				replaceWebImage(imageUri, destFileName);
 			} else {
 				replaceWebImage(imageUri, imageUri);
@@ -334,36 +302,26 @@ public class ArticleDetailActivity extends BaseActivity implements
 		return -1;
 	}
 
-	private void hideLoadingBar() {
-		mFooterTipsTv.setVisibility(View.VISIBLE);
-		mFooterTipsTv.setText(getResources().getString(
-				R.string.global_list_no_more));
-		mFooterTipsTv.setOnClickListener(null);
-		mFooterProgressBar.setVisibility(View.GONE);
-	}
-
-	private void showLoadingBar() {
-		mFooterTipsTv.setVisibility(View.VISIBLE);
-		mFooterTipsTv.setText(getResources().getString(
-				R.string.global_list_loading));
-		mFooterTipsTv.setOnClickListener(null);
-		mFooterProgressBar.setVisibility(View.VISIBLE);
-	}
-
 	private void setArticleLoadingView() {
 		mProgressBar.setVisibility(View.VISIBLE);
 		mRetryArticle.setVisibility(View.INVISIBLE);
-		mCommentList.setVisibility(View.GONE);
 		mCommentCount.setVisibility(View.INVISIBLE);
 		mProgressBarInner.startAnimation(mLoadingAnimation);
+
+		mActionBar.setRightVisibility(View.GONE);
+		mCommentView.setVisibility(View.GONE);
+		commentCountView.setVisibility(View.GONE);
 	}
 
 	private void setArticleLoadedView() {
 		mProgressBar.setVisibility(View.INVISIBLE);
 		mRetryArticle.setVisibility(View.INVISIBLE);
-		mCommentList.setVisibility(View.VISIBLE);
 		mCommentCount.setVisibility(View.VISIBLE);
 		mProgressBarInner.clearAnimation();
+
+		mActionBar.setRightVisibility(View.VISIBLE);
+		mCommentView.setVisibility(View.VISIBLE);
+		commentCountView.setVisibility(View.VISIBLE);
 	}
 
 	private void setArticleLoadFailedView() {
@@ -372,13 +330,10 @@ public class ArticleDetailActivity extends BaseActivity implements
 		mRetryArticle.setVisibility(View.VISIBLE);
 		mCommentCount.setVisibility(View.INVISIBLE);
 		mProgressBarInner.clearAnimation();
-	}
 
-	private void setCommentLoadFailedView() {
-		mFooterTipsTv.setText(getResources().getString(R.string.global_retry));
-		mFooterTipsTv.setOnClickListener(this);
-		mFooterProgressBar.setVisibility(View.GONE);
-		mFooterTipsTv.setOnClickListener(this);
+		mActionBar.setRightVisibility(View.GONE);
+		mCommentView.setVisibility(View.GONE);
+		commentCountView.setVisibility(View.GONE);
 	}
 
 	private class MyWebChromeClient extends WebChromeClient {
@@ -481,11 +436,8 @@ public class ArticleDetailActivity extends BaseActivity implements
 			mTitleCommentNewest.setVisibility(View.GONE);
 			mTitleCommentEmpty.setVisibility(View.VISIBLE);
 
-			mFooterTipsTv.setVisibility(View.GONE);
-			mFooterProgressBar.setVisibility(View.GONE);
 			mTitleCommentEmpty.setOnClickListener(this);
 		} else {
-			mFooterTipsTv.setVisibility(View.VISIBLE);
 			mTitleCommentNewest.setVisibility(View.VISIBLE);
 			mTitleCommentEmpty.setVisibility(View.GONE);
 			mTitleCommentEmpty.setOnClickListener(null);
@@ -500,6 +452,7 @@ public class ArticleDetailActivity extends BaseActivity implements
 		if (Build.VERSION.SDK_INT >= 11) {
 			mBody.onResume();
 		}
+		startActivity = false;
 	}
 
 	@SuppressLint("NewApi")
@@ -509,6 +462,7 @@ public class ArticleDetailActivity extends BaseActivity implements
 		if (Build.VERSION.SDK_INT >= 11) {
 			mBody.onPause();
 		}
+		mMonitor.onCancelMonitor();
 	}
 
 	//
@@ -516,6 +470,7 @@ public class ArticleDetailActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, false);
 		LocalLog.d(TAG, "[onCreate]");
+		EventBus.getDefault().register(this);
 		Intent intent = getIntent();
 		msharedPre = getSharedPreferences(Constants.KEY_UPDATE_GLOBAL,
 				Context.MODE_PRIVATE);
@@ -527,17 +482,54 @@ public class ArticleDetailActivity extends BaseActivity implements
 				finish();
 				return;
 			}
+
+			@SuppressWarnings("unchecked")
+			ArrayList<ArticleInfo> list = (ArrayList<ArticleInfo>) intent
+					.getSerializableExtra(KEY_ARTICLE_LIST);
+			if (list != null) {
+				ArticleDetailSwitcher.getInstance().setArticleInfos(list);
+			}
+
 		} else {
 			finish();
 			return;
 		}
 
 		setContentView(R.layout.activity_article_detail);
+		mGestureDetector = new GestureDetector((OnGestureListener) this);
 		mActionBar = (ActionBar) findViewById(R.id.actionbar);
+		mActionBar.setRightVisibility(View.GONE);
+		commentCountView = LayoutInflater.from(this).inflate(
+				R.layout.global_actionbar_comment, null);
+		commentCountView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mArticleDetail != null) {
+					CommentListActivity.startActivity(
+							ArticleDetailActivity.this, mArticleDetail.getId(),
+							mArticleDetail.getTitle());
+				}
+			}
+		});
+		((TextView) commentCountView.findViewById(R.id.comment_count))
+				.setTextColor(getResources().getColor(R.color.actionbar_bg));
+		commentCountView.findViewById(R.id.comment_count)
+				.setBackgroundResource(R.drawable.comment_count_white);
+		commentCountView.setVisibility(View.GONE);
+		mActionBar.setCustomizeView(commentCountView);
+		mActionBar.setRightImageResource(R.drawable.more_menu);
 		mActionBar.setOnLeftClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
+			}
+		});
+		mActionBar.setOnRightClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				showMoreMenu();
 			}
 		});
 
@@ -545,25 +537,20 @@ public class ArticleDetailActivity extends BaseActivity implements
 			mActionBar.setTitle(mArticleInfo.getSourceUrl());
 		}
 
+		mCommentView = (ArticleCommentView) findViewById(R.id.comment_view);
+		mCommentView
+				.setViewBackground(R.drawable.global_inputbox_parent_bg_light);
+		mCommentView.setInputBoxBackground(R.drawable.global_inputbox_bg_light);
+		mCommentView.setInputBoxTextColor(getResources().getColor(
+				R.color.article_detail_comment_primary_text));
+		mCommentView.setArticleId(mArticleInfo.getId());
+		mCommentView.setVisibility(View.GONE);
 		mScrollView = (ExtendedScrollView) findViewById(R.id.scroll);
-		initListView();
 		initWebView();
+		initRecommandView();
 		initExtraView();
 		loadArticle();
 		loadMyData();
-		initMenu();
-
-		mHandler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mBody.setLayoutParams(new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.FILL_PARENT, mBodyContainer
-								.getHeight()));
-				mCommentList.setLayoutParams(new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.FILL_PARENT, mBodyContainer
-								.getHeight()));
-			}
-		}, 100);
 
 		mState = STATE_INIT;
 		if (ARTICLE_UNCERTAIN != mArticleInfo.getArticleType()) {
@@ -579,8 +566,8 @@ public class ArticleDetailActivity extends BaseActivity implements
 				.statsReport(this, "stats_read_article", "article_name", title);
 		StatsUtil.statsReportByMta(this, "stats_read_article", "article_name",
 				"(" + mArticleInfo.getId() + ")" + title);
-		StatsUtil.statsReportByHiido("stats_read_article", "article_name:"
-				+ title);
+		StatsUtil.statsReportByHiido("stats_read_article",
+				"(" + mArticleInfo.getId() + ")" + title);
 	}
 
 	@Override
@@ -588,7 +575,7 @@ public class ArticleDetailActivity extends BaseActivity implements
 		super.onActivityResult(requestCode, resultCode, data);
 
 		Fragment fs = getSupportFragmentManager().findFragmentByTag(
-				TAG_SOCIAL_DIALOG);
+				ArticleSocialDialog.TAG_SOCIAL_DIALOG);
 		if (fs != null && fs.isAdded() && fs instanceof ArticleSocialDialog) {
 			((ArticleSocialDialog) fs).onActivityResult(requestCode,
 					resultCode, data);
@@ -612,8 +599,6 @@ public class ArticleDetailActivity extends BaseActivity implements
 				//
 				// notifyCommentCountChanged();
 				// setCommentTitleView();
-				mListAdapter.startLoad();
-				mJump.performClick();
 			}
 		}
 	}
@@ -631,11 +616,16 @@ public class ArticleDetailActivity extends BaseActivity implements
 
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		super.onStop();
 		if (inCustomView()) {
 			hideCustomView();
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		EventBus.getDefault().unregister(this);
+		super.onDestroy();
 	}
 
 	private boolean inCustomView() {
@@ -646,37 +636,45 @@ public class ArticleDetailActivity extends BaseActivity implements
 		mWebChromeClient.onHideCustomView();
 	}
 
+	private void initRecommandView() {
+		mArticleViews = new View[3];
+		mArticleImageViews = new ImageView[3];
+		mArticleTitleTextViews = new TextView[3];
+		mArticleViews[0] = findViewById(R.id.ll_article_view1);
+		mArticleViews[0].setOnClickListener(this);
+		mArticleViews[0].setTag(0);
+		mArticleViews[1] = findViewById(R.id.ll_article_view2);
+		mArticleViews[1].setOnClickListener(this);
+		mArticleViews[1].setTag(1);
+		mArticleViews[2] = findViewById(R.id.ll_article_view3);
+		mArticleViews[2].setOnClickListener(this);
+		mArticleViews[2].setTag(2);
+		mArticleImageViews[0] = (ImageView) findViewById(R.id.iv_article_view1);
+		mArticleImageViews[1] = (ImageView) findViewById(R.id.iv_article_view2);
+		mArticleImageViews[2] = (ImageView) findViewById(R.id.iv_article_view3);
+		mArticleTitleTextViews[0] = (TextView) findViewById(R.id.tv_article_view1);
+		mArticleTitleTextViews[1] = (TextView) findViewById(R.id.tv_article_view2);
+		mArticleTitleTextViews[2] = (TextView) findViewById(R.id.tv_article_view3);
+	}
+
 	private void initExtraView() {
 		mProgressBarInner = findViewById(R.id.progressbar_load_article_inner);
 		mProgressBar = findViewById(R.id.progressbar_load_article);
 		mRetryArticle = findViewById(R.id.retry_article);
 		mRetryArticle.setOnClickListener(this);
-		mBodyContainer = findViewById(R.id.body_container);
-		mLikeArticle = (ImageView) mHeaderView.findViewById(R.id.like_article);
-		mDislikeArticle = (ImageView) mHeaderView
-				.findViewById(R.id.dislike_article);
-		mLikeCount = (TextView) mHeaderView.findViewById(R.id.like_count);
-		mDislikeCount = (TextView) mHeaderView.findViewById(R.id.dislike_count);
+		mLikeArticle = (ImageView) findViewById(R.id.like_article);
+		mDislikeArticle = (ImageView) findViewById(R.id.dislike_article);
+		mLikeCount = (TextView) findViewById(R.id.like_count);
+		mDislikeCount = (TextView) findViewById(R.id.dislike_count);
 		mTag = new TextView[3];
-		mTag[0] = (TextView) mHeaderView.findViewById(R.id.tag_a);
-		mTag[1] = (TextView) mHeaderView.findViewById(R.id.tag_b);
-		mTag[2] = (TextView) mHeaderView.findViewById(R.id.tag_c);
+		mTag[0] = (TextView) findViewById(R.id.tag_a);
+		mTag[1] = (TextView) findViewById(R.id.tag_b);
+		mTag[2] = (TextView) findViewById(R.id.tag_c);
 		mCommentCount = (TextView) findViewById(R.id.comment_count);
 		mCommentCount.setVisibility(View.INVISIBLE);
-		mKeep = (ImageView) findViewById(R.id.keep_btn);
-		mKeep.setOnClickListener(this);
-		findViewById(R.id.shared_btn).setOnClickListener(this);
-		mJump = findViewById(R.id.jump_btn);
-		mJump.setOnClickListener(this);
-		findViewById(R.id.comment_btn).setOnClickListener(this);
-		findViewById(R.id.report_btn).setOnClickListener(this);
-		mHeaderView.findViewById(R.id.like_article_container)
-				.setOnClickListener(this);
-		mHeaderView.findViewById(R.id.dislike_article_container)
-				.setOnClickListener(this);
+		findViewById(R.id.like_article_container).setOnClickListener(this);
+		findViewById(R.id.dislike_article_container).setOnClickListener(this);
 
-		// mRootContainer = (ExtendedLinearLayout)
-		// findViewById(R.id.article_detail_container);
 		mScrollView.setOnFlipListener(this);
 		mLoadingAnimation = AnimationUtils.loadAnimation(
 				getApplicationContext(), R.anim.article_detail_loading);
@@ -686,56 +684,11 @@ public class ArticleDetailActivity extends BaseActivity implements
 		mTitleCommentEmpty = findViewById(R.id.title_comment_empty);
 	}
 
-	private void initListView() {
-		mCommentList = (ExtendedListView) findViewById(R.id.comment_list);
-		mScrollView.listView = mCommentList;
-		LayoutInflater lif = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mHeaderView = lif.inflate(R.layout.article_detail_comment_header,
-				mCommentList, false);
-		mCommentList.addHeaderView(mHeaderView, null, false);
-
-		mLoadingView = lif.inflate(R.layout.lv_footer_loading, null);
-		mFooterProgressBar = (ProgressBar) mLoadingView
-				.findViewById(R.id.progressBar1);
-		mFooterTipsTv = (TextView) mLoadingView
-				.findViewById(R.id.global_loading_text);
-		mCommentList.addFooterView(mLoadingView);
-
-		mListAdapter = new ListAdapter(ArticleDetailActivity.this,
-				R.layout.article_detail_comment_list_item);
-		mCommentList.setAdapter(mListAdapter);
-
-		mCommentList.setOnScrollListener(new OnScrollListener() {
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
-					// 当不滚动时
-					if (mCommentList.getLastVisiblePosition() == (mCommentList
-							.getCount() - 1)) {
-						mListAdapter.loadMore();
-					}
-				}
-			}
-
-			@Override
-			public void onScroll(AbsListView absListView, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-			};
-		});
-		mCommentList.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-		});
-	}
-
+	@SuppressLint("SetJavaScriptEnabled")
 	private void initWebView() {
 		mBody = (ExtendedWebView) findViewById(R.id.article_body);
 		mCustomViewContainer = (FrameLayout) findViewById(R.id.custom_view_container);
-		mScrollView.webView = mBody;
+		// mScrollView.webView = mBody;
 		mBody.getSettings().setJavaScriptEnabled(true);
 		mBody.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 		mBody.getSettings().setDomStorageEnabled(true);
@@ -749,6 +702,7 @@ public class ArticleDetailActivity extends BaseActivity implements
 		mBody.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				mMonitor.onCancelMonitor();
 				LocalLog.d(TAG,
 						"[WebViewClient][shouldOverrideUrlLoading], url = "
 								+ url);
@@ -756,76 +710,84 @@ public class ArticleDetailActivity extends BaseActivity implements
 						AppWebActivity.class);
 				intent.putExtra(AppWebActivity.KEY_URL, url);
 				startActivity(intent);
-				// Intent intent = new Intent(Intent.ACTION_VIEW,
-				// Uri.parse(url));
-				// startActivity(intent);
 				return true;
 			}
 
 			@Override
 			public void onLoadResource(WebView view, String url) {
-				// TODO Auto-generated method stub
 				LocalLog.d(TAG, "[WebViewClient][onLoadResource], url = " + url);
+				mMonitor.onCancelMonitor();
 				super.onLoadResource(view, url);
 			}
 
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
-				// TODO Auto-generated method stub
 				LocalLog.d(TAG, "[WebViewClient][onPageStarted], url = " + url);
+				mMonitor.onCancelMonitor();
 				super.onPageStarted(view, url, favicon);
 			}
 
 			@Override
 			public void onPageFinished(WebView view, String url) {
-				// TODO Auto-generated method stub
 				LocalLog.d(TAG, "[WebViewClient][onPageFinished], url = " + url);
+				mMonitor.onCancelMonitor();
+				setUpRecommendArticle();
+				maskAsViewed();
 				super.onPageFinished(view, url);
 
 			}
 
 			public void onReceivedError(WebView view, int errorCode,
 					String description, String failingUrl) {
+				mMonitor.onCancelMonitor();
 				LocalLog.d(TAG, "[WebViewClient][onReceivedError], url = "
 						+ failingUrl + ", errorCode = " + errorCode);
 				Toast.makeText(ArticleDetailActivity.this, description,
 						Toast.LENGTH_SHORT).show();
 			}
-
 		});
-
 	}
 
-	private void initMenu() {
-		mMenu = findViewById(R.id.menu);
-		mAnimRadioOut = AnimationUtils.loadAnimation(this,
-				R.anim.article_detail_menu_tans_out);
-		mAnimRadioOut.setAnimationListener(mAnimListener);
-		mAnimRadioIn = AnimationUtils.loadAnimation(this,
-				R.anim.article_detail_menu_tans_in);
-		mAnimRadioIn.setAnimationListener(mAnimListener);
-	}
-
-	private void showMenu() {
-		// mLastDisplayTime = System.currentTimeMillis();
-
-		if (isAnimating) {
+	private void showMoreMenu() {
+		if (mArticleDetail == null) {
 			return;
 		}
-		if (!mIsRadioVisible) {
-			mAnimRadioOut.cancel();
-			mMenu.startAnimation(mAnimRadioIn);
-		}
-	}
+		ArrayList<DropDownItem> itemList = new ArrayList<DropDownHelper.DropDownItem>();
+		itemList.add(new DropDownItem(getResources().getString(R.string.share),
+				R.drawable.btn_show_topic_detail_share_selector, false, false));
+		boolean hasFav = mArticleDetail == null ? false : mArticleDetail.hasFav;
+		itemList.add(new DropDownItem(getResources().getString(
+				hasFav ? R.string.cancel_collect : R.string.collect),
+				R.drawable.btn_article_collect_selector, hasFav, false));
+		DropDownHelper.showDropDownList(this, mActionBar.getRightImageView(),
+				itemList, new OnDropDownClickListener() {
 
-	private void hideMenu() {
-		if (isAnimating) {
-			return;
-		}
-		if (mIsRadioVisible) {
-			mAnimRadioIn.cancel();
-			mMenu.startAnimation(mAnimRadioOut);
-		}
+					@Override
+					public void onClick(int position, String text) {
+						if (position == 0) {
+							if (mArticleDetail == null) {
+								return;
+							}
+							DialogFragment fs = ArticleSocialDialog.newInstance(
+									mArticleDetail.getId(),
+									mArticleDetail.getTitle(), mSocialImgUrl,
+									ArticleSocialDialog.SHARED_FROM_ARTICLE);
+							Util.showDialog(ArticleDetailActivity.this, fs,
+									ArticleSocialDialog.TAG_SOCIAL_DIALOG);
+						} else if (position == 1) {
+							collectPost();
+						} else {
+							if (mArticleDetail == null) {
+								return;
+							}
+							DialogFragment fr = ArticleReportDialog
+									.newInstance(mArticleInfo.getId(),
+											mArticleDetail.getTitle());
+							Util.showDialog(ArticleDetailActivity.this, fr,
+									ArticleSocialDialog.TAG_REPORT_DIALOG);
+						}
+					}
+				});
 	}
 
 	private void loadMyData() {
@@ -844,11 +806,6 @@ public class ArticleDetailActivity extends BaseActivity implements
 
 		IPageCache pageCache = new IPageCache();
 
-		mMyCommentsLike = Preference.getInstance().getMyCommentsLike();
-		if (mMyCommentsLike == null) {
-			mMyCommentsLike = new HashSet<String>();
-		}
-
 		mMyArticlesLike = Preference.getInstance().getMyArticlesLike();
 		if (mMyArticlesLike == null) {
 			mMyArticlesLike = new HashSet<Long>();
@@ -858,6 +815,50 @@ public class ArticleDetailActivity extends BaseActivity implements
 			mMyArticlesDislike = new HashSet<Long>();
 		}
 
+	}
+
+	private void setUpRecommendArticle() {
+		if (recommendArticleList == null || recommendArticleList.size() <= 0) {
+			findViewById(R.id.ll_recommend_article_view).setVisibility(
+					View.GONE);
+		} else {
+			int articleCount = Math.min(recommendArticleList.size(), 3);
+			if (articleCount > 1) {
+				findViewById(R.id.recommand_divider1).setVisibility(
+						View.VISIBLE);
+			}
+			if (articleCount > 2) {
+				findViewById(R.id.recommand_divider2).setVisibility(
+						View.VISIBLE);
+			}
+
+			for (int i = 0; i < articleCount; ++i) {
+				mArticleViews[i].setVisibility(View.VISIBLE);
+				mArticleTitleTextViews[i].setText(recommendArticleList.get(i)
+						.getTitle());
+				ArrayList<String> imageList = recommendArticleList.get(i)
+						.getImageList();
+				if (imageList != null && imageList.size() > 0) {
+					SwitchImageLoader.getInstance().displayImage(
+							imageList.get(0), mArticleImageViews[i],
+							SwitchImageLoader.DEFAULT_ARTICLE_ITEM_DISPLAYER);
+				}
+			}
+		}
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				findViewById(R.id.ll_detail_footer_view).setVisibility(
+						View.VISIBLE);
+			}
+		}, 100);
+	}
+
+	private void maskAsViewed() {
+		if (mArticleDetail == null) {
+			return;
+		}
+		ArticleUtil.maskAsViewed(mArticleDetail.getId());
 	}
 
 	private void setArticleDetail(GetArticleDetailRsp data) {
@@ -883,6 +884,7 @@ public class ArticleDetailActivity extends BaseActivity implements
 			setArticleLoadFailedView();
 			return;
 		}
+		recommendArticleList = data.getRecommendList();
 
 		/**
 		 * 如果是推送过来的数据，在拉取到数据之后发送报告
@@ -921,6 +923,8 @@ public class ArticleDetailActivity extends BaseActivity implements
 			LocalLog.d(TAG, "[setArticleDetail][mBody.loadUrl], filepath = "
 					+ filepath);
 			mBody.loadUrl("file://" + filepath);
+			mDataDisplayed = true;
+			mMonitor.startMonitor();
 		}
 		mLikeCount.setText(Integer.toString(mArticleDetail.getCount()
 				.getLikeCount()));
@@ -932,20 +936,48 @@ public class ArticleDetailActivity extends BaseActivity implements
 
 		mDislikeCount.setText(Integer.toString(mArticleDetail.getCount()
 				.getDislikeCount()));
-		if (mMyArticlesLike.contains(mArticleInfo.getId())) {
+		if (mArticleDetail.getHasLike() == Like._HAS_PRAISE) {
+			if (!mMyArticlesLike.contains(mArticleInfo.getId())) {
+				mMyArticlesLike.add(mArticleInfo.getId());
+			}
 			mLikeArticle
 					.setImageResource(R.drawable.article_detail_like_pressed);
-		} else {
-			mLikeArticle
-					.setImageResource(R.drawable.article_detail_like_normal);
-		}
-		if (mMyArticlesDislike.contains(mArticleInfo.getId())) {
+			mDislikeArticle
+					.setImageResource(R.drawable.article_detail_dislike_normal);
+		} else if (mArticleDetail.getHasLike() == Like._HAS_STAMP) {
+			if (!mMyArticlesDislike.contains(mArticleInfo.getId())) {
+				mMyArticlesDislike.add(mArticleInfo.getId());
+			}
 			mDislikeArticle
 					.setImageResource(R.drawable.article_detail_dislike_pressed);
+			mLikeArticle
+					.setImageResource(R.drawable.article_detail_like_normal);
 		} else {
+			if (mMyArticlesLike.contains(mArticleInfo.getId())) {
+				mMyArticlesLike.remove(mArticleInfo.getId());
+			}
+			if (mMyArticlesDislike.contains(mArticleInfo.getId())) {
+				mMyArticlesDislike.remove(mArticleInfo.getId());
+			}
+			mLikeArticle
+					.setImageResource(R.drawable.article_detail_like_normal);
 			mDislikeArticle
 					.setImageResource(R.drawable.article_detail_dislike_normal);
 		}
+		// if (mMyArticlesLike.contains(mArticleInfo.getId())) {
+		// mLikeArticle
+		// .setImageResource(R.drawable.article_detail_like_pressed);
+		// } else {
+		// mLikeArticle
+		// .setImageResource(R.drawable.article_detail_like_normal);
+		// }
+		// if (mMyArticlesDislike.contains(mArticleInfo.getId())) {
+		// mDislikeArticle
+		// .setImageResource(R.drawable.article_detail_dislike_pressed);
+		// } else {
+		// mDislikeArticle
+		// .setImageResource(R.drawable.article_detail_dislike_normal);
+		// }
 
 		List<Channel> channels = mArticleDetail.getChannelList();
 		if (channels != null && channels.size() > 0) {
@@ -962,10 +994,8 @@ public class ArticleDetailActivity extends BaseActivity implements
 		mActionBar.setTitle(mArticleDetail.getSourceUrl());
 
 		if (mArticleDetail.hasFav) {
-			mKeep.setImageResource(R.drawable.article_detail_kept);
 			mKept = true;
 		} else {
-			mKeep.setImageResource(R.drawable.article_detail_keep_normal);
 			mKept = false;
 		}
 		mCommentCount
@@ -1006,17 +1036,23 @@ public class ArticleDetailActivity extends BaseActivity implements
 						ArticleDetailActivity.this) {
 					@Override
 					public void onError(Exception e) {
-						// TODO Auto-generated method stub
 						LocalLog.d(TAG, "[getArticleDetail][onError]");
 						if (mArticleDetail != null) {
 							return;
 						}
-						if (!TextUtils.isEmpty(e.getMessage())) {
-							Toast.makeText(
-									ArticleDetailActivity.this,
-									getResources().getString(
-											R.string.load_failed),
-									Toast.LENGTH_SHORT).show();
+						if (e instanceof UserException) {
+							String msg = e.getMessage();
+							if (!TextUtils.isEmpty(msg)) {
+								ToastUtil.showToast(msg);
+							}
+						} else {
+							if (!Util.isNetworkConnected()) {
+								ToastUtil
+										.showToast(R.string.http_not_connected);
+								return;
+							} else {
+								ToastUtil.showToast(R.string.http_error);
+							}
 						}
 						setArticleLoadFailedView();
 					}
@@ -1032,184 +1068,6 @@ public class ArticleDetailActivity extends BaseActivity implements
 				mArticleInfo.getId());
 	}
 
-	class ListAdapter extends ArrayAdapter<Comment> {
-
-		@Override
-		public boolean isEnabled(int position) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		private LayoutInflater mInflater;
-		private int mResource;
-		private boolean mLoading = false;
-		private boolean mReloading = false;
-
-		private GetCommentListRsp mCommentListRsp;
-
-		public ListAdapter(Context context, int textViewResourceId) {
-			super(context, textViewResourceId);
-			mInflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			mResource = textViewResourceId;
-		}
-
-		public void setData(List<Comment> data) {
-			setNotifyOnChange(false);
-			clear();
-			if (data != null) {
-				for (Comment item : data) {
-					add(item);
-				}
-			}
-			notifyDataSetChanged();
-		}
-
-		public void appendData(List<Comment> data) {
-			setNotifyOnChange(false);
-			if (data != null) {
-				for (Comment item : data) {
-					add(item);
-				}
-			}
-			notifyDataSetChanged();
-		}
-
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				holder = new ViewHolder();
-				convertView = mInflater.inflate(mResource, null);
-				holder.mContent = (TextView) convertView
-						.findViewById(R.id.content);
-				holder.mUserName = (TextView) convertView
-						.findViewById(R.id.user_name);
-				holder.mLikeCount = (TextView) convertView
-						.findViewById(R.id.like_count);
-				holder.mTime = (TextView) convertView
-						.findViewById(R.id.comment_time);
-				holder.mUserLogo = (ImageView) convertView
-						.findViewById(R.id.user_logo);
-				holder.mLike = (ImageView) convertView
-						.findViewById(R.id.like_comment);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-
-			Comment item = getItem(position);
-			holder.mContent.setText(item.getContent());
-			if (mMyCommentsLike.contains(item.getId())) {
-				holder.mLike
-						.setImageResource(R.drawable.article_detail_comment_like_pressed);
-			} else {
-				holder.mLike
-						.setImageResource(R.drawable.article_detail_comment_like_normal);
-			}
-			holder.mComment = item;
-			holder.mLike.setTag(holder);
-			holder.mLike.setOnClickListener(ArticleDetailActivity.this);
-			holder.mLikeCount.setText(Integer.toString(item.getCount()
-					.getLikeCount()));
-			holder.mUserName.setText(item.getUser().getName());
-			SwitchImageLoader.getInstance().displayImage(item.getUser().icon,
-					holder.mUserLogo, SwitchImageLoader.DEFAULT_USER_DISPLAYER);
-			// holder.mTime.setText(TimeUtil.parseTime(ArticleDetailActivity.this,
-			// item.getTime()));
-			holder.mTime.setText(TimeUtil.parseTime(item.getTime()));
-			return convertView;
-		}
-
-		public void startLoad() {
-			mReloading = true;
-			mLoading = true;
-			mCommentListRsp = null;
-			showLoadingBar();
-			loadComments();
-		}
-
-		public void loadMore() {
-			if (getCount() == 0 || mCommentListRsp == null) {
-				startLoad();
-			}
-			if (!mLoading && !mReloading && mCommentListRsp != null
-					&& mCommentListRsp.hasMore) {
-				mLoading = true;
-				showLoadingBar();
-				loadComments();
-			}
-		}
-
-		private void loadComments() {
-			String attachInfo = null;
-			if (mCommentListRsp != null) {
-				attachInfo = mCommentListRsp.getAttachInfo();
-			}
-			CommentModel.getCommentList(
-					new ResponseListener<GetCommentListRsp>(
-							ArticleDetailActivity.this) {
-						@Override
-						public void onError(Exception e) {
-							// TODO Auto-generated method stub
-							super.onError(e);
-							mLoading = false;
-							mReloading = false;
-							if (!TextUtils.isEmpty(e.getMessage())) {
-								Toast.makeText(
-										ArticleDetailActivity.this,
-										getResources().getString(
-												R.string.load_failed),
-										Toast.LENGTH_SHORT).show();
-							}
-							setCommentLoadFailedView();
-						}
-
-						@Override
-						public void onResponse(GetCommentListRsp data) {
-							mCommentListRsp = data;
-							// 重新加载
-							if (mReloading) {
-								if (mCommentListRsp == null) {
-									mArticleDetail.setCommentCount(0);
-									mListAdapter.setData(null);
-								} else {
-									mArticleDetail
-											.setCommentCount(mCommentListRsp
-													.getCount());
-									mListAdapter.setData(data.getCommentList());
-								}
-								mCommentCount.setText(Integer
-										.toString(mArticleDetail
-												.getCommentCount()));
-								notifyCommentCountChanged();
-								mReloading = false;
-								setCommentTitleView();
-							} else if (mCommentListRsp != null) {
-								mListAdapter.appendData(mCommentListRsp
-										.getCommentList());
-							}
-							mLoading = false;
-							if (mCommentListRsp != null
-									&& !mCommentListRsp.hasMore
-									&& mArticleDetail.getCommentCount() > 0) {
-								hideLoadingBar();
-							}
-						}
-					}, // Listener
-					mArticleInfo.getId(), attachInfo);
-		}
-	}
-
-	private static class ViewHolder {
-		TextView mUserName;
-		TextView mLikeCount;
-		TextView mTime;
-		TextView mContent;
-		ImageView mUserLogo;
-		ImageView mLike;
-		Comment mComment;
-	}
-
 	class JsInterface {
 		Context context;
 
@@ -1221,10 +1079,14 @@ public class ArticleDetailActivity extends BaseActivity implements
 		@JavascriptInterface
 		public void openVideo(String url) {
 			LocalLog.d(TAG, "[JsInterface][openVideo], url = " + url);
-			Intent intent = new Intent(ArticleDetailActivity.this,
-					VideoPlayerActivity.class);
-			intent.putExtra(VideoPlayerActivity.EXTRA_VIDEO_URL, url);
-			startActivity(intent);
+			// Intent intent = new Intent(ArticleDetailActivity.this,
+			// VideoPlayerActivity.class);
+			// intent.putExtra(VideoPlayerActivity.EXTRA_VIDEO_URL, url);
+			// startActivity(intent);
+			//
+
+			VideoPlayerActivity.startVideoPlayerActivity(
+					ArticleDetailActivity.this, "", url);
 		}
 
 		// 查看图片url
@@ -1462,14 +1324,13 @@ public class ArticleDetailActivity extends BaseActivity implements
 				@Override
 				public void run() {
 					setArticleLoadedView();
-					mListAdapter.startLoad();
 				}
 			});
 		}
 
 		// 点击图片标签
 		@JavascriptInterface
-		public void onClickImage(int id) {
+		public void onClickImage(int pos) {
 			ArrayList<Image> imageList = mArticleDetail.getImageList();
 			if (imageList == null || imageList.size() == 0) {
 				return;
@@ -1479,16 +1340,25 @@ public class ArticleDetailActivity extends BaseActivity implements
 				arrayList.add(image.getUrls().get(ImageType._IMAGE_TYPE_BIG)
 						.getUrl());
 			}
-			Intent intent = new Intent(ArticleDetailActivity.this,
-					ImageZoomDetailViewerActivity.class);
-			intent.putExtra(
-					ImageZoomDetailViewerActivity.EXTRA_IMAGE_LIST_ZOOM,
-					arrayList);
-			intent.putExtra(ImageZoomDetailViewerActivity.EXTRA_CURRENT_IMAGE,
-					id);
-			intent.putExtra(ImageZoomDetailViewerActivity.EXTRA_TITLE,
+			ImageZoomDetailViewerActivity.startZoomDetailActivity(
+					ArticleDetailActivity.this, arrayList, pos,
 					mArticleDetail.getTitle());
-			startActivity(intent);
+			// ArticleGalleryActivity.startActivity(ArticleDetailActivity.this,
+			// null, mArticleDetail.getId(), mArticleDetail.getTitle(),
+			// pos, ArticleGalleryActivity.SOURCE_QUERY,
+			// mArticleDetail.commentCount,
+			// ArticleType._ARTICLE_TYPE_ARTICLE, false);
+
+			// Intent intent = new Intent(ArticleDetailActivity.this,
+			// ImageZoomDetailViewerActivity.class);
+			// intent.putExtra(
+			// ImageZoomDetailViewerActivity.EXTRA_IMAGE_LIST_ZOOM,
+			// arrayList);
+			// intent.putExtra(ImageZoomDetailViewerActivity.EXTRA_CURRENT_IMAGE,
+			// id);
+			// intent.putExtra(ImageZoomDetailViewerActivity.EXTRA_TITLE,
+			// mArticleDetail.getTitle());
+			// startActivity(intent);
 
 		}
 
@@ -1498,11 +1368,15 @@ public class ArticleDetailActivity extends BaseActivity implements
 			// Toast.makeText(context, "onClickVideo " + Integer.toString(id),
 			// Toast.LENGTH_SHORT).show();
 			Video video = mArticleDetail.getVideoList().get(id);
-			Intent intent = new Intent(ArticleDetailActivity.this,
-					VideoPlayerActivity.class);
-			intent.putExtra(VideoPlayerActivity.EXTRA_VIDEO_URL,
-					video.getMp4Url());
-			startActivity(intent);
+			// Intent intent = new Intent(ArticleDetailActivity.this,
+			// VideoPlayerActivity.class);
+			// intent.putExtra(VideoPlayerActivity.EXTRA_VIDEO_URL,
+			// video.getMp4Url());
+			// startActivity(intent);
+			//
+
+			VideoPlayerActivity.startVideoPlayerActivity(
+					ArticleDetailActivity.this, "", video.getMp4Url());
 		}
 
 		// 滚动到指定y
@@ -1522,109 +1396,9 @@ public class ArticleDetailActivity extends BaseActivity implements
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-
-		Intent intent = null;
 		switch (v.getId()) {
-		case R.id.shared_btn:
-			if (mArticleDetail == null) {
-				return;
-			}
-			DialogFragment fs = ArticleSocialDialog.newInstance(
-					mArticleDetail.getId(), mArticleDetail.getTitle(),
-					mSocialImgUrl, ArticleSocialDialog.SHARED_FROM_ARTICLE);
-			Util.showDialog(ArticleDetailActivity.this, fs, TAG_SOCIAL_DIALOG);
-			break;
-		case R.id.jump_btn:
-			if (mArticleDetail == null) {
-				return;
-			}
-			mCommentList.setSelection(0);
-			mHandler.post(new Runnable() {
-				@Override
-				public void run() {
-					mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-				}
-			});
-			break;
 		case R.id.title_comment_empty:
 			postComment();
-			break;
-		case R.id.comment_btn:
-			postComment();
-			break;
-		case R.id.report_btn:
-			if (mArticleDetail == null) {
-				return;
-			}
-			DialogFragment fr = ArticleReportDialog.newInstance(
-					mArticleInfo.getId(), mArticleDetail.getTitle());
-			Util.showDialog(ArticleDetailActivity.this, fr, TAG_REPORT_DIALOG);
-			break;
-		case R.id.keep_btn:
-			if (mArticleDetail == null) {
-				return;
-			}
-			if (mKept) {
-
-				ReportModel.AddFavArticle(new ResponseListener<Boolean>(
-						ArticleDetailActivity.this) {
-					@Override
-					public void onError(Exception e) {
-						// TODO Auto-generated method stub
-						super.onError(e);
-						ToastUtil.showToast(R.string.load_failed);
-					}
-
-					@Override
-					public void onResponse(Boolean arg0) {
-						mKept = false;
-						mKeep.setImageResource(R.drawable.article_detail_keep_normal);
-						Toast.makeText(
-								ArticleDetailActivity.this,
-								getResources().getString(
-										R.string.article_keep_cancel),
-								Toast.LENGTH_SHORT).show();
-						Preference.getInstance().saveMyFavCount(
-								Preference.getInstance().getMyFavCount() - 1);
-					}
-				}, mArticleInfo.getId(), FavType.FAV_TYPE_DEL);
-			} else {
-
-				ReportModel.AddFavArticle(new ResponseListener<Boolean>(
-						ArticleDetailActivity.this) {
-					@Override
-					public void onError(Exception e) {
-						// TODO Auto-generated method stub
-						super.onError(e);
-						ToastUtil.showToast(R.string.load_failed);
-					}
-
-					@Override
-					public void onResponse(Boolean arg0) {
-						// TODO Auto-generated method stub
-						// Toast.makeText(ArticleDetailActivity.this, "success",
-						// Toast.LENGTH_SHORT).show();
-						mKept = true;
-						mKeep.setImageResource(R.drawable.article_detail_kept);
-						Toast.makeText(
-								ArticleDetailActivity.this,
-								getResources().getString(
-										R.string.article_keep_success),
-								Toast.LENGTH_SHORT).show();
-						Preference.getInstance().saveMyFavCount(
-								Preference.getInstance().getMyFavCount() + 1);
-					}
-
-				}, mArticleInfo.getId(), FavType.FAV_TYPE_ADD);
-			}
-
-			StatsUtil.statsReport(this, "stats_collect", "article_name",
-					mArticleDetail.getTitle());
-			StatsUtil.statsReportByMta(this, "stats_collect", "article_name",
-					mArticleInfo.getTitle());
-			StatsUtil.statsReportByHiido("stats_collect", "article_name"
-					+ mArticleDetail.getTitle());
 			break;
 		case R.id.tag_a: {
 			Channel channel = mArticleDetail.getChannelList().get(0);
@@ -1644,65 +1418,15 @@ public class ArticleDetailActivity extends BaseActivity implements
 					ArticleDetailActivity.this, channel);
 		}
 			break;
-		case R.id.like_comment:
-			final ViewHolder holder = (ViewHolder) v.getTag();
-			// if (COMMENT_MINE.equals(holder.mCommentId)) {
-			// Toast.makeText(this,
-			// getResources().getString(R.string.like_self_hint),
-			// Toast.LENGTH_SHORT).show();
-			// return;
-			// }
-			if (mMyCommentsLike.contains(holder.mComment.getId())) {
+		case R.id.dislike_article_container:
+			if (mArticleDetail.getHasLike() == Like._HAS_PRAISE) {
 				Toast.makeText(this,
 						getResources().getString(R.string.liked_hint),
-						Toast.LENGTH_SHORT).show();
-			} else {
-
-				ReportModel.LikeComment(
-						new ResponseListener<Boolean>(
-								ArticleDetailActivity.this) {
-
-							@Override
-							public void onError(Exception e) {
-								// TODO Auto-generated method stub
-								super.onError(e);
-								ToastUtil.showToast(R.string.load_failed);
-							}
-
-							@Override
-							public void onResponse(Boolean arg0) {
-								// TODO Auto-generated method stub
-								// Toast.makeText(ArticleDetailActivity.this,
-								// "success", Toast.LENGTH_SHORT).show();
-								mMyCommentsLike.add(holder.mComment.getId());
-								Preference.getInstance().saveMyCommentsLike(
-										mMyCommentsLike);
-								holder.mLike
-										.setImageResource(R.drawable.article_detail_comment_like_pressed);
-								int likeCount = Integer
-										.parseInt(holder.mLikeCount.getText()
-												.toString()) + 1;
-								holder.mLikeCount.setText(Integer
-										.toString(likeCount));
-								holder.mComment.getCount().setLikeCount(
-										likeCount);
-
-							}
-
-						}, mArticleInfo.getId(), holder.mComment.getId(),
-						LikeType.LIKE_TYPE_LIKE);
-			}
-			break;
-		case R.id.dislike_article_container:
-			if (mMyArticlesDislike.contains(mArticleInfo.getId())) {
-				Toast.makeText(this,
-						getResources().getString(R.string.disliked_hint),
 						Toast.LENGTH_SHORT).show();
 				return;
-			}
-			if (mMyArticlesLike.contains(mArticleInfo.getId())) {
+			} else if (mArticleDetail.getHasLike() == Like._HAS_STAMP) {
 				Toast.makeText(this,
-						getResources().getString(R.string.liked_hint),
+						getResources().getString(R.string.disliked_hint),
 						Toast.LENGTH_SHORT).show();
 				return;
 			}
@@ -1711,14 +1435,8 @@ public class ArticleDetailActivity extends BaseActivity implements
 					ArticleDetailActivity.this) {
 
 				@Override
-				public void onError(Exception e) {
-					// TODO Auto-generated method stub
-					super.onError(e);
-					ToastUtil.showToast(R.string.load_failed);
-				}
-
-				@Override
 				public void onResponse(Boolean arg0) {
+					mArticleDetail.setHasLike(Like._HAS_STAMP);
 					mMyArticlesDislike.add(mArticleInfo.getId());
 					Preference.getInstance().saveMyArticlesDislike(
 							mMyArticlesDislike);
@@ -1732,15 +1450,14 @@ public class ArticleDetailActivity extends BaseActivity implements
 			}, mArticleInfo.getId(), LikeType.LIKE_TYPE_DISLIKE);
 			break;
 		case R.id.like_article_container:
-			if (mMyArticlesDislike.contains(mArticleInfo.getId())) {
-				Toast.makeText(this,
-						getResources().getString(R.string.disliked_hint),
-						Toast.LENGTH_SHORT).show();
-				return;
-			}
-			if (mMyArticlesLike.contains(mArticleInfo.getId())) {
+			if (mArticleDetail.getHasLike() == Like._HAS_PRAISE) {
 				Toast.makeText(this,
 						getResources().getString(R.string.liked_hint),
+						Toast.LENGTH_SHORT).show();
+				return;
+			} else if (mArticleDetail.getHasLike() == Like._HAS_STAMP) {
+				Toast.makeText(this,
+						getResources().getString(R.string.disliked_hint),
 						Toast.LENGTH_SHORT).show();
 				return;
 			}
@@ -1748,13 +1465,8 @@ public class ArticleDetailActivity extends BaseActivity implements
 					ArticleDetailActivity.this) {
 
 				@Override
-				public void onError(Exception e) {
-					super.onError(e);
-					ToastUtil.showToast(R.string.load_failed);
-				}
-
-				@Override
 				public void onResponse(Boolean arg0) {
+					mArticleDetail.setHasLike(Like._HAS_PRAISE);
 					mMyArticlesLike.add(mArticleInfo.getId());
 					Preference.getInstance()
 							.saveMyArticlesLike(mMyArticlesLike);
@@ -1775,13 +1487,100 @@ public class ArticleDetailActivity extends BaseActivity implements
 		case R.id.retry_article:
 			loadArticle();
 			break;
-		case R.id.global_loading_text:
-			mListAdapter.loadMore();
+		case R.id.ll_article_view1:
+		case R.id.ll_article_view2:
+		case R.id.ll_article_view3:
+			ArticleInfo articleInfo = recommendArticleList.get((Integer) v
+					.getTag());
+			ArticleDetailActivity.startArticleDetailActivity(
+					ArticleDetailActivity.this, articleInfo);
+			String eventId = "stats_click_recomm";
+			String key = "article_title";
+			String value = String.valueOf(articleInfo.getTitle() + "("
+					+ articleInfo.getId() + ")");
+			StatsUtil.statsReport(this, eventId, key, value);
+			StatsUtil.statsReportByMta(this, eventId, key, value);
+			StatsUtil.statsReportByHiido(eventId, key + value);
+			break;
 		default:
 			break;
+		}
+	}
 
+	private void collectPost() {
+		if (mArticleDetail == null) {
+			return;
+		}
+		if (mKept) {
+
+			ReportModel.AddFavArticle(new ResponseListener<Boolean>(
+					ArticleDetailActivity.this) {
+				@Override
+				public void onError(Exception e) {
+					super.onError(e);
+					ToastUtil.showToast(R.string.load_failed);
+				}
+
+				@Override
+				public void onResponse(Boolean arg0) {
+					mKept = false;
+					mArticleDetail.setHasFav(false);
+					Toast.makeText(
+							ArticleDetailActivity.this,
+							getResources().getString(
+									R.string.article_keep_cancel),
+							Toast.LENGTH_SHORT).show();
+					Preference.getInstance().saveMyFavCount(
+							Preference.getInstance().getMyFavCount() - 1);
+				}
+			}, mArticleInfo.getId(), FavType.FAV_TYPE_DEL);
+		} else {
+
+			ReportModel.AddFavArticle(new ResponseListener<Boolean>(
+					ArticleDetailActivity.this) {
+				@Override
+				public void onError(Exception e) {
+					super.onError(e);
+					ToastUtil.showToast(R.string.load_failed);
+				}
+
+				@Override
+				public void onResponse(Boolean arg0) {
+					mKept = true;
+					mArticleDetail.setHasFav(true);
+					Toast.makeText(
+							ArticleDetailActivity.this,
+							getResources().getString(
+									R.string.article_keep_success),
+							Toast.LENGTH_SHORT).show();
+					Preference.getInstance().saveMyFavCount(
+							Preference.getInstance().getMyFavCount() + 1);
+				}
+
+			}, mArticleInfo.getId(), FavType.FAV_TYPE_ADD);
 		}
 
+		StatsUtil.statsReport(this, "stats_collect", "article_name",
+				mArticleDetail.getTitle());
+		StatsUtil.statsReportByMta(this, "stats_collect", "article_name",
+				mArticleInfo.getTitle());
+		StatsUtil.statsReportByHiido("stats_collect", "article_name"
+				+ mArticleDetail.getTitle());
+	}
+
+	public void onEvent(CommentEvent commentEvent) {
+
+		if (commentEvent != null && mArticleDetail != null
+				&& mArticleDetail.getId() == commentEvent.getId()) {
+
+			int count = commentEvent.commentCount;
+			if (count == CommentEvent.CMT_CNT_ADD) {
+				count = mArticleDetail.getCommentCount() + 1;
+				mArticleDetail.setCommentCount(count);
+			}
+
+			mCommentCount.setText(Integer.toString(count));
+		}
 	}
 
 	private void postComment() {
@@ -1789,10 +1588,9 @@ public class ArticleDetailActivity extends BaseActivity implements
 		if (mArticleDetail == null) {
 			return;
 		}
-		Intent intent = new Intent(ArticleDetailActivity.this,
-				CommentActivity.class);
-		intent.putExtra(CommentActivity.KEY_ARTICLE_ID, mArticleInfo.getId());
-		startActivityForResult(intent, 0);
+
+		mCommentView.showInputMethod();
+
 		StatsUtil.statsReport(this, "stats_comment", "article_name",
 				mArticleDetail.getTitle());
 		StatsUtil.statsReportByMta(this, "stats_comment", "article_name",
@@ -1810,36 +1608,143 @@ public class ArticleDetailActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void onFlip() {
-		// TODO Auto-generated method stub
+	public void onFlipRight() {
 		finish();
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 	}
 
 	@Override
-	public void onUp() {
-		// TODO Auto-generated method stub
-		// this.showMenu();
+	public boolean onUp() {
+		return ArticleDetailSwitcher.getInstance().switchToNextArticle(
+				ArticleDetailActivity.this, mArticleInfo.getId(),
+				ArticleType._ARTICLE_TYPE_ARTICLE, null);
 	}
 
 	@Override
-	public void onDown() {
+	public boolean onDown() {
+		return ArticleDetailSwitcher.getInstance().switchToPreArticle(
+				ArticleDetailActivity.this, mArticleInfo.getId(),
+				ArticleType._ARTICLE_TYPE_ARTICLE, null);
+	}
+
+	private boolean startActivity = false;
+
+	private int orientation = UNDEFINE;
+
+	@Override
+	public void onFlipLeft() {
+		CommentListActivity.startActivity(ArticleDetailActivity.this,
+				mArticleInfo.getId(), mArticleInfo.getTitle());
+	}
+
+	private GestureDetector mGestureDetector;
+	private int verticalMinDistance = Util.getAppWidth() / 5;
+	private int minVelocity = 100;
+
+	@Override
+	public boolean onDown(MotionEvent e) {
 		// TODO Auto-generated method stub
-		// this.hideMenu();
+		// orientation = UNDEFINE;
+		return false;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 
-	// private void showDialog(DialogFragment f, String tag) {
-	// // DialogFragment.show() will take care of adding the fragment
-	// // in a transaction. We also want to remove any currently showing
-	// // dialog, so make our own transaction and take care of that here.
-	// FragmentManager fm = getSupportFragmentManager();
-	// FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-	// Fragment prev = fm.findFragmentByTag(tag);
-	// if (prev != null) {
-	// ft.remove(prev);
-	// }
-	// ft.addToBackStack(null);
-	// f.show(ft, tag);
-	// }
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private boolean mDataDisplayed;
+
+	/**
+	 * 捕获上下左右滑动手势
+	 */
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+			float velocityY) {
+
+		int distanceX = (int) (e1.getX() - e2.getX());
+		int distanceY = (int) (e1.getY() - e2.getY());
+		if (orientation == HORIZIONTAL) {
+			if (distanceX > verticalMinDistance
+					&& Math.abs(velocityX) > minVelocity) {
+				onFlipLeft();
+			} else if (distanceX < -verticalMinDistance
+					&& Math.abs(velocityX) > minVelocity) {
+				onFlipRight();
+			}
+		} else if (orientation == VERTICAL) {
+			if (startActivity) {
+				return false;
+			}
+
+			if (!mDataDisplayed
+					|| Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+				// for KITKAT webview load video will cause deadlock issue
+				return false;
+			}
+			if (!mScrollView.canScrollVerticallyex(1)
+					&& distanceY > verticalMinDistance
+					&& Math.abs(velocityY) > minVelocity) {
+				startActivity = onUp();
+			} else if (!mScrollView.canScrollVerticallyex(-1)
+					&& distanceY < -verticalMinDistance
+					&& Math.abs(velocityY) > minVelocity) {
+				startActivity = onDown();
+			}
+		}
+
+		return true;
+	}
+
+	float downX;
+	float downY;
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+			downX = ev.getX();
+			downY = ev.getY();
+			orientation = UNDEFINE;
+		}
+		mGestureDetector.onTouchEvent(ev);
+		if (ev.getAction() == MotionEvent.ACTION_MOVE
+				&& (Math.abs(ev.getX() - downX) > verticalMinDistance / 4 || Math
+						.abs(ev.getY() - downY) > verticalMinDistance / 4)) {
+			if (orientation == HORIZIONTAL) {
+				return true;
+			} else if (orientation == VERTICAL) {
+				return super.dispatchTouchEvent(ev);
+			} else if (Math.abs(ev.getX() - downX) > Math
+					.abs(ev.getY() - downY)) {
+				orientation = HORIZIONTAL;
+				return true;
+			} else {
+				orientation = VERTICAL;
+				return super.dispatchTouchEvent(ev);
+			}
+		}
+		return super.dispatchTouchEvent(ev);
+	}
+
+	private WebViewMonitor mMonitor = new WebViewMonitor(this);
 
 }

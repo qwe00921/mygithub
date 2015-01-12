@@ -3,11 +3,14 @@ package com.yy.android.gamenews.ui.common;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.yy.android.gamenews.util.DomainIpTransformatter;
 
 public abstract class ImageAdapter<E> extends BaseAdapter {
 
@@ -15,12 +18,19 @@ public abstract class ImageAdapter<E> extends BaseAdapter {
 	// private DisplayImageOptions options;
 	protected ArrayList<E> mDataSource;
 	protected LayoutInflater mInflater;
+	private DomainIpTransformatter mIpFormatter;
+	private Resources mResource;
 
 	private Context mContext;
 
 	public ImageAdapter(Context context) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
+		mResource = context.getResources();
+	}
+
+	public Resources getResources() {
+		return mResource;
 	}
 
 	public Context getContext() {
@@ -61,12 +71,29 @@ public abstract class ImageAdapter<E> extends BaseAdapter {
 	}
 
 	protected void displayImage(String url, ImageView view) {
-		mImageLoader.displayImage(url, view);
+		displayImage(url, view, null);
 	}
 
 	protected void displayImage(String url, ImageView view,
 			DisplayImageOptions options) {
-		mImageLoader.displayImage(url, view, options);
+
+		displayImage(url, view, options, null);
+	}
+
+	public void displayImage(String url, ImageView imageView,
+			DisplayImageOptions options, ImageLoadingListener listener) {
+
+		if (needTransferDomainToIp()) {
+			if (mIpFormatter == null) {
+				mIpFormatter = DomainIpTransformatter.getInstance();
+			}
+			url = mIpFormatter.domainToIp(url);
+		}
+		mImageLoader.displayImage(url, imageView, options, listener, false);
+	}
+
+	protected void loadImage(String url, ImageLoadingListener listener) {
+		mImageLoader.loadImage(url, listener);
 	}
 
 	/**
@@ -82,5 +109,9 @@ public abstract class ImageAdapter<E> extends BaseAdapter {
 	 */
 	public void resume() {
 		mImageLoader.resume();
+	}
+
+	protected boolean needTransferDomainToIp() {
+		return false;
 	}
 }

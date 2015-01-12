@@ -1,5 +1,8 @@
 package com.yy.android.gamenews.ui.common;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,8 +37,7 @@ public class DataListViewConverter extends DataViewConverter<ListView> {
 		mListView.setHeaderDividersEnabled(false);
 		mListView.setFooterDividersEnabled(false);
 
-		return new RefreshListWrapper(mContext, mListView, addHeader,
-				addFooter);
+		return new RefreshListWrapper(mContext, mListView, addHeader, addFooter);
 	}
 
 	@Override
@@ -58,7 +60,9 @@ public class DataListViewConverter extends DataViewConverter<ListView> {
 	@Override
 	public void setSelection(int selection) {
 		if (mListView != null) {
-			mListView.setSelection(selection);
+			 mListView.setSelection(selection);
+//			mListView.setSelectionAfterHeaderView();
+			// mListView.smoothScrollToPosition(selection);
 		}
 	}
 
@@ -123,4 +127,23 @@ public class DataListViewConverter extends DataViewConverter<ListView> {
 		return new RefreshListWrapper(mContext, mListView, header);
 	}
 
+	@Override
+	public void stopScroll() {
+		if (mListView != null) {
+			try {
+				Field field = android.widget.AbsListView.class
+						.getDeclaredField("mFlingRunnable");
+				field.setAccessible(true);
+				Object flingRunnable = field.get(mListView);
+				if (flingRunnable != null) {
+					Method method = Class.forName(
+							"android.widget.AbsListView$FlingRunnable")
+							.getDeclaredMethod("endFling");
+					method.setAccessible(true);
+					method.invoke(flingRunnable);
+				}
+			} catch (Exception e) {
+			}
+		}
+	}
 }

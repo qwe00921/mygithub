@@ -30,7 +30,6 @@ import com.duowan.gamenews.GetSearchSuggestionListRsp;
 import com.duowan.gamenews.UpdateMyFavChannelListRsp;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.event.SubscribeEvent;
-import com.yy.android.gamenews.event.UpdateChannelListEvent;
 import com.yy.android.gamenews.model.ChannelModel;
 import com.yy.android.gamenews.ui.common.SwitchImageLoader;
 import com.yy.android.gamenews.ui.view.ActionBar;
@@ -47,18 +46,21 @@ import com.yy.android.sportbrush.R;
 import de.greenrobot.event.EventBus;
 
 public class ChannelDepotActivity extends BaseActivity {
+
+	public static final int HOT_CHANNEL_CODE = 100;
 	private ActionBar mActionBar;
 	private CategoryFlowLayout mCategoryFlowLayout;
 	private LinearLayout mLayout;
 	private View mGridItem;
 	private TextView mChannelManageTips;
+	private TextView mChannelEdit;
 	private boolean mIsAnimationProcessing = false;
 	private Channel mLastAdded;
 	private ArrayList<Channel> mSubscribeChannels;
 	private ArrayList<Channel> mOriginalChannels = new ArrayList<Channel>();
 	private int mTips = 0;
 	private boolean mSubscribeChanged = false;
-	private TextView mCompleteTextView;
+	// private TextView mCompleteTextView;
 	private String mGetColumnListAttach = null;
 	private TextView mHintView;
 	private View mHintLayout;
@@ -159,27 +161,27 @@ public class ChannelDepotActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener mCompleteClick = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			if (mIsAnimationProcessing) {
-				mGridItem.clearAnimation();
-				mGridItem.setVisibility(View.INVISIBLE);
-				mCategoryFlowLayout.addView(getGridsItemView(mLastAdded));
-				refreshTips();
-				mIsAnimationProcessing = false;
-			}
-			mChannelManageTips.setVisibility(View.VISIBLE);
-			refreshTips();
-			mCategoryFlowLayout.setNormalMode();
-			mSubscribeChannels = mCategoryFlowLayout.getSubscribeChannelList();
-			Preference.getInstance().saveMyFavorChannelList(mSubscribeChannels);
-			refreshColumnView();
-			mCompleteTextView.setVisibility(View.INVISIBLE);
-			mActionBar.setRightVisibility(View.VISIBLE);
-		}
-	};
+	// private OnClickListener mCompleteClick = new OnClickListener() {
+	//
+	// @Override
+	// public void onClick(View v) {
+	// if (mIsAnimationProcessing) {
+	// mGridItem.clearAnimation();
+	// mGridItem.setVisibility(View.INVISIBLE);
+	// mCategoryFlowLayout.addView(getGridsItemView(mLastAdded));
+	// refreshTips();
+	// mIsAnimationProcessing = false;
+	// }
+	// mChannelManageTips.setVisibility(View.VISIBLE);
+	// refreshTips();
+	// mCategoryFlowLayout.setNormalMode();
+	// mSubscribeChannels = mCategoryFlowLayout.getSubscribeChannelList();
+	// Preference.getInstance().saveMyFavorChannelList(mSubscribeChannels);
+	// refreshColumnView();
+	// mCompleteTextView.setVisibility(View.INVISIBLE);
+	// mActionBar.setRightVisibility(View.VISIBLE);
+	// }
+	// };
 
 	private OnClickListener mMorelistener = new OnClickListener() {
 		@Override
@@ -227,6 +229,24 @@ public class ChannelDepotActivity extends BaseActivity {
 		mGridItem = findViewById(R.id.grid_item);
 		mGridItem.setVisibility(View.INVISIBLE);
 		mChannelManageTips = (TextView) findViewById(R.id.channel_manage_tips);
+		mChannelEdit = (TextView) findViewById(R.id.action_complete);
+		mChannelEdit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String txt = mChannelEdit.getText().toString().trim();
+				if (txt.equals(getResources().getString(
+						R.string.channel_depot_complete))) {
+					editChannelComplete();
+				} else {
+					mChannelEdit.setText(getResources().getString(
+							R.string.channel_depot_complete));
+					mChannelManageTips.setText(getResources().getString(
+							R.string.channel_manage_edit_tips));
+					mCategoryFlowLayout.editChannel();
+				}
+			}
+		});
 		mCategoryFlowLayout.setOnRearrangeListener(new OnRearrangeListener() {
 
 			@Override
@@ -237,6 +257,7 @@ public class ChannelDepotActivity extends BaseActivity {
 		mActionBar.setOnRightClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				editChannelComplete();
 				Intent intent = new Intent(ChannelDepotActivity.this,
 						ChannelSearchActivity.class);
 				startActivity(intent);
@@ -248,16 +269,19 @@ public class ChannelDepotActivity extends BaseActivity {
 				onBackPressed();
 			}
 		});
-		mCompleteTextView = mActionBar.getRightTextView();
-		mCompleteTextView.setText(R.string.channel_complete);
-		mCompleteTextView.setOnClickListener(mCompleteClick);
+		// mCompleteTextView = mActionBar.getRightTextView();
+		// mCompleteTextView.setText(R.string.channel_depot_complete);
+		// mCompleteTextView.setOnClickListener(mCompleteClick);
 
 		mCategoryFlowLayout.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				mActionBar.setRightVisibility(ViewGroup.INVISIBLE);
-				mCompleteTextView.setVisibility(View.VISIBLE);
-				mChannelManageTips.setVisibility(View.INVISIBLE);
+				// mActionBar.setRightVisibility(ViewGroup.INVISIBLE);
+				// mCompleteTextView.setVisibility(View.VISIBLE);
+				mChannelManageTips.setText(getResources().getString(
+						R.string.channel_manage_edit_tips));
+				mChannelEdit.setText(getResources().getString(
+						R.string.channel_depot_complete));
 				return false;
 			}
 		});
@@ -275,6 +299,26 @@ public class ChannelDepotActivity extends BaseActivity {
 		refreshTips();
 		// checkXinGeDeleteData();
 		EventBus.getDefault().register(this);
+	}
+
+	/**
+	 * 完成编辑频道
+	 */
+	private void editChannelComplete() {
+		mChannelEdit.setText(getResources().getString(
+				R.string.channel_depot_edit));
+		if (mIsAnimationProcessing) {
+			mGridItem.clearAnimation();
+			mGridItem.setVisibility(View.INVISIBLE);
+			mCategoryFlowLayout.addView(getGridsItemView(mLastAdded));
+			refreshTips();
+			mIsAnimationProcessing = false;
+		}
+		refreshTips();
+		mCategoryFlowLayout.setNormalMode();
+		mSubscribeChannels = mCategoryFlowLayout.getSubscribeChannelList();
+		Preference.getInstance().saveMyFavorChannelList(mSubscribeChannels);
+		refreshColumnView();
 	}
 
 	@Override
@@ -330,21 +374,21 @@ public class ChannelDepotActivity extends BaseActivity {
 
 	public void checkHint() {
 
-//		if (mTipsHelper == null) {
-//			mTipsHelper = new TipsHelper(this, mHintLayout, mHintView);
-//		}
-//		int step = Preference.getInstance().getCurrentGuideStep();
-//		if (Preference.STEP_3 == step) {
-//			mTipsHelper.checkHint(step, true);
-//		}
+		// if (mTipsHelper == null) {
+		// mTipsHelper = new TipsHelper(this, mHintLayout, mHintView);
+		// }
+		// int step = Preference.getInstance().getCurrentGuideStep();
+		// if (Preference.STEP_3 == step) {
+		// mTipsHelper.checkHint(step, true);
+		// }
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (mCompleteTextView.getVisibility() == View.VISIBLE) {
-			mCompleteTextView.performClick();
-		}
+		// if (mCompleteTextView.getVisibility() == View.VISIBLE) {
+		// mCompleteTextView.performClick();
+		// }
 	}
 
 	@Override
@@ -528,11 +572,11 @@ public class ChannelDepotActivity extends BaseActivity {
 		mLayout.removeAllViews();
 		for (Column item : list) {
 			View view = inflater.inflate(R.layout.channel_columns, null);
+			LinearLayout lltItem = (LinearLayout) view
+					.findViewById(R.id.channel_item);
 			TextView columnName = (TextView) view
 					.findViewById(R.id.column_name);
 			View moreAction = view.findViewById(R.id.action_more);
-			LinearLayout layout = (LinearLayout) view
-					.findViewById(R.id.channel_container);
 			View channel1 = view.findViewById(R.id.channel_1);
 			View channel2 = view.findViewById(R.id.channel_2);
 			View channel3 = view.findViewById(R.id.channel_3);
@@ -543,22 +587,29 @@ public class ChannelDepotActivity extends BaseActivity {
 
 			ArrayList<Channel> channels = item.getChannelList();
 			mSubscribeChannels = mCategoryFlowLayout.getSubscribeChannelList();
-			int channelCount = channels.size();
+			
+			if(item.getId() == HOT_CHANNEL_CODE){
+				lltItem.setBackgroundResource(R.color.hot_channel_bg);
+			}
+			if (channels != null) {
+				int channelCount = channels.size();
 
-			int i = 0;
-			if (++i <= channelCount) {
-				channel1.setVisibility(View.VISIBLE);
-				updateColumnChannelsView(channel1, channels.get(i - 1));
+				int i = 0;
+				if (++i <= channelCount) {
+					channel1.setVisibility(View.VISIBLE);
+					updateColumnChannelsView(channel1, channels.get(i - 1));
+				}
+				if (++i <= channelCount) {
+					channel2.setVisibility(View.VISIBLE);
+					updateColumnChannelsView(channel2, channels.get(i - 1));
+				}
+				if (++i <= channelCount) {
+					channel3.setVisibility(View.VISIBLE);
+					updateColumnChannelsView(channel3, channels.get(i - 1));
+				}
+				mLayout.addView(view);
 			}
-			if (++i <= channelCount) {
-				channel2.setVisibility(View.VISIBLE);
-				updateColumnChannelsView(channel2, channels.get(i - 1));
-			}
-			if (++i <= channelCount) {
-				channel3.setVisibility(View.VISIBLE);
-				updateColumnChannelsView(channel3, channels.get(i - 1));
-			}
-			mLayout.addView(view);
+
 		}
 	}
 
@@ -605,10 +656,6 @@ public class ChannelDepotActivity extends BaseActivity {
 				ArrayList<Column> list = response.getColumnList();
 				updateColumnView(list);
 			}
-
-			public void onError(Exception e) {
-				ToastUtil.showToast(R.string.http_error);
-			};
 		};
 		ChannelModel.getColumnList(responseListener, mGetColumnListAttach,
 				count);

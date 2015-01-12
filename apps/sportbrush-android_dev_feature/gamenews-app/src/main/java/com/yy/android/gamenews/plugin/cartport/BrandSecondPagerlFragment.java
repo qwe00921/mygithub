@@ -59,10 +59,7 @@ public class BrandSecondPagerlFragment extends BaseFragment {
 
 			@Override
 			public void onClick(View v) {
-				Activity activity = getActivity();
-				if (activity != null) {
-					activity.onBackPressed();
-				}
+				onActivityBackPressed();
 			}
 		});
 		View mActionBarBg = mActionBar.findViewById(R.id.actionbar_container);

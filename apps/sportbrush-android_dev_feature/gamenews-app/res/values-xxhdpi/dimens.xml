@@ -25,16 +25,16 @@
     <dimen name="actionbar_img_width">34.66dp</dimen>
 
     <!-- 频道仓库 -->
-    <dimen name="gridview_item_width">56dp</dimen>
-    <dimen name="gridview_img_width">48dp</dimen>
-    <dimen name="gridview_img_height">48dp</dimen>
+    <dimen name="gridview_item_width">60dp</dimen>
+    <dimen name="gridview_img_width">52dp</dimen>
+    <dimen name="gridview_img_height">52dp</dimen>
     <dimen name="column_item_margin">16dp</dimen>
     <dimen name="column_item_width">87dp</dimen>
     <dimen name="column_item_height">60dp</dimen>
-    <dimen name="channel_depot_grid_item_right">6dp</dimen>
-    <dimen name="channel_depot_grid_item_top">6dp</dimen>
-    <dimen name="channel_depot_column_item_width">94dp</dimen>
-    <dimen name="channel_depot_column_item_height">69dp</dimen>
+    <dimen name="channel_depot_grid_item_right">5dp</dimen>
+    <dimen name="channel_depot_grid_item_top">5dp</dimen>
+    <dimen name="channel_depot_column_item_width">98dip</dimen>
+    <dimen name="channel_depot_column_item_height">71.8dip</dimen>
     <dimen name="channel_depot_margin_window">17dp</dimen>
 
     <!-- 个人中心 -->
@@ -50,6 +50,14 @@
     <dimen name="my_list_item_padding_left">10.66dp</dimen>
     <dimen name="my_list_item_padding_right">6.66dp</dimen>
     <dimen name="image_settings_margin_right">4dp</dimen>
+
+    <!-- 精彩赛事 -->
+    <dimen name="wondlerful_race_title_size">15sp</dimen>
+    <dimen name="wondlerful_race_bottom_height">5dp</dimen>
+    <dimen name="wondlerful_race_height">30dp</dimen>
+    <dimen name="wondlerful_race_union_flag_margin_left">15dp</dimen>
+    <dimen name="wondlerful_race_margin_top">0dp</dimen>
+    <dimen name="wondlerful_race_margin_bottom">10dp</dimen>
 
     <!-- 通用 -->
     <!-- list view左右padding -->

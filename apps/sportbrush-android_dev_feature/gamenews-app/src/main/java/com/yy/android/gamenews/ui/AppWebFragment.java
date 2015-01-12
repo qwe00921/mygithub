@@ -1,5 +1,7 @@
 package com.yy.android.gamenews.ui;
 
+import java.net.URISyntaxException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,15 +50,21 @@ import com.duowan.gamenews.LoginActionFlag;
 import com.duowan.gamenews.UserInitRsp;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.GameNewsApplication;
+import com.yy.android.gamenews.plugin.distribution.DistributionListActivity;
 import com.yy.android.gamenews.ui.view.ActionBar;
+import com.yy.android.gamenews.util.PageCaller;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.SignUtil;
 import com.yy.android.gamenews.util.StatsUtil;
+import com.yy.android.gamenews.util.ToastUtil;
 import com.yy.android.gamenews.util.Util;
+import com.yy.android.gamenews.util.WebViewCacheUtil;
 import com.yy.android.sportbrush.R;
 
 public class AppWebFragment extends BaseFragment implements OnClickListener {
 
+	public static final String KEY_NEED_TOOLBAR = "need_toolbar";
+	public static final String KEY_ENABLE_CACHE = "enable_cache";
 	public static final String TAG = AppWebFragment.class.getSimpleName();
 	public static final String TAG_SOCIAL_DIALOG = "article_social_dialog";
 	public static final String TAG_OPERATOR_DIALOG = "article_operator_dialog";
@@ -146,7 +154,7 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 	// }
 
 	public static AppWebFragment getInstance(Context context, String url,
-			String accessToken) {
+			String accessToken, boolean cache, boolean needToolbar) {
 		Bundle bundle = new Bundle();
 		AppWebFragment fragment = new AppWebFragment();
 		fragment.setArguments(bundle);
@@ -157,18 +165,44 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 			url = url + "&token=" + accessToken;
 		}
 
-		return getInstance(context, url);
+		return getInstance(context, url, cache, needToolbar);
 	}
 
-	public static AppWebFragment getInstance(Context context, String url) {
+	public static AppWebFragment getInstance(Context context, String url,
+			boolean cache, boolean needToolbar) {
 		Bundle bundle = new Bundle();
 		AppWebFragment fragment = new AppWebFragment();
 		fragment.setArguments(bundle);
 
 		bundle.putString(KEY_URL, url);
 		bundle.putString(KEY_TITLE, TITLE_VIEW);
+		bundle.putBoolean(KEY_ENABLE_CACHE, cache);
+		bundle.putBoolean(KEY_NEED_TOOLBAR, needToolbar);
 
 		return fragment;
+	}
+
+	public static AppWebFragment getInstanceWithYYToken(Context context,
+			String url, boolean cache, boolean needToolbar) {
+		UserInitRsp rsp = Preference.getInstance().getInitRsp();
+		String token = "";
+		if (rsp != null) {
+			token = rsp.extraInfo
+					.get(LoginActionFlag._LOGIN_ACTION_FLAG_YY_TOKEN);
+		}
+		String query = "";
+		try {
+			query = Util.getUrlQuery(url);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!TextUtils.isEmpty(query)) {
+			url = url + "&token=" + token;
+		} else {
+			url = url + "?token=" + token;
+		}
+		return getInstance(context, url, cache, needToolbar);
 	}
 
 	private String wrapUrl(String url, String accessToken) {
@@ -282,22 +316,25 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (LoginYYActivity.REQUEST_LOGIN == requestCode) {
-			if (resultCode == Activity.RESULT_OK) {
+		if (resultCode == Activity.RESULT_OK) {
+			if (Constants.REQUEST_LOGIN == requestCode) {
 				UserInitRsp rsp = (UserInitRsp) data
-						.getSerializableExtra(LoginYYActivity.EXTRA_USER_INIT_RSP);
+						.getSerializableExtra(Constants.EXTRA_USER_INIT_RSP);
 				accessToken = rsp.extraInfo
 						.get(LoginActionFlag._LOGIN_ACTION_FLAG_YY_TOKEN);
 				mWebView.loadUrl(wrapUrl(mUrl, accessToken));
-			}
-			return;
-		}
-		if (resultCode == Activity.RESULT_OK) {
-			Fragment fs = getActivity().getSupportFragmentManager()
-					.findFragmentByTag(TAG_SOCIAL_DIALOG);
-			if (fs != null && fs.isAdded() && fs instanceof ArticleSocialDialog) {
-				((ArticleSocialDialog) fs).onActivityResult(requestCode,
-						resultCode, data);
+				return;
+			} else if (Constants.REQUEST_LOGIN_REDIRECT == requestCode) {
+				DistributionListActivity.startDistributionListActivity(
+						getActivity(), DistributionListActivity.FROM_H5WEB);
+			} else {
+				Fragment fs = getActivity().getSupportFragmentManager()
+						.findFragmentByTag(TAG_SOCIAL_DIALOG);
+				if (fs != null && fs.isAdded()
+						&& fs instanceof ArticleSocialDialog) {
+					((ArticleSocialDialog) fs).onActivityResult(requestCode,
+							resultCode, data);
+				}
 			}
 		}
 	}
@@ -332,12 +369,6 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 		super.onCreate(savedInstanceState);
 	}
 
-	@Override
-	public void onStart() {
-		mIsAllowEntryLogin = true;
-		super.onStart();
-	}
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
@@ -354,11 +385,14 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 		mMenu = container.findViewById(R.id.menu);
 		mActionBar = (ActionBar) container.findViewById(R.id.actionbar);
 		mActionBar.setVisibility(View.GONE);
+		setContainer((ViewGroup) mWebView.getParent());
 		mProgressBar = mActionBar.findViewById(R.id.actionbar_right);
 		if (savedInstanceState != null) {
 			mUrl = savedInstanceState.getString(KEY_URL);
 		}
-
+		if (!getArguments().getBoolean(KEY_NEED_TOOLBAR, true)) {
+			mMenu.setVisibility(View.GONE);
+		}
 		return container;
 	}
 
@@ -389,8 +423,6 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 		mLoadingAnimation.setFillAfter(true);// 动画停止时保持在该动画结束时的状态
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.getSettings().setPluginState(PluginState.ON);
-		mWebView.getSettings()
-				.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); // 使用缓存
 		mWebView.setBackgroundColor(0);
 		mWebView.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
 		mWebView.setHorizontalScrollBarEnabled(true);
@@ -404,7 +436,10 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 		mWebView.addJavascriptInterface(new JsInterface(getActivity()),
 				"client"); // JS交互
 		mWebView.getSettings().setSupportZoom(false);
-
+		// 来自于特权，支持缓存
+		if (getArguments().getBoolean(KEY_ENABLE_CACHE)) {
+			WebViewCacheUtil.startWebViewCache(mWebView, getActivity());
+		}
 		if (needAgent) {
 			String userAgent = Constants.USER_AGENT_PREFIX
 					+ GameNewsApplication.getInstance().getPackageInfo().versionName;
@@ -462,6 +497,8 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 				startActivity(intent);
 			}
 		});
+		Util.ensureAccesstokenForCookie(getActivity());
+		mWebView.loadUrl(mUrl);
 		// showView(VIEW_TYPE_LOADING);
 		// mProgressBar.setVisibility(View.VISIBLE);
 		// mProgressBar.startAnimation(mLoadingAnimation);
@@ -472,14 +509,18 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 				"web_article_name", mTitle + "  " + mUrl);
 		StatsUtil.statsReportByHiido("", "web_article_name:" + mTitle + "  "
 				+ mUrl);
-
-		mWebView.loadUrl(mUrl);
 		super.onViewCreated(parentView, savedInstanceState);
 	}
 
 	@Override
 	protected View getDataView() {
 		return mWebView;
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		mIsAllowEntryLogin = true;
 	}
 
 	@Override
@@ -500,6 +541,11 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 	}
 
 	public void setButtons() {
+
+		if (mOnNavigationChangeListener != null) {
+			mOnNavigationChangeListener.onNavChanged(mWebView.canGoForward(),
+					mWebView.canGoBack());
+		}
 		if (mWebView.canGoBack()) {
 			mWebBack.setImageResource(R.drawable.app_web_back_selector);
 		} else {
@@ -517,17 +563,13 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.web_reload:
-			mWebView.reload();
+			reload();
 			break;
 		case R.id.web_back:
-			if (mWebView.canGoBack()) {
-				mWebView.goBack();
-			}
+			goBack();
 			break;
 		case R.id.web_go:
-			if (mWebView.canGoForward()) {
-				mWebView.goForward();
-			}
+			goForward();
 			break;
 		case R.id.web_more:
 			AppWebOperatorDialog fw = AppWebOperatorDialog.newInstance(mUrl);
@@ -537,6 +579,29 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 			break;
 		}
 
+	}
+
+	public void reload() {
+		mWebView.reload();
+	}
+
+	private boolean mClearHistory;
+
+	public void loadUrlClearTop(String url) {
+		mClearHistory = true;
+		mWebView.loadUrl(url);
+	}
+
+	public void goForward() {
+		if (mWebView.canGoForward()) {
+			mWebView.goForward();
+		}
+	}
+
+	public void goBack() {
+		if (mWebView.canGoBack()) {
+			mWebView.goBack();
+		}
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -559,6 +624,11 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 			mProgressBar.clearAnimation();
 			setEmptyViewClickable(false);
 			setButtons();
+
+			if (mClearHistory) {
+				view.clearHistory();
+				mClearHistory = false;
+			}
 			// mWebView.getSettings().setBlockNetworkImage(false);
 		}
 
@@ -691,6 +761,18 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 
 		}
 
+		@JavascriptInterface
+		public void openNativePage(final int type, final int id) {
+
+			mHandler.post(new Runnable() {
+				public void run() {
+					if (!mIsAppStopped) {
+						PageCaller.open(getActivity(), type, id);
+					}
+				}
+			});
+		}
+
 		// 点击登录
 		@JavascriptInterface
 		public void yyLogin(final String url) {
@@ -701,8 +783,8 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 								LoginYYActivity.class);
 						intent.putExtra(FROM, TAG);
 						intent.putExtra(FROM_KEY_RUL, url);
-						startActivityForResult(intent,
-								LoginYYActivity.REQUEST_LOGIN);
+						mUrl = url;
+						startActivityForResult(intent, Constants.REQUEST_LOGIN);
 					}
 				});
 				mIsAllowEntryLogin = false;
@@ -724,5 +806,49 @@ public class AppWebFragment extends BaseFragment implements OnClickListener {
 			});
 
 		}
+
+		@JavascriptInterface
+		public void showToast(final String msg) {
+
+			mHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					ToastUtil.showToast(msg);
+				}
+			});
+
+		}
+
+		// 赚取T豆入口
+		@JavascriptInterface
+		public void distributionApp() {
+			if (Preference.getInstance().isUserLogin()) {
+				DistributionListActivity.startDistributionListActivity(
+						getActivity(), DistributionListActivity.FROM_H5WEB);
+			} else {
+				Intent intent = new Intent(getActivity(), LoginYYActivity.class);
+				startActivityForResult(intent, Constants.REQUEST_LOGIN_REDIRECT);
+			}
+		}
+	}
+
+	private OnNavigationChangeListener mOnNavigationChangeListener;
+
+	public void setOnNavigationChangeListener(
+			OnNavigationChangeListener listener) {
+		mOnNavigationChangeListener = listener;
+	}
+
+	public interface OnNavigationChangeListener {
+		public void onNavChanged(boolean canForward, boolean canBackward);
+	}
+
+	@Override
+	public boolean onBackPressed() {
+		if (mWebView.canGoBack()) {
+			mWebView.goBack();
+			return true;
+		}
+		return super.onBackPressed();
 	}
 }

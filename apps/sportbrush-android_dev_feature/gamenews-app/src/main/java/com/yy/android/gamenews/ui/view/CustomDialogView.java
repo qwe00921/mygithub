@@ -1,8 +1,8 @@
 package com.yy.android.gamenews.ui.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.yy.android.gamenews.ui.AppWebActivity;
 import com.yy.android.gamenews.ui.common.SwitchImageLoader;
 import com.yy.android.gamenews.util.Util;
 import com.yy.android.sportbrush.R;
@@ -77,6 +76,7 @@ public class CustomDialogView extends FrameLayout {
 		View view = mInflater.inflate(R.layout.sign_image_btn_layout, null);
 		view.setId(id);
 		view.setOnClickListener(listener);
+		view.setEnabled(enabled);
 
 		((LinearLayout) mImageViewGroup).setWeightSum(mImageViewGroup
 				.getChildCount() + 1);
@@ -88,13 +88,12 @@ public class CustomDialogView extends FrameLayout {
 		ImageView btn = (ImageView) view.findViewById(R.id.sign_image_btn);
 
 		SwitchImageLoader.getInstance().displayImage(url, btn, mOptions);
-		btn.setEnabled(enabled);
 
 		TextView tv = (TextView) view.findViewById(R.id.sign_image_title);
 		tv.setText(text);
 	}
 
-	private void addTextView(String text) {
+	private void addTextView(String text, boolean center) {
 
 		if (mTextViewGroup.getVisibility() != View.VISIBLE) {
 			mTextViewGroup.setVisibility(View.VISIBLE);
@@ -104,6 +103,9 @@ public class CustomDialogView extends FrameLayout {
 				R.layout.dialog_sign_desc_tv, null)
 				.findViewById(R.id.sign_desc);
 		tv.setText(text);
+		if (center) {
+			tv.setGravity(Gravity.CENTER_HORIZONTAL);
+		}
 		mTextViewGroup.addView(tv);
 	}
 
@@ -161,7 +163,12 @@ public class CustomDialogView extends FrameLayout {
 		}
 
 		public Builder addTextView(String text) {
-			mView.addTextView(text);
+			mView.addTextView(text, false);
+			return this;
+		}
+
+		public Builder addTextView(String text, boolean center) {
+			mView.addTextView(text, center);
 			return this;
 		}
 

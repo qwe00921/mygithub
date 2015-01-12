@@ -134,4 +134,8 @@ public class AutoAdjustHelper {
 		mViewWidthSpec = widthMeasureSpec;
 		mViewHeightSpec = heightMeasureSpec;
 	}
+
+	public void setScale(float mScale) {
+		this.mScale = mScale;
+	}
 }

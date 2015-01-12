@@ -11,10 +11,8 @@ import com.duowan.gamenews.GetTeamListRsp;
 import com.duowan.gamenews.RefreshType;
 import com.duowan.gamenews.Team;
 import com.duowan.gamenews.bean.TeamListItemObject;
-import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.ui.BaseListFragment;
 import com.yy.android.gamenews.ui.common.ImageAdapter;
-import com.yy.android.gamenews.util.IPageCache;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.thread.BackgroundTask;
 
@@ -90,7 +88,7 @@ public class TeamMoreFragment extends BaseListFragment<TeamListItemObject> {
 				return;
 			}
 
-			requestFinish(RefreshType._REFRESH_TYPE_REFRESH, getResource(mRsp), false, true);
+			requestFinish(RefreshType._REFRESH_TYPE_REFRESH, getResource(mRsp), false, true, false);
 
 			super.onPostExecute(needReload);
 		}
@@ -136,8 +134,8 @@ public class TeamMoreFragment extends BaseListFragment<TeamListItemObject> {
 
 	@Override
 	protected void requestFinish(int refresh, ArrayList<TeamListItemObject> sourceList, 
-			boolean hasMore, boolean replace) {
-		super.requestFinish(refresh, sourceList, hasMore, replace);
+			boolean hasMore, boolean replace, boolean error) {
+		super.requestFinish(refresh, sourceList, hasMore, replace, error);
 		if (sourceList != null) {
 			showView(VIEW_TYPE_DATA);
 		} else {

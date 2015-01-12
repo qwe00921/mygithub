@@ -2,6 +2,7 @@ package com.yy.android.gamenews.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -30,8 +31,8 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 	private boolean mUserInitRunning;
 	private boolean mArticleListRunning;
 	private boolean mLaunchRunning;
-	private boolean mIsAsyncTaskRunning;
-	private boolean mIsAppExit;
+	private boolean mIsAsyncTaskRunning; // doInbackground最多执行5秒，之后该标志位被置为false
+	private boolean mIsTaskEnd;
 	private boolean mIsUpdateChannelRunning;
 
 	private static final int TASK_APP_INIT = 1001;
@@ -40,13 +41,14 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 	private static final int TASK_LAUNCH = 1004;
 	private static final int TASK_UPDATE_CHANNEL = 1005;
 
-	private static final int STAY_MIN_TIME = 3000; // 最少停留3秒
+	private static final int STAY_MAX_TIME = 5000; // 最多停留5秒
 
 	private static final int DURATION_CHECK_UPDATE = 24 * 3600 * 1000; // 24小时自动检查一次
 
 	private FragmentActivity mActivity;
 
 	private static final String LOG_TAG = "AppInitTask";
+	private DomainIpTransformatter mIpFormatter;
 
 	public AppInitTask(FragmentActivity activity) {
 		mPref = Preference.getInstance();
@@ -65,11 +67,11 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 			syncMyFavorChannelList(channels);
 		}
 	}
-	
+
 	private void syncMyFavorChannelList(final ArrayList<Channel> channels) {
 		setTaskStatus(TASK_UPDATE_CHANNEL, true);
 		saveToXinGe(channels);
-		ChannelModel.updateMyFavChannelList(mActivity, 
+		ChannelModel.updateMyFavChannelList(mActivity,
 				new ResponseListener<UpdateMyFavChannelListRsp>(mActivity) {
 
 					@Override
@@ -96,7 +98,7 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 	private void saveChannel(List<Channel> channels) {
 		mPref.saveMyFavorChannelList(channels);
 	}
-	
+
 	private void saveToXinGe(List<Channel> channels) {
 		if (Util.isNetworkConnected()) {
 			PushUtil.addChannelTag(mActivity, channels);// 每次进入同步服务器频道列表，同时和信鸽同步推送的Tag
@@ -122,21 +124,27 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 			checkMyFavorChannel();
 		}
 		checkUpdate();
-		AlarmUtil.ensureAlarms(mActivity);
-		mPref.recordLaunchTime();
+		prepareLocalData();
 
 		long delay = System.currentTimeMillis() - time; // 计算以上过程使用了多长时间
 
 		// 计算还需停留多久
-		if (delay < STAY_MIN_TIME) {
-			delay = STAY_MIN_TIME - delay;
+		if (delay < STAY_MAX_TIME) {
+			delay = STAY_MAX_TIME - delay;
 		}
+
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	private void prepareLocalData() {
+		AlarmUtil.ensureAlarms(mActivity);
+		// mIpFormatter = DomainIpTransformatter.getInstance();
+		// mIpFormatter.prepareDefault();
 	}
 
 	private void checkAndDeleteChannel(List<Channel> channels, String key) {
@@ -165,13 +173,11 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 
 		Log.d(LOG_TAG, "mAppInitRunning = " + mAppInitRunning
 				+ "\n mUserInitRunning = " + mUserInitRunning
-				+ "\n mLaunchRunning = " + mLaunchRunning
 				+ "\n mArticleListRunning = " + mArticleListRunning
-				+ "\n mIsAsyncTaskRunning = " + mIsAsyncTaskRunning
+				// + "\n mIsAsyncTaskRunning = " + mIsAsyncTaskRunning
 				+ "\n mIsUpdateChannelRunning = " + mIsUpdateChannelRunning
-				+ "\n mIsAppExit = " + mIsAppExit);
-		return !(mAppInitRunning || mUserInitRunning || mLaunchRunning
-				|| mArticleListRunning || mIsAsyncTaskRunning || mIsUpdateChannelRunning);
+				+ "\n mIsAppExit = " + mIsTaskEnd);
+		return !(mAppInitRunning || mUserInitRunning || mArticleListRunning || mIsUpdateChannelRunning);
 	}
 
 	private synchronized void setTaskStatus(int taskId, boolean status) {
@@ -203,11 +209,12 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 			break;
 		}
 		case TASK_UPDATE_CHANNEL: {
-			Log.d(LOG_TAG, "[setTaskStatus], taskId = TASK_UPDATE_CHANNEL, status = "
-					+ status);
+			Log.d(LOG_TAG,
+					"[setTaskStatus], taskId = TASK_UPDATE_CHANNEL, status = "
+							+ status);
 			mIsUpdateChannelRunning = status;
 			break;
-			
+
 		}
 		}
 	}
@@ -321,6 +328,11 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 		@Override
 		public void onResponse(AppInitRsp rsp) {
 			if (rsp != null) {
+				Map<Integer, String> options = rsp.getOptions();
+				if (options != null && !options.isEmpty()) {
+					mPref.saveGiftAddressContent(options.get(0));
+				}
+
 				ArrayList<Channel> topList = rsp.getTopList();
 				if (topList != null) {
 					mPref.saveTopChannelList(topList);
@@ -353,17 +365,23 @@ public class AppInitTask extends BackgroundTask<Void, Void, Boolean> {
 		}
 	};
 
+	/**
+	 * 如果任务结束，或者停留超过{@link #STAY_MAX_TIME} 秒，则任务结束
+	 */
 	private void onTaskFinish() {
 		Log.d(LOG_TAG, "[startMainApp] executed");
-		if (isTaskEnd() && !mIsAppExit) {
+
+		if ((isTaskEnd() || !mIsAsyncTaskRunning) && !mIsTaskEnd
+				&& !mLaunchRunning) {
 			if (mOnAppInitTaskListener != null) {
 				mOnAppInitTaskListener.onTaskFinished();
 			}
+			mIsTaskEnd = true;
 		}
 	}
 
 	public void endTask() {
-		mIsAppExit = true;
+		mIsTaskEnd = true;
 	}
 
 	private OnAppInitTaskListener mOnAppInitTaskListener;

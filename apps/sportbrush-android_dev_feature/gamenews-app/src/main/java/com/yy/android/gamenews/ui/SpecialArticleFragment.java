@@ -22,11 +22,11 @@ import com.yy.android.gamenews.ui.common.DataViewConverterFactory;
 import com.yy.android.gamenews.ui.common.RefreshableViewWrapper;
 import com.yy.android.gamenews.ui.common.SwitchImageLoader;
 import com.yy.android.gamenews.util.StatsUtil;
-import com.yy.android.gamenews.util.ToastUtil;
 import com.yy.android.gamenews.util.Util;
 import com.yy.android.sportbrush.R;
 
-public class SpecialArticleFragment extends
+public class SpecialArticleFragment
+		extends
 		ArticleListFragment<GetSpecialArticleListRsp, GetSpecialArticleRspLocal> {
 	private long mSpecialId;
 	private ImageView mImageView;
@@ -93,17 +93,14 @@ public class SpecialArticleFragment extends
 					public void onResponse(GetSpecialArticleListRsp data) {
 						setEmptyText(strEmptyNoData);
 						requestFinish(refresh, data, false);
-						setCloudStatics(getActivity(), mSpecialId, data.getName());
+						setCloudStatics(getActivity(), mSpecialId,
+								data.getName());
 					}
 
 					@Override
 					public void onError(Exception e) {
 						setEmptyText(strEmptyReload);
 						requestFinish(refresh, null, true);
-
-						if (e != null) {
-							ToastUtil.showToast(R.string.http_error);
-						}
 						super.onError(e);
 					}
 				}, // Listener
@@ -135,7 +132,7 @@ public class SpecialArticleFragment extends
 			hasMore = data.hasMore;
 			displayHeader(data);
 		}
-		requestFinish(refresh, dataList, hasMore, false);
+		requestFinish(refresh, dataList, hasMore, false, error);
 	}
 
 	private void displayHeader(GetSpecialArticleListRsp data) {
@@ -173,20 +170,19 @@ public class SpecialArticleFragment extends
 			mDesLayout.setVisibility(View.GONE);
 		}
 	}
-	
+
 	@Override
 	protected boolean needShowUpdatedCount() {
 		return false;
 	}
-	
-	
-	public void setCloudStatics(Context context, long mSpecialId2, String title){
-		StatsUtil.statsReport(context, "stats_special_article", "article_special_name",
-				title);
+
+	public void setCloudStatics(Context context, long mSpecialId2, String title) {
+		StatsUtil.statsReport(context, "stats_special_article",
+				"article_special_name", title);
 		StatsUtil.statsReportByMta(context, "stats_special_article",
-				"article_special_name", mSpecialId2+ title);
-		StatsUtil.statsReportByHiido("stats_special_article", "article_special_name:"
-				+ title);
+				"article_special_name", mSpecialId2 + title);
+		StatsUtil.statsReportByHiido("stats_special_article",
+				"article_special_name:" + title);
 	}
 
 	@Override

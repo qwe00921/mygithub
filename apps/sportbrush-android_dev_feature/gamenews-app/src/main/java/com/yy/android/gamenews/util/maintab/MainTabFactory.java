@@ -1,7 +1,6 @@
 package com.yy.android.gamenews.util.maintab;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.duowan.Comm.ECommAppType;
 import com.yy.android.gamenews.Constants;
@@ -10,86 +9,95 @@ import com.yy.android.gamenews.ui.view.ActionBar;
 
 public class MainTabFactory {
 
-	public static MainFragmentTab getTab(int index, MainActivity context,
-			View button, ActionBar actionBar, Bundle savedInstance) {
-		MainFragmentTab tab = null;
+	public static final int TAB_COUNT_GAMENEWS = 5;
+	public static final int TAB_COUNT_SPORT = 3;
+	public static final int TAB_COUNT_CAR = 3;
+
+	public static int getTabCount() {
+		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_SPORTBRUSH)) {
+			return TAB_COUNT_SPORT;
+		} else if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_CARBRUSH)) {
+			return TAB_COUNT_CAR;
+		} else if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
+			return TAB_COUNT_GAMENEWS;
+		}
+
+		return 0;
+	}
+
+	public static MainTab getTab(int index, MainActivity context,
+			ActionBar actionBar, Bundle savedInstance) {
+		MainTab tab = null;
 
 		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_SPORTBRUSH)) {
-			return getTabForSportbrush(index, context, button, actionBar,
-					savedInstance);
+			return getTabForSportbrush(index, context, actionBar, savedInstance);
 		} else if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_CARBRUSH)) {
-			return getTabForCarbrush(index, context, button, actionBar,
-					savedInstance);
+			return getTabForCarbrush(index, context, actionBar, savedInstance);
 		} else if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
-			return getTabForGamenews(index, context, button, actionBar,
-					savedInstance);
+			return getTabForGamenews(index, context, actionBar, savedInstance);
 		}
 
 		return tab;
 	}
 
-	private static MainFragmentTab getTabForSportbrush(int index,
-			MainActivity context, View button, ActionBar actionBar,
-			Bundle savedInstance) {
-		MainFragmentTab tab = null;
+	private static MainTab getTabForSportbrush(int index, MainActivity context,
+			ActionBar actionBar, Bundle savedInstance) {
+		MainTab tab = null;
 		switch (index) {
 		case 0: {
-			tab = new MainTab1(context, button, actionBar, savedInstance);
+			tab = new MainTab1(context, actionBar, savedInstance);
 			break;
 		}
 		case 1: {
-			tab = new MainTab2Sportbrush(context, button, actionBar,
-					savedInstance);
+			tab = new MainTab2Sportbrush(context, actionBar, savedInstance);
 			break;
 		}
 		case 2: {
-			tab = new MainTab3SportBrush(context, button, actionBar,
-					savedInstance);
+			tab = new MainTab3SportBrush(context, actionBar, savedInstance);
 			break;
 		}
 		}
 		return tab;
 	}
 
-	private static MainFragmentTab getTabForGamenews(int index,
-			MainActivity context, View button, ActionBar actionBar,
-			Bundle savedInstance) {
-		MainFragmentTab tab = null;
+	private static MainTab getTabForGamenews(int index, MainActivity context,
+			ActionBar actionBar, Bundle savedInstance) {
+		MainTab tab = null;
 		switch (index) {
 		case 0: {
-			tab = new MainTab1Gamenews(context, button, actionBar,
-					savedInstance);
+			tab = new MainTab1Gamenews(context, actionBar, savedInstance);
 			break;
 		}
 		case 1: {
-			tab = new MainTab2Gamenews(context, button, actionBar,
-					savedInstance);
+			tab = new MainTab2Gamenews(context, actionBar, savedInstance);
 			break;
 		}
 		case 2: {
-			tab = new MainTab3Gamenews(context, button, actionBar,
-					savedInstance);
+			tab = new MainTab3Gamenews(context, actionBar, savedInstance);
 			break;
 		}
 		case 3: {
+			tab = new MainTab4Gamenews(context, actionBar, savedInstance);
+			break;
+		}
+		case 4: {
+			tab = new MainTab5Gamenews(context, actionBar, savedInstance);
 			break;
 		}
 		}
 		return tab;
 	}
 
-	private static MainFragmentTab getTabForCarbrush(int index,
-			MainActivity context, View button, ActionBar actionBar,
-			Bundle savedInstance) {
-		MainFragmentTab tab = null;
+	private static MainTab getTabForCarbrush(int index, MainActivity context,
+			ActionBar actionBar, Bundle savedInstance) {
+		MainTab tab = null;
 		switch (index) {
 		case 0: {
-			tab = new MainTab1(context, button, actionBar, savedInstance);
+			tab = new MainTab1(context, actionBar, savedInstance);
 			break;
 		}
 		case 1: {
-			tab = new MainTab2Carbrush(context, button, actionBar,
-					savedInstance);
+			tab = new MainTab2Carbrush(context, actionBar, savedInstance);
 			break;
 		}
 		case 2: {

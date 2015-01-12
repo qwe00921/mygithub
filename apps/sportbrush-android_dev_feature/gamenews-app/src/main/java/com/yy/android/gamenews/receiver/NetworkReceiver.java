@@ -8,10 +8,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.text.TextUtils;
 
+import com.duowan.Comm.ECommAppType;
 import com.duowan.android.base.model.BaseModel.ResponseListener;
 import com.duowan.gamenews.Channel;
 import com.duowan.gamenews.UpdateMyFavChannelListRsp;
+import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.GameNewsApplication;
+import com.yy.android.gamenews.event.MessageEvent;
 import com.yy.android.gamenews.event.NetWorkChangeEvent;
 import com.yy.android.gamenews.event.UpdateChannelListEvent;
 import com.yy.android.gamenews.model.ChannelModel;
@@ -78,6 +81,18 @@ public class NetworkReceiver extends BroadcastReceiver {
 										}, channels, false);
 					}
 
+				}
+			}
+
+			// 网络状态改变
+			if (intent.getAction().equals(
+					ConnectivityManager.CONNECTIVITY_ACTION)) {
+				if (GameNewsApplication.getInstance() != null
+						&& Util.isNetworkConnected()&&Constants
+						.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
+					MessageEvent msg  =	new MessageEvent();
+					msg.setNetworkChangeStatus(MessageEvent.STATUS_SUCESS);
+					EventBus.getDefault().post(msg);
 				}
 			}
 		}

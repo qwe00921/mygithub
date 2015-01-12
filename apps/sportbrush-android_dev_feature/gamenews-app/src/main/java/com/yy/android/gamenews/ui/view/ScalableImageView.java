@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.yy.android.gamenews.event.ImageZoomEvent;
@@ -33,67 +34,106 @@ public class ScalableImageView extends ImageView implements
 	private SimpleOnGestureListener mMouseGestureListener;
 	private GestureDetector mGestureDetector;
 	private Counter mRevertCounter = new Counter();
+	private Counter mDecCounter = new Counter();
 
-	private float mMinScale;
-	private float mMaxScale;
-	private float mMidScale;
-	boolean mIsAnimating;
-	private OnCounterCallback mRevertCallback = new OnCounterCallback() {
+	private float mMinScale = 1.0f;
+	private float mMaxScale = 2.0f;
+	private float mMidScale = 4.0f;
+
+	private static class TranslateItem {
+		CounterItem transItemX;
+		CounterItem transItemY;
+	}
+
+	private class OnImageAnimCallback implements OnCounterCallback {
 
 		private float mProgress;
-		private float tX;
-		private float tY;
+		private float mTransX;
+		private float mTransY;
+		private boolean mIsAnimating;
+
+		public boolean isAnimating() {
+			return mIsAnimating;
+		}
 
 		@Override
 		public void onUpdate(List<CounterItem> list) {
-			CounterItem scaleItem = list.get(0);
-			CounterItem transItemX = null;
-			if (list.size() > 1) {
-				transItemX = list.get(1);
-			}
-			CounterItem transItemY = null;
-			if (list.size() > 2) {
+			CounterItem scaleItem = getScaleItem(list);
+			TranslateItem transItem = getTranslateItem(list);
 
-				transItemY = list.get(2);
-			}
 			// 第一次会传start的值，用于初始化
 			if (!mIsAnimating) {
 				if (scaleItem != null) {
 					mProgress = scaleItem.getValue();
 				}
-				if (transItemX != null) {
-					tX = transItemX.getValue();
+				if (transItem.transItemX != null) {
+					mTransX = transItem.transItemX.getValue();
 				}
-				if (transItemY != null) {
-					tY = transItemY.getValue();
+				if (transItem.transItemY != null) {
+					mTransY = transItem.transItemY.getValue();
 				}
 				mIsAnimating = true;
 				return;
 			}
 
-			Log.d(TAG, "[mRevertCallback]tX = " + tX + ", tY = " + tY);
+			Log.d(TAG, "[mRevertCallback]tX = " + mTransX + ", tY = " + mTransY);
+			calculateTranslate(transItem);
+
+			calculateScale(scaleItem);
+		}
+
+		private CounterItem getScaleItem(List<CounterItem> list) {
+			if (list != null && list.size() > 0) {
+				return list.get(0);
+			}
+			return null;
+		}
+
+		private TranslateItem getTranslateItem(List<CounterItem> list) {
+			TranslateItem item = new TranslateItem();
+			if (list == null) {
+				return null;
+			}
+			if (list.size() > 1) {
+				item.transItemX = list.get(1);
+			}
+			if (list.size() > 2) {
+				item.transItemY = list.get(2);
+			}
+
+			return item;
+		}
+
+		private void calculateTranslate(TranslateItem item) {
+			if (item == null) {
+				return;
+			}
 			// 计算位移
 			float valueX = 0;
-			if (transItemX != null) {
+			if (item.transItemX != null) {
 
-				valueX = transItemX.getValue() - tX; // valueX为本次位移需移动的距离，如从第1个像素移动到第10个像素，则移动距离为9
-				tX = transItemX.getValue();
+				valueX = item.transItemX.getValue() - mTransX; // valueX为本次位移需移动的距离，如从第1个像素移动到第10个像素，则移动距离为9
+				mTransX = item.transItemX.getValue();
 			}
 			float valueY = 0;
-			if (transItemY != null) {
+			if (item.transItemY != null) {
 
-				valueY = transItemY.getValue() - tY;
-				tY = transItemY.getValue();
+				valueY = item.transItemY.getValue() - mTransY;
+				mTransY = item.transItemY.getValue();
 			}
 
 			mCurrentMatrix.postTranslate(valueX, valueY);
+		}
+
+		private void calculateScale(CounterItem scaleItem) {
+			// 计算scale
 			if (scaleItem != null) {
 				Log.d(TAG, "[mRevertCallback]progress = " + mProgress);
 
 				float divide = scaleItem.getValue() / mProgress;
 				mProgress = scaleItem.getValue();
-				mCurrentMatrix
-						.postScale(divide, divide, mid.x + tX, mid.y + tY); // 通过位移计算相应的scale中点
+				mCurrentMatrix.postScale(divide, divide, mid.x + mTransX, mid.y
+						+ mTransY); // 通过位移计算相应的scale中点
 			}
 
 			setImageMatrix(mCurrentMatrix);
@@ -103,8 +143,8 @@ public class ScalableImageView extends ImageView implements
 		public void onStop() {
 			mIsAnimating = false;
 			mProgress = 0;
-			tX = 0;
-			tY = 0;
+			mTransX = 0;
+			mTransY = 0;
 		}
 
 		@Override
@@ -114,6 +154,21 @@ public class ScalableImageView extends ImageView implements
 		@Override
 		public void onPause() {
 		}
+
+	}
+
+	private OnImageAnimCallback mRevertCallback = new OnImageAnimCallback();
+
+	private OnImageAnimCallback mDecCallback = new OnImageAnimCallback() {
+
+		public void onStop() {
+			super.onStop();
+			checkRevert();
+
+			mode = NONE;
+			Log.d(TAG, "mode=NONE");
+		};
+
 	};
 
 	private static final String TAG = "ScreenView";
@@ -154,6 +209,7 @@ public class ScalableImageView extends ImageView implements
 
 	void init(Context context) {
 		mRevertCounter.setOnTimerCallback(mRevertCallback);
+		mDecCounter.setOnTimerCallback(mDecCallback);
 		Matrix matrix = getImageMatrix();
 		mCurrentMatrix.set(matrix);
 		setGestureListener(new SimpleOnGestureListener() {
@@ -238,7 +294,7 @@ public class ScalableImageView extends ImageView implements
 
 		float scaleY = (float) viewHeight / (float) drawableHeight;
 		mMinScale = scaleX < scaleY ? scaleX : scaleY;
-		mMaxScale = mMinScale * 4;
+		mMaxScale = mMinScale * 4f;
 		mMidScale = mMinScale * 2f;
 
 		Matrix matrix = getImageMatrix();
@@ -276,6 +332,7 @@ public class ScalableImageView extends ImageView implements
 	Matrix mSavedMatrix = new Matrix();
 	PointF start = new PointF();
 	PointF mid = new PointF();
+	PointF speed = new PointF();
 	float oldDist;
 
 	// We can be in one of these 3 states
@@ -286,7 +343,7 @@ public class ScalableImageView extends ImageView implements
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (mIsAnimating) {
+		if (mRevertCallback.isAnimating() || mDecCallback.isAnimating()) {
 			return true;
 		}
 		// Handle touch events here...
@@ -305,7 +362,7 @@ public class ScalableImageView extends ImageView implements
 		case MotionEvent.ACTION_DOWN:
 			mSavedMatrix.set(mCurrentMatrix);
 			start.set(event.getX(), event.getY());
-			Log.d(TAG, "mode=DRAG");
+			// Log.d(TAG, "mode=DRAG");
 			mode = DRAG;
 			isDown = true;
 			break;
@@ -313,7 +370,18 @@ public class ScalableImageView extends ImageView implements
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_POINTER_UP:
 			if (mode != NONE) {
-				checkRevert(event);
+				checkRevert();
+
+				// CounterItem scale = null;
+				//
+				// CounterItem transX = new CounterItem(event.getX(),
+				// event.getX()
+				// + speed.x);
+				// CounterItem transY = new CounterItem(event.getY(),
+				// event.getY()
+				// + speed.y);
+				// mDecCounter.setValue(scale, transX, transY);
+				// mDecCounter.start();
 			}
 
 			mode = NONE;
@@ -321,12 +389,12 @@ public class ScalableImageView extends ImageView implements
 			break;
 		case MotionEvent.ACTION_POINTER_DOWN:
 			oldDist = spacing(event);
-			Log.d(TAG, "oldDist=" + oldDist);
+			// Log.d(TAG, "oldDist=" + oldDist);
 			if (oldDist > 10f) {
 				mSavedMatrix.set(mCurrentMatrix);
 				midPoint(mid, event);
 				mode = ZOOM;
-				Log.d(TAG, "mode=ZOOM");
+				// Log.d(TAG, "mode=ZOOM");
 			}
 			break;
 		case MotionEvent.ACTION_MOVE:
@@ -341,11 +409,11 @@ public class ScalableImageView extends ImageView implements
 					break;
 				}
 
-				float deltaX = toX - fromX;
-				float deltaY = toY - fromY;
+				speed.x = toX - fromX;
+				speed.y = toY - fromY;
 
 				mCurrentMatrix.set(mSavedMatrix);
-				mCurrentMatrix.postTranslate(deltaX, deltaY);
+				mCurrentMatrix.postTranslate(speed.x, speed.y);
 
 			} else if (mode == ZOOM) {
 				float newDist = spacing(event);
@@ -383,10 +451,10 @@ public class ScalableImageView extends ImageView implements
 	 * @param event
 	 * @return
 	 */
-	private void checkRevert(MotionEvent event) {
-
+	private void checkRevert() {
+		Log.d(TAG, "checkRevert");
 		List<CounterItem> timeItems = new ArrayList<CounterItem>();
-		CounterItem zoomItem = getZoomBackItem(event, mCurrentMatrix);
+		CounterItem zoomItem = getZoomBackItem(mCurrentMatrix);
 		timeItems.add(zoomItem);
 
 		Matrix matrix = new Matrix();
@@ -415,7 +483,7 @@ public class ScalableImageView extends ImageView implements
 		}
 	}
 
-	private CounterItem getZoomBackItem(MotionEvent event, Matrix matrix) {
+	private CounterItem getZoomBackItem(Matrix matrix) {
 		if (mode == ZOOM) {
 			float currentScaleX = getScaleX(matrix);
 			if (currentScaleX < mMinScale) {
@@ -425,71 +493,125 @@ public class ScalableImageView extends ImageView implements
 		return null;
 	}
 
+	/**
+	 * 获取位移动画x轴和y轴动画信息，当图像边界超过视图边界（即边框在视图显示范围内）时，自动将图像位移至视图边框位置
+	 * 
+	 * <pre>
+	 *     -----------------
+	 * ....|....           |
+	 * .A  |   .           |
+	 * .   |   .   B       |
+	 * .   |   .           |
+	 * .   -----------------
+	 * .........
+	 * </pre>
+	 * 
+	 * 如上图，A（图像）的右边及上边超过了B（视图）的右边及上边，则需要对A做向上及向右的位移
+	 * 
+	 * @param matrix
+	 *            当前图像矩阵
+	 * @return 一个包含{@link CounterItem}的列表，包含所需位移的x位移动画信息和y位移动画信息
+	 */
 	private List<CounterItem> getTranslateBackItems(Matrix matrix) {
 		List<CounterItem> itemList = new ArrayList<CounterItem>();
 
-		float imageLeft = getImageLeft(matrix);
-		float imageTop = getImageTop(matrix);
-		float imageDown = getImageBottom(matrix);
-		float imageRight = getImageRight(matrix);
+		PointF point = getTranslatePoint(matrix);
 
-		int measuredWidth = getMeasuredWidth();
-		int measuredHeight = getMeasuredHeight();
-		int width = getWidth();
-		int height = getHeight();
-
-		int viewWidth = width == 0 ? measuredWidth : width;
-		int viewHeight = height == 0 ? measuredHeight : height;
-
-		float deltaX = 0;
-		float deltaY = 0;
-
-		float viewCenterX = viewWidth / 2;
-		float viewCenterY = viewHeight / 2;
-		float imageCenterX = (imageRight + imageLeft) / 2;
-		float imageCenterY = (imageDown + imageTop) / 2;
-
-		if (imageRight - imageLeft < viewWidth) {
-			if (imageLeft > 0 || imageRight < viewWidth) {
-				deltaX = viewCenterX - imageCenterX;
-			}
-		} else {
-			if (imageLeft >= 0) {
-
-				deltaX = 0 - imageLeft;
-			}
-
-			if (imageRight <= viewWidth) {
-				deltaX = viewWidth - imageRight;
-			}
-		}
-
-		if (imageDown - imageTop < viewHeight) {
-			if (imageTop > 0 || imageDown < viewHeight) {
-				deltaY = viewCenterY - imageCenterY;
-			}
-		} else {
-			if (imageTop >= 0) { // If reaches left edge
-
-				deltaY = 0 - imageTop;
-			}
-			if (imageDown <= viewHeight) {
-				deltaY = viewHeight - imageDown;
-			}
-		}
-
-		Log.d(TAG, "deltaX = " + deltaX + ", deltaY = " + deltaY);
-		if (Math.abs(deltaX) < ACCURACY && Math.abs(deltaY) < ACCURACY) {
+		Log.d(TAG, "point.x = " + point.x + ", point.y = " + point.y);
+		if (Math.abs(point.x) < ACCURACY && Math.abs(point.y) < ACCURACY) {
 			return itemList;
 		}
 
-		CounterItem xItem = new CounterItem(0, deltaX);
-		CounterItem yItem = new CounterItem(0, deltaY);
+		CounterItem xItem = new CounterItem(0, point.x);
+		CounterItem yItem = new CounterItem(0, point.y);
 
 		itemList.add(xItem);
 		itemList.add(yItem);
 
 		return itemList;
+	}
+
+	private PointF getTranslatePoint(Matrix matrix) {
+		PointF point = new PointF();
+
+		point.x = getDeltaX(matrix);
+		point.y = getDeltaY(matrix);
+		return point;
+	}
+
+	private float getDeltaX(Matrix matrix) {
+		int width = getWidth();
+		int measuredWidth = getMeasuredWidth();
+		float imageLeft = getImageLeft(matrix);
+		float imageRight = getImageRight(matrix);
+		int viewWidth = width == 0 ? measuredWidth : width;
+		return calculateEdgeDistance(imageLeft, imageRight, 0, viewWidth);
+	}
+
+	private float getDeltaY(Matrix matrix) {
+		int height = getHeight();
+		int measuredHeight = getMeasuredHeight();
+		float imageTop = getImageTop(matrix);
+		float imageDown = getImageBottom(matrix);
+		int viewHeight = height == 0 ? measuredHeight : height;
+		return calculateEdgeDistance(imageTop, imageDown, 0, viewHeight);
+	}
+
+	/**
+	 * 
+	 * 计算同一方向的两条边start和end与view该方向总宽度/长度之间的位置关系 在计算时，起点默认为0，宽/长为s
+	 * 如s为200，则表明该视图该方向的取值范围在0~200之间，在此条件下： 有两种情况
+	 * 
+	 * case 1：需位移的图像边长小于视图边长
+	 * 
+	 * <pre>
+	 * 
+	 * 123456789012345678   
+	 *    -------------     视图
+	 * .....                图像
+	 * 
+	 *         以上情况： startImage = 1, endImage = 5 边长为4，中心点为3
+	 *                   startView = 4, endView = 16 边长为12，中心点为10
+	 *         此时需要把图像中心点移至视图中心点，需要做的位移是10-3=7，位移后的结果：
+	 *         
+	 *         
+	 * 123456789012345678   
+	 *    -------------     视图
+	 *         .....         图像
+	 *         
+	 *   case 2: 图像边长大于视图边长，此种情况只需保证超出的那一边位移至相应的边即可
+	 * </pre>
+	 * 
+	 * @param startImage
+	 *            图像起始边位置
+	 * @param endImage
+	 *            图像结束边位置
+	 * @param startView
+	 *            视图起始边位置
+	 * @param endView
+	 *            视图结束边位置
+	 * @return
+	 */
+	private float calculateEdgeDistance(float startImage, float endImage,
+			float startView, float endView) {
+		float viewCenter = (endView + startView) / 2;
+		float imageCenter = (endImage + startImage) / 2;
+
+		float delta = 0;
+
+		if (endImage - startImage < endView) { // 如果图像小于视图
+			if (startImage > 0 || endImage < endView) { // 位移至中心点
+				delta = viewCenter - imageCenter;
+			}
+		} else { // 图像大于视图
+			if (startImage >= startView) { // 起始边越界
+				delta = startView - startImage;
+			}
+			if (endImage <= endView) { // 结束边越界
+				delta = endView - endImage;
+			}
+		}
+		return delta;
 	}
 
 	private void doCheckTranslateBack(boolean anim) {
@@ -598,8 +720,15 @@ public class ScalableImageView extends ImageView implements
 		return finalScaleValue;
 	}
 
-	public boolean isIntercept(MotionEvent e) {
+	private boolean isMinScale() {
 		float currentScale = getScaleX(mCurrentMatrix);
 		return !Util.isFloatEquals(currentScale, mMinScale);
+	}
+
+	public boolean isIntercept(MotionEvent e) {
+		if (getVisibility() != View.VISIBLE) {
+			return false;
+		}
+		return isMinScale();
 	}
 }

@@ -52,6 +52,7 @@ public class DataPlaListViewConverter extends
 
 		mListView = (MultiColumnListView) listLayout
 				.findViewById(R.id.waterfall_list);
+		mListView.setCacheColorHint(android.R.color.transparent);
 		return parentView;
 	}
 
@@ -123,5 +124,12 @@ public class DataPlaListViewConverter extends
 		mListView.setFooterDividersEnabled(false);
 
 		return new RefreshPlaListWrapper(mContext, mListView, header);
+	}
+	
+	@Override
+	public void stopScroll() {
+		if(mListView != null) {
+			mListView.stopScroll();
+		}
 	}
 }

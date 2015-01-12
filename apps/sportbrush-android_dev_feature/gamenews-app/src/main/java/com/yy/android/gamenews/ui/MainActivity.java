@@ -9,45 +9,56 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duowan.Comm.ECommAppType;
 import com.duowan.android.base.model.BaseModel.ResponseListener;
 import com.duowan.gamenews.UserInitRsp;
 import com.duowan.gamenews.bean.WelcomeChannel;
+import com.duowan.show.NotificationRsp;
 import com.yy.android.gamenews.Constants;
-import com.yy.android.gamenews.event.FirstButtomTabEvent;
 import com.yy.android.gamenews.event.FragmentCallbackEvent;
+import com.yy.android.gamenews.event.MainTabEvent;
+import com.yy.android.gamenews.event.MessageEvent;
 import com.yy.android.gamenews.event.SchedTabChangedEvent;
-import com.yy.android.gamenews.event.SecondButtomTabEvent;
-import com.yy.android.gamenews.event.ThirdButtomTabEvent;
 import com.yy.android.gamenews.model.InitModel;
 import com.yy.android.gamenews.plugin.schetable.SchedFragment;
+import com.yy.android.gamenews.plugin.show.TagListActivity;
 import com.yy.android.gamenews.ui.view.ActionBar;
 import com.yy.android.gamenews.ui.view.ImagePagerAdapter;
 import com.yy.android.gamenews.ui.view.WelcomeChannelView;
+import com.yy.android.gamenews.ui.view.tab.FrameFragmentItem;
+import com.yy.android.gamenews.ui.view.tab.FrameFragmentLayout;
+import com.yy.android.gamenews.ui.view.tab.FrameFragmentLayout.OnFrameChangeListener;
 import com.yy.android.gamenews.util.AnimationHelper;
+import com.yy.android.gamenews.util.ClassUtils;
+import com.yy.android.gamenews.util.MainTabStatsUtil;
+import com.yy.android.gamenews.util.MessageAsyncTask;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.PushUtil;
 import com.yy.android.gamenews.util.SignUtil;
 import com.yy.android.gamenews.util.SignUtil.OnSignEndListener;
-import com.yy.android.gamenews.util.StatsUtil;
-import com.yy.android.gamenews.util.TipsHelper;
 import com.yy.android.gamenews.util.Util;
-import com.yy.android.gamenews.util.maintab.FragmentTabTransaction;
-import com.yy.android.gamenews.util.maintab.MainFragmentTab;
+import com.yy.android.gamenews.util.WebViewCacheUtil;
+import com.yy.android.gamenews.util.maintab.MainTab;
+import com.yy.android.gamenews.util.maintab.MainTab1;
+import com.yy.android.gamenews.util.maintab.MainTab2;
 import com.yy.android.gamenews.util.maintab.MainTab3SportBrush;
+import com.yy.android.gamenews.util.maintab.MainTab5Gamenews;
 import com.yy.android.gamenews.util.maintab.MainTabFactory;
 import com.yy.android.sportbrush.R;
 
@@ -55,29 +66,18 @@ import de.greenrobot.event.EventBus;
 
 public class MainActivity extends BaseActivity {
 	private static final String TAG = MainActivity.class.getSimpleName();
-	public static final String TAG_NAME_INFO = "info"; // 头条，第一个tab
-	public static final String TAG_NAME_NEWS = "news"; // 频道，第二个tab
-	public static final String TAG_NAME_BRUSH = "brush";
-	public static final String TAG_NAME_EXTRA1 = "extra1"; // 额外的tab1
-	public static final String TAG_NAME_EXTRA2 = "extra2"; // 额外的tab2
+	// public static final String TAG_NAME_INFO = "info"; // 头条，第一个tab
+	// public static final String TAG_NAME_NEWS = "news"; // 频道，第二个tab
+	// public static final String TAG_NAME_BRUSH = "brush";
+	// public static final String TAG_NAME_EXTRA1 = "extra1"; // 额外的tab1
+	// public static final String TAG_NAME_EXTRA2 = "extra2"; // 额外的tab2
+	// public static final String TAG_NAME_EXTRA3 = "extra3"; // 额外的tab3
 
 	public static final String ACTION_BRUSH_CLICKED = "action_brush_clicked";
-	private static final String KEY_CURRENT_TAB = "current_tab";
 
-	private MainFragmentTab mTab1;
-	private MainFragmentTab mTab2;
-	private MainFragmentTab mTab3;
-	private MainFragmentTab mTab4;
 	private SignUtil mSignUtil;
 	private View mWelcome_main;
-	private View mNewsTab;
-	private View mBrushTab;
-	private View mExtraTab1;
-	private View mExtraTab2;
-	private ImageView mIndicator;
-	private View mInfoTab;
 
-	private Animation mAnimCenterRotate;
 	private Animation mAnimRadioIn;
 	private Animation mAnimRadioOut;
 	// 游戏刷子
@@ -87,12 +87,11 @@ public class MainActivity extends BaseActivity {
 	private ImageView imageView1;
 	private ImageView imageView3;
 
-	private View mRadioGroup;
 	private ActionBar mActionBar;
+	private FrameFragmentLayout mFragmentFrame;
 
 	private Preference mPref;
 	private boolean mShowWelcomeView;
-	private boolean mWelcomeAnimationView;
 	private boolean mIsShowWelcomeGuide;
 
 	// private List<ActiveInfo> mActiveChannelList;
@@ -132,13 +131,13 @@ public class MainActivity extends BaseActivity {
 		}
 	}
 
-	private String mCurrentTabName = TAG_NAME_INFO;
 	private boolean isFirstLaunch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG, "onCreate");
+		EventBus.getDefault().register(this);
 
 		setContentView(R.layout.activity_main);
 
@@ -158,11 +157,6 @@ public class MainActivity extends BaseActivity {
 		isFirstLaunch = mPref.isFirstLaunch();
 		mShowWelcomeView = isFirstLaunch || appUpdated;
 
-		// if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
-		// if (isFirstLaunch) {
-		// showWelcomeChannelView();
-		// }
-		// }
 		if (mShowWelcomeView) {
 			// 初始化
 			mPref.setGuideStep(Preference.STEP_0);
@@ -174,9 +168,6 @@ public class MainActivity extends BaseActivity {
 			PushUtil.start(getApplicationContext());
 		}
 
-		// mImageLoader = SwitchImageLoader.getInstance();
-		mRadioGroup = findViewById(R.id.main_radio);
-
 		mAnimRadioOut = AnimationUtils.loadAnimation(this,
 				R.anim.main_radio_tans_out);
 		mAnimRadioOut.setAnimationListener(mAnimListener);
@@ -184,72 +175,66 @@ public class MainActivity extends BaseActivity {
 				R.anim.main_radio_tans_in);
 		mAnimRadioIn.setAnimationListener(mAnimListener);
 
-		mAnimCenterRotate = AnimationUtils.loadAnimation(this,
-				R.anim.main_radio_center_rotation);
-		mAnimCenterRotate.setAnimationListener(new AnimationListener() {
-
-			@Override
-			public void onAnimationStart(Animation animation) {
-			}
-
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-			}
-
-			@Override
-			public void onAnimationEnd(Animation animation) {
-				mIndicator.setVisibility(View.INVISIBLE);
-			}
-		});
-
 		mActionBar = (ActionBar) findViewById(R.id.actionbar);
 
-		mCurrentTabName = mPref.getLastTabName();// .getString(KEY_CURRENT_TAB);
+		mCurrentTabIndex = mPref.getLastTabIndex();// .getString(KEY_CURRENT_TAB);
 
-		mIndicator = (ImageView) findViewById(R.id.main_radio_center_indicator);
-
-		mNewsTab = findViewById(R.id.news_btn);
-		mNewsTab.setOnClickListener(mOnClickListener);
-
-		mExtraTab1 = findViewById(R.id.extra_btn_1);
-		mExtraTab1.setOnClickListener(mOnClickListener);
-		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)
+		if (Constants.isFunctionEnabledInVersion(Constants.APP_VER_NAME_1_7_0)
 				|| Constants
-						.isFunctionEnabled(ECommAppType._Comm_APP_SPORTBRUSH)) {
-			mExtraTab1.setVisibility(View.VISIBLE);
+						.isFunctionEnabledInVersion(Constants.APP_VER_NAME_1_7_0_SSHOT)) {
+			if (appUpdated
+					&& Constants
+							.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
+				mCurrentTabIndex = MainTab1.INDEX;
+			}
 		}
 
-		mExtraTab2 = findViewById(R.id.extra_btn_2);
-		mExtraTab2.setOnClickListener(mOnClickListener);
-		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
-			mExtraTab2.setVisibility(View.VISIBLE);
+		mFragmentFrame = (FrameFragmentLayout) findViewById(R.id.container);
+		mFragmentFrame.setOnFrameChangeListener(new OnFrameChangeListener() {
+
+			@Override
+			public void onChange(int index, FrameFragmentItem item) {
+				changeTab(index, item);
+			}
+
+		});
+
+		List<FrameFragmentItem> itemList = new ArrayList<FrameFragmentItem>();
+		for (int i = 0; i < MainTabFactory.getTabCount(); i++) {
+			FrameFragmentItem item = MainTabFactory.getTab(i, this, mActionBar,
+					savedInstanceState);
+			itemList.add(item);
 		}
 
-		mBrushTab = findViewById(R.id.brush_btn);
-		mBrushTab.setOnClickListener(mOnClickListener);
-
-		mInfoTab = findViewById(R.id.info_btn);
-		mInfoTab.setOnClickListener(mOnClickListener);
-
-		if (savedInstanceState != null) { // onSaveInstanceState里保存的当前选择的tab
-			mTab1 = MainTabFactory.getTab(0, this, mInfoTab, mActionBar,
-					savedInstanceState);
-			mTab2 = MainTabFactory.getTab(1, this, mNewsTab, mActionBar,
-					savedInstanceState);
-			mTab3 = MainTabFactory.getTab(2, this, mExtraTab1, mActionBar,
-					savedInstanceState);
-			mTab4 = MainTabFactory.getTab(3, this, mExtraTab2, mActionBar,
-					savedInstanceState);
+		if (savedInstanceState != null) {
+			mFragmentFrame.restore(itemList);
+		} else {
+			mFragmentFrame.add(itemList);
 		}
+	}
 
-		if (!mShowWelcomeView) {
-			changeTab(mCurrentTabName);
+	public void onEvent(MessageEvent event) {
+		if (event != null && event.isNeedUpdate()) {
+			showPersonMessage();
 		}
-		EventBus.getDefault().register(this);
+		if (event != null && event.isNetworkChangeStatus()) {
+			new MessageAsyncTask(this).execute();
+		}
+	}
+
+	public void showPersonMessage() {
+		NotificationRsp Notification = mPref.getNotifacation();
+		if (Notification != null && Notification.getUnreadCount() > 0) {
+			mActionBar.setLeftMsgCountVisibility(View.VISIBLE);
+			mActionBar.setLeftMsgCount(Notification.getUnreadCount());
+		} else {
+			mActionBar.setLeftMsgCountVisibility(View.GONE);
+			mActionBar.setLeftMsgCount(0);
+		}
 	}
 
 	public void startWebWithYYToken(String url) {
-		AppWebActivity.startWebActivityWithYYToken(this, url);
+		AppWebActivity.startWebActivityWithYYToken(this, url, true);
 	}
 
 	public void handleIntent(Intent intent) {
@@ -275,107 +260,20 @@ public class MainActivity extends BaseActivity {
 		} else if (type == 0) {
 			// 文章
 			if (id != -1) {
-				ArticleDetailActivity.startArticleDetailActivity(this, id);
+				ArticleDetailActivity.startArticleDetailActivityFromNotice(
+						this, id);
 			}
 		}
 	}
-
-	private OnClickListener mOnClickListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.news_btn: {
-				/**
-				 * 体育刷子和游戏刷子的频道选择页面在点击频道之后出现
-				 */
-				if (Constants
-						.isFunctionEnabled(ECommAppType._Comm_APP_CARBRUSH)
-						|| Constants
-								.isFunctionEnabled(ECommAppType._Comm_APP_SPORTBRUSH)) {
-					if (!mPref.isChannelSelected()) {
-						showWelcomeChannelView();
-						mPref.setChannelSelected(true);
-					}
-				}
-				changeTab(TAG_NAME_NEWS);
-				break;
-			}
-			case R.id.brush_btn: {
-				break;
-			}
-			case R.id.info_btn: {
-				changeTab(TAG_NAME_INFO);
-				break;
-			}
-
-			case R.id.extra_btn_1: {
-				changeTab(TAG_NAME_EXTRA1);
-				break;
-			}
-			case R.id.extra_btn_2: {
-				changeTab(TAG_NAME_EXTRA2);
-				break;
-			}
-			}
-		}
-	};
 
 	/**
 	 * 统计
 	 * 
 	 * @param tabName
 	 */
-	public void addStatistics(String tabName) {
-		String lastTabName = mPref.getLastTabName();
-		if (lastTabName.equals(TAG_NAME_NEWS) && tabName.equals(TAG_NAME_INFO)) {
-			FirstButtomTabEvent event = new FirstButtomTabEvent();
-			event.setType(FirstButtomTabEvent._INTO_ORDER_CHANNEL);
-			event.setEventId(FirstButtomTabEvent.HEAD_INFO);
-			event.setKey(FirstButtomTabEvent.INTO_ORDER_CHANNEL);
-			event.setValue(FirstButtomTabEvent.INTO_ORDER_CHANNEL_NAME);
-			EventBus.getDefault().post(event);
-		} else if (lastTabName.equals(TAG_NAME_NEWS)
-				&& tabName.equals(TAG_NAME_EXTRA1)) {
-			FirstButtomTabEvent event = new FirstButtomTabEvent();
-			event.setType(FirstButtomTabEvent._INTO_SCHETABLE);
-			event.setEventId(FirstButtomTabEvent.HEAD_INFO);
-			event.setKey(FirstButtomTabEvent.INTO_SCHETABLE);
-			event.setValue(FirstButtomTabEvent.INTO_SCHETABLE_NAME);
-			EventBus.getDefault().post(event);
-		} else if (lastTabName.equals(TAG_NAME_INFO)
-				&& tabName.equals(TAG_NAME_NEWS)) {
-			SecondButtomTabEvent event = new SecondButtomTabEvent();
-			event.setType(SecondButtomTabEvent._INTO_HAND_INFO);
-			event.setEventId(SecondButtomTabEvent.ORDER_INFO);
-			event.setKey(SecondButtomTabEvent.INTO_HAND_INFO);
-			event.setValue(SecondButtomTabEvent.INTO_HAND_INFO_NAME);
-			EventBus.getDefault().post(event);
-		} else if (lastTabName.equals(TAG_NAME_INFO)
-				&& tabName.equals(TAG_NAME_EXTRA1)) {
-			SecondButtomTabEvent event = new SecondButtomTabEvent();
-			event.setType(SecondButtomTabEvent._INTO_SCHETABLE);
-			event.setEventId(SecondButtomTabEvent.ORDER_INFO);
-			event.setKey(SecondButtomTabEvent.INTO_SCHETABLE);
-			event.setValue(SecondButtomTabEvent.INTO_SCHETABLE_NAME);
-			EventBus.getDefault().post(event);
-		} else if (lastTabName.equals(TAG_NAME_EXTRA1)
-				&& tabName.equals(TAG_NAME_NEWS)) {
-			ThirdButtomTabEvent event = new ThirdButtomTabEvent();
-			event.setType(ThirdButtomTabEvent._INTO_HAND_INFO);
-			event.setEventId(ThirdButtomTabEvent.THIRD_TAB_INFO);
-			event.setKey(ThirdButtomTabEvent.INTO_HAND_INFO);
-			event.setValue(ThirdButtomTabEvent.INTO_HAND_INFO_NAME);
-			EventBus.getDefault().post(event);
-		} else if (lastTabName.equals(TAG_NAME_EXTRA1)
-				&& tabName.equals(TAG_NAME_INFO)) {
-			ThirdButtomTabEvent event = new ThirdButtomTabEvent();
-			event.setType(ThirdButtomTabEvent._INTO_ORDER);
-			event.setEventId(ThirdButtomTabEvent.THIRD_TAB_INFO);
-			event.setKey(ThirdButtomTabEvent.INTO_ORDER);
-			event.setValue(ThirdButtomTabEvent.INTO_ORDER_NAME);
-			EventBus.getDefault().post(event);
-		}
+	public void addchangeTabStatistics(int index) {
+		int lastTabIndex = mPref.getLastTabIndex();
+		MainTabStatsUtil.addchangeTabStatistics(this, lastTabIndex, index);
 	}
 
 	private void checkDailyLaunch() {
@@ -396,41 +294,21 @@ public class MainActivity extends BaseActivity {
 
 	private void checkExpireRefresh() {
 
-		if (mTab1 == null || mTab2 == null) {
-			return;
-		}
-		if (mTab1.isVisible()) {
-			mTab1.checkExpire();
-		}
-		if (mTab2.isVisible()) {
-			mTab2.checkExpire();
-		}
+		// if (mTab1 == null || mTab2 == null) {
+		// return;
+		// }
+		// if (mTab1.isVisible()) {
+		// mTab1.checkExpire();
+		// }
+		// if (mTab2.isVisible()) {
+		// mTab2.checkExpire();
+		// }
 
-	}
-
-	private int mRequestRefreshCount;
-
-	private void setIndicatorRefreshing(boolean isRefreshing) {
-
-		if (mAnimCenterRotate == null) {
-			return;
+		List<FrameFragmentItem> itemList = mFragmentFrame.getItemList();
+		for (int i = 0; i < itemList.size(); i++) {
+			MainTab tab = (MainTab) itemList.get(i);
+			tab.checkExpire();
 		}
-		if (isRefreshing) {
-			mRequestRefreshCount++;
-			mIndicator.setVisibility(View.VISIBLE);
-			mIndicator
-					.setBackgroundResource(R.drawable.btn_main_radio_refreshing);
-			mIndicator.startAnimation(mAnimCenterRotate);
-		} else {
-			mRequestRefreshCount--;
-			if (mRequestRefreshCount <= 0) {
-				mIndicator.setVisibility(View.INVISIBLE);
-				mAnimCenterRotate.cancel();
-				mAnimCenterRotate.reset();
-				mIndicator.clearAnimation();
-			}
-		}
-
 	}
 
 	private boolean isAnimating;
@@ -484,12 +362,6 @@ public class MainActivity extends BaseActivity {
 		}
 		if (!mIsRadioVisible) {
 			mAnimRadioOut.cancel();
-			mRadioGroup.startAnimation(mAnimRadioIn);
-			mRadioGroup.setClickable(true);
-			mInfoTab.setClickable(true);
-			mNewsTab.setClickable(true);
-			mExtraTab1.setClickable(true);
-			mExtraTab2.setClickable(true);
 		}
 	}
 
@@ -500,141 +372,72 @@ public class MainActivity extends BaseActivity {
 		}
 		if (mIsRadioVisible) {
 			mAnimRadioIn.cancel();
-			mRadioGroup.startAnimation(mAnimRadioOut);
-			mRadioGroup.setClickable(false);
-			mInfoTab.setClickable(false);
-			mNewsTab.setClickable(false);
-			mExtraTab1.setClickable(false);
-			mExtraTab2.setClickable(false);
 		}
 	}
 
-	/**
-	 * 根据tab名称来做切换动作，显示相应tab并高亮
-	 * 
-	 * @param tabName
-	 */
-	private void changeTab(final String tabName) {
-		addStatistics(tabName);// 统计
-		if (TAG_NAME_NEWS.equals(tabName)) {
-			mNewsTab.setSelected(true);
-			mInfoTab.setSelected(false);
-			mExtraTab1.setSelected(false);
-			mExtraTab2.setSelected(false);
-		} else if (TAG_NAME_INFO.equals(tabName)) {
+	private int mCurrentTabIndex;
 
-			mExtraTab2.setSelected(false);
-			mExtraTab1.setSelected(false);
-			mNewsTab.setSelected(false);
-			mInfoTab.setSelected(true);
-		} else if (TAG_NAME_EXTRA1.equals(tabName)) {
-
-			mExtraTab1.setSelected(true);
-			mNewsTab.setSelected(false);
-			mInfoTab.setSelected(false);
-			mExtraTab2.setSelected(false);
-		} else if (TAG_NAME_EXTRA2.equals(tabName)) {
-			if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
-				startWebWithYYToken(Constants.GIFT_URL);
-				return;
-			} else {
-				mExtraTab1.setSelected(false);
-				mNewsTab.setSelected(false);
-				mInfoTab.setSelected(false);
-				mExtraTab2.setSelected(true);
-			}
+	private void changeTab(int index, FrameFragmentItem item) {
+		addchangeTabStatistics(index);
+		if (isFirstLaunch && !mPref.isChannelSelected()
+				&& item instanceof MainTab2) {
+			showWelcomeChannelView((MainTab) item);
 		}
-
-		changeTabFragment(tabName);
-
+		mCurrentTabIndex = index;
 		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_SPORTBRUSH)
-				&& !TAG_NAME_EXTRA1.equals(mCurrentTabName)
-				&& TAG_NAME_EXTRA1.equals(tabName)) {
+				&& mCurrentTabIndex != MainTab3SportBrush.INDEX
+				&& index != MainTab3SportBrush.INDEX) {
 			reloadSchedData();
 		}
-		ArticleDetailActivity.CURRENT_BUTTON_TAB = tabName;
-		mCurrentTabName = tabName;
-		mPref.setLastTabName(tabName);
-	}
 
-	/**
-	 * 根据tab名称来显示对应的fragment，如果fragment为空，会创建并添加
-	 * 
-	 * @param tabName
-	 *            tab的名称
-	 */
-	private void changeTabFragment(String tabName) {
-
-		FragmentTabTransaction tabTransaction = FragmentTabTransaction
-				.beginTransaction(this);
-		// 如果为空，则添加
-		if (mTab1 == null) {
-			mTab1 = MainTabFactory.getTab(0, this, mInfoTab, mActionBar, null);
-			tabTransaction.add(mTab1);
-		}
-		if (mTab2 == null) {
-			mTab2 = MainTabFactory.getTab(1, this, mNewsTab, mActionBar, null);
-			tabTransaction.add(mTab2);
-		}
-		if (mTab3 == null) {
-			mTab3 = MainTabFactory
-					.getTab(2, this, mExtraTab1, mActionBar, null);
-			tabTransaction.add(mTab3);
-		}
-		if (mTab4 == null) {
-			mTab4 = MainTabFactory
-					.getTab(3, this, mExtraTab2, mActionBar, null);
-			tabTransaction.add(mTab4);
-		}
-		String eventKey = "";
-		String param = "";
-		if (TAG_NAME_NEWS.equals(tabName)) {
-			eventKey = "into_news_tag";
-			param = mTab2.getTabName();
-			tabTransaction.show(mTab2).hide(mTab1).hide(mTab3).hide(mTab4);
-		} else if (TAG_NAME_INFO.equals(tabName)) {
-			eventKey = "into_info_tag";
-			param = mTab1.getTabName();
-			tabTransaction.show(mTab1).hide(mTab2).hide(mTab3).hide(mTab4);
-		} else if (TAG_NAME_EXTRA1.equals(tabName)) {
-			eventKey = "into_extra1_tag";
-			param = mTab3.getTabName();
-			tabTransaction.show(mTab3).hide(mTab1).hide(mTab2).hide(mTab4);
-		} else {
-			eventKey = "into_extra2_tag";
-			param = mTab4.getTabName();
-			tabTransaction.show(mTab4).hide(mTab1).hide(mTab2).hide(mTab3);
-		}
-		tabTransaction.commit();
-		StatsUtil.statsReport(this, eventKey, "change_tag_name", param);
-		StatsUtil.statsReportByHiido(eventKey, param);
-		StatsUtil.statsReportByMta(this, eventKey, param);
+		ArticleDetailActivity.CURRENT_BUTTON_TAB = index;
+		mCurrentTabIndex = index;
+		mPref.setLastTabIndex(index);
 	}
 
 	@Override
 	public void onResume() {
+		super.onResume();
 
+		mFragmentFrame.show(mCurrentTabIndex);
 		if (mPref.getInitRsp() == null) {
 			InitModel.sendUserInitReq(this, mUserInitRspListener, null, false);
 		}
 
-		changeTab(mCurrentTabName);
+		mPref.recordLaunchTime();
 		checkBehaviorFromLauncher();
-		// if (mShowWelcomeView) {
-		//
-		// setIntercept(mTab1, true);
-		// setIntercept(mTab2, true);
-		// setIntercept(mTab3, true);
-		//
-		// } else {
-		// setIntercept(mTab1, false);
-		// setIntercept(mTab2, false);
-		// setIntercept(mTab3, false);
-		// }
-		super.onResume();
-		startGameWelcomeAinamin();
+		checkWebviewPreload();
 	}
 
+	private void checkWebviewPreload() {
+		if (mPref.getWebViewCacheState() == false) {
+			View view = getLayoutInflater().inflate(
+					R.layout.webview_cache_layout, null);
+			final WebView webView = (WebView) view
+					.findViewById(R.id.cache_webview);
+			mHandler.postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					WebViewCacheUtil
+							.startPreWebView(MainActivity.this, webView,
+									WebViewCacheUtil.webView_url_one, mHandler);
+				}
+			}, WebViewCacheUtil.DELAY_MILLIS);
+			mHandler.postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					WebViewCacheUtil
+							.startPreWebView(MainActivity.this, webView,
+									WebViewCacheUtil.webView_url_two, mHandler);
+				}
+			}, WebViewCacheUtil.DELAY_MILLIS);
+
+		}
+	}
+
+	@SuppressWarnings("unused")
 	private void startGameWelcomeAinamin() {
 		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)
 				&& mShowWelcomeView && mIsShowWelcomeGuide) {
@@ -683,8 +486,12 @@ public class MainActivity extends BaseActivity {
 	 * @author yuelai.ye
 	 */
 	public void reloadSchedData() {
-		if (mTab3 != null && mTab3.getFragment() instanceof SchedFragment) {
-			((SchedFragment) mTab3.getFragment()).reloadSchedData();
+		for (FrameFragmentItem item : mFragmentFrame.getItemList()) {
+			Fragment fragment = item.getFragment();
+			if (fragment instanceof SchedFragment) {
+
+				((SchedFragment) fragment).reloadSchedData();
+			}
 		}
 	}
 
@@ -717,12 +524,6 @@ public class MainActivity extends BaseActivity {
 		};
 	};
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putString(KEY_CURRENT_TAB, mCurrentTabName);
-		super.onSaveInstanceState(outState);
-	}
-
 	public static final String ACTION_EXIT_APP = "exit_app";
 
 	@Override
@@ -732,9 +533,9 @@ public class MainActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onBackPressed() {
+	public void onBackPressedAfterFragment() {
 		if (mHandler.hasMessages(MSG_FAKE_EXIT_APP)) {
-			super.onBackPressed();
+			super.onBackPressedAfterFragment();
 		} else {
 			Toast.makeText(this, R.string.main_exit_app, DURATION_EXIT_APP)
 					.show();
@@ -764,10 +565,11 @@ public class MainActivity extends BaseActivity {
 	}
 
 	public void onEvent(SchedTabChangedEvent event) {
-		if (mTab3 != null) {
+
+		MainTab3SportBrush tab = (MainTab3SportBrush) getItemByClass(MainTab3SportBrush.class);
+		if (tab != null) {
 			int visibility = event.getVisibility();
-			((MainTab3SportBrush) mTab3)
-					.setRightImageViewVisibility(visibility);
+			tab.setRightImageViewVisibility(visibility);
 		}
 	}
 
@@ -809,13 +611,14 @@ public class MainActivity extends BaseActivity {
 			break;
 		}
 		case FragmentCallbackEvent.FRGMT_LIST_REFRESHING: {
-
-			setIndicatorRefreshing(true);
+			mActionBar.startLoading();
+			// setIndicatorRefreshing(true);
 			break;
 		}
 
 		case FragmentCallbackEvent.FRGMT_LIST_REFRESH_DONE: {
-			setIndicatorRefreshing(false);
+			mActionBar.stopLoading();
+			// setIndicatorRefreshing(false);
 			break;
 		}
 		case FragmentCallbackEvent.FRGMT_TAB_CHANGED: {
@@ -825,42 +628,18 @@ public class MainActivity extends BaseActivity {
 		}
 	}
 
-	public void onEvent(FirstButtomTabEvent event) {
-		if (event == null) {
-			return;
-		}
-		StatsUtil.statsReportAllData(this, event.getEventId(), event.getKey(),
-				event.getValue());
+	public void onEvent(MainTabEvent event) {
+		MainTabStatsUtil.statistics(this, event);
 	}
 
-	public void onEvent(SecondButtomTabEvent event) {
-		if (event == null) {
-			return;
-		}
-		StatsUtil.statsReportAllData(this, event.getEventId(), event.getKey(),
-				event.getValue());
-	}
-
-	public void onEvent(ThirdButtomTabEvent event) {
-		if (event == null) {
-			return;
-		}
-		StatsUtil.statsReportAllData(this, event.getEventId(), event.getKey(),
-				event.getValue());
-	}
-
-	private void setIntercept(MainFragmentTab tab, boolean intercept) {
-		if (tab != null) {
-			tab.setIntercept(intercept);
-		}
-	}
-
-	// private WelcomeView mWelcomeView;
 	private ViewPager mViewPager;
 	private ImagePagerAdapter mAdapter;
 
 	private void initViewPager() {
-		mWelcome_main = findViewById(R.id.welcome_pager_main);
+		ViewStub stub = (ViewStub) findViewById(R.id.welcome_pager_main);
+		stub.inflate();
+
+		mWelcome_main = findViewById(R.id.welcome_pager_main_layout);
 		mViewPager = (ViewPager) findViewById(R.id.welcome_pager);
 		mAdapter = new ImagePagerAdapter(this);
 		mWelcome_main.setVisibility(View.VISIBLE);
@@ -868,122 +647,39 @@ public class MainActivity extends BaseActivity {
 
 		final List<View> resList = new ArrayList<View>();
 
-		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
-			addGameWelcomeAnimation(mViewPager, resList);// 游戏刷子欢迎页
-		} else {
-			View layout1 = getLayoutInflater().inflate(
-					R.layout.welcome_pager_layout, null);
-			ImageView view1 = (ImageView) layout1
-					.findViewById(R.id.welcome_pager_img);
-			view1.setBackgroundResource(R.drawable.welcome_1);
-			resList.add(layout1);
+		View layout1 = getLayoutInflater().inflate(
+				R.layout.welcome_pager_layout, null);
+		ImageView view1 = (ImageView) layout1
+				.findViewById(R.id.welcome_pager_img);
+		view1.setBackgroundResource(R.drawable.welcome_1);
+		resList.add(layout1);
 
-			View layout2 = getLayoutInflater().inflate(
-					R.layout.welcome_pager_layout, null);
-			ImageView view2 = (ImageView) layout2
-					.findViewById(R.id.welcome_pager_img);
-			view2.setBackgroundResource(R.drawable.welcome_2);
-			resList.add(layout2);
-		}
-		/**
-		 * 汽车刷子有4个欢迎页面
-		 */
-		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_CARBRUSH)
-				|| Constants
-						.isFunctionEnabled(ECommAppType._Comm_APP_SPORTBRUSH)) {
-			View layout3 = getLayoutInflater().inflate(
-					R.layout.welcome_pager_layout, null);
-			ImageView view3 = (ImageView) layout3
-					.findViewById(R.id.welcome_pager_img);
-			view3.setBackgroundResource(R.drawable.welcome_3);
-			resList.add(layout3);
-			View layout4 = getLayoutInflater().inflate(
-					R.layout.welcome_pager_layout, null);
-			ImageView view4 = (ImageView) layout4
-					.findViewById(R.id.welcome_pager_img);
-			view4.setBackgroundResource(R.drawable.welcome_4);
-			resList.add(layout4);
-		}
+		View layout2 = getLayoutInflater().inflate(
+				R.layout.welcome_pager_layout, null);
+		ImageView view2 = (ImageView) layout2
+				.findViewById(R.id.welcome_pager_img);
+		view2.setBackgroundResource(R.drawable.welcome_2);
+		resList.add(layout2);
 
-		// mWelcomeView = new WelcomeView(this);
-		// mWelcomeView.setOnCompletedListener(new OnCompletedListener() {
-		// @Override
-		// public void onCompleted() {
-		// mPref.finishFirstLaunch();
-		// mPref.finishAppUpdate();
-		// // checkAndShowTips();
-		// if (mWelcomeChannelView != null) {
-		// mWelcomeChannelView.checkHint();
-		// }
-		// mViewPager.setVisibility(View.GONE);
-		// }
-		// });
+		View layout3 = getLayoutInflater().inflate(
+				R.layout.welcome_pager_layout, null);
+		ImageView view3 = (ImageView) layout3
+				.findViewById(R.id.welcome_pager_img);
+		view3.setBackgroundResource(R.drawable.welcome_3);
+		resList.add(layout3);
+
+		View layout4 = getLayoutInflater().inflate(
+				R.layout.welcome_pager_layout, null);
+		ImageView view4 = (ImageView) layout4
+				.findViewById(R.id.welcome_pager_img);
+		view4.setBackgroundResource(R.drawable.welcome_4);
+		resList.add(layout4);
 		resList.add(new View(this));
 		mAdapter.updateDatasource(resList);
 		mViewPager.setAdapter(mAdapter);
 		mViewPager.setOnPageChangeListener(new SimpleOnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
-				if (Constants
-						.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
-					if (position == 1 && !mWelcomeAnimationView) {
-						Animation createAnimRightToLeftIn = AnimationHelper
-								.createAnimRightToLeftIn(getBaseContext(),
-										new AnimationListener() {
-
-											@Override
-											public void onAnimationStart(
-													Animation animation) {
-											}
-
-											@Override
-											public void onAnimationRepeat(
-													Animation animation) {
-
-											}
-
-											@Override
-											public void onAnimationEnd(
-													Animation animation) {
-												imageView3
-														.startAnimation(AnimationHelper
-																.createAnimRightToLeftSecondLongIn(
-																		getBaseContext(),
-																		null));
-
-												imageView3
-														.setVisibility(View.VISIBLE);
-											}
-										});
-						imageView1.startAnimation(createAnimRightToLeftIn);
-						imageView1.setVisibility(View.VISIBLE);
-						mWelcomeAnimationView = true;
-					} else if (position == 2) {
-						if (isFirstLaunch) {
-							showWelcomeChannelView();
-						}
-						if (imageViewOne != null
-								&& imageViewOne.getDrawingCache() != null) {
-							imageViewOne.getDrawingCache().recycle();
-						}
-						if (imageViewTwo != null
-								&& imageViewTwo.getDrawingCache() != null) {
-							imageViewTwo.getDrawingCache().recycle();
-						}
-						if (imageViewThree != null
-								&& imageViewThree.getDrawingCache() != null) {
-							imageViewThree.getDrawingCache().recycle();
-						}
-						if (imageView1 != null
-								&& imageView1.getDrawingCache() != null) {
-							imageView1.getDrawingCache().recycle();
-						}
-						if (imageView3 != null
-								&& imageView3.getDrawingCache() != null) {
-							imageView3.getDrawingCache().recycle();
-						}
-					}
-				}
 
 				if (position == resList.size() - 1) {
 					mViewPager.postDelayed(new Runnable() {
@@ -992,19 +688,19 @@ public class MainActivity extends BaseActivity {
 							mPref.finishFirstLaunch();
 							mPref.finishAppUpdate();
 							// checkAndShowTips();
+							mSignUtil.requestSignDaily();
 							if (mWelcomeChannelView != null) {
 								mWelcomeChannelView.checkHint();
 							} else {
-								changeTab(mCurrentTabName);
-								// mFloatEvent.setVisibility(View.VISIBLE);
 								mShowWelcomeView = false;
-								// setIntercept(mTab1, false);
-								// setIntercept(mTab2, false);
-								// setIntercept(mTab3, false);
-								// checkHint();
 							}
-							mWelcome_main.setVisibility(View.GONE);
-							mViewPager.setVisibility(View.GONE);
+
+							ViewGroup parent = (ViewGroup) mWelcome_main
+									.getParent();
+
+							parent.removeView(mWelcome_main);
+							// mWelcome_main.setVisibility(View.GONE);
+							// mViewPager.setVisibility(View.GONE);
 							mViewPager.setAdapter(null);
 							mAdapter.updateDatasource(null);
 							mViewPager = null;
@@ -1019,8 +715,19 @@ public class MainActivity extends BaseActivity {
 
 	private WelcomeChannelView mWelcomeChannelView;
 
-	private void showWelcomeChannelView() {
-		mWelcomeChannelView = (WelcomeChannelView) findViewById(R.id.welcome_channel_view);
+	/**
+	 * 显示欢迎页选频道的列表
+	 * 
+	 * @param item
+	 *            在该item叫起showWelcomeChannelView,点击后会刷新该item
+	 */
+	private void showWelcomeChannelView(final MainTab item) {
+
+		ViewStub stub = (ViewStub) findViewById(R.id.welcome_channel_view);
+		stub.inflate();
+
+		mPref.setChannelSelected(true);
+		mWelcomeChannelView = (WelcomeChannelView) findViewById(R.id.welcome_channel_view_object);
 
 		List<WelcomeChannel> welcomeChannelList = Util.getWelcomeChannelList();
 		mWelcomeChannelView.setChannelList(welcomeChannelList);
@@ -1029,18 +736,13 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				changeTab(mCurrentTabName);
-				mSignUtil.requestSignDaily();
-				mWelcomeChannelView.setVisibility(View.GONE);
+				ViewGroup parent = (ViewGroup) mWelcomeChannelView.getParent();
+				parent.removeView(mWelcomeChannelView);
 
-				if (mTab2 != null) {
-					mTab2.refresh();
+				if (item != null) {
+					item.refresh();
 				}
 				mShowWelcomeView = false;
-				// setIntercept(mTab1, false);
-				// setIntercept(mTab2, false);
-				// setIntercept(mTab3, false);
-				// checkHint();
 			}
 		});
 	}
@@ -1088,47 +790,51 @@ public class MainActivity extends BaseActivity {
 		mIsShowWelcomeGuide = true;// 展示欢迎引导页
 	}
 
-	private TextView mHintView;
-	private View mHintLayout;
-	private TipsHelper mTipsHelper;
-
 	public void checkHint() {
 
 		if (mPref.getCurrentGuideStep() == Preference.STEP_0) {
-			Util.showHelpTips(MainActivity.this, mExtraTab2, null);
+
+			MainTab item = (MainTab) getItemByClass(MainTab5Gamenews.class);
+			Util.showMainHelpTips(MainActivity.this, item, null);
 		}
-		// if (mTipsHelper == null) {
-		// mHintView = (TextView) findViewById(R.id.welcome_main_hint);
-		// mHintLayout = findViewById(R.id.welcome_hint_layout);
-		// mTipsHelper = new TipsHelper(this, mHintLayout, mHintView);
-		// }
-		// int step = Preference.getInstance().getCurrentGuideStep();
-		// if (step < Preference.STEP_2) { // 如果用户在前两步时退出，则从第三步开始
-		// step = Preference.STEP_2;
-		// }
-		// if (Preference.STEP_2 == step) {
-		// mTipsHelper.checkHint(step, true);
-		// }
 	}
 
-	// @Override
-	// public boolean dispatchTouchEvent(MotionEvent ev) {
-	// boolean ignored = mTab1 == null ? true : mTab1.dispatchTouchEvent(ev,
-	// FirstButtomTabEvent.HEAD_INFO);
-	// if (ignored) {
-	// ignored = mTab2 == null ? true : mTab2.dispatchTouchEvent(ev,
-	// SecondButtomTabEvent.ORDER_INFO);
-	// if (ignored) {
-	// ignored = mTab3 == null ? true : mTab3.dispatchTouchEvent(ev,
-	// ThirdButtomTabEvent.THIRD_TAB_INFO);
-	// }
-	// }
-	//
-	// if (ignored) {
-	// return super.dispatchTouchEvent(ev);
-	// } else {
-	// return false;
-	// }
-	// }
+	private List<FrameFragmentItem> getFragmentItemList() {
+		if (mFragmentFrame == null) {
+			return null;
+		}
+		return mFragmentFrame.getItemList();
+	}
+
+	private FrameFragmentItem getItemByClass(Class<?> clazz) {
+		List<FrameFragmentItem> itemList = getFragmentItemList();
+		if (itemList == null) {
+			return null;
+		}
+		for (FrameFragmentItem item : itemList) {
+			if (ClassUtils.isInstanceOf(item, clazz)) {
+				return item;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		// 登录完成开始发表话题
+		if (requestCode == Constants.REQUEST_LOGIN_REDIRECT
+				&& resultCode == RESULT_OK) {
+			TagListActivity.startTagListActivity(this);
+		} else {
+			Fragment fs = getSupportFragmentManager().findFragmentByTag(
+					ArticleSocialDialog.TAG_SOCIAL_DIALOG);
+			if (fs != null && fs.isAdded() && fs instanceof ArticleSocialDialog) {
+				((ArticleSocialDialog) fs).onActivityResult(requestCode,
+						resultCode, data);
+			}
+		}
+	}
 
 }

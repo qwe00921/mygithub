@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.duowan.gamenews.ArticleInfo;
 import com.duowan.gamenews.GetUnionInfoRsp;
-import com.duowan.gamenews.GetUnionInfoRsp;
 
 public class GetUnionInfoRspLocal extends
 		GetArticleListRspLocal<GetUnionInfoRsp> {

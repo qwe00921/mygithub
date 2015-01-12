@@ -1421,6 +1421,7 @@ public class PLA_ListView extends PLA_AbsListView {
      */
     @Override
     public void setSelection(int position) {
+    	setSelectionFromTop(position, 0);
     }
 
     public void setSelectionFromTop(int position, int y) {

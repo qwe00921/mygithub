@@ -21,11 +21,28 @@ public class CustomViewPager extends ViewPager {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		boolean isIntercept = false;
 		if (isChildIntercept(ev)) {
 			return false;
 		}
+		try {
+			isIntercept = super.onInterceptTouchEvent(ev);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		return super.onInterceptTouchEvent(ev);
+		return isIntercept;
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		boolean ret = false;
+		try {
+			ret = super.onTouchEvent(ev);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 	private boolean isChildIntercept(MotionEvent ev) {
@@ -33,12 +50,12 @@ public class CustomViewPager extends ViewPager {
 
 		return isIntercept(ev, view);
 	}
-	
+
 	@Override
 	public CustomPagerAdapter getAdapter() {
-		return (CustomPagerAdapter)super.getAdapter();
+		return (CustomPagerAdapter) super.getAdapter();
 	}
-	
+
 	private boolean isIntercept(MotionEvent ev, View view) {
 		boolean isIntercept = false;
 

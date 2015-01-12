@@ -122,7 +122,7 @@ public class UpgradeService extends Service {
 					.get(newItem.getUrl());
 			byte[] md5 = FileUtil.hexToByteArray(newItem.getMd5());
 			File currentFile = new File(currItemTpye, name);
-			byte[] currentmd5 = FileUtil.md5(FileUtil.readFile(currentFile));
+			byte[] currentmd5 = FileUtil.md5Byte2Byte(FileUtil.readFile(currentFile));
 			if (currItem != null
 					&& currItem.getVersion().equals(newItem.getVersion())
 					&& Arrays.equals(md5, currentmd5)) {
@@ -140,7 +140,7 @@ public class UpgradeService extends Service {
 			FileUtil.download(newItem.getUrl(), newItemFile);
 
 			// check md5
-			byte[] fileMd5 = FileUtil.md5(FileUtil.readFile(newItemFile));
+			byte[] fileMd5 = FileUtil.md5Byte2Byte(FileUtil.readFile(newItemFile));
 			if (!Arrays.equals(md5, fileMd5)) {
 				state = "fail";
 				saveState(

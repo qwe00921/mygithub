@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.duowan.android.base.model.BaseModel.ResponseListener;
-import com.yy.android.sportbrush.R;
 import com.yy.android.gamenews.model.ReportModel;
 import com.yy.android.gamenews.util.StatsUtil;
 import com.yy.android.gamenews.util.ToastUtil;
+import com.yy.android.sportbrush.R;
 
 public class ArticleReportDialog extends DialogFragment implements
 		OnClickListener {

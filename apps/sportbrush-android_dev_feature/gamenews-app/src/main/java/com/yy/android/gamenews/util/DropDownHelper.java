@@ -61,25 +61,45 @@ public class DropDownHelper {
 	}
 
 	public static void showDropDownList(Context context, View anchor,
-			final String[] textArray, final Object[] resArray, int selectIndex,
-			OnDropDownClickListener listener) {
-		if (textArray == null) {
-			return;
-		}
+			final String[] textArray, final Object[] resArray,
+			int[] selectIndexes, OnDropDownClickListener listener) {
 
 		ArrayList<DropDownItem> itemList = new ArrayList<DropDownItem>();
 		for (int i = 0; i < textArray.length; i++) {
 			DropDownItem item = new DropDownItem();
-			item.icon = resArray[i];
+			if (resArray != null) {
+				item.icon = resArray[i];
+			}
 			item.text = textArray[i];
-			if (selectIndex == i) {
-				item.selected = true;
-			} else {
-				item.selected = false;
+
+			if (selectIndexes != null) {
+				for (int index : selectIndexes) {
+					if (i == index) {
+
+						item.drawableSelected = true;
+						item.textSelected = true;
+					}
+				}
 			}
 			itemList.add(item);
 		}
 
+		showDropDownList(context, anchor, itemList, listener);
+	}
+
+	public static void showDropDownList(Context context, View anchor,
+			final String[] textArray, final Object[] resArray, int selectIndex,
+			OnDropDownClickListener listener) {
+		showDropDownList(context, anchor, textArray, resArray,
+				new int[] { selectIndex }, listener);
+	}
+
+	public static void showDropDownList(Context context, View anchor,
+			ArrayList<DropDownItem> itemList, OnDropDownClickListener listener) {
+
+		if (itemList == null) {
+			return;
+		}
 		ImageAdapter<DropDownItem> adapter = new ImageAdapter<DropDownItem>(
 				context) {
 
@@ -104,6 +124,8 @@ public class DropDownHelper {
 							.findViewById(R.id.dropdown_list_item_img);
 					holder.text = (TextView) convertView
 							.findViewById(R.id.dropdown_list_item_text);
+					holder.divider = convertView
+							.findViewById(R.id.dropdown_list_item_divider);
 					convertView.setTag(holder);
 				} else {
 					holder = (ViewHolder) convertView.getTag();
@@ -115,22 +137,35 @@ public class DropDownHelper {
 					Log.d("", "[getView] convertView = " + convertView
 							+ ", position = " + position + ", icon = "
 							+ item.icon);
+
 					holder.text.setText(item.text);
 					Object img = item.icon;
-					if (img instanceof Integer) {
-						holder.image.setImageResource((Integer) img);
-					} else if (img instanceof String) {
-						displayImage(String.valueOf(img), holder.image);
+					if (img == null) {
+						holder.image.setVisibility(View.GONE);
+					} else {
+						if (img instanceof Integer) {
+							holder.image.setImageResource((Integer) img);
+						} else if (img instanceof String) {
+							displayImage(String.valueOf(img), holder.image);
+						}
 					}
 
-					if (item.selected) {
-						holder.text.setSelected(true);
+					if (item.drawableSelected) {
 						holder.image.setSelected(true);
 					} else {
-
-						holder.text.setSelected(false);
 						holder.image.setSelected(false);
 					}
+					if (item.textSelected) {
+						holder.text.setSelected(true);
+					} else {
+						holder.text.setSelected(false);
+					}
+				}
+
+				if (position == getCount() - 1) {
+					holder.divider.setVisibility(View.GONE);
+				} else {
+					holder.divider.setVisibility(View.VISIBLE);
 				}
 				return convertView;
 			}
@@ -143,12 +178,25 @@ public class DropDownHelper {
 	private static class ViewHolder {
 		ImageView image;
 		TextView text;
+		View divider;
 	}
 
-	private static class DropDownItem {
+	public static class DropDownItem {
 		String text;
 		Object icon;
-		boolean selected;
+		boolean drawableSelected;
+		boolean textSelected;
+
+		public DropDownItem() {
+			this("", 0, false, false);
+		}
+
+		public DropDownItem(String text, Object icon, boolean drawableSelected,
+				boolean textSelected) {
+			this.text = text;
+			this.icon = icon;
+			this.drawableSelected = drawableSelected;
+		}
 	}
 
 	public interface OnDropDownClickListener {

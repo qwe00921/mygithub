@@ -13,10 +13,12 @@ import com.duowan.gamenews.GetUnionListRsp;
 import com.duowan.gamenews.RefreshType;
 import com.duowan.gamenews.UnionInfo;
 import com.duowan.gamenews.UnionType;
+import com.yy.android.gamenews.event.MainTabEvent;
 import com.yy.android.gamenews.event.SupportUnionEvent;
 import com.yy.android.gamenews.model.UnionModel;
 import com.yy.android.gamenews.ui.BaseListFragment;
 import com.yy.android.gamenews.ui.common.ImageAdapter;
+import com.yy.android.gamenews.util.MainTabStatsUtil;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.Util;
 import com.yy.android.gamenews.util.thread.BackgroundTask;
@@ -121,6 +123,15 @@ public class UnionListFragment extends BaseListFragment<UnionInfo> {
 			int position, long id) {
 		UnionInfo unionInfo = (UnionInfo) adapter.getItem(position);
 		UnionInfoActivity.startActivity(getActivity(), unionInfo);
+		
+		String key = null;
+		if(unionType == UnionType._UNION_TYPE_TOP){
+			key = MainTabEvent.CLICK_TOP_UNION;
+		}else{
+			key = MainTabEvent.CLICK_OTHER_UNION;
+		}
+		MainTabStatsUtil.statistics(mContext,
+				MainTabEvent.TAB_GAMERACE_INFO, key, unionInfo.getName());
 		super.onItemClick(parent, adapter, view, position, id);
 	}
 
@@ -146,17 +157,18 @@ public class UnionListFragment extends BaseListFragment<UnionInfo> {
 						mRsp = param;
 						if (param != null && param.getUnionList() != null 
 								&& !param.getUnionList().isEmpty()) {
-							requestFinish(refreType, param.getUnionList(), param.hasMore, true);
+							requestFinish(refreType, param.getUnionList(), param.hasMore, true, false);
 							if(refreType == RefreshType._REFRESH_TYPE_REFRESH){
 								cacheUnionList(param);
 							}
 						}else{
-							ArrayList<UnionInfo> dataSource = unionListAdapter.getDataSource();
-							if (dataSource != null && dataSource.size() > 0) {
-								showView(VIEW_TYPE_DATA);
-							} else {
-								showView(VIEW_TYPE_EMPTY);
-							}
+							requestFinish(refreType, null,false, false, false);
+//							ArrayList<UnionInfo> dataSource = unionListAdapter.getDataSource();
+//							if (dataSource != null && dataSource.size() > 0) {
+//								showView(VIEW_TYPE_DATA);
+//							} else {
+//								showView(VIEW_TYPE_EMPTY);
+//							}
 						}
 					}
 
@@ -164,16 +176,16 @@ public class UnionListFragment extends BaseListFragment<UnionInfo> {
 					public void onError(Exception e) {
 						super.onError(e);
 						requestFinish(refreType,
-								null, false, true);
+								null, false, true, false);
 					}
 
-				}, unionType, attachInfo);
+				}, unionType, attachInfo, refreType);
 	}
 	
 	@Override
 	protected void requestFinish(int refresh, ArrayList<UnionInfo> sourceList, 
-			boolean hasMore, boolean replace) {
-		super.requestFinish(refresh, sourceList, hasMore, replace);
+			boolean hasMore, boolean replace, boolean error) {
+		super.requestFinish(refresh, sourceList, hasMore, replace, error);
 		if (sourceList != null && sourceList.size() > 0) {
 			showView(VIEW_TYPE_DATA);
 		} else {
@@ -238,7 +250,7 @@ public class UnionListFragment extends BaseListFragment<UnionInfo> {
 			}
 
 			requestFinish(RefreshType._REFRESH_TYPE_REFRESH, mRsp.getUnionList(),
-					false, true);
+					false, true, false);
 
 			super.onPostExecute(needReload);
 		}

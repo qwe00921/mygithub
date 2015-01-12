@@ -96,8 +96,7 @@ public class RoundImageView extends ImageView {
 		this.measure(0, 0);
 		if (drawable.getClass() == NinePatchDrawable.class)
 			return;
-		Bitmap b = ((BitmapDrawable) drawable).getBitmap();
-		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+
 		if (defaultWidth == 0) {
 			defaultWidth = getWidth();
 
@@ -143,6 +142,9 @@ public class RoundImageView extends ImageView {
 			super.onDraw(canvas);
 			return;
 		}
+		Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+	
 		Bitmap roundBitmap = getCroppedRoundBitmap(bitmap, radiusOutSide);
 		canvas.drawBitmap(roundBitmap, defaultWidth / 2 - radiusOutSide,
 				defaultHeight / 2 - radiusOutSide, null);
@@ -185,7 +187,6 @@ public class RoundImageView extends ImageView {
 				&& diameter != 0) {
 			scaledSrcBmp = Bitmap.createScaledBitmap(squareBitmap, diameter,
 					diameter, true);
-
 		} else {
 			scaledSrcBmp = squareBitmap;
 		}

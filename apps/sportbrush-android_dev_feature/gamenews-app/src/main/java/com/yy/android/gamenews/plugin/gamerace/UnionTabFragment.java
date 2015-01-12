@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+import com.yy.android.gamenews.event.MainTabEvent;
 import com.yy.android.gamenews.ui.BaseFragment;
+import com.yy.android.gamenews.util.MainTabStatsUtil;
 import com.yy.android.sportbrush.R;
 
 public class UnionTabFragment extends BaseFragment implements OnClickListener{
@@ -80,7 +82,9 @@ public class UnionTabFragment extends BaseFragment implements OnClickListener{
 		if(currentTabIndex == index){
 			return;
 		}
-		
+		String eventId = MainTabEvent.TAB_GAMERACE_INFO;
+		String key = null;
+		String value = null;
 		currentTabIndex = index;
 		fragmentTransaction = getChildFragmentManager().beginTransaction();
 		if(topUnionListFragment == null){
@@ -96,11 +100,17 @@ public class UnionTabFragment extends BaseFragment implements OnClickListener{
 			fragmentTransaction.show(topUnionListFragment).hide(otherUnionListFragment);
 			topUnionView.setSelected(true);
 			otherUnionView.setSelected(false);
+			key = MainTabEvent.INTO_TOP_UNION_TAB;
+			value = MainTabEvent.INTO_TOP_UNION_TAB_NAME;
 		}else{
 			fragmentTransaction.show(otherUnionListFragment).hide(topUnionListFragment);
 			otherUnionView.setSelected(true);
 			topUnionView.setSelected(false);
+			key = MainTabEvent.INTO_OTHER_UNION_TAB;
+			value = MainTabEvent.INTO_OTHER_UNION_TAB_NAME;
 		}
 		fragmentTransaction.commit();
+		
+		MainTabStatsUtil.statistics(getActivity(), eventId, key, value);
 	}
 }

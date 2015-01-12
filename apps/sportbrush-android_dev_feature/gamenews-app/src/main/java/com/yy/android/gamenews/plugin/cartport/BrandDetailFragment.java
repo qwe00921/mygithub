@@ -103,7 +103,7 @@ public class BrandDetailFragment extends BaseListFragment<CarCateListItembject> 
 					public void onResponse(GetCarListRsp arg0) {
 						if (arg0 == null || arg0.getCarList() == null) {
 							requestFinish(RefreshType._REFRESH_TYPE_REFRESH,
-									null, false, false);
+									null, false, false, false);
 							return;
 						}
 						ArrayList<CarCateListItembject> carCatelist = new ArrayList<CarCateListItembject>();
@@ -123,14 +123,14 @@ public class BrandDetailFragment extends BaseListFragment<CarCateListItembject> 
 							}
 						}
 						requestFinish(RefreshType._REFRESH_TYPE_REFRESH,
-								carCatelist, false, false);
+								carCatelist, false, false, false);
 					}
 
 					@Override
 					public void onError(Exception e) {
 						super.onError(e);
 						requestFinish(RefreshType._REFRESH_TYPE_REFRESH, null,
-								false, false);
+								false, false, false);
 					}
 				}, COUNT, "", mBrandId);
 
@@ -139,8 +139,8 @@ public class BrandDetailFragment extends BaseListFragment<CarCateListItembject> 
 	@Override
 	protected void requestFinish(int refresh,
 			ArrayList<CarCateListItembject> data, boolean hasMore,
-			boolean replace) {
-		super.requestFinish(refresh, data, hasMore, replace);
+			boolean replace, boolean error) {
+		super.requestFinish(refresh, data, hasMore, replace, error);
 		if (data != null) {
 			showView(VIEW_TYPE_DATA);
 		} else {

@@ -14,14 +14,17 @@
         android:id="@+id/head"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#ff000000"
-        android:orientation="vertical" >
+        android:background="#e6000000"
+        android:orientation="vertical"
+        android:padding="5dp" >
 
         <TextView
             android:id="@+id/page_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:gravity="center"
+            android:singleLine="true"
             android:text="@string/alarm_message_single"
             android:textColor="#ffffff"
             android:textSize="18sp" />
@@ -31,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/page_title"
-            android:layout_marginTop="8dip"
+            android:layout_marginTop="4dip"
             android:gravity="center"
             android:text="4/6"
             android:textColor="#ffffff"
@@ -43,8 +46,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="9.33dip"
-        android:gravity="bottom" >
+        android:background="@drawable/article_banner_bg"
+        android:gravity="bottom"
+        android:padding="9.33dip" >
 
         <ImageView
             android:id="@+id/back"

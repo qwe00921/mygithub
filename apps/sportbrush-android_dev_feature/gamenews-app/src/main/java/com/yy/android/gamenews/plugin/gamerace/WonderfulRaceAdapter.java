@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.duowan.gamenews.RaceTopicInfo;
 import com.duowan.gamenews.RaceTopicType;
+import com.yy.android.gamenews.event.MainTabEvent;
 import com.yy.android.gamenews.ui.common.ImageAdapter;
+import com.yy.android.gamenews.util.MainTabStatsUtil;
 import com.yy.android.sportbrush.R;
 
 public class WonderfulRaceAdapter extends ImageAdapter<RaceTopicInfo> {
@@ -60,7 +62,9 @@ public class WonderfulRaceAdapter extends ImageAdapter<RaceTopicInfo> {
 					// 跳转个人赛
 					PersonalRaceTopicActivity.startActivity(mContext, item.getId());
 				}
-
+				MainTabStatsUtil.statistics(mContext,
+						MainTabEvent.TAB_GAMERACE_INFO,
+						MainTabEvent.CLICK_RACE_TOPIC, item.getName());
 			}
 		});
 		return convertView;

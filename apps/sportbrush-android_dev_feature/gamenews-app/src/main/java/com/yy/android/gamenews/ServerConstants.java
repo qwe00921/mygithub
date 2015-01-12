@@ -19,5 +19,11 @@ public class ServerConstants {
 	public static interface MESSAGE {
 		public static final String KEY = "msg";
 	}
+	
+	public static interface SERVANT_NAME {
+		public static final String GAME = "gamenews";
+		public static final String SPORT = "sportnews";
+		public static final String AUTO = "autonews";
+	}
 
 }

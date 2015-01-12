@@ -60,7 +60,12 @@ public class ArticleSocialDialog extends DialogFragment implements
 
 	public static final String SHARED_FROM_HD = "from_huodong";
 	public static final String SHARED_FROM_ARTICLE = "from_article";
+	public static final String SHARED_FROM_LIST = "from_list";
 	public static final String SHARED_FROM_MYHOME = "from_myhome";
+	
+	public static final String TAG_SOCIAL_DIALOG = "article_social_dialog";
+	public static final String TAG_REPORT_DIALOG = "article_report_dialog";
+	
 	private String mSharedFrom;
 	private long mArticleId;
 	private String mSharedUrl;
@@ -169,11 +174,14 @@ public class ArticleSocialDialog extends DialogFragment implements
 					if (from.equals(SHARED_FROM_ARTICLE)) {
 						File cache = ImageLoader.getInstance().getDiscCache()
 								.get(image);
-						if (image == null || TextUtils.isEmpty(image)) {
-							dismiss();
-							return;
+						if (image == null || TextUtils.isEmpty(image)
+								|| cache == null || !cache.exists()) {
+							mSinaSharedUMImage = new UMImage(getActivity(),
+									R.drawable.ic_launcher);
+						} else {
+							mSinaSharedUMImage = new UMImage(getActivity(),
+									cache);
 						}
-						mSinaSharedUMImage = new UMImage(getActivity(), cache);
 					} else {
 						if (image == null || TextUtils.isEmpty(image)) {
 							dismiss();
@@ -437,6 +445,7 @@ public class ArticleSocialDialog extends DialogFragment implements
 			StatsUtil.statsReportByHiido("stats_share", "share_type:friend");
 			break;
 		}
+		dismiss();
 	}
 
 	private void postShare(SHARE_MEDIA shareMedia) {

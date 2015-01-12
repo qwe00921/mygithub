@@ -8,21 +8,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
 
 import com.duowan.Comm.ECommAppType;
+import com.duowan.gamenews.ArticleCategory;
 import com.duowan.gamenews.Channel;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.event.CheckExpireEvent;
 import com.yy.android.gamenews.event.ClickHotChannelEvent;
-import com.yy.android.gamenews.event.FirstButtomTabEvent;
 import com.yy.android.gamenews.event.FragmentCallbackEvent;
+import com.yy.android.gamenews.event.MainTabEvent;
 import com.yy.android.gamenews.event.RefreshEvent;
-import com.yy.android.gamenews.event.SecondButtomTabEvent;
 import com.yy.android.gamenews.event.SubscribeEvent;
+import com.yy.android.gamenews.util.MainTabStatsUtil;
 import com.yy.android.gamenews.util.PushUtil;
 import com.yy.android.gamenews.util.StatsUtil;
 import com.yy.android.gamenews.util.Util;
@@ -61,7 +60,7 @@ public class NewsFragment extends ViewPagerFragment {
 
 	@Override
 	public void onResume() {
-		if (mEvent != null) {
+		if (mEvent != null && mType == TYPE_MY_FAVOR) {
 			boolean hasChanged = mEvent.isSubscribeChanged;
 			boolean isMulti = mEvent.isSubscribeMultiple;
 			if (hasChanged) {
@@ -72,12 +71,12 @@ public class NewsFragment extends ViewPagerFragment {
 					showTab(0);
 					refreshCurrent();
 				} else {
-					showTab(mTitles.getChildCount() - 1);
+					showTab(mTitles.getTitleCount() - 1);
 				}
 
 			}
-			mEvent = null;
 		}
+		mEvent = null;
 
 		if (mNeedCheckExpireRefresh) {
 			doCheckExpireCurrent();
@@ -104,20 +103,40 @@ public class NewsFragment extends ViewPagerFragment {
 
 		List<Channel> channelList = new ArrayList<Channel>();
 		List<Channel> savedList = mPref.getTopChannelList();
+
+		boolean needAdd = true;
 		if (savedList != null) {
-			channelList.addAll(savedList);
+			for (Channel channel : savedList) {
+				if (Constants.RECOMMD_ID == channel.getId()) {
+					needAdd = false;
+				}
+				List<ArticleCategory> categoryList = channel.getCategoryList();
+
+				if (categoryList != null) {
+					for (ArticleCategory category : categoryList) {
+						Channel subChannel = (Channel) channel.clone();
+						subChannel.categoryList = new ArrayList<ArticleCategory>();
+						subChannel.categoryList.add(category);
+						subChannel.setName(category.getName());
+
+						channelList.add(subChannel);
+					}
+				} else {
+					channelList.add(channel);
+				}
+			}
 		}
 
-		// if (channelList.size() == 0) {
-		Channel recomd = new Channel();
-		recomd.setId(Constants.RECOMMD_ID);
-		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_SPORTBRUSH)) {
-			recomd.setName(Constants.TITLE_LEADERBOARD);
-		} else {
-			recomd.setName(Constants.TITLE_RECMD);
+		if (needAdd) {
+			Channel recomd = new Channel();
+			recomd.setId(Constants.RECOMMD_ID);
+			if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_SPORTBRUSH)) {
+				recomd.setName(Constants.TITLE_LEADERBOARD);
+			} else {
+				recomd.setName(Constants.TITLE_RECMD);
+			}
+			channelList.add(0, recomd);
 		}
-		channelList.add(0, recomd);
-		// }
 		return channelList;
 	}
 
@@ -167,8 +186,14 @@ public class NewsFragment extends ViewPagerFragment {
 					cacheSize = Constants.CACH_SIZE_HOME_HOT_LIST;
 				}
 			}
+
+			List<ArticleCategory> categoryList = channel.getCategoryList();
+			ArticleCategory category = null;
+			if (categoryList != null && categoryList.size() > 0) {
+				category = categoryList.get(0);
+			}
 			ChannelArticleInfoFragment fragment = ChannelArticleInfoFragment
-					.newInstance(channel, cacheSize, mType, null);
+					.newInstance(channel, cacheSize, mType, category);
 
 			return fragment;
 		}
@@ -257,7 +282,7 @@ public class NewsFragment extends ViewPagerFragment {
 	@Override
 	protected void onViewPageSelected(int index) {
 		new Handler().post(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				FragmentCallbackEvent event = new FragmentCallbackEvent();
@@ -268,29 +293,20 @@ public class NewsFragment extends ViewPagerFragment {
 				doCheckExpireCurrent();
 
 				String title = getCurrentChannel().getName();
-				// String eventKey = mType == TYPE_HEADLINES ? "view_info_channel"
+				// String eventKey = mType == TYPE_HEADLINES ?
+				// "view_info_channel"
 				// : "view_favor_channel";
-				// StatsUtil.statsReport(getActivity(), eventKey, "channel_name",
+				// StatsUtil.statsReport(getActivity(), eventKey,
+				// "channel_name",
 				// title);
 				// StatsUtil.statsReportByHiido(eventKey, title);
 				// StatsUtil.statsReportByMta(getActivity(), eventKey, title);
 
-				if (mType == TYPE_HEADLINES) {
-					FirstButtomTabEvent firstevent = new FirstButtomTabEvent();
-					firstevent.setType(FirstButtomTabEvent._ONCLICK_GATE_HEAD_TOP);
-					firstevent.setEventId(FirstButtomTabEvent.HEAD_INFO);
-					firstevent.setKey(FirstButtomTabEvent.ONCLICK_GATE_HEAD_TOP);
-					firstevent.setValue(title);
-					EventBus.getDefault().post(firstevent);
-				} else if (mType == TYPE_MY_FAVOR) {
-					SecondButtomTabEvent firstevent = new SecondButtomTabEvent();
-					firstevent.setType(SecondButtomTabEvent._ONCLICK_ARTICLE_TOP);
-					firstevent.setEventId(SecondButtomTabEvent.ORDER_INFO);
-					firstevent.setKey(SecondButtomTabEvent.ONCLICK_ARTICLE_TOP);
-					firstevent.setValue(title);
-					EventBus.getDefault().post(firstevent);
-				}
-
+				String eventId = (mType == TYPE_HEADLINES ? MainTabEvent.TAB_HEAD_INFO
+						: MainTabEvent.TAB_ORDER_INFO);
+				String key = (mType == TYPE_HEADLINES ? MainTabEvent.ONCLICK_GATE_HEAD_TOP
+						: MainTabEvent.ONCLICK_ARTICLE_TOP);
+				MainTabStatsUtil.postStatisEvent(eventId, key, title);
 				ArticleDetailActivity.CURRENT_ARTICLE_TAB = title;
 			}
 		});

@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.duowan.gamenews.UnionInfo;
+import com.yy.android.gamenews.event.MainTabEvent;
 import com.yy.android.gamenews.ui.BaseActivity;
 import com.yy.android.gamenews.ui.view.ActionBar;
+import com.yy.android.gamenews.util.MainTabStatsUtil;
 import com.yy.android.sportbrush.R;
 
 public class UnionInfoActivity extends BaseActivity {
@@ -22,6 +24,9 @@ public class UnionInfoActivity extends BaseActivity {
 		Intent intent = new Intent(context, UnionInfoActivity.class);
 		intent.putExtra(UNION, unionInfo);
 		context.startActivity(intent);
+		
+		MainTabStatsUtil.statistics(context,
+				MainTabEvent.INTO_UNION_DETAIL, "union", unionInfo.getName());
 	}
 
 	public void onCreate(Bundle savedInstanceState) {

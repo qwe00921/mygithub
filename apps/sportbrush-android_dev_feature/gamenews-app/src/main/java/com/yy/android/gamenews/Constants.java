@@ -9,6 +9,9 @@ public final class Constants {
 	// APP 版本
 	public static final String APP_VER_NAME_1_2_0 = "1.2.0";
 	public static final String APP_VER_NAME_1_2_0_SSHOT = "1.2.0-SNAPSHOT";
+	public static final String APP_VER_NAME_1_7_0 = "1.7.0";
+	public static final String APP_VER_NAME_1_7_0_SSHOT = "1.7.0-SNAPSHOT";
+
 	// APP KEY
 	public static final String WEIBO_APP_KEY = "2872789820";
 	public static final String QQ_APP_ID = "1101502802";
@@ -16,6 +19,8 @@ public final class Constants {
 	public static final String WEIXIN_APP_KEY = "wxcd4e8e4f32e4c1e2";
 
 	public static final String YY_APP_ID = "5173";
+
+	public static final String URL_DUOWAN = "shua.duowan.com";
 	// Cache +
 	// 数据库版本
 	public static final String SD_DATABASE_VERSION_NAME = "sdcard_database_version";
@@ -58,6 +63,7 @@ public final class Constants {
 	public static final String CACHE_KEY_HOT_CART_LIST = "hot_cart_list";
 	public static final String CACHE_KEY_BRAND_CHOOSE_SECOND_LIST = "brand_choose_second_list";
 	public static final int CACHE_SIZE_VIEWED_ARTI_LIST = 500;
+	public static final String CACHE_KEY_ARTICLE_LIST_DEFAULT = "article_list_default";
 	public static final String CACHE_KEY_LAST_REFRSH_TIME = "last_refresh_time";
 	public static final String CACHE_KEY_LAST_REFRSH_TIME_ARTICLE = "last_refresh_article";
 	public static final String CACHE_KEY_LAST_REFRSH_TIME_SPECIAL = "last_refresh_special";
@@ -66,7 +72,8 @@ public final class Constants {
 	public static final String CACHE_KEY_TEAM_LIST = "team_list";
 	public static final String WONDERFUL_RACE_LIST = "wondful_race_list";
 	public static final String UNION_RACE_TOPIC = "union_race_topic";
-
+	public static final String CACHE_KEY_LIKE_TOPIC_LIST = "like_topic_list";	
+	public static final String CACHE_PERSON_MESSAGE_LIST = "cache_person_message_list";
 	/**
 	 * 文章列表缓存的大小
 	 */
@@ -76,7 +83,11 @@ public final class Constants {
 
 	public static final int CACHE_DURATION_FOREVER = Integer.MAX_VALUE;
 	public static final int CACHE_MYFAVOR_DURATION = Integer.MAX_VALUE; // 保存12小时
-	public static final int CACHE_DURATION_HOMELIST = 60 * 60; // cache一小时过期
+
+	/**
+	 * 一小时
+	 */
+	public static final int CACHE_DURATION_HOMELIST = 60 * 60; 
 
 	// 频道仓库
 	public static final int SUBSCRIBE_MOST_LIMIT = 20;
@@ -131,10 +142,10 @@ public final class Constants {
 	public static final String APP_IDC_IP = "http://shua.duowan.com/ip.php?type=idc";
 
 	// 访问服务器需要用到的servant name
-	public static final String APP_SERVANT_NAME = "gamenews";
+	public static String APP_SERVANT_NAME = "gamenews";
 
 	// 更新时用到的app type
-	public static final int ECOMM_APP_TYPE = ECommAppType._Comm_APP_GAMENEWS;
+	public static int ECOMM_APP_TYPE = ECommAppType._Comm_APP_GAMENEWS;
 
 	public static boolean isFunctionEnabled(int enabledAppType) {
 		return ECOMM_APP_TYPE == enabledAppType;
@@ -146,4 +157,20 @@ public final class Constants {
 		}
 		return versionName.equals(Util.getVersionName());
 	}
+
+	public static final String EXTRA_USER_INIT_RSP = "user_init_rsp";
+	public static final int REQUEST_LOGIN = 1001;
+	public static final int REQUEST_LOGIN_REDIRECT = 1002; // 登录完成跳转
+
+	// bs2 server info
+	public static final String BS2_ACCESS_KEY = "ak_uzk";
+	public static final String BS2_ACCESS_SECRET = "c07e90035de645c8c90f171272960724c87e0b88";
+	public static final String BS2_BUCKET = "brushimg";
+
+	public static final String BS2_IMG_HOST = "image.yy.com";
+
+	// 秀场share地址
+	public static final String SHOW_TOPIC_DETAIL_FORMATTER = "http://shua.duowan.com/show/index.php?m=share&id=%d";
+	public static final long CACHE_DURATION_BS2_IP_MAP = 24 * 3600 * 1000;
+
 }

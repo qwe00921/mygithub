@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.yy.android.sportbrush.R;
 import com.yy.android.gamenews.util.Util;
+import com.yy.android.sportbrush.R;
 
 public class AppWebOperatorDialog extends DialogFragment implements
 		OnClickListener {

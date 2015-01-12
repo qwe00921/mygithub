@@ -16,7 +16,6 @@ import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.ui.BaseListFragment;
 import com.yy.android.gamenews.ui.common.ImageAdapter;
 import com.yy.android.gamenews.util.IPageCache;
-import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.thread.BackgroundTask;
 
 public class WonderfulRaceFragment extends BaseListFragment<RaceTopicInfo> {
@@ -26,7 +25,6 @@ public class WonderfulRaceFragment extends BaseListFragment<RaceTopicInfo> {
 	private FragmentActivity mActivity;
 	protected IPageCache mPageCache;
 	private Map<Integer, String> mAttachInfo = null;
-	private Preference mPref;
 	private GetWonderfulRaceRsp mRsp;
 	private boolean IsFirstEnter = true;
 	private boolean mQuit = false;
@@ -41,7 +39,6 @@ public class WonderfulRaceFragment extends BaseListFragment<RaceTopicInfo> {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mPageCache = new IPageCache();
-		mPref = Preference.getInstance();
 	}
 
 	@Override
@@ -60,6 +57,10 @@ public class WonderfulRaceFragment extends BaseListFragment<RaceTopicInfo> {
 
 	@Override
 	protected void requestData(final int refreType) {
+		Map<Integer, String> attachInfo = null;
+		if (refreType == RefreshType._REFRESH_TYPE_LOAD_MORE) {
+			attachInfo = mAttachInfo;
+		}
 		WonderfulRaceModel.getWonderfulRaceList(
 				new ResponseListener<GetWonderfulRaceRsp>(mActivity) {
 
@@ -71,23 +72,28 @@ public class WonderfulRaceFragment extends BaseListFragment<RaceTopicInfo> {
 						if (arg0 != null) {
 							mAttachInfo = arg0.getAttachInfo();
 						}
-						requestFinish(refreType, arg0.getRaceList(),
-								arg0.getHasMore(), false);
+						if (refreType == RefreshType._REFRESH_TYPE_REFRESH) {
+							requestFinish(refreType, arg0.getRaceList(),
+									arg0.getHasMore(), true, false);
+						} else {
+							requestFinish(refreType, arg0.getRaceList(),
+									arg0.getHasMore(), false, false);
+						}
 					}
 
 					@Override
 					public void onError(Exception e) {
 						super.onError(e);
-						requestFinish(refreType, null, false, false);
+						requestFinish(refreType, null, false, false, false);
 
 					}
-				}, COUNT, mAttachInfo, refreType);
+				}, COUNT, attachInfo, refreType);
 	}
 
 	@Override
 	protected void requestFinish(int refresh, ArrayList<RaceTopicInfo> data,
-			boolean hasMore, boolean replace) {
-		super.requestFinish(refresh, data, hasMore, replace);
+			boolean hasMore, boolean replace, boolean error) {
+		super.requestFinish(refresh, data, hasMore, replace, error);
 		if (IsFirstEnter && data != null && data.size() > 0) {
 			showView(VIEW_TYPE_DATA);
 			IsFirstEnter = false;
@@ -150,7 +156,7 @@ public class WonderfulRaceFragment extends BaseListFragment<RaceTopicInfo> {
 		protected void onPostExecute(Boolean needReload) {
 			if (needReload && !mQuit) {
 				requestFinish(RefreshType._REFRESH_TYPE_REFRESH,
-						mRsp.getRaceList(), false, true);
+						mRsp.getRaceList(), false, true, false);
 			} else {
 				showView(VIEW_TYPE_EMPTY);
 			}

@@ -48,15 +48,19 @@ import com.duowan.gamenews.LoginActionFlag;
 import com.duowan.gamenews.UserInitRsp;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.GameNewsApplication;
+import com.yy.android.gamenews.plugin.distribution.DistributionListActivity;
 import com.yy.android.gamenews.ui.view.ActionBar;
+import com.yy.android.gamenews.util.PageCaller;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.SignUtil;
 import com.yy.android.gamenews.util.StatsUtil;
 import com.yy.android.gamenews.util.Util;
+import com.yy.android.gamenews.util.WebViewCacheUtil;
 import com.yy.android.sportbrush.R;
 
 public class AppWebActivity extends BaseActivity implements OnClickListener {
 
+	public static final String KEY_ENABLE_CACHE = "enable_cache";
 	public static final String TAG = AppWebActivity.class.getSimpleName();
 	public static final String TAG_SOCIAL_DIALOG = "article_social_dialog";
 	public static final String TAG_OPERATOR_DIALOG = "article_operator_dialog";
@@ -103,11 +107,7 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 			String domain = Util.getUrlDomainName(url);
 			if (domain.equals(Constants.PUSH_DOMAIN)) {
 				// 符合域名.内部网页
-				UserInitRsp rsp = Preference.getInstance().getInitRsp();
-				String accessToken = "";
-				if (rsp != null) {
-					accessToken = rsp.getAccessToken();
-				}
+				String accessToken = Util.getAccessToken();
 				String query = Util.getUrlQuery(url);
 				if (!TextUtils.isEmpty(query)) {
 					intent.putExtra(AppWebActivity.KEY_URL, url + "&token="
@@ -129,7 +129,15 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	public static void startWebActivityWithYYToken(Context context, String url) {
+	/**
+	 * 
+	 * @param context
+	 * @param url
+	 * @param cache
+	 *            是否支持cache
+	 */
+	public static void startWebActivityWithYYToken(Context context, String url,
+			boolean cache) {
 		Intent intent = new Intent(context, AppWebActivity.class);
 		UserInitRsp rsp = Preference.getInstance().getInitRsp();
 		String token = "";
@@ -145,19 +153,26 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 			e.printStackTrace();
 		}
 		if (!TextUtils.isEmpty(query)) {
-			intent.putExtra(AppWebActivity.KEY_URL, url + "&token="
-					+ token);
+			url = url + "&token=" + token;
 		} else {
-			intent.putExtra(AppWebActivity.KEY_URL, url + "?token="
-					+ token);
+			url = url + "?token=" + token;
 		}
 		intent.putExtra(AppWebActivity.KEY_URL, url);
+		intent.putExtra(AppWebActivity.KEY_ENABLE_CACHE, cache);
 		intent.putExtra(AppWebActivity.KEY_TITLE, AppWebActivity.TITLE_VIEW);
 		context.startActivity(intent);
 	}
 
+	/**
+	 * 
+	 * @param context
+	 * @param url
+	 * @param accessToken
+	 * @param cache
+	 *            是否支持cache
+	 */
 	public static void startWebActivityFromNotice(Context context, String url,
-			String accessToken) {
+			String accessToken, boolean cache) {
 		Intent intent = new Intent(context, AppWebActivity.class);
 		if (url.contains("token=")) {
 			url = url.replace("token=", "token=" + accessToken);
@@ -165,6 +180,7 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 			url = url + "&token=" + accessToken;
 		}
 		intent.putExtra(AppWebActivity.KEY_URL, url);
+		intent.putExtra(AppWebActivity.KEY_ENABLE_CACHE, cache);
 		intent.putExtra(AppWebActivity.KEY_TITLE, AppWebActivity.TITLE_VIEW);
 		context.startActivity(intent);
 
@@ -277,13 +293,13 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (LoginYYActivity.REQUEST_LOGIN == requestCode) {
+		if (Constants.REQUEST_LOGIN == requestCode) {
 			if (resultCode == RESULT_OK) {
 				UserInitRsp rsp = (UserInitRsp) data
-						.getSerializableExtra(LoginYYActivity.EXTRA_USER_INIT_RSP);
+						.getSerializableExtra(Constants.EXTRA_USER_INIT_RSP);
 				accessToken = rsp.extraInfo
 						.get(LoginActionFlag._LOGIN_ACTION_FLAG_YY_TOKEN);
-				startWebActivityFromNotice(this, mUrl, accessToken);
+				startWebActivityFromNotice(this, mUrl, accessToken, true);
 				finish();
 			}
 			return;
@@ -352,6 +368,7 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 		mLoadingAnimation.setInterpolator(new LinearInterpolator());
 		mLoadingAnimation.setFillAfter(true);// 动画停止时保持在该动画结束时的状态
 		mWebView.setWebViewClient(new MyWebViewClient());
+		mWebView.getSettings().setPluginState(PluginState.ON);
 
 		mWebView.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
 		mWebView.setHorizontalScrollBarEnabled(true);
@@ -365,7 +382,10 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 		webSettings.setJavaScriptEnabled(true);
 		mWebView.addJavascriptInterface(new JsInterface(this), "client"); // JS交互
 		mWebView.getSettings().setSupportZoom(false);
-		mWebView.getSettings().setPluginState(PluginState.ON);
+		// 来自于特权，支持缓存
+		if (getIntent().getExtras().getBoolean(KEY_ENABLE_CACHE)) {
+			WebViewCacheUtil.startWebViewCache(mWebView, this);
+		}
 		if (needAgent) {
 			String userAgent = Constants.USER_AGENT_PREFIX
 					+ GameNewsApplication.getInstance().getPackageInfo().versionName;
@@ -416,6 +436,8 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 				startActivity(intent);
 			}
 		});
+
+		Util.ensureAccesstokenForCookie(AppWebActivity.this);
 		mWebView.loadUrl(mUrl);
 		// showView(VIEW_TYPE_LOADING);
 		// mProgressBar.setVisibility(View.VISIBLE);
@@ -510,6 +532,7 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
 			LocalLog.d(TAG, "[MyWebViewClient] onPageFinished, url  = " + url);
+
 			showView(VIEW_TYPE_DATA);
 			mProgressBar.setVisibility(View.INVISIBLE);
 			mProgressBar.clearAnimation();
@@ -646,6 +669,18 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 
 		}
 
+		@JavascriptInterface
+		public void openNativePage(final int type, final int id) {
+
+			mHandler.post(new Runnable() {
+				public void run() {
+					if (!mIsStopped) {
+						PageCaller.open(AppWebActivity.this, type, id);
+					}
+				}
+			});
+		}
+
 		// 点击登录
 		@JavascriptInterface
 		public void yyLogin(final String url) {
@@ -657,28 +692,28 @@ public class AppWebActivity extends BaseActivity implements OnClickListener {
 						intent.putExtra(FROM, TAG);
 						intent.putExtra(FROM_KEY_RUL, url);
 						mUrl = url;
-						startActivityForResult(intent,
-								LoginYYActivity.REQUEST_LOGIN);
+						startActivityForResult(intent, Constants.REQUEST_LOGIN);
 					}
 				});
 				mIsAllowEntryLogin = false;
 			}
 
 		}
-		
+
 		@JavascriptInterface
 		public void checkIn() {
-			
+
 			mHandler.post(new Runnable() {
 				@Override
 				public void run() {
-					StatsUtil.statsReport(AppWebActivity.this, "stats_click_checkin");
-					StatsUtil.statsReportByMta(AppWebActivity.this, "stats_click_checkin", "点击签到");
+					StatsUtil.statsReport(AppWebActivity.this,
+							"stats_click_checkin");
+					StatsUtil.statsReportByMta(AppWebActivity.this,
+							"stats_click_checkin", "点击签到");
 					StatsUtil.statsReportByHiido("stats_click_checkin", "点击签到");
-					new SignUtil(AppWebActivity.this).requestSign();					
+					new SignUtil(AppWebActivity.this).requestSign();
 				}
 			});
-
 		}
 	}
 }

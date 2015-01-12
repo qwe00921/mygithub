@@ -19,21 +19,27 @@ import android.content.SharedPreferences.Editor;
 import android.util.Base64;
 import android.util.Log;
 
-import com.duowan.Comm.ECommAppType;
+import com.duowan.android.base.Tea;
 import com.duowan.gamenews.ActiveInfo;
 import com.duowan.gamenews.Channel;
+import com.duowan.gamenews.GetStoreAppListRsp;
 import com.duowan.gamenews.GetTeamListRsp;
 import com.duowan.gamenews.GetUnionListRsp;
 import com.duowan.gamenews.MeRsp;
 import com.duowan.gamenews.PlatType;
 import com.duowan.gamenews.RaceInfo;
 import com.duowan.gamenews.SportRaceListRsp;
+import com.duowan.gamenews.StoreAppInfo;
 import com.duowan.gamenews.Team;
 import com.duowan.gamenews.UserInitRsp;
+import com.duowan.show.AllowEmptyContent;
+import com.duowan.show.GetTagListRsp;
+import com.duowan.show.GetTopicListRsp;
+import com.duowan.show.NotificationRsp;
 import com.duowan.taf.jce.JceInputStream;
 import com.duowan.taf.jce.JceOutputStream;
 import com.yy.android.gamenews.Constants;
-import com.yy.android.gamenews.ui.MainActivity;
+import com.yy.android.gamenews.util.maintab.MainTab1;
 
 public class Preference {
 	// Preference
@@ -42,6 +48,7 @@ public class Preference {
 	// public static final String PREF_SCHED_NAME = "sched_pref";
 
 	private SharedPreferences mPref;
+	private Tea mTea = new Tea();
 	// private SharedPreferences mSchedPref;
 
 	/**
@@ -113,8 +120,11 @@ public class Preference {
 	// 活动频道
 	private static final String KEY_ACTIVE_CHANNEL_LIST = "active_channel_list";
 
-	// 首页最后选择的tab名，两个值：我的最爱和广场
+	/**
+	 * @deprecated use {@link #KEY_LAST_TAB_INDEX} instead
+	 */
 	private static final String KEY_LAST_TAB_NAME = "last_tab_name";
+	private static final String KEY_LAST_TAB_INDEX = "last_tab_index";
 
 	// 上一次检查更新的时间
 	private static final String KEY_LAST_CHECK_TIME = "last_check_time";
@@ -126,6 +136,8 @@ public class Preference {
 	private static final String KEY_TEST_URL = "test_url";
 	// 获取测试url的ip地址
 	private static final String KEY_TEST_IP = "test_ip";
+	// 获取app type
+	private static final String KEY_TEST_APP_TYPE = "test_app_type";
 
 	private static final String KEY_ME_RSP = "me_rsp";
 
@@ -138,11 +150,39 @@ public class Preference {
 	private static final String KEY_SPORT_RACE = "sport_race";
 	private static final String KEY_TEAM = "team";
 
+	private static final String KEY_HOST_IP_MAP = "bs2_host_ip_map"; // bs2 ip
+																		// map
+
+	private static final String KEY_HOST_MAP_UPDATE_TIME = "bs2_host_map_update_time";
+
+	// 发表话题是否允许为空
+	public static final String ALLOW_EMPTY_TOPIC_CONTENT = "allow_empty_topic_content";
+	// 个人消息
+	private static final String KEY_PERSON_MESSAGE = "preson_message";
+
+	private static final String STORE_APP_LIST = "store_app_list";
+	// 已安装的app 列表，用于与后台同步，同步后清空
+	private static final String INSTALLED_APP_LIST = "installed_app_list";
+	// 已下载的app 列表，用于与后台同步，同步后清空
+	private static final String DOWNLOADED_APP_LIST = "downloaded_app_list";
 	/**
 	 * 保存的app版本，如果是升级，则该值为升级前的app版本
 	 */
 	private static final String KEY_VERSION_CODE = "version_code";
 	private static final String KEY_NEED_SHOW_LOG = "need_show_log";
+
+	// 礼包详情页url
+	private static final String GIFT_ADDRESS_CONTENT = "gift_address_content";
+
+	public void saveGiftAddressContent(String giftUrl) {
+		if (giftUrl != null) {
+			mPref.edit().putString(GIFT_ADDRESS_CONTENT, giftUrl).commit();
+		}
+	}
+
+	public String getGiftAddressContent() {
+		return mPref.getString(GIFT_ADDRESS_CONTENT, Constants.GIFT_URL);
+	}
 
 	public void saveVersionCode(int versionCode) {
 		mPref.edit().putInt(KEY_VERSION_CODE, versionCode).commit();
@@ -290,6 +330,26 @@ public class Preference {
 	}
 
 	/**
+	 * 设置发表话题内容是否允许为空
+	 * 
+	 * @param enabled
+	 */
+	public void setAllowEmptyTopicContent(int allowEmptyTopicContent) {
+		mPref.edit().putInt(ALLOW_EMPTY_TOPIC_CONTENT, allowEmptyTopicContent)
+				.commit();
+	}
+
+	/**
+	 * 获取发表话题内容是否允许为空
+	 * 
+	 * @return
+	 */
+	public int getAllowEmptyTopicContent() {
+		return mPref.getInt(ALLOW_EMPTY_TOPIC_CONTENT,
+				AllowEmptyContent._NO_ALLOW_EMPTY);
+	}
+
+	/**
 	 * 设置是否推送通知
 	 * 
 	 * @param enabled
@@ -299,25 +359,44 @@ public class Preference {
 	}
 
 	/**
+	 * 设置webView的cache
+	 * 
+	 * @param enabled
+	 */
+	public void setWebViewCacheState(boolean enabled) {
+		mPref.edit().putBoolean(WebViewCacheUtil.WEBVIEW_CACHE_STATE, enabled)
+				.commit();
+	}
+
+	/**
+	 * 获取webView的cache
+	 * 
+	 * @param enabled
+	 */
+	public boolean getWebViewCacheState() {
+		return mPref.getBoolean(WebViewCacheUtil.WEBVIEW_CACHE_STATE, false);
+	}
+
+	/**
 	 * 设置上次选中的tab名
 	 * 
 	 * @return
 	 */
-	public String getLastTabName() {
-		String defaultTab = MainActivity.TAG_NAME_INFO;
-		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
-			defaultTab = MainActivity.TAG_NAME_NEWS;
-		}
-		return mPref.getString(KEY_LAST_TAB_NAME, defaultTab);
+	public int getLastTabIndex() {
+		int defaultTab = MainTab1.INDEX;
+		return mPref.getInt(KEY_LAST_TAB_INDEX, defaultTab);
 	}
 
 	/**
 	 * 获取上次选中的tab名
 	 * 
-	 * @param tabName
+	 * @param tabIndex
 	 */
-	public void setLastTabName(String tabName) {
-		mPref.edit().putString(KEY_LAST_TAB_NAME, tabName).commit();
+	public void setLastTabIndex(int tabIndex) {
+
+		// 把key_last_tab_name清空
+		mPref.edit().putString(KEY_LAST_TAB_NAME, "")
+				.putInt(KEY_LAST_TAB_INDEX, tabIndex).commit();
 	}
 
 	/**
@@ -424,9 +503,8 @@ public class Preference {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		String productBase64 = new String(Base64.encode(os.toByteArray(),
-				Base64.DEFAULT));
-
+		String productBase64 = new String(Base64.encode(
+				mTea.encrypt2(null, os.toByteArray()), Base64.DEFAULT));
 		mPref.edit().putString(key, productBase64).commit();
 	}
 
@@ -437,7 +515,13 @@ public class Preference {
 		if (productBase64 == null || "".equals(productBase64)) {
 			return null;
 		}
-		byte[] data = Base64.decode(productBase64.getBytes(), Base64.DEFAULT);
+
+		byte[] savedData = Base64.decode(productBase64.getBytes(),
+				Base64.DEFAULT);
+		byte[] data = mTea.decrypt2(null, savedData);
+		if (data == null) {
+			data = savedData;
+		}
 		JceInputStream is = new JceInputStream(data);
 		T returnValue = null;
 		try {
@@ -601,6 +685,14 @@ public class Preference {
 		return mPref.getString(KEY_TEST_IP, "");
 	}
 
+	public void setTestAppType(int type) {
+		mPref.edit().putInt(KEY_TEST_APP_TYPE, type).commit();
+	}
+
+	public int getTestAppType() {
+		return mPref.getInt(KEY_TEST_APP_TYPE, Constants.ECOMM_APP_TYPE);
+	}
+
 	public static final int STEP_0 = 0;
 	public static final int STEP_1 = 1;
 	public static final int STEP_2 = 2;
@@ -742,6 +834,108 @@ public class Preference {
 		saveJceObject(key, rsp);
 	}
 
+	/**
+	 * 获取post数据
+	 * 
+	 * @return
+	 */
+	public GetTopicListRsp getTopicListRsp(String key) {
+		GetTopicListRsp rsp = (GetTopicListRsp) getJceObject(key,
+				new GetTopicListRsp());
+		return rsp;
+	}
+
+	public void saveTopicListRsp(String key, GetTopicListRsp rsp) {
+		if (rsp == null) {
+			return;
+		}
+		saveJceObject(key, rsp);
+	}
+
+	/**
+	 * 获取post分类数据
+	 * 
+	 * @return
+	 */
+	public GetTagListRsp getTagListRsp(String key) {
+		GetTagListRsp rsp = (GetTagListRsp) getJceObject(key,
+				new GetTagListRsp());
+		return rsp;
+	}
+
+	public void saveTagListRsp(String key, GetTagListRsp rsp) {
+		if (rsp == null) {
+			return;
+		}
+		saveJceObject(key, rsp);
+	}
+
+	/**
+	 * 获取分发app列表
+	 * 
+	 * @return
+	 */
+	public GetStoreAppListRsp getStoreAppListRsp() {
+		GetStoreAppListRsp rsp = (GetStoreAppListRsp) getJceObject(
+				STORE_APP_LIST, new GetStoreAppListRsp());
+		return rsp;
+	}
+
+	public void saveStoreAppListRsp(GetStoreAppListRsp rsp) {
+		if (rsp == null) {
+			return;
+		}
+		saveJceObject(STORE_APP_LIST, rsp);
+	}
+
+	public ArrayList<StoreAppInfo> getInstalledAppList() {
+
+		ArrayList<StoreAppInfo> list = new ArrayList<StoreAppInfo>();
+		list.add(new StoreAppInfo());
+		list = getJceObject(INSTALLED_APP_LIST, list);
+		return list;
+	}
+
+	public void saveInstalledAppList(ArrayList<StoreAppInfo> list) {
+		if (list == null) {
+			return;
+		}
+		saveJceObject(INSTALLED_APP_LIST, list);
+	}
+
+	/**
+	 * 获取分发app列表
+	 * 
+	 * @return
+	 */
+	public ArrayList<StoreAppInfo> getDownloadedAppList() {
+
+		ArrayList<StoreAppInfo> list = new ArrayList<StoreAppInfo>();
+		list.add(new StoreAppInfo());
+		list = getJceObject(DOWNLOADED_APP_LIST, list);
+		return list;
+	}
+
+	public void saveDownloadededAppList(ArrayList<StoreAppInfo> list) {
+		if (list == null) {
+			return;
+		}
+		saveJceObject(DOWNLOADED_APP_LIST, list);
+	}
+
+	/**
+	 * 获取个人消息记录
+	 * 
+	 * @return
+	 */
+	public void setNotifacation(NotificationRsp rsp) {
+		saveJceObject(KEY_PERSON_MESSAGE, rsp);
+	}
+
+	public NotificationRsp getNotifacation() {
+		return getJceObject(KEY_PERSON_MESSAGE, new NotificationRsp());
+	}
+
 	public void setNeedShowLog(boolean needShowLog) {
 		mPref.edit().putBoolean(KEY_NEED_SHOW_LOG, needShowLog).commit();
 	}
@@ -787,5 +981,20 @@ public class Preference {
 			editor.putBoolean(KEY_IS_FIRST_LAUNCH_DAILY, true);
 		}
 		editor.putLong(KEY_LAST_LAUNCH_TIME, now).commit();
+	}
+
+	public Map<String, String> getIpMap() {
+		return getJceObject(KEY_HOST_IP_MAP, new HashMap<String, String>());
+	}
+
+	public void setIpMap(Map<String, String> map) {
+		saveJceObject(KEY_HOST_IP_MAP, map);
+		mPref.edit()
+				.putLong(KEY_HOST_MAP_UPDATE_TIME, System.currentTimeMillis())
+				.commit();
+	}
+
+	public long getLastHostMapUpdateTime() {
+		return mPref.getLong(KEY_HOST_MAP_UPDATE_TIME, 0);
 	}
 }

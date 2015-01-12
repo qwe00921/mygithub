@@ -4,18 +4,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -27,12 +36,14 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Process;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -55,6 +66,14 @@ import com.duowan.gamenews.bean.WelcomeChannel;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.GameNewsApplication;
 import com.yy.android.gamenews.event.SubscribeEvent;
+import com.yy.android.gamenews.ui.ArticleDetailActivity;
+import com.yy.android.gamenews.ui.WelcomeActivity;
+import com.yy.android.gamenews.util.maintab.MainTab;
+import com.yy.android.gamenews.util.maintab.MainTab1;
+import com.yy.android.gamenews.util.maintab.MainTab2;
+import com.yy.android.gamenews.util.maintab.MainTab3;
+import com.yy.android.gamenews.util.maintab.MainTab4;
+import com.yy.android.gamenews.util.maintab.MainTab5;
 import com.yy.android.sportbrush.R;
 
 public class Util {
@@ -503,7 +522,7 @@ public class Util {
 		return context.getResources().getDisplayMetrics().heightPixels;
 	}
 
-	public static void showHelpTips(Context context, View targetView,
+	public static void showMainHelpTips(Context context, MainTab mainTab,
 			OnDismissListener dismissListener) {
 		final PopupWindow tipsView = new PopupWindow(context);
 		tipsView.setOutsideTouchable(true);
@@ -531,26 +550,25 @@ public class Util {
 		if (dismissListener != null) {
 			tipsView.setOnDismissListener(dismissListener);
 		}
-		switch (targetView.getId()) {
-		case R.id.info_btn:
+		switch (mainTab.getId()) {
+		case MainTab1.INDEX:
 			tips.setText(R.string.tips_new_info);
-
 			break;
-		case R.id.brush_btn:
+		case MainTab2.INDEX:
 			tips.setText(R.string.tips_brush);
 			break;
-		case R.id.news_btn:
+		case MainTab3.INDEX:
 			tips.setText(R.string.tips_mine);
 			tipsView.setBackgroundDrawable(context.getResources().getDrawable(
 					R.drawable.bg_help_down1));
 			break;
-		case R.id.add_title:
+		case MainTab4.INDEX:
 			tips.setText(R.string.tips_subscribe);
 			tipsView.setBackgroundDrawable(context.getResources().getDrawable(
 					R.drawable.bg_help_up));
 			break;
 
-		case R.id.extra_btn_2:
+		case MainTab5.INDEX:
 			tips.setText(R.string.tips_extra_btn1);
 			tipsView.setBackgroundDrawable(context.getResources().getDrawable(
 					R.drawable.bg_help_down1));
@@ -560,26 +578,26 @@ public class Util {
 		}
 
 		int[] location = new int[2];
-		targetView.getLocationOnScreen(location);
+
+		View button = mainTab.getButton();
+		button.getLocationOnScreen(location);
 		Rect tempRect = new Rect(location[0], location[1], location[0]
-				+ targetView.getWidth(), location[1] + targetView.getHeight());
+				+ button.getWidth(), location[1] + button.getHeight());
 		helpView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		int helpViewWidth = helpView.getMeasuredWidth();
 		int helpViewHeight = helpView.getMeasuredHeight();
 
-		if (R.id.add_title == targetView.getId()) {
-			tipsView.showAsDropDown(targetView, 0, dip2px(context, 10));
-		} else if (R.id.extra_btn_2 == targetView.getId()) {
+		if (MainTab5.INDEX == mainTab.getId()) {
 			int xPos = (tempRect.left + tempRect.right) / 2 - helpViewWidth
 					+ dip2px(context, 25);
 			int yPos = (int) (tempRect.top - helpViewHeight - dip2px(context,
 					10));
-			tipsView.showAtLocation(targetView, Gravity.NO_GRAVITY, xPos, yPos);
-		}else {
+			tipsView.showAtLocation(button, Gravity.NO_GRAVITY, xPos, yPos);
+		} else {
 			int xPos = (tempRect.left + tempRect.right) / 2 - helpViewWidth / 2;
 			int yPos = (int) (tempRect.top - helpViewHeight - dip2px(context,
 					10));
-			tipsView.showAtLocation(targetView, Gravity.NO_GRAVITY, xPos, yPos);
+			tipsView.showAtLocation(button, Gravity.NO_GRAVITY, xPos, yPos);
 		}
 
 		int step = Preference.getInstance().getCurrentGuideStep();
@@ -683,6 +701,33 @@ public class Util {
 		CookieSyncManager.getInstance().sync();
 	}
 
+	public static void addCookie(Context context, String url, String value) {
+		CookieSyncManager.createInstance(context);
+		CookieManager cookieManager = CookieManager.getInstance();
+		cookieManager.setAcceptCookie(true);
+
+		String cookie = cookieManager.getCookie(url);
+		cookieManager.setCookie(url, value + ","
+				+ (cookie == null ? "" : cookie));
+		CookieSyncManager.getInstance().sync();
+	}
+
+	public static void ensureAccesstokenForCookie(Context context) {
+		Preference pref = Preference.getInstance();
+		UserInitRsp rsp = pref.getInitRsp();
+
+		CookieSyncManager.createInstance(context);
+		CookieManager cookieManager = CookieManager.getInstance();
+		String url = "shua.duowan.com";
+
+		String cookie = cookieManager.getCookie(url);
+		if (cookie == null || !cookie.contains("accessToken="))
+
+			if (rsp != null) {
+				addCookie(context, url, "accessToken=" + rsp.getAccessToken());
+			}
+	}
+
 	/**
 	 * 隐藏软键盘
 	 */
@@ -719,20 +764,230 @@ public class Util {
 	public static String getKey() {
 		String date = TimeUtil.parseTimeToYMD(new Date());
 		String str = "checkin";
-		String token = "";
-		UserInitRsp rsp = Preference.getInstance().getInitRsp();
-		if (rsp != null) {
-			token = rsp.getAccessToken();
-		}
+		String token = getAccessToken();
 
 		String key = "";
 		try {
-			key = FileUtil.md5(FileUtil.md5(date) + str) + FileUtil.md5(token);
+			key = FileUtil.md5Str2Str(FileUtil.md5Str2Str(date) + str)
+					+ FileUtil.md5Str2Str(token);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return key;
+	}
+
+	public static String getIPFromInet(String host) {
+		InetAddress address = null;
+		try {
+			address = InetAddress.getByName(host);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取失败");
+		}
+
+		String ip = "";
+		if (address != null) {
+			ip = address.getHostAddress();
+		}
+		return ip;
+	}
+
+	private static String getIPFromLocal(String host) {
+
+		Preference pref = Preference.getInstance();
+		Map<String, String> ipMap = pref.getIpMap();
+
+		if (ipMap != null && ipMap.containsKey(host)) {
+			return ipMap.get(host);
+		}
+
+		return "";
+	}
+
+	public static String ensureIp(String domain) {
+		Set<String> list = new HashSet<String>();
+		list.add(domain);
+
+		Map<String, String> map = ensureIpMap(list);
+		if (map == null) {
+			return null;
+		}
+		return map.get(domain);
+	}
+
+	public static Map<String, String> ensureIpMap(Set<String> domainList) {
+		Map<String, String> map = new HashMap<String, String>();
+
+		Preference pref = Preference.getInstance();
+		long lastUpdateTime = pref.getLastHostMapUpdateTime();
+		long currentTime = System.currentTimeMillis();
+
+		String ip = "";
+		for (String domain : domainList) {
+			if (currentTime - lastUpdateTime >= Constants.CACHE_DURATION_BS2_IP_MAP) {
+				ip = syncIPFromInet(domain);
+			} else {
+				ip = getIPFromLocal(domain);
+				if (TextUtils.isEmpty(ip)) {
+					ip = syncIPFromInet(domain);
+				}
+			}
+
+			if (TextUtils.isEmpty(ip)) {
+				ip = domain; // 最后保障：如果无法获取到ip地址，则返回原host
+			}
+
+			map.put(domain, ip);
+		}
+		return map;
+	}
+
+	/**
+	 * 从网络获取ip地址，并保存到本地
+	 * 
+	 * @param host
+	 * @param ipMap
+	 * @return 该host对应的ip地址
+	 */
+	private static String syncIPFromInet(String host) {
+		Preference pref = Preference.getInstance();
+		Map<String, String> ipMap = pref.getIpMap();
+		String ip;
+		ip = getIPFromInet(host);
+		if (!TextUtils.isEmpty(ip)) {
+			if (ipMap == null) {
+				ipMap = new HashMap<String, String>();
+			}
+			ipMap.put(host, ip);
+		}
+
+		pref.setIpMap(ipMap);
+		return ip;
+	}
+
+	public static String getDomainName(String url) {
+		if (TextUtils.isEmpty(url)) {
+			return "";
+		}
+
+		url = url.replace("https://", "");
+		url = url.replace("http://", "");
+
+		int index = url.indexOf("/");
+		if (index == -1) {
+			return url;
+		}
+
+		return url.substring(0, index);
+	}
+
+	/**
+	 * 判断所给的url是否是一个ip地址：如10.33.3.3
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public static boolean isIpUrl(String url) {
+		if (TextUtils.isEmpty(url)) {
+			return false;
+		}
+
+		url = url.replaceAll("\\.", "");
+		if (TextUtils.isDigitsOnly(url)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static String replaceDomainWithIP(String url, String ip) {
+		if (TextUtils.isEmpty(url) || TextUtils.isEmpty(ip)) {
+			return url;
+		}
+		String domain = getDomainName(url);
+		String newUrl = url.replace(domain, ip);
+		return newUrl;
+	}
+
+	public static void startMainApp(Context context) {
+		context.startActivity(getMainAppIntent(context));
+	}
+
+	public static Intent getMainAppIntent(Context context) {
+		Intent intent = new Intent(context, WelcomeActivity.class);
+
+		intent.setAction(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_LAUNCHER);
+		return intent;
+	}
+
+	public static void restartApp(Activity activity) {
+
+		AlarmManager am = (AlarmManager) activity
+				.getSystemService(Context.ALARM_SERVICE);
+		Intent intent = activity.getIntent();
+
+		if (ArticleDetailActivity.class.getName().equals(
+				intent.getComponent().getClassName())) {
+
+			intent.putExtra(ArticleDetailActivity.KEY_ARTICLE_LIST,
+					ArticleDetailSwitcher.getInstance().getArticleInfos());
+		}
+
+		PendingIntent pi = PendingIntent.getActivity(activity, 1, intent, 0);
+		am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 100, pi);
+
+		Process.killProcess(Process.myPid());
+	}
+
+	public static boolean inTest(String channelName) {
+		return "test".equals(channelName) || "dev".equals(channelName);
+	}
+
+	public static byte[] combineArray(byte[]... params) {
+
+		if (params == null || params.length == 0) {
+			return null;
+		}
+
+		int length = 0;
+		for (byte[] bytearray : params) {
+			if (bytearray == null) {
+				continue;
+			}
+			length += bytearray.length;
+		}
+		byte[] returnValue = new byte[length];
+		int currentLength = 0;
+		for (int i = 0; i < params.length; i++) {
+			byte[] bytearray = params[i];
+
+			if (bytearray == null) {
+				continue;
+			}
+
+			System.arraycopy(bytearray, 0, returnValue, currentLength,
+					bytearray.length);
+
+			currentLength += bytearray.length;
+		}
+
+		return returnValue;
+	}
+
+	public static String getVersionCodeForServer() {
+		return "android-" + getVersionName();
+	}
+
+	public static String getAccessToken() {
+		UserInitRsp rsp = Preference.getInstance().getInitRsp();
+		String accessToken = "";
+		if (rsp != null) {
+			accessToken = rsp.getAccessToken();
+		}
+		return accessToken;
 	}
 }

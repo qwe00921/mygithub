@@ -1,11 +1,11 @@
 package com.yy.android.gamenews.ui;
 
-import android.support.v4.view.ViewPager;
+import java.lang.reflect.Field;
+
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.animation.Interpolator;
-
-import java.lang.reflect.Field;
 
 public class CustomDurationViewPager extends ViewPager {
 

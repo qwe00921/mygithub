@@ -297,6 +297,12 @@ public class CategoryFlowLayout extends GridFlowLayout implements
 		}
 		return false;
 	}
+	
+	public void editChannel(){
+		if (mMode == MODE_NORMAL) {
+			setEditMode();
+		}
+	}
 
 	public boolean onTouch(View view, MotionEvent event) {
 		if (mMode == MODE_NORMAL) {

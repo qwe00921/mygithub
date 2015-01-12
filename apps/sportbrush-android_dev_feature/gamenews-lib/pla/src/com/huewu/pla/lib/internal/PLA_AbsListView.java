@@ -1532,7 +1532,7 @@ ViewTreeObserver.OnGlobalLayoutListener, ViewTreeObserver.OnTouchModeChangeListe
                             performClick.mClickMotionPosition = motionPosition;
                             performClick.rememberWindowAttachCount();
 
-                            mResurrectToPosition = motionPosition;
+                            //mResurrectToPosition = motionPosition; // marked by carlos, for listview cannot refresh after click
 
                             if (mTouchMode == TOUCH_MODE_DOWN || mTouchMode == TOUCH_MODE_TAP) {
                                 mLayoutMode = LAYOUT_NORMAL;
@@ -1776,6 +1776,12 @@ ViewTreeObserver.OnGlobalLayoutListener, ViewTreeObserver.OnTouchModeChangeListe
                 mLastScrollState = newState;
             }
         }
+    }
+    
+    public void stopScroll() {
+    	if(mFlingRunnable != null) {
+    		mFlingRunnable.endFling();
+    	}
     }
 
     /**

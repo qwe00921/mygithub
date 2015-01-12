@@ -28,55 +28,19 @@ public class CommentModel extends CommonModel {
 
 	public static void addComment(
 			final ResponseListener<Boolean> responseListener, long articleId,
-			String comment) {
-
-		// if (TEST_DATA) {
-		// sHandler.postDelayed(new Runnable() {
-		// @Override
-		// public void run() {
-		// GetCommentListRsp rsp = new GetCommentListRsp();
-		//
-		// rsp.setCommentList(getData());
-		// rsp.setHasMore(testCount < 5 ? true : false);
-		// testCount++;
-		//
-		// responseListener.onResponse(rsp);
-		// }
-		// }, 2000);
-		//
-		// return;
-		// }
-
-		UniPacket uniPacket = createUniPacket("AddComment");
+			String comment, boolean showDialog) {
 
 		AddCommentReq req = new AddCommentReq();
 
 		req.setArticleId(articleId);
 		req.setComment(comment);
-		uniPacket.put("request", req);
 
-		new Request(responseListener.get(), uniPacket) {
-			@Override
-			public void onError(Exception e) {
-				// TODO Auto-generated method stub
-				super.onError(e);
-				responseListener.onError(e);
-			}
+		UniPacket uniPacket = createUniPacket("AddComment", req);
 
-			@Override
-			public void onResponse(UniPacket response) {
-				String strType = "";
-				Integer intType = 0;
-				String msg = response.getByClass("msg", strType);
-				int code = response.getByClass("code", intType);
-				int subcode = response.getByClass("subcode", intType);
-				if (code == 0 && subcode == 0) {
-					responseListener.onResponse(true);
-				} else {
-					responseListener.onError(new Exception(msg));
-				}
-			}
-		}.setShowProgressDialog(true).execute();
+		new CommonRequest<Boolean>(responseListener.get(), uniPacket)
+				.setup(responseListener, Boolean.valueOf(false))
+				.setShowErrorMsg(true).setShowProgressDialog(true).execute();
+
 	}
 
 	public static void getCommentList(
@@ -103,15 +67,13 @@ public class CommentModel extends CommonModel {
 
 			return;
 		}
-
-		UniPacket uniPacket = createUniPacket("GetCommentList");
-
 		GetCommentListReq req = new GetCommentListReq();
 
 		req.setArticleId(articleId);
 		req.setCount(20); // 默认10个
 		req.setAttachInfo(attachInfo);
-		uniPacket.put("request", req);
+
+		UniPacket uniPacket = createUniPacket("GetCommentList", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override

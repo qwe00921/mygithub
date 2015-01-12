@@ -1,8 +1,12 @@
 package com.yy.android.gamenews.ui;
 
+import java.util.List;
+
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +34,10 @@ public class BaseFragment extends Fragment {
 	private View mProgressBar;
 	private View mProgressBarInner;
 	protected Context mContext;
+	protected String strEmptyReload;
+	protected String strEmptyNoData;
+	protected String strEmptyAddChannel;
+	protected boolean mIsAppStopped;
 
 	private static final String KEY_CURRENT_VIEW = "current_view";
 
@@ -40,15 +48,22 @@ public class BaseFragment extends Fragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
+		Bundle bundle = getArguments();
+		if (bundle == null) {
+			bundle = savedInstanceState;
+		}
+		readDataFromBundle(bundle);
 		mInflater = LayoutInflater.from(getActivity());
 		super.onCreate(savedInstanceState);
+	}
+
+	protected void readDataFromBundle(Bundle bundle) {
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		if(savedInstanceState != null) {
+		if (savedInstanceState != null) {
 			mCurrentView = savedInstanceState.getInt(KEY_CURRENT_VIEW,
 					VIEW_TYPE_EMPTY);
 
@@ -62,7 +77,9 @@ public class BaseFragment extends Fragment {
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-
+		strEmptyAddChannel = getString(R.string.main_add_fav);
+		strEmptyReload = getString(R.string.global_empty_reload);
+		strEmptyNoData = getString(R.string.global_empty_no_data);
 		showView(mCurrentView);
 		super.onViewCreated(view, savedInstanceState);
 	}
@@ -79,7 +96,14 @@ public class BaseFragment extends Fragment {
 	}
 
 	@Override
+	public void onStart() {
+		mIsAppStopped = false;
+		super.onStart();
+	}
+
+	@Override
 	public void onStop() {
+		mIsAppStopped = true;
 		super.onStop();
 	}
 
@@ -112,7 +136,7 @@ public class BaseFragment extends Fragment {
 		}
 
 		if (mEmptyLayout == null) {
-			mEmptyLayout = mInflater.inflate(R.layout.global_reload, null,
+			mEmptyLayout = mInflater.inflate(R.layout.global_reload, container,
 					false);
 
 			showView(mEmptyLayout, false);
@@ -142,6 +166,10 @@ public class BaseFragment extends Fragment {
 
 		mContainer = container;
 		mContainer.addView(mEmptyLayout);
+	}
+
+	public void setEmptyLayoutBg(int resId) {
+		mEmptyLayout.setBackgroundColor(resId);
 	}
 
 	private void showView(View view, boolean show) {
@@ -236,4 +264,28 @@ public class BaseFragment extends Fragment {
 		}
 	}
 
+	public void onActivityBackPressed() {
+		Activity activity = getActivity();
+		if (activity != null) {
+			activity.onBackPressed();
+		}
+	}
+
+	public boolean onBackPressed() {
+
+		FragmentManager manager = getChildFragmentManager();
+		List<Fragment> fragments = manager.getFragments();
+		if (fragments != null) {
+			for (Fragment fragment : fragments) {
+				if (fragment != null) {
+					if (fragment instanceof BaseFragment) {
+						if (((BaseFragment) fragment).onBackPressed()) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +33,7 @@ import de.greenrobot.event.EventBus;
 
 public class ChannelMoreFragment extends BaseFragment {
 
-//	private TextView mLable;
+	// private TextView mLable;
 	private XListView mListView;
 	private GridItemViewAdapter mAdapter;
 	private String mType;
@@ -158,7 +157,7 @@ public class ChannelMoreFragment extends BaseFragment {
 		}
 		mAdapter.clearAll();
 		if (channels != null && channels.size() > 0) {
-//			mLable.setVisibility(View.GONE);
+			// mLable.setVisibility(View.GONE);
 			mKeyWord = key;
 			mHasMore = hasMore;
 			mAttachInfo = attachInfo;
@@ -181,7 +180,7 @@ public class ChannelMoreFragment extends BaseFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.channel_more_fragment, container,
 				false);
-//		mLable = (TextView) view.findViewById(R.id.channel_more_lable);
+		// mLable = (TextView) view.findViewById(R.id.channel_more_lable);
 		mListView = (XListView) view.findViewById(R.id.listview);
 		mListView.setPullRefreshEnable(false);
 		mListView.setPullLoadEnable(true);
@@ -191,9 +190,10 @@ public class ChannelMoreFragment extends BaseFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-		
-		SubscribeEvent event = Util.getSubscribeEvent(mOriginalChannels, mChannels);
-		if(event != null) {
+
+		SubscribeEvent event = Util.getSubscribeEvent(mOriginalChannels,
+				mChannels);
+		if (event != null) {
 			Preference.getInstance().saveMyFavorChannelList(mChannels);
 			ChannelModel.updateMyFavChannelList(getActivity(),
 					(ArrayList<Channel>) mChannels);
@@ -216,7 +216,7 @@ public class ChannelMoreFragment extends BaseFragment {
 		if (arguments != null) {
 			mType = arguments.getString(Constants.EXTRA_GRID_FG_TYPE);
 			if (Constants.EXTRA_GRID_FG_TYPE_SEARCH.equals(mType)) {
-//				mLable.setVisibility(View.GONE);
+				// mLable.setVisibility(View.GONE);
 				mKeyWord = arguments
 						.getString(Constants.EXTRA_GRID_FG_KEY_WORD);
 
@@ -231,11 +231,11 @@ public class ChannelMoreFragment extends BaseFragment {
 				mColumnId = arguments.getInt(Constants.EXTRA_COLUMN_ID);
 				String columnName = arguments
 						.getString(Constants.EXTRA_COLUMN_NAME);
-//				mLable.setVisibility(View.INVISIBLE);
-//				mLable.setText(columnName);
+				// mLable.setVisibility(View.INVISIBLE);
+				// mLable.setText(columnName);
 
 				mListView.manualLoadMore();
-				//getColumnChannelList(mColumnId, null, 18);
+				// getColumnChannelList(mColumnId, null, 18);
 			}
 		}
 	}
@@ -347,12 +347,12 @@ public class ChannelMoreFragment extends BaseFragment {
 	}
 
 	private void updateChangedChannels(Channel channel) {
-//		if (Util.isSubscribedChannel(mChangedChannels, channel)) {
-//			mChangedChannels.remove(channel);
-//		} else {
-//			Util.validChannelData(channel);
-//			mChangedChannels.add(channel);
-//		}
+		// if (Util.isSubscribedChannel(mChangedChannels, channel)) {
+		// mChangedChannels.remove(channel);
+		// } else {
+		// Util.validChannelData(channel);
+		// mChangedChannels.add(channel);
+		// }
 	}
 
 	private void getColumnChannelList(int columnId, String attachInfo, int count) {
@@ -369,15 +369,11 @@ public class ChannelMoreFragment extends BaseFragment {
 				mAttachInfo = response.getAttachInfo();
 				ArrayList<Channel> list = response.getChannelList();
 				mAdapter.append(list);
-//				mLable.setVisibility(View.VISIBLE);
+				// mLable.setVisibility(View.VISIBLE);
 				if (!mHasMore) {
 					mListView.setFooterEmpty(true);
 				}
 			}
-
-			public void onError(Exception e) {
-				ToastUtil.showToast(R.string.http_error);
-			};
 		};
 		ChannelModel.getColumnChannelList(responseListener, columnId,
 				attachInfo, count);
@@ -390,6 +386,10 @@ public class ChannelMoreFragment extends BaseFragment {
 		ResponseListener<SearchChannelRsp> responseListener = new ResponseListener<SearchChannelRsp>(
 				getActivity()) {
 			public void onResponse(SearchChannelRsp response) {
+
+				if (mListView.isPullLoading()) {
+					mListView.stopLoadMore();
+				}
 				mHasMore = response.getHasMore();
 				mAttachInfo = response.getAttachInfo();
 				ArrayList<Channel> list = response.getChannelList();

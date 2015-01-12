@@ -71,13 +71,12 @@ public class WonderfulRaceModel extends CommonModel {
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetWonderfulRace");
-
 		GetWonderfulRaceReq req = new GetWonderfulRaceReq();
 		req.setCount(count); // 默认10个
 		req.setAttachInfo(attachInfo);
 		req.setRefreshType(refreshType);
-		uniPacket.put("request", req);
+
+		UniPacket uniPacket = createUniPacket("GetWonderfulRace", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override

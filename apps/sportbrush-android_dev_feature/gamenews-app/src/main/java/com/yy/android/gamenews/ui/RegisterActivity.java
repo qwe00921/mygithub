@@ -11,8 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yy.android.sportbrush.R;
 import com.yy.android.gamenews.util.Util;
+import com.yy.android.sportbrush.R;
 import com.yy.udbsdk.UICalls;
 import com.yy.udbsdk.UIError;
 import com.yy.udbsdk.UIListener;

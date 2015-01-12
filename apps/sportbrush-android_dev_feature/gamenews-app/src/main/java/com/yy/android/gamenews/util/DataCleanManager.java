@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import android.content.Context;
 import android.os.Environment;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.util.db.DbFactory;
 
@@ -20,7 +21,8 @@ public class DataCleanManager {
 	}
 
 	private static File getDatabases(Context context) {
-		return context.getDatabasePath(Constants.SD_DATABASE_NAME).getParentFile();
+		return context.getDatabasePath(Constants.SD_DATABASE_NAME)
+				.getParentFile();
 	}
 
 	private static File getSharedPreferences(Context context) {
@@ -104,30 +106,35 @@ public class DataCleanManager {
 		cleanInternalCache(context);
 		cleanExternalCache(context);
 		cleanDatabases(context);
-//		cleanSharedPreference(context);
+		// cleanSharedPreference(context);
+		ImageLoader.getInstance().clearDiscCache();
+		ImageLoader.getInstance().clearMemoryCache();
 		cleanFiles(context);
-		for (String filePath : filepath) {
-			cleanCustomCache(filePath);
+		if (filepath != null) {
+			for (String filePath : filepath) {
+				cleanCustomCache(filePath);
+			}
 		}
+
 	}
 
 	private static void deleteFiles(File file) {
-		
-		if(file == null || !file.exists()) {
+
+		if (file == null || !file.exists()) {
 			return;
 		}
-		if(file.isDirectory()) {
+		if (file.isDirectory()) {
 			for (File item : file.listFiles()) {
 				deleteFiles(item);
 			}
 		}
 		file.delete();
-		
-//		if (file != null && file.exists() && file.isDirectory()) {
-//			for (File item : file.listFiles()) {
-//				item.delete();
-//			}
-//		}
+
+		// if (file != null && file.exists() && file.isDirectory()) {
+		// for (File item : file.listFiles()) {
+		// item.delete();
+		// }
+		// }
 	}
 
 	public static long getAppCacheSize(Context context) {
@@ -135,22 +142,22 @@ public class DataCleanManager {
 		long internalSize = getInternalCacheSize(context);
 		long externalSize = getExternalCacheSize(context);
 		long filesDirSize = getFilesDirSize(context);
-		long customizeSize = getCustomizeFileSize(context, FileUtil.getBaseDir());
+		// long customizeSize = getCustomizeFileSize(context,
+		// FileUtil.getBaseDir());
 
-		return dbSize + internalSize + externalSize + filesDirSize
-				+ customizeSize;
+		return dbSize + internalSize + externalSize + filesDirSize;
 	}
 
 	public static void cleanAppCache(Context context) {
-		cleanApplicationData(context, FileUtil.getBaseDir());
+		cleanApplicationData(context);
 	}
 
 	public static long getFileSize(File file)// 取得文件夹大小
 	{
-		
+
 		long size = 0;
-		if(file != null && file.exists()) {
-			if(file.isDirectory()) {
+		if (file != null && file.exists()) {
+			if (file.isDirectory()) {
 				File fileList[] = file.listFiles();
 				if (fileList != null) {
 
@@ -170,8 +177,8 @@ public class DataCleanManager {
 	}
 
 	public static String FormetFileSize(long fileS) {// 转换文件大小
-		
-		if(fileS == 0) {
+
+		if (fileS == 0) {
 			return "0";
 		}
 		DecimalFormat df = new DecimalFormat("#.00");

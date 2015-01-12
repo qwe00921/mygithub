@@ -5,14 +5,17 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.duowan.android.base.model.BaseModel;
 import com.duowan.android.base.net.VolleyClient;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatReportStrategy;
 import com.umeng.analytics.MobclickAgent;
 import com.yy.android.gamenews.ui.common.SwitchImageLoader;
 import com.yy.android.gamenews.util.Preference;
+import com.yy.android.gamenews.util.Util;
 import com.yy.android.sportbrush.R;
 import com.yy.hiidostatis.api.HiidoSDK;
 import com.yy.hiidostatis.api.OnStatisListener;
@@ -40,8 +43,12 @@ public class GameNewsApplication extends Application {
 		initHiido();// 海度统计初始化
 		// (测试环境)崩溃日志
 		String channelName = getString(R.string.channelname);
-		if ("test".equals(channelName) || "dev".equals(channelName)) {
-			Thread.setDefaultUncaughtExceptionHandler(new AppUncaughtExceptionHandler());
+		if (Util.inTest(channelName)) {
+			String hostUrl = Preference.getInstance().getTestUrl();
+			if (!TextUtils.isEmpty(hostUrl)) {
+				BaseModel.HOST = hostUrl;
+			}
+//			Thread.setDefaultUncaughtExceptionHandler(new AppUncaughtExceptionHandler());
 		}
 	}
 

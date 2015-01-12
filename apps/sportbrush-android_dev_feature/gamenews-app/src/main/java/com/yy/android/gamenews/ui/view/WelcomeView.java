@@ -3,21 +3,18 @@ package com.yy.android.gamenews.ui.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 
-import com.yy.android.sportbrush.R;
 import com.yy.android.gamenews.util.Util;
+import com.yy.android.sportbrush.R;
 
 public class WelcomeView extends FrameLayout {
 

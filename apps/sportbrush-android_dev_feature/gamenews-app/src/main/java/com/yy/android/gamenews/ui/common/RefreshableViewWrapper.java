@@ -2,15 +2,14 @@ package com.yy.android.gamenews.ui.common;
 
 import java.util.List;
 
-import android.R.integer;
 import android.content.Context;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.MeasureSpec;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -24,7 +23,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.huewu.pla.lib.MultiColumnListView;
-import com.huewu.pla.lib.internal.PLA_ListView;
 import com.yy.android.gamenews.ui.view.Counter;
 import com.yy.android.gamenews.ui.view.Counter.OnCounterCallback;
 import com.yy.android.gamenews.ui.view.CounterItem;
@@ -121,6 +119,7 @@ public abstract class RefreshableViewWrapper<E extends View> {
 	private ImageView mHeaderProgressBar;
 	private ImageView mFooterProgressBar;
 	private TextView mFooterTipsTv;
+	private View mFooterContainer;
 	private Animation mLoadingAnimation;
 
 	// 定义头部下拉刷新的布局的高度
@@ -137,7 +136,7 @@ public abstract class RefreshableViewWrapper<E extends View> {
 	private int mState;
 	private boolean isBack;
 	private boolean mHasLoadingBar;
-	private boolean showUpdateTip; //是否需要show 更新提示
+	private boolean showUpdateTip; // 是否需要show 更新提示
 
 	// 用于保证startY的值在一个完整的touch事件中只被记录一次
 	private boolean mIsRecorded;
@@ -231,6 +230,19 @@ public abstract class RefreshableViewWrapper<E extends View> {
 				.findViewById(R.id.progressBar1);
 		mFooterTipsTv = (TextView) mFooterView
 				.findViewById(R.id.global_loading_text);
+		mFooterContainer = mFooterView
+				.findViewById(R.id.global_footer_container);
+
+		mFooterContainer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mListener != null) {
+					showLoadingBar();
+					mListener.onLoading();
+				}
+			}
+		});
 		if (addFooter) {
 			addFooter(mMainView, mFooterView);
 		}
@@ -375,7 +387,7 @@ public abstract class RefreshableViewWrapper<E extends View> {
 				// 保证在设置padding的过程中，当前的位置一直是在head，否则如果当列表超出屏幕的话，当在上推的时候，列表会同时进行滚动
 				// 可以松手去刷新了
 				if (mState == RELEASE_TO_REFRESH) {
-					setSelection(mMainView, 0);
+					// setSelection(mMainView, 0);
 					// 往上推了，推到了屏幕足够掩盖head的程度，但是还没有推到全部掩盖的地步
 					if (((currentY - mStartY) / RATIO < headerContentHeight)// 由松开刷新状态转变到下拉刷新状态
 							&& (currentY - mStartY) > 0) {
@@ -390,7 +402,7 @@ public abstract class RefreshableViewWrapper<E extends View> {
 				}
 				// 还没有到达显示松开刷新的时候,DONE或者是PULL_To_REFRESH状态
 				if (mState == PULL_TO_REFRESH) {
-					setSelection(mMainView, 0);
+					// setSelection(mMainView, 0);
 					// 下拉到可以进入RELEASE_TO_REFRESH的状态
 					if ((currentY - mStartY) / RATIO >= headerContentHeight) {// 由done或者下拉刷新状态转变到松开刷新
 						mState = RELEASE_TO_REFRESH;
@@ -400,7 +412,7 @@ public abstract class RefreshableViewWrapper<E extends View> {
 					// 上推到顶了
 					else if (currentY - mStartY <= 0) {// 由 或者下拉刷新状态转变到done状态
 						mState = DONE;
-//						changeHeaderViewByState();
+						// changeHeaderViewByState();
 					}
 				}
 				// done状态下
@@ -453,13 +465,18 @@ public abstract class RefreshableViewWrapper<E extends View> {
 					mDirection = DIRECTION_DOWN;
 				}
 				mLastY = currentY;
-				
-				if(mMainView instanceof ListView){
-					onScroll(((ListView)mMainView).getFirstVisiblePosition(), 0, 0);
-				} else if(mMainView instanceof GridView){
-					onScroll(((GridView)mMainView).getFirstVisiblePosition(), 0, 0);
-				}else if(mMainView instanceof MultiColumnListView){
-					onScroll(((MultiColumnListView)mMainView).getFirstVisiblePosition(), 0, 0);
+
+				if (mMainView instanceof ListView) {
+					onScroll(((ListView) mMainView).getFirstVisiblePosition(),
+							0, 0);
+				} else if (mMainView instanceof GridView) {
+					onScroll(((GridView) mMainView).getFirstVisiblePosition(),
+							0, 0);
+				} else if (mMainView instanceof MultiColumnListView) {
+					onScroll(
+							((MultiColumnListView) mMainView)
+									.getFirstVisiblePosition(),
+							0, 0);
 				}
 				break;
 			}
@@ -490,25 +507,26 @@ public abstract class RefreshableViewWrapper<E extends View> {
 		}
 	};
 
-	private void showHeaderView() {
+	private void showHeaderView(boolean anim) {
 		mHeaderTipsTv.setText(R.string.global_list_refreshing);
 		mHeaderLastUpdatedTv.setVisibility(View.VISIBLE);
 
-		// if (anim) {
-		CounterItem item = new CounterItem(mHeaderView.getPaddingTop(), 0);
-		mShowCounter.setValue(item);
-		mShowCounter.start();
-		// }
+		if (anim) {
+			CounterItem item = new CounterItem(mHeaderView.getPaddingTop(), 0);
+			mShowCounter.setValue(item);
+			mShowCounter.start();
+		}
 
-		// else {
-		//
-		// mHeaderView.setPadding(0, 0, 0, 0);
-		// }
+		else {
+
+			mHeaderView.setPadding(0, 0, 0, 0);
+			onLvRefresh();
+		}
 	}
 
 	private void hideHeaderView(boolean showUpdateTip, boolean delay) {
 		this.showUpdateTip = showUpdateTip;
-		if(showUpdateTip){
+		if (showUpdateTip) {
 			int res = 0;
 			if (-1 == mUpdateCount) { // -1表示数据请求失败
 				res = R.string.global_list_refresh_fail;
@@ -518,9 +536,9 @@ public abstract class RefreshableViewWrapper<E extends View> {
 			mHeaderTipsTv.setText(res);
 		}
 		mHeaderLastUpdatedTv.setVisibility(View.VISIBLE);
-		
+
 		int delayDuration = 0;
-		if(delay) {
+		if (delay) {
 			delayDuration = 500;
 		}
 
@@ -561,14 +579,13 @@ public abstract class RefreshableViewWrapper<E extends View> {
 
 		case REFRESHING:
 
-			showHeaderView();
+			showHeaderView(true);
 			break;
 		case DONE:
 			hideHeaderView(showUpdateTip, delay);
 			break;
 		}
 	}
-	
 
 	private void changeHeaderViewByState(boolean showUpdateTip) {
 		changeHeaderViewByState(showUpdateTip, true);
@@ -631,7 +648,8 @@ public abstract class RefreshableViewWrapper<E extends View> {
 		changeHeaderViewByState(true);
 	}
 
-	private Handler mHandler = new Handler(){};
+	private Handler mHandler = new Handler() {
+	};
 
 	private Runnable mHideHeaderRunnable = new Runnable() {
 		public void run() {
@@ -654,17 +672,31 @@ public abstract class RefreshableViewWrapper<E extends View> {
 		mLastRefreshTime = time;
 	}
 
-	public void hideLoadingBar() {
+	public void showNoMoreLoadingBar() {
 		mHasLoadingBar = false;
 		mFooterTipsTv.setText(R.string.global_list_no_more);
 		if (mFooterProgressBar != null) {
 			mFooterProgressBar.setVisibility(View.GONE);
 			mFooterProgressBar.clearAnimation();
 		}
+
+		mFooterContainer.setClickable(false);
+	}
+
+	public void showErrorLoadingBar() {
+		mHasLoadingBar = false;
+
+		mFooterTipsTv.setText(R.string.global_retry);
+
+		if (mFooterProgressBar != null) {
+			mFooterProgressBar.setVisibility(View.GONE);
+			mFooterProgressBar.clearAnimation();
+		}
+		mFooterContainer.setClickable(true);
 	}
 
 	public void showLoadingBar() {
-		if(mAddFooter){
+		if (mAddFooter) {
 			mHasLoadingBar = true;
 		}
 		mFooterTipsTv.setText(R.string.global_list_loading);
@@ -673,6 +705,7 @@ public abstract class RefreshableViewWrapper<E extends View> {
 			mFooterProgressBar.setVisibility(View.VISIBLE);
 			mFooterProgressBar.startAnimation(mLoadingAnimation);
 		}
+		mFooterContainer.setClickable(false);
 	}
 
 	public boolean hasLoadingBar() {
@@ -684,16 +717,17 @@ public abstract class RefreshableViewWrapper<E extends View> {
 			mListener.onRefresh();
 		}
 	}
-	
-	public void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount){
+
+	public void onScroll(int firstVisibleItem, int visibleItemCount,
+			int totalItemCount) {
 		if (firstVisibleItem == 0) {
 			setRefreshable(true);
 		} else {
 			setRefreshable(false);
 		}
 		if (mListener != null) {
-			mListener.onScroll(mMainView, firstVisibleItem,
-					visibleItemCount, totalItemCount, mDirection);
+			mListener.onScroll(mMainView, firstVisibleItem, visibleItemCount,
+					totalItemCount, mDirection);
 		}
 	}
 

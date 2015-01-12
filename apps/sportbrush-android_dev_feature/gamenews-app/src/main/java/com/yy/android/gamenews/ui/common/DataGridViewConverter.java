@@ -122,4 +122,9 @@ public class DataGridViewConverter extends DataViewConverter<GridView> {
 		return new RefreshGridViewWrapper(mContext, mGridView, addHeader,
 				addFooter);
 	}
+
+	@Override
+	public void stopScroll() {
+		// TODO: stop scroll gridview
+	}
 }

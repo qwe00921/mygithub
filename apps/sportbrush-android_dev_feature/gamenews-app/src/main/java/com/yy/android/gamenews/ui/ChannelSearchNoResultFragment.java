@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,13 +16,13 @@ import android.widget.TextView;
 import com.duowan.gamenews.Channel;
 import com.duowan.gamenews.Column;
 import com.yy.android.gamenews.Constants;
-import com.yy.android.sportbrush.R;
 import com.yy.android.gamenews.event.SubscribeEvent;
 import com.yy.android.gamenews.model.ChannelModel;
 import com.yy.android.gamenews.ui.common.SwitchImageLoader;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.ToastUtil;
 import com.yy.android.gamenews.util.Util;
+import com.yy.android.sportbrush.R;
 
 import de.greenrobot.event.EventBus;
 

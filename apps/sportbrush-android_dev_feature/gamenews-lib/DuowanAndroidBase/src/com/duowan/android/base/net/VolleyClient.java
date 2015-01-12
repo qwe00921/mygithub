@@ -6,22 +6,21 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.http.AndroidHttpClient;
-import android.os.Build;
 import android.util.Log;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
 import com.duowan.android.base.BaseActivity;
+import com.duowan.android.base.BuildConfig;
 import com.duowan.android.base.event.UniPacketErrorEvent;
 import com.duowan.android.base.event.VolleyErrorEvent;
 import com.duowan.android.base.event.VolleyInitEvent;
@@ -35,6 +34,7 @@ import de.greenrobot.event.EventBus;
  * @version 创建时间：2014-3-10 下午3:14:12
  */
 public class VolleyClient {
+	public static boolean ENCRYPT = true;
 
 	private final static String TAG = "Volley";
 	private static final String DEFAULT_CACHE_DIR = "volley";
@@ -59,15 +59,8 @@ public class VolleyClient {
 		}
 
 		HttpStack stack = null;
-		if (Build.VERSION.SDK_INT >= 9) {
-			stack = new HurlStack();
-		} else {
-			// Prior to Gingerbread, HttpUrlConnection was unreliable.
-			// See:
-			// http://android-developers.blogspot.com/2011/09/androids-http-clients.html
-			stack = new HttpClientStack(
-					AndroidHttpClient.newInstance(userAgent));
-		}
+		// always use HttpClientStack because WUP proxy is not good enough
+		stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
 
 		Network network = new BasicNetwork(stack);
 		if (maxCacheSizeInBytes <= 0) {
@@ -87,77 +80,21 @@ public class VolleyClient {
 		return mRequestQueue;
 	}
 
-	public static void newRequestQueue(String host, final UniPacket uniPacket,
-			final Listener responseListener) {
+	public static void newRequestQueue(String host, UniPacket uniPacket,
+			Listener responseListener) {
 		newRequestQueue(host, uniPacket, null, null, responseListener);
 	}
 
-	public static void newRequestQueue(String host, final UniPacket uniPacket,
-			final String cacheKey, final String tag,
-			final Listener responseListener) {
-		newRequestQueue(host, uniPacket, cacheKey, tag, 2500, responseListener);
+	public static void newRequestQueue(String host, UniPacket uniPacket,
+			String cacheKey, String tag, Listener responseListener) {
+		newRequestQueue(host, uniPacket, cacheKey, tag, null, responseListener);
 	}
 
-	/**
-	 * WUP（wireless uni-protocol）无线统一协议 基于jce编码的命令字(Command)层协议封装
-	 * UniPacket实现请求与回应包对象的封装
-	 * 
-	 * <p>
-	 * post {@link UniPacketErrorEvent} to
-	 * {@link BaseActivity#onEventMainThread(UniPacketErrorEvent)}
-	 * </p>
-	 * <p>
-	 * post {@link VolleyErrorEvent} to
-	 * {@link BaseActivity#onEventMainThread(VolleyErrorEvent)}
-	 * </p>
-	 * 
-	 * @param uniPacket
-	 * @param cacheKey
-	 * @param responseListener
-	 */
-	public static void newRequestQueue(String host, final UniPacket uniPacket,
-			final String cacheKey, final String tag, final int timeout,
-			final Listener responseListener) {
-		log(uniPacket, "request host: " + host);
-		WupRequest request = new WupRequest(host, uniPacket,
-				new Response.Listener<UniPacket>() {
-					@Override
-					public void onResponse(UniPacket response) {
-						log(response, "response");
-
-						if (responseListener == null)
-							return;
-
-						try {
-							responseListener.onResponse(response);
-						} catch (Exception e) {
-							if (com.duowan.android.base.BuildConfig.DEBUG) {
-								Log.e(TAG, "UniPacket response parse error !",
-										e);
-							}
-							EventBus.getDefault()
-									.post(new com.duowan.android.base.event.UniPacketErrorEvent(
-											e.getMessage()));
-							responseListener.onError(e);
-						}
-					}
-				}, new Response.ErrorListener() {
-
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						EventBus.getDefault()
-								.post(new com.duowan.android.base.event.VolleyErrorEvent(
-										error));
-						if (responseListener != null)
-							responseListener.onError(error);
-					}
-				});
-		request.setRetryPolicy(new DefaultRetryPolicy(timeout,
-				DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-		request.setCacheKey(cacheKey);
-		request.setTag(tag);
-		newRequestQueue(request);
+	public static void newRequestQueue(String host, UniPacket uniPacket,
+			String cacheKey, String tag, RetryPolicy retryPolicy,
+			Listener responseListener) {
+		newRequestQueue(host, uniPacket, cacheKey, tag, -1, -1, retryPolicy,
+				responseListener);
 	}
 
 	/**
@@ -177,56 +114,68 @@ public class VolleyClient {
 	 * @param uniPacket
 	 * @param cacheKey
 	 * @param tag
-	 * @param timeout
 	 * @param cacheHitButRefreshed
 	 * @param cacheExpired
+	 * @param retryPolicy
 	 * @param responseListener
 	 */
-	public static void newRequestQueue(String host, final UniPacket uniPacket,
-			final String cacheKey, final String tag, final int timeout,
-			long cacheHitButRefreshed, long cacheExpired,
+	public static void newRequestQueue(String host, UniPacket uniPacket,
+			String cacheKey, String tag, long cacheHitButRefreshed,
+			long cacheExpired, RetryPolicy retryPolicy,
 			final Listener responseListener) {
 		log(uniPacket, "request host: " + host);
-		WupRequest request = new WupRequest(host, uniPacket,
-				new Response.Listener<UniPacket>() {
-					@Override
-					public void onResponse(UniPacket response) {
-						log(response, "response");
 
-						if (responseListener == null)
-							return;
+		Response.Listener<UniPacket> listener = new Response.Listener<UniPacket>() {
+			@Override
+			public void onResponse(UniPacket response) {
+				log(response, "response");
 
-						try {
-							responseListener.onResponse(response);
-						} catch (Exception e) {
-							if (com.duowan.android.base.BuildConfig.DEBUG) {
-								Log.e(TAG, "UniPacket response parse error !",
-										e);
-							}
-							EventBus.getDefault()
-									.post(new com.duowan.android.base.event.UniPacketErrorEvent(
-											e.getMessage()));
-							responseListener.onError(e);
-						}
+				if (responseListener == null)
+					return;
+
+				try {
+					responseListener.onResponse(response);
+				} catch (Exception e) {
+					if (com.duowan.android.base.BuildConfig.DEBUG) {
+						Log.e(TAG, "UniPacket response parse error !", e);
 					}
-				}, new Response.ErrorListener() {
+					EventBus.getDefault()
+							.post(new com.duowan.android.base.event.UniPacketErrorEvent(
+									e.getMessage()));
+					responseListener.onError(e);
+				}
+			}
+		};
 
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						EventBus.getDefault()
-								.post(new com.duowan.android.base.event.VolleyErrorEvent(
-										error));
-						if (responseListener != null)
-							responseListener.onError(error);
-					}
-				});
-		request.setRetryPolicy(new DefaultRetryPolicy(timeout,
-				DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		Response.ErrorListener errorListener = new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				log(error);
+
+				EventBus.getDefault().post(
+						new com.duowan.android.base.event.VolleyErrorEvent(
+								error));
+				if (responseListener != null)
+					responseListener.onError(error);
+			}
+		};
+
+//		boolean encrypt = ENCRYPT || !BuildConfig.DEBUG;
+		boolean encrypt = false;
+		WupRequest request = new WupRequest(host, uniPacket, encrypt, listener,
+				errorListener);
+
 		request.setCacheKey(cacheKey);
 		request.setTag(tag);
-		request.setCacheHitButRefreshed(cacheHitButRefreshed);
-		request.setCacheExpired(cacheExpired);
+		if (cacheHitButRefreshed >= 0) {
+			request.setCacheHitButRefreshed(cacheHitButRefreshed);
+		}
+		if (cacheExpired >= 0) {
+			request.setCacheExpired(cacheExpired);
+		}
+		if (retryPolicy != null) {
+			request.setRetryPolicy(retryPolicy);
+		}
 		newRequestQueue(request);
 	}
 
@@ -249,6 +198,14 @@ public class VolleyClient {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	private static void log(VolleyError error) {
+		if (com.duowan.android.base.BuildConfig.DEBUG) {
+			if (error == null)
+				return;
+			Log.e(TAG, error.toString());
 		}
 	}
 

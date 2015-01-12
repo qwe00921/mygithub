@@ -209,11 +209,15 @@ public class ChannelSearchActivity extends BaseActivity implements
 
 		@Override
 		public int getCount() {
-			return resultList.size();
+			return resultList == null ? 0 : resultList.size();
 		}
 
 		@Override
 		public String getItem(int index) {
+			if (resultList == null || index < 0
+					|| index >= resultList.size()) {
+				return null;
+			}
 			return resultList.get(index);
 		}
 
@@ -260,10 +264,6 @@ public class ChannelSearchActivity extends BaseActivity implements
 							response.getHasMore(), channels);
 				}
 			}
-
-			public void onError(Exception e) {
-				ToastUtil.showToast(R.string.http_error);
-			};
 		};
 		ChannelModel
 				.searchChannel(responseListener, keyWord, attachInfo, count);

@@ -40,6 +40,8 @@ public abstract class DataViewConverter<VIEW extends View> {
 	public abstract void setSelection(int selection);
 
 	public abstract int getFirstVisiblePosition();
+	
+	public abstract void stopScroll();
 
 	public abstract void setOnItemClickListener(OnItemClickListener listener);
 

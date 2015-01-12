@@ -82,10 +82,7 @@ public class CartportFragment extends BaseFragment implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				Activity activity = getActivity();
-				if (activity != null) {
-					activity.onBackPressed();
-				}
+				onActivityBackPressed();
 			}
 		});
 		// mActionBar.setActionBarBgColor(0xff222528);

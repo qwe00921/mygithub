@@ -18,6 +18,7 @@ import com.duowan.autonews.GetCarDetailRsp;
 import com.duowan.gamenews.RefreshType;
 import com.yy.android.gamenews.model.CartModel;
 import com.yy.android.gamenews.ui.BaseListFragment;
+import com.yy.android.gamenews.ui.SingleFragmentActivity;
 import com.yy.android.gamenews.ui.common.ImageAdapter;
 import com.yy.android.gamenews.ui.common.SwitchImageLoader;
 import com.yy.android.gamenews.util.StatsUtil;
@@ -52,7 +53,7 @@ public class CartDetailSummaryFragment extends
 		Bundle params = getArguments();
 
 		if (params != null) {
-			mCartId = params.getInt(SingleFragmentActivity.TAG_FGMT_CARTID);
+			mCartId = params.getInt(CartDetailActivity.TAG_FGMT_CARTID);
 		}
 		super.onCreate(savedInstanceState);
 	}
@@ -149,7 +150,7 @@ public class CartDetailSummaryFragment extends
 			if (detail != null) {
 				listData = detail.getItemList();
 				if (refreshType == RefreshType._REFRESH_TYPE_LOAD_MORE) {
-					requestFinish(refreshType, listData, loadMore, false);
+					requestFinish(refreshType, listData, loadMore, false, false);
 					return;
 				}
 				mCarNameView.setText(detail.getName());
@@ -163,7 +164,7 @@ public class CartDetailSummaryFragment extends
 			}
 		}
 		updateParams(first);
-		requestFinish(refreshType, listData, loadMore, true);
+		requestFinish(refreshType, listData, loadMore, true, false);
 	}
 
 	@Override

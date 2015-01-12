@@ -80,6 +80,7 @@ public class FileUtil {
 		String toFileName = String.format("%s/%s.jpg", getBaseDir(),
 				fromFile.getName());
 		File toFile = new File(toFileName);
+		toFile.mkdirs();
 		if (toFile.exists()) {
 			toFile.delete();
 		}
@@ -342,14 +343,22 @@ public class FileUtil {
 		return sb.toString();
 	}
 
-	public static byte[] md5(byte[] data) throws NoSuchAlgorithmException {
+	public static byte[] md5Byte2Byte(byte[] data)
+			throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
+		if (data == null) {
+			return null;
+		}
 		return md.digest(data);
 	}
 
-	public static String md5(String text) throws NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		byte[] data = md.digest(text.getBytes());
+	public static String md5Byte2String(byte[] original)
+			throws NoSuchAlgorithmException {
+		byte[] data = md5Byte2Byte(original);
+
+		if (data == null) {
+			return null;
+		}
 
 		StringBuilder buf = new StringBuilder("");
 		int i = 0;
@@ -362,6 +371,11 @@ public class FileUtil {
 			buf.append(Integer.toHexString(i));
 		}
 		return buf.toString();
+	}
+
+	public static String md5Str2Str(String text)
+			throws NoSuchAlgorithmException {
+		return md5Byte2String(text.getBytes());
 	}
 
 }

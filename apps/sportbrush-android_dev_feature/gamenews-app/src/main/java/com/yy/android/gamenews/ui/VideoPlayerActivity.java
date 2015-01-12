@@ -1,5 +1,6 @@
 package com.yy.android.gamenews.ui;
 
+import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,6 +27,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -37,6 +39,7 @@ import com.yy.android.gamenews.event.NetWorkChangeEvent;
 import com.yy.android.gamenews.ui.common.UiUtils;
 import com.yy.android.gamenews.ui.view.AppDialog;
 import com.yy.android.gamenews.ui.view.AppDialog.OnClickListener;
+import com.yy.android.gamenews.util.ToastUtil;
 import com.yy.android.gamenews.util.Util;
 import com.yy.android.sportbrush.R;
 
@@ -62,34 +65,61 @@ public class VideoPlayerActivity extends Activity implements
 	private SeekBar seekbar = null;// 进度
 	private SeekBar soundBar = null;// 音量调节
 	private TextView progress = null;
-	private Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			switch (msg.what) {
-			case 1:
-				if (mediaPlayer != null) {
+	private Handler handler = new MyHandler(this);
 
-					int duration = mediaPlayer.getDuration();
-					if (seekbar.getMax() == 0) {
-						seekbar.setMax(duration);
-					}
-					if (toTime(0).equals(durationTime.getText())) {
-						durationTime.setText(toTime(duration));// 设置时间
-					}
-					currentPosition = mediaPlayer.getCurrentPosition();
-				}
+	private static final int MSG_REFRESH = 1;
+	private static final int MSG_HIDE_CONTROLLER = 2;
 
-				seekbar.setProgress(currentPosition);
-				playtime.setText(toTime(currentPosition));
-				handler.sendEmptyMessage(1);
-				break;
+	private static class MyHandler extends Handler {
+		private WeakReference<VideoPlayerActivity> mRef;
 
-			default:
-				break;
-			}
-
+		public MyHandler(VideoPlayerActivity activity) {
+			mRef = new WeakReference<VideoPlayerActivity>(activity);
 		}
-	};// 用于进度条
+
+		@Override
+		public void handleMessage(Message msg) {
+			VideoPlayerActivity activity = mRef.get();
+
+			if (activity != null) {
+
+				switch (msg.what) {
+				case MSG_REFRESH: {
+					activity.refresh();
+					break;
+				}
+				case MSG_HIDE_CONTROLLER: {
+					activity.hideController();
+					break;
+				}
+				}
+			}
+			super.handleMessage(msg);
+		}
+	}
+
+	private void refresh() {
+		if (mediaPlayer != null) {
+
+			int duration = mediaPlayer.getDuration();
+			if (seekbar.getMax() == 0) {
+				seekbar.setMax(duration);
+			}
+			if (toTime(0).equals(durationTime.getText())) {
+				durationTime.setText(toTime(duration));// 设置时间
+			}
+			currentPosition = mediaPlayer.getCurrentPosition();
+
+			// adjustDisplay();
+		}
+
+		seekbar.setProgress(currentPosition);
+		playtime.setText(toTime(currentPosition));
+
+		if (handler != null) {
+			handler.sendEmptyMessage(1);
+		}
+	}
 
 	public static void startVideoPlayerActivity(Context context, String title,
 			String url) {
@@ -104,34 +134,29 @@ public class VideoPlayerActivity extends Activity implements
 	private AudioManager mAudioManager = null;
 	private View video_contrlbar, titlebar;
 	private boolean isControlBarShow = true;
-	Display currentDisplay;
-	SurfaceView surfaceView;
-	SurfaceHolder surfaceHolder;
-	MediaPlayer mediaPlayer;// 使用的是MediaPlayer来播放视频
-	int ScurrentPosition; // 音量
-	Timer showController = new Timer();
-	TimerTask timerTask;
-	private Handler fHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			switch (msg.what) {
-			case 1:
-				video_contrlbar.setVisibility(View.GONE);
-				titlebar.setVisibility(View.GONE);
-				isControlBarShow = false;
-				break;
-			default:
-				break;
-			}
-		}
-	};// 用于控制台显隐
+	private boolean isSeekbarPressed;
+	private Display currentDisplay;
+	private Button mBackBtn;
+	private SurfaceView surfaceView;
+	private SurfaceHolder surfaceHolder;
+	private MediaPlayer mediaPlayer;// 使用的是MediaPlayer来播放视频
+	private int ScurrentPosition; // 音量
+	private Timer showController = new Timer();
+	private TimerTask timerTask;
+
+	private void hideController() {
+		video_contrlbar.setVisibility(View.GONE);
+		titlebar.setVisibility(View.GONE);
+		isControlBarShow = false;
+	}
+
 	boolean readyToPlayer = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate :1");
-		
+
 		mAudioManager = (AudioManager) VideoPlayerActivity.this
 				.getSystemService(AUDIO_SERVICE);
 		EventBus.getDefault().register(this);
@@ -142,7 +167,6 @@ public class VideoPlayerActivity extends Activity implements
 		setContentView(R.layout.activity_video_player);
 
 		name = getIntent().getStringExtra(EXTRA_VIDEO_TITLE);
-		// url = "http://www.w3schools.com/html/mov_bbb.mp4"; // 网络视频和本地视频都可以的
 		url = getIntent().getStringExtra(EXTRA_VIDEO_URL);
 		Log.d(TAG, " url :" + url);
 
@@ -150,6 +174,14 @@ public class VideoPlayerActivity extends Activity implements
 		// dialog.setMessage("加载中...");
 		// dialog.show();
 		progress = (TextView) findViewById(R.id.progress);
+		mBackBtn = (Button) findViewById(R.id.back);
+		mBackBtn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				doExit();
+			}
+		});
 
 		// 控制台
 		video_contrlbar = (View) findViewById(R.id.video_contrlbar);
@@ -184,12 +216,17 @@ public class VideoPlayerActivity extends Activity implements
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-
+				play();
+				isSeekbarPressed = false;
+				repostHideControllerEvent();
 			}
 
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-
+				if (mediaPlayer != null) {
+					mediaPlayer.pause();
+				}
+				isSeekbarPressed = true;
 			}
 
 			@Override
@@ -199,6 +236,9 @@ public class VideoPlayerActivity extends Activity implements
 					mediaPlayer.seekTo(progress);
 			}
 		});
+
+		seekbar.setEnabled(false);
+		playBtn.setEnabled(false);
 
 		/* 音量控制条 */
 		soundBar = (SeekBar) findViewById(R.id.video_sound);
@@ -234,14 +274,15 @@ public class VideoPlayerActivity extends Activity implements
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-		surfaceView.setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.MainView).setOnClickListener(
+				new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				showControlBar(); // 点击屏幕时，调出控制台；
-			}
-		});
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						showControlBar(); // 点击屏幕时，调出控制台；
+					}
+				});
 		Log.d(TAG, "onCreate :2");
 		setup();
 		currentDisplay = getWindowManager().getDefaultDisplay();
@@ -251,6 +292,9 @@ public class VideoPlayerActivity extends Activity implements
 	@Override
 	protected void onDestroy() {
 		EventBus.getDefault().unregister(this);
+		handler.removeMessages(MSG_HIDE_CONTROLLER);
+		handler.removeMessages(MSG_REFRESH);
+		releaseMediaPlayer();
 		super.onDestroy();
 	}
 
@@ -258,6 +302,10 @@ public class VideoPlayerActivity extends Activity implements
 		video_contrlbar.setVisibility(View.VISIBLE);
 		titlebar.setVisibility(View.VISIBLE);
 		isControlBarShow = true;
+		repostHideControllerEvent();
+	}
+
+	private void repostHideControllerEvent() {
 		if (timerTask != null) {
 			timerTask.cancel();
 		}
@@ -265,30 +313,14 @@ public class VideoPlayerActivity extends Activity implements
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				if (isControlBarShow) {
-					Message msg = fHandler.obtainMessage(1);
-					fHandler.sendMessage(msg);
+				if (isControlBarShow && !isSeekbarPressed) {
+					handler.sendEmptyMessage(MSG_HIDE_CONTROLLER);
 				}
 			}
 
 		};
 		showController.schedule(timerTask, 5000); // 5秒后隐藏
 	}
-
-	Runnable contrlShow = new Runnable() {
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			video_contrlbar.setVisibility(View.GONE);
-			titlebar.setVisibility(View.GONE);
-			isControlBarShow = false;
-			fHandler.postDelayed(contrlShow, 5000);
-
-		}
-
-	};
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -330,41 +362,15 @@ public class VideoPlayerActivity extends Activity implements
 	private void setup() {
 		loadClip();
 		mediaPlayer.prepareAsync();
-		// try {
-		// mediaPlayer.setOnPreparedListener(new OnPreparedListener() {
-		//
-		// @Override
-		// public void onPrepared(final MediaPlayer mp) {
-		// seekbar.setMax(mp.getDuration());// 设置播放进度条最大值
-		// handler.sendEmptyMessage(1);// 向handler发送消息，启动播放进度条
-		// playtime.setText(toTime(mp.getCurrentPosition()));// 初始化播放时间
-		// durationTime.setText(toTime(mp.getDuration()));// 设置时间
-		// mp.seekTo(currentPosition);// 初始化MediaPlayer播放位置
-		// /* 获得最大音量 */
-		// mAudioManager = (AudioManager) VideoPlayerActivity.this
-		// .getSystemService(VideoPlayerActivity.this.AUDIO_SERVICE);
-		// int maxSound = mAudioManager
-		// .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		//
-		// /* 获得当前音量 */
-		// int currentSound = mAudioManager
-		// .getStreamVolume(AudioManager.STREAM_MUSIC);
-		//
-		// soundBar.setMax(maxSound);
-		// soundBar.setProgress(currentSound);
-		// play();
-		// }
-		// });
-		// mediaPlayer.prepareAsync();
-		//
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
 	}
 
 	private void play() {
-		// Log.d(TAG, "cancel dialog:" + dialog);
-		/* 设置视频尺寸 */
+		mediaPlayer.start();
+		playBtn.setBackgroundResource(R.drawable.video_pause_selector);
+		adjustDisplay();
+	}
+
+	private void adjustDisplay() {
 		int tmpWidth = currentDisplay.getWidth();
 		int tmpHeight = currentDisplay.getHeight();
 		int videoHeight = mediaPlayer.getVideoHeight();
@@ -383,13 +389,18 @@ public class VideoPlayerActivity extends Activity implements
 			}
 		}
 
-		surfaceView.setLayoutParams(new LinearLayout.LayoutParams(width,
-				height));
-		// if (dialog != null) {
-		// dialog.dismiss();
-		// }
-		mediaPlayer.start();
-		playBtn.setBackgroundResource(R.drawable.video_pause_selector);
+		if (width == surfaceView.getWidth()
+				&& height == surfaceView.getHeight()) {
+			return;
+		}
+
+		surfaceView
+				.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+		if (width == 0 || height == 0) {
+			surfaceView.setVisibility(View.INVISIBLE);
+		} else {
+			surfaceView.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void pause() {
@@ -417,30 +428,36 @@ public class VideoPlayerActivity extends Activity implements
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) { // surface销毁时结束播放，防止按下home键后仍有声音,但无法播放图像。
 
+		finish();
+	}
+
+	private void releaseMediaPlayer() {
 		if (mediaPlayer != null) {
 			mediaPlayer.reset();
 			mediaPlayer.release();
 			mediaPlayer = null;
 		}
-		finish();
-
 	}
 
 	@Override
 	public void onVideoSizeChanged(MediaPlayer arg0, int arg1, int arg2) {
 		Log.d(TAG, "onVideoSizeChanged");
-
+		adjustDisplay();
 	}
 
 	@Override
 	public void onSeekComplete(MediaPlayer mp) {
 		Log.d(TAG, "onSeekComplete");
-
+		seekbar.setEnabled(true);
+		playBtn.setEnabled(true);
 	}
 
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		Log.d(TAG, "onPrepared");
+		seekbar.setEnabled(true);
+		playBtn.setEnabled(true);
+
 		mp.seekTo(currentPosition);// 初始化MediaPlayer播放位置
 		play();
 
@@ -448,6 +465,7 @@ public class VideoPlayerActivity extends Activity implements
 		seekbar.setMax(duration);// 设置播放进度条最大值
 		durationTime.setText(toTime(mp.getDuration()));// 设置时间
 		playtime.setText(toTime(mp.getCurrentPosition()));// 初始化播放时间
+		// adjustDisplay();
 		handler.sendEmptyMessage(1);// 向handler发送消息，启动播放进度条
 		/* 获得最大音量 */
 
@@ -472,12 +490,18 @@ public class VideoPlayerActivity extends Activity implements
 	@Override
 	public boolean onError(MediaPlayer arg0, int arg1, int arg2) {
 		Log.d(TAG, "onError");
+		if (arg2 == MediaPlayer.MEDIA_ERROR_IO) {
+			ToastUtil.showToast(R.string.http_error);
+		} else {
+			ToastUtil.showToast("播放出错，请重试！");
+		}
+		finish();
 		return false;
 	}
 
 	@Override
 	public void onCompletion(MediaPlayer arg0) { // 播放完后自动退出
-		// finish();
+		finish();
 	}
 
 	@Override
@@ -539,13 +563,17 @@ public class VideoPlayerActivity extends Activity implements
 			}, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
 		} else {
-			if (mediaPlayer != null) {
-				mediaPlayer.reset();
-				mediaPlayer.release();
-				mediaPlayer = null;
-			}
-			finish();
+			doExit();
 		}
+	}
+	
+	private void doExit() {
+		if (mediaPlayer != null) {
+			mediaPlayer.reset();
+			mediaPlayer.release();
+			mediaPlayer = null;
+		}
+		finish();
 	}
 
 	private boolean mIsNotified;

@@ -1,6 +1,5 @@
 package com.yy.android.gamenews.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.TimeoutError;
+import com.duowan.Comm.ECommAppType;
 import com.duowan.android.base.model.BaseModel.ResponseListener;
-import com.duowan.gamenews.ArticleInfo;
 import com.duowan.gamenews.LoginActionFlag;
 import com.duowan.gamenews.MeRsp;
 import com.duowan.gamenews.PlatType;
@@ -28,6 +28,7 @@ import com.duowan.gamenews.UserInitReq;
 import com.duowan.gamenews.UserInitRsp;
 import com.duowan.gamenews.switchsInfo;
 import com.duowan.gamenews.swiths;
+import com.duowan.show.NotificationRsp;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -39,8 +40,11 @@ import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.yy.android.gamenews.Constants;
+import com.yy.android.gamenews.event.MessageEvent;
 import com.yy.android.gamenews.model.ArticleModel;
 import com.yy.android.gamenews.model.InitModel;
+import com.yy.android.gamenews.plugin.distribution.DistributionListActivity;
+import com.yy.android.gamenews.plugin.message.MessageActivity;
 import com.yy.android.gamenews.ui.common.SwitchImageLoader;
 import com.yy.android.gamenews.ui.common.UiUtils;
 import com.yy.android.gamenews.ui.view.ActionBar;
@@ -57,9 +61,12 @@ import com.yy.android.gamenews.util.Util;
 import com.yy.android.gamenews.util.thread.BackgroundTask;
 import com.yy.android.sportbrush.R;
 
+import de.greenrobot.event.EventBus;
+
 public class MyHomeActivity extends BaseActivity implements OnClickListener {
 
 	private static final String TAG = LoginYYActivity.class.getSimpleName();
+	private static final String REQUEST_CODE = "request_code";
 	private View mLoginLayout;
 	private View mUserInfoLayout;
 	private View mLogoutView;
@@ -77,6 +84,7 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 	private TextView mShareTo;
 	private ImageView mUserPicView;
 	private ActionBar mActionBar;
+	private TextView mUnreadMessageCount;
 
 	private IPageCache mPageCache;
 	private Preference mPref;
@@ -88,13 +96,20 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 
 	UMSocialService mController;
 
-	private ArrayList<ArticleInfo> mMyFavorList;
 	private SwitchImageLoader mImageLoader;
 
 	private Dialog mCleanCacheDialog;
+	private View mMessageCountView;
 
-	public static void startMyHomeActivity(Activity context) {
-		context.startActivity(new Intent(context, MyHomeActivity.class));
+	public static void startMyHomeActivityForResult(Activity context) {
+		startMyHomeActivityForResult(context, Constants.REQUEST_LOGIN);
+	}
+
+	public static void startMyHomeActivityForResult(Activity context,
+			int requestCode) {
+		Intent intent = new Intent(context, MyHomeActivity.class);
+		intent.putExtra(REQUEST_CODE, requestCode);
+		context.startActivityForResult(intent, requestCode);
 		context.overridePendingTransition(R.anim.myhome_open_enter,
 				R.anim.myhome_open_exit);
 	}
@@ -102,6 +117,7 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_myhome);
+		EventBus.getDefault().register(MyHomeActivity.this);
 		mController = UMServiceFactory.getUMSocialService("com.umeng.login",
 				RequestType.SOCIAL);
 		mController.getConfig().setSsoHandler(
@@ -150,9 +166,65 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 		mPageCache = new IPageCache();
 		updateSettings();
 		requestMeRsp();
-
+		if(Constants
+				.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)){
+			addMessageRecord();// 增加进入个人消息入口
+		}
 		// mAttribute = Util.getDisplayAttribute(this);
 		super.onCreate(savedInstanceState);
+	}
+
+	public void onEvent(MessageEvent event) {
+		if (event != null && event.isNeedUpdate()&&Constants
+				.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
+			showPersonMessage();
+		}
+	}
+
+	private void showPersonMessage() {
+		NotificationRsp notifacation = mPref.getNotifacation();
+		if (notifacation != null && notifacation.getUnreadCount() > 0
+				&& mMessageCountView != null && mUnreadMessageCount != null) {
+			mUnreadMessageCount.setText(String.valueOf(notifacation
+					.getUnreadCount()));
+			mUnreadMessageCount.setVisibility(View.VISIBLE);
+		} else {
+			mUnreadMessageCount.setText("0");
+			mUnreadMessageCount.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * 进入个人消息入口
+	 */
+	private void addMessageRecord() {
+		mMessageCountView = LayoutInflater.from(this).inflate(
+				R.layout.global_actionbar_message, null);
+		mMessageCountView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mPref.setNotifacation(null);
+				MessageEvent event = new MessageEvent();
+				event.setNeedUpdate(MessageEvent.STATUS_SUCESS);
+				EventBus.getDefault().post(event);
+				MessageActivity.startMessageActivity(MyHomeActivity.this);
+			}
+		});
+		mUnreadMessageCount = (TextView) mMessageCountView
+				.findViewById(R.id.message_count);
+		mUnreadMessageCount.setTextColor(getResources().getColor(
+				R.color.global_white));
+		mUnreadMessageCount.setBackgroundResource(R.drawable.comment_count);
+		mUnreadMessageCount.setVisibility(View.GONE);
+		mActionBar.setCustomizeView(mMessageCountView);
+		showPersonMessage();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(MyHomeActivity.this);
 	}
 
 	private void requestMeRsp() {
@@ -245,12 +317,19 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		switch (requestCode) {
-		case LoginYYActivity.REQUEST_LOGIN: {
+		case Constants.REQUEST_LOGIN: {
 			if (resultCode == RESULT_OK) {
 				UserInitRsp rsp = (UserInitRsp) data
-						.getSerializableExtra(LoginYYActivity.EXTRA_USER_INIT_RSP);
+						.getSerializableExtra(Constants.EXTRA_USER_INIT_RSP);
 
 				onLoginSucc(rsp);
+			}
+			break;
+		}
+		case Constants.REQUEST_LOGIN_REDIRECT: {
+			if (resultCode == RESULT_OK) {
+				DistributionListActivity.startDistributionListActivity(this,
+						DistributionListActivity.FROM_MYHOME);
 			}
 			break;
 		}
@@ -295,7 +374,7 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 				return;
 			}
 			Intent intent = new Intent(this, LoginYYActivity.class);
-			startActivityForResult(intent, LoginYYActivity.REQUEST_LOGIN);
+			startActivityForResult(intent, Constants.REQUEST_LOGIN);
 			break;
 		}
 		case R.id.feedback: {
@@ -304,19 +383,30 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 			break;
 		}
 		case R.id.my_event_sign_btn: {
-			Intent intent = new Intent(this, AppWebActivity.class);
-			intent.putExtra(AppWebActivity.KEY_URL, mSignUrl);
-			intent.putExtra(AppWebActivity.KEY_TITLE, AppWebActivity.TITLE_SIGN);
-			startActivity(intent);
+			// Intent intent = new Intent(this, AppWebActivity.class);
+			// intent.putExtra(AppWebActivity.KEY_URL, mSignUrl);
+			// intent.putExtra(AppWebActivity.KEY_TITLE,
+			// AppWebActivity.TITLE_SIGN);
+			// startActivity(intent);
+
+			// 将目前“签到”按钮更改为“赚取T豆”按钮
+			if (!Util.isNetworkConnected()) {
+				ToastUtil.showToast(R.string.http_not_connected);
+				return;
+			}
+			if(mPref.isUserLogin()){
+				DistributionListActivity.startDistributionListActivity(this,
+						DistributionListActivity.FROM_MYHOME);
+			}else{
+				Intent intent = new Intent(this, LoginYYActivity.class);
+				startActivityForResult(intent, Constants.REQUEST_LOGIN_REDIRECT);
+			}
+			
 			break;
 		}
 		case R.id.my_event_btn: {
 			Intent intent = new Intent(this, AppWebActivity.class);
-			UserInitRsp rsp = mPref.getInitRsp();
-			String accessToken = "";
-			if (rsp != null) {
-				accessToken = rsp.getAccessToken();
-			}
+			String accessToken = Util.getAccessToken();
 			intent.putExtra(AppWebActivity.KEY_URL, Constants.MY_EVENT_URL
 					+ "&token=" + accessToken);
 			intent.putExtra(AppWebActivity.KEY_TITLE, AppWebActivity.TITLE_HD);
@@ -369,12 +459,10 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 						@Override
 						public void onDialogClick(int nButtonId) {
 							if (nButtonId == AppDialog.BUTTON_POSITIVE) {
-								mCleanCacheDialog = UiUtils
-										.cleanCacheDialogShow(
-												MyHomeActivity.this,
-												getResources()
-														.getString(
-																R.string.clean_cacheing));
+								mCleanCacheDialog = UiUtils.loadingDialogShow(
+										MyHomeActivity.this,
+										getResources().getString(
+												R.string.clean_cacheing));
 								new CleanCacheTask().execute();
 								StatsUtil.statsReportAllData(
 										MyHomeActivity.this, "clean_cache",
@@ -574,11 +662,21 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 				Toast.LENGTH_SHORT).show();
 		updateLoginStatus(true);
 
+		Intent intent = new Intent();
+		intent.putExtra(Constants.EXTRA_USER_INIT_RSP, rsp);
+		setResult(RESULT_OK, intent);
+
 		StatsUtil.statsReport(MyHomeActivity.this, "stats_login", "login_type",
 				"yy");
 		StatsUtil.statsReportByMta(MyHomeActivity.this, "stats_login",
 				"login_type", "yy");
 		StatsUtil.statsReportByHiido("stats_login", "login_type:yy");
+
+		if (getIntent() != null
+				&& getIntent().getIntExtra(REQUEST_CODE,
+						Constants.REQUEST_LOGIN) == Constants.REQUEST_LOGIN_REDIRECT) {
+			onBackPressed();
+		}
 	}
 
 	private boolean mIsLogin;
@@ -602,6 +700,7 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 
 		public void onError(Exception e) {
 			if (mIsLogin) {
+				mPref.setLoginType(PlatType._PLAT_TYPE_DEFAULT);
 				if (e instanceof TimeoutError) {
 
 					Toast.makeText(getApplicationContext(),
@@ -694,13 +793,13 @@ public class MyHomeActivity extends BaseActivity implements OnClickListener {
 			}
 			mCacheSize.setText(DataCleanManager.FormetFileSize(cacheSize));
 
-			if (showRegist) {
-				mRegistView.setVisibility(View.VISIBLE);
-				mRegistView.setClickable(true);
-			} else {
-				mRegistView.setVisibility(View.GONE);
-				mRegistView.setClickable(false);
-			}
+//			if (showRegist) {
+//				mRegistView.setVisibility(View.VISIBLE);
+//				mRegistView.setClickable(true);
+//			} else {
+//				mRegistView.setVisibility(View.GONE);
+//				mRegistView.setClickable(false);
+//			}
 
 			if (showEvent) {
 				mEventView.setVisibility(View.VISIBLE);

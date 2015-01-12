@@ -2,6 +2,7 @@ package com.yy.android.gamenews.event;
 
 public class ForthButtonTabEvent {
 	public static final String FORTH_TAB_INFO = "into_forth_tab_info";
+	public static final String FIVE_TAB_INFO = "into_five_tab_info";
 	public static final int _INTO_MY_HOME_CENTER = 1;
 	public static final int _INTO_HAND_INFO = 2;
 	public static final int _INTO_ORDER = 3;
