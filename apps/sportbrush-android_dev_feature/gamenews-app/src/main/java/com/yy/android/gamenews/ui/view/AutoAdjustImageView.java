@@ -41,6 +41,10 @@ public class AutoAdjustImageView extends ImageView {
 	public void setAdjustType(int type) {
 		mHelper.setAdjustType(type);
 	}
+	
+	public void setScaleRate(float scale){
+		mHelper.setScale(scale);
+	}
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

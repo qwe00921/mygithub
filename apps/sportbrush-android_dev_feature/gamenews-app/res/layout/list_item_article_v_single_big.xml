@@ -20,28 +20,22 @@
         android:paddingRight="@dimen/global_list_padding_h"
         android:paddingTop="@dimen/global_list_padding_top" >
 
-        <FrameLayout
-            android:id="@+id/list_articl_order_layout"
+        <TextView
+            android:id="@+id/tv_order"
+            style="@style/HomeListPrimaryText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="16dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="4dp" >
-
-            <TextView
-                android:id="@+id/tv_order"
-                style="@style/HomeListPrimaryText"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:background="@color/gamelist_time_color"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="1"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-        </FrameLayout>
+            android:layout_marginTop="4dp"
+            android:background="@color/gamelist_time_color"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/list_article_title"
@@ -49,8 +43,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/list_articl_order_layout"
-            android:layout_toRightOf="@+id/list_articl_order_layout"
+            android:layout_toEndOf="@+id/tv_order"
+            android:layout_toRightOf="@+id/tv_order"
             android:ellipsize="end"
             android:maxLines="2"
             android:paddingBottom="5dp"
@@ -62,9 +56,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/list_article_title"
-            android:layout_toEndOf="@+id/list_articl_order_layout"
-            android:layout_toRightOf="@+id/list_articl_order_layout"
-            android:layout_marginBottom="10dp" >
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/tv_order"
+            android:layout_toRightOf="@+id/tv_order" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -137,34 +131,18 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/list_article_img_layout"
-            android:layout_width="fill_parent"
+        <com.yy.android.gamenews.ui.view.AutoAdjustImageView
+            android:id="@+id/list_article_img1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/list_article_info_layout"
-            android:layout_toEndOf="@+id/list_articl_order_layout"
-            android:layout_toRightOf="@+id/list_articl_order_layout" >
-
-            <com.yy.android.gamenews.ui.view.AutoAdjustImageView
-                android:id="@+id/list_article_img1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/article_list_item_loading_big"
-                android:visibility="gone"
-                gamenews:adjustType="auto_adjust_scale_height"
-                gamenews:scaleRate="1.828" />
-
-            <com.yy.android.gamenews.ui.view.AutoAdjustImageView
-                android:id="@+id/list_article_mask_img1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="center"
-                android:src="@drawable/ic_list_video_mask"
-                android:visibility="gone"
-                gamenews:adjustType="auto_adjust_scale_height"
-                gamenews:scaleRate="1.828" />
-        </RelativeLayout>
+            android:layout_toEndOf="@+id/tv_order"
+            android:layout_toRightOf="@+id/tv_order"
+            android:scaleType="fitXY"
+            android:src="@drawable/article_list_item_loading_big"
+            android:visibility="gone"
+            gamenews:adjustType="auto_adjust_scale_height"
+            gamenews:scaleRate="1.828" />
     </RelativeLayout>
 
     <View

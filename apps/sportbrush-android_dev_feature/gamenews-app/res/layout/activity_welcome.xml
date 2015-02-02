@@ -34,39 +34,10 @@
         android:scaleType="centerInside"
         android:visibility="gone" />
 
-    <Button
-        android:id="@+id/dev"
-        android:layout_width="80dip"
-        android:layout_height="40dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="5dip"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/article_list_item_selector"
-        android:text="@string/app_dev"
-        android:visibility="gone" />
-
-    <Button
-        android:id="@+id/pre"
-        android:layout_width="80dip"
-        android:layout_height="40dip"
-        android:layout_alignBaseline="@+id/dev"
-        android:layout_alignBottom="@+id/dev"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/article_list_item_selector"
-        android:text="@string/app_pre"
-        android:visibility="gone" />
-
-    <Button
-        android:id="@+id/idc"
-        android:layout_width="80dip"
-        android:layout_height="40dip"
-        android:layout_alignBaseline="@+id/dev"
-        android:layout_alignBottom="@+id/dev"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dip"
-        android:background="@drawable/article_list_item_selector"
-        android:text="@string/app_idc"
-        android:visibility="gone" />
+    <ViewStub
+        android:id="@+id/app_custom_stub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout="@layout/app_custom_layout" />
 
 </RelativeLayout>

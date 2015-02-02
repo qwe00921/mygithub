@@ -1,0 +1,6 @@
+int drawable base_dialog_ffffff_bg 0x7f020000
+int drawable base_dialog_progress_bg 0x7f020001
+int id base_dialog_progress_loading 0x7f060000
+int layout base_dialog_progress 0x7f030000
+int string base_loading_text 0x7f040000
+int style BaseDialog 0x7f050000

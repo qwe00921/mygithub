@@ -18,11 +18,11 @@ import com.duowan.gamenews.UserInitRsp;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.event.ClickHotChannelEvent;
 import com.yy.android.gamenews.event.FragmentCallbackEvent;
+import com.yy.android.gamenews.event.RefreshEvent;
 import com.yy.android.gamenews.ui.AppWebFragment;
 import com.yy.android.gamenews.ui.ChannelArticleInfoFragment;
 import com.yy.android.gamenews.ui.ViewPagerAdapter;
 import com.yy.android.gamenews.ui.ViewPagerFragment;
-import com.yy.android.gamenews.ui.common.DataViewConverterFactory;
 import com.yy.android.gamenews.util.PushUtil;
 import com.yy.android.gamenews.util.Util;
 
@@ -45,10 +45,10 @@ public class ChannelDetailFragment extends ViewPagerFragment {
 		SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(
 				getChildFragmentManager());
 		ArrayList<ArticleCategory> categoryList = mChannel.getCategoryList();
-		if(categoryList == null) {
+		if (categoryList == null) {
 			categoryList = new ArrayList<ArticleCategory>();
 		}
-		if(categoryList.size() <= 0) {
+		if (categoryList.size() <= 0) {
 			categoryList.add(new ArticleCategory());
 		}
 		mSectionsPagerAdapter.updateDataSource(categoryList);
@@ -70,7 +70,7 @@ public class ChannelDetailFragment extends ViewPagerFragment {
 	public void onResume() {
 		super.onResume();
 	}
-	
+
 	@Override
 	protected boolean needCheckDivide() {
 		return true;
@@ -169,12 +169,6 @@ public class ChannelDetailFragment extends ViewPagerFragment {
 				type = category.getId();
 			}
 			switch (type) {
-
-			case SubType._SUBTYPE_FALL: {
-				fragment = ChannelArticleInfoFragment.newInstance(mChannel,
-						DataViewConverterFactory.TYPE_LIST_WATERFALL, category);
-				break;
-			}
 			case SubType._SUBTYPE_GIFT: {
 
 				UserInitRsp rsp = mPref.getInitRsp();
@@ -187,7 +181,7 @@ public class ChannelDetailFragment extends ViewPagerFragment {
 				if (token != null && (!TextUtils.isEmpty(token))) {
 					url = url + token;
 				}
-				fragment = AppWebFragment.getInstance(getActivity(), url);
+				fragment = AppWebFragment.getInstance(getActivity(), url, false, true);
 				break;
 			}
 			default: {
@@ -225,14 +219,14 @@ public class ChannelDetailFragment extends ViewPagerFragment {
 	}
 
 	public void refreshCurrent() {
-		// SectionsPagerAdapter mSectionsPagerAdapter = (SectionsPagerAdapter)
-		// mViewPager
-		// .getAdapter();
-		// ArticleCategory channel = mSectionsPagerAdapter.getData(mViewPager
-		// .getCurrentItem());
-		// RefreshEvent event = new RefreshEvent();
-		// event.mChannel = channel;
-		// EventBus.getDefault().post(event);
+		SectionsPagerAdapter mSectionsPagerAdapter = (SectionsPagerAdapter) mViewPager
+				.getAdapter();
+		ArticleCategory category = mSectionsPagerAdapter.getData(mViewPager
+				.getCurrentItem());
+		RefreshEvent event = new RefreshEvent();
+		event.mChannel = mChannel;
+		event.mCategory = category;
+		EventBus.getDefault().post(event);
 	}
 
 	@Override

@@ -18,11 +18,11 @@ import android.view.WindowManager;
 import com.duowan.gamenews.RaceInfo;
 import com.duowan.gamenews.Team;
 import com.yy.android.gamenews.ui.BaseActivity;
-import com.yy.android.gamenews.ui.WelcomeActivity;
 import com.yy.android.gamenews.ui.common.UiUtils;
 import com.yy.android.gamenews.ui.view.AppDialog;
 import com.yy.android.gamenews.ui.view.AppDialog.OnClickListener;
 import com.yy.android.gamenews.util.Preference;
+import com.yy.android.gamenews.util.Util;
 import com.yy.android.sportbrush.R;
 
 public class AlarmActivity extends BaseActivity {
@@ -73,12 +73,7 @@ public class AlarmActivity extends BaseActivity {
 	}
 
 	private void gotoMainApp() {
-		Intent intent = new Intent(AlarmActivity.this, WelcomeActivity.class);
-
-		intent.setAction(Intent.ACTION_MAIN);
-		intent.addCategory(Intent.CATEGORY_LAUNCHER);
-		startActivity(intent);
-
+		Util.startMainApp(this);
 	}
 
 	@Override
@@ -189,7 +184,8 @@ public class AlarmActivity extends BaseActivity {
 
 		RaceInfo currentInfo = null;
 		List<RaceInfo> infoList = Preference.getInstance().getAlarmRaceList();
-		List<RaceInfo> schedInfoList = Preference.getInstance().getSchedAlarmRaceList();
+		List<RaceInfo> schedInfoList = Preference.getInstance()
+				.getSchedAlarmRaceList();
 		if (infoList == null || infoList.size() == 0) {
 			onBackPressed();
 			return;

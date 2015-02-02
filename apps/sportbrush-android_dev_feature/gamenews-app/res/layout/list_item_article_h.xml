@@ -19,53 +19,33 @@
         android:paddingRight="@dimen/global_list_padding_h"
         android:paddingTop="@dimen/global_list_padding_top" >
 
-        <FrameLayout
-            android:id="@+id/list_articl_order_layout"
+        <TextView
+            android:id="@+id/tv_order"
+            style="@style/HomeListPrimaryText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="16dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="1dp" >
+            android:layout_marginTop="1dp"
+            android:background="@color/gamelist_time_color"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tv_order"
-                style="@style/HomeListPrimaryText"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:background="@color/gamelist_time_color"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="1"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/list_article_img_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/list_article_img1"
+            android:layout_width="@dimen/home_list_img_width"
+            android:layout_height="@dimen/home_list_img_height"
             android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp"
-            android:layout_marginLeft="10dp" >
-
-            <ImageView
-                android:id="@+id/list_article_img1"
-                android:layout_width="@dimen/home_list_img_width"
-                android:layout_height="@dimen/home_list_img_height"
-                android:scaleType="centerCrop"
-                android:src="@drawable/article_list_item_loading"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/list_article_mask_img1"
-                android:layout_width="@dimen/home_list_img_width"
-                android:layout_height="@dimen/home_list_img_height"
-                android:scaleType="center"
-                android:src="@drawable/article_list_item_loading"
-                android:visibility="gone" />
-        </FrameLayout>
+            android:scaleType="centerCrop"
+            android:src="@drawable/article_list_item_loading"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/list_article_title"
@@ -74,14 +54,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="8dp"
-            android:layout_toEndOf="@+id/list_articl_order_layout"
-            android:layout_toLeftOf="@id/list_article_img_layout"
-            android:layout_toRightOf="@+id/list_articl_order_layout"
-            android:layout_toStartOf="@id/list_article_img_layout"
+            android:layout_marginTop="-4dp"
+            android:layout_toEndOf="@+id/tv_order"
+            android:layout_toLeftOf="@id/list_article_img1"
+            android:layout_toRightOf="@+id/tv_order"
+            android:layout_toStartOf="@id/list_article_img1"
             android:ellipsize="end"
             android:gravity="top"
             android:maxLines="2"
-            android:layout_marginTop="-4dp"
             android:singleLine="false"
             android:textIsSelectable="false" />
 
@@ -91,10 +71,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_below="@id/list_article_title"
-            android:layout_toEndOf="@+id/list_articl_order_layout"
-            android:layout_toLeftOf="@id/list_article_img_layout"
-            android:layout_toRightOf="@+id/list_articl_order_layout"
-            android:layout_toStartOf="@id/list_article_img_layout"
+            android:layout_toEndOf="@+id/tv_order"
+            android:layout_toLeftOf="@id/list_article_img1"
+            android:layout_toRightOf="@+id/tv_order"
+            android:layout_toStartOf="@id/list_article_img1"
             android:gravity="bottom" >
 
             <LinearLayout
@@ -146,8 +126,8 @@
                     android:id="@+id/iv_hot"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:layout_marginBottom="2dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="3dp"
                     android:layout_marginStart="3dp"
                     android:contentDescription="@null"

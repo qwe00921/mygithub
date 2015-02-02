@@ -67,41 +67,47 @@ public class ArticleDetailModel extends CommonModel {
 			// articleId = 5136;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetArticleDetail");
-
 		GetArticleDetailReq req = new GetArticleDetailReq();
 
 		req.setArticleId(articleId);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetArticleDetail", req);
 
 		String cacheKey = String.format("%s-%s-%d", uniPacket.getServantName(),
 				uniPacket.getFuncName(), articleId);
-		new Request(responseListener.get(), uniPacket, cacheKey) {
-			@Override
-			public void onError(Exception e) {
-				// TODO Auto-generated method stub
-				super.onError(e);
-				responseListener.onError(e);
-			}
 
-			@Override
-			public void onResponse(UniPacket response) {
-				String strType = "";
-				Integer intType = 0;
-				String msg = response.getByClass("msg", strType);
-				int code = response.getByClass("code", intType);
-				int subcode = response.getByClass("subcode", intType);
-				if (code == 0 && subcode == 0) {
-					GetArticleDetailRsp rsp = new GetArticleDetailRsp();
-					rsp = response.getByClass("result", rsp);
-					responseListener.onResponse(rsp);
-				} else {
-					responseListener.onError(new Exception(msg));
-				}
-			}
-		}.setCacheHitButRefreshed(cacheHitButRefreshed)
-				.setCacheExpired(cacheExpired).setShowProgressDialog(false)
-				.execute();
+		new CommonRequest<GetArticleDetailRsp>(responseListener.get(),
+				uniPacket, cacheKey)
+				.setup(responseListener, new GetArticleDetailRsp())
+				.setShowErrorMsg(false).setShowProgressDialog(false)
+				.setCacheHitButRefreshed(cacheHitButRefreshed)
+				.setCacheExpired(cacheExpired).execute();
+
+		// new Request(responseListener.get(), uniPacket, cacheKey) {
+		// @Override
+		// public void onError(Exception e) {
+		// // TODO Auto-generated method stub
+		// super.onError(e);
+		// responseListener.onError(e);
+		// }
+		//
+		// @Override
+		// public void onResponse(UniPacket response) {
+		// String strType = "";
+		// Integer intType = 0;
+		// String msg = response.getByClass("msg", strType);
+		// int code = response.getByClass("code", intType);
+		// int subcode = response.getByClass("subcode", intType);
+		// if (code == 0 && subcode == 0) {
+		// GetArticleDetailRsp rsp = new GetArticleDetailRsp();
+		// rsp = response.getByClass("result", rsp);
+		// responseListener.onResponse(rsp);
+		// } else {
+		// responseListener.onError(new Exception(msg));
+		// }
+		// }
+		// }.setCacheHitButRefreshed(cacheHitButRefreshed)
+		// .setCacheExpired(cacheExpired).setShowProgressDialog(false)
+		// .execute();
 	}
 
 	private static ArticleDetail getData(long articleId) {

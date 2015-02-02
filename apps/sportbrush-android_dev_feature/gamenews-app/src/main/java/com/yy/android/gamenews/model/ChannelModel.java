@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 
 import com.duowan.gamenews.Channel;
 import com.duowan.gamenews.FeedBackReq;
+import com.duowan.gamenews.GetChannelDetailReq;
+import com.duowan.gamenews.GetChannelDetailRsp;
 import com.duowan.gamenews.GetColumnChannelListReq;
 import com.duowan.gamenews.GetColumnChannelListRsp;
 import com.duowan.gamenews.GetColumnListReq;
@@ -30,155 +32,72 @@ public class ChannelModel extends CommonModel {
 	public static void getColumnList(
 			final ResponseListener<GetColumnListRsp> responseListener,
 			String attachInfo, final int count) {
-		// cache
-		// if (!Util.isNetworkConnected()) {
-		// ToastUtil.showToast(R.string.http_not_connected);
-		// return;
-		// }
-		UniPacket uniPacket = createUniPacket("GetColumnList");
 		GetColumnListReq req = new GetColumnListReq();
 		req.setAttachInfo(attachInfo);
 		req.setCount(count);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetColumnList", req);
 
 		String cacheKey = String.format("%s-%s-%s-%s",
 				uniPacket.getServantName(), uniPacket.getFuncName(),
 				attachInfo, String.valueOf(count));
 
-		Request request = new Request(responseListener.get(), uniPacket,
-				cacheKey) {
-			@Override
-			public void onResponse(UniPacket response) {
-				GetColumnListRsp rsp = new GetColumnListRsp();
-				rsp = response.getByClass("result", rsp);
-				if (rsp != null)
-					responseListener.onResponse(rsp);
-			}
-
-			public void onError(Exception e) {
-				responseListener.onError(e);
-			};
-		};
-		// request.setShowProgressDialog(false);
-		request.execute();
+		new CommonRequest<GetColumnListRsp>(responseListener.get(), uniPacket,
+				cacheKey).setup(responseListener, new GetColumnListRsp())
+				.setShowErrorMsg(true).execute();
 	}
 
 	public static void getColumnChannelList(
 			final ResponseListener<GetColumnChannelListRsp> responseListener,
 			int columnId, String attachInfo, final int count) {
-		if (!Util.isNetworkConnected()) {
-			ToastUtil.showToast(R.string.http_not_connected);
-			return;
-		}
-		UniPacket uniPacket = createUniPacket("GetColumnChannelList");
 		GetColumnChannelListReq req = new GetColumnChannelListReq();
 		req.setId(columnId);
 		req.setAttachInfo(attachInfo);
 		req.setCount(count);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetColumnChannelList", req);
 
-		// String cacheKey = String.format("%s-%s-%s-%s",
-		// uniPacket.getServantName(), uniPacket.getFuncName(), columnId,
-		// attachInfo);
-
-		Request request = new Request(responseListener.get(), uniPacket) {
-			@Override
-			public void onResponse(UniPacket response) {
-				GetColumnChannelListRsp rsp = new GetColumnChannelListRsp();
-				rsp = response.getByClass("result", rsp);
-				if (rsp != null)
-					responseListener.onResponse(rsp);
-			}
-
-			public void onError(Exception e) {
-				responseListener.onError(e);
-			};
-		};
-		request.setShowProgressDialog(false);
-		request.execute();
+		new CommonRequest<GetColumnChannelListRsp>(responseListener.get(),
+				uniPacket)
+				.setup(responseListener, new GetColumnChannelListRsp())
+				.setShowErrorMsg(true).setShowProgressDialog(false).execute();
 	}
 
 	public static void searchChannel(
 			final ResponseListener<SearchChannelRsp> responseListener,
 			final String keyWord, String attachInfo, final int count) {
-		if (!Util.isNetworkConnected()) {
-			ToastUtil.showToast(R.string.http_not_connected);
-			return;
-		}
-		UniPacket uniPacket = createUniPacket("SearchChannel");
 		SearchChannelReq req = new SearchChannelReq();
 		req.setKeyword(keyWord);
 		req.setAttachInfo(attachInfo);
 		req.setCount(count);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("SearchChannel", req);
 
-		new Request(responseListener.get(), uniPacket) {
-			@Override
-			public void onResponse(UniPacket response) {
-				SearchChannelRsp rsp = new SearchChannelRsp();
-				rsp = response.getByClass("result", rsp);
-				if (rsp != null)
-					responseListener.onResponse(rsp);
-			}
-
-			public void onError(Exception e) {
-				responseListener.onError(e);
-			};
-		}.execute();
+		new CommonRequest<SearchChannelRsp>(responseListener.get(), uniPacket)
+				.setup(responseListener, new SearchChannelRsp())
+				.setShowErrorMsg(true).setShowProgressDialog(true).execute();
 	}
 
 	public static void getSearchSuggestionList(
 			final ResponseListener<GetSearchSuggestionListRsp> responseListener,
 			String attachInfo, int count) {
-		UniPacket uniPacket = createUniPacket("GetSearchSuggestionList");
 		GetSearchSuggestionListReq req = new GetSearchSuggestionListReq();
 		req.setAttachInfo(attachInfo);
 		req.setCount(count);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetSearchSuggestionList", req);
 
-		Request request = new Request(responseListener.get(), uniPacket) {
-			@Override
-			public void onResponse(UniPacket response) {
-				GetSearchSuggestionListRsp rsp = new GetSearchSuggestionListRsp();
-				rsp = response.getByClass("result", rsp);
-				if (rsp != null)
-					responseListener.onResponse(rsp);
-			}
-
-			public void onError(Exception e) {
-				responseListener.onError(e);
-			};
-		};
-		request.setShowProgressDialog(false);
-		request.execute();
+		new CommonRequest<GetSearchSuggestionListRsp>(responseListener.get(),
+				uniPacket)
+				.setup(responseListener, new GetSearchSuggestionListRsp())
+				.setShowErrorMsg(false).setShowProgressDialog(false).execute();
 	}
 
 	public static void getMyFavChannelList(
 			final ResponseListener<GetMyFavChannelListRsp> listener) {
 
-		UniPacket uniPacket = createUniPacket("GetMyFavChannelList");
 		GetMyFavChannelListReq req = new GetMyFavChannelListReq();
-		uniPacket.put("request", req);
-		
-		Request request = new Request(listener.get(), uniPacket) {
-			@Override
-			public void onResponse(UniPacket response) {
-				GetMyFavChannelListRsp rsp = new GetMyFavChannelListRsp();
-				rsp = response.getByClass("result", rsp);
-				if (listener != null) {
-					listener.onResponse(rsp);
-				}
-			}
+		UniPacket uniPacket = createUniPacket("GetMyFavChannelList", req);
 
-			public void onError(Exception e) {
-
-				if (listener != null) {
-					listener.onError(null);
-				}
-			};
-		};
-		request.setShowProgressDialog(false);
-		request.execute();
+		new CommonRequest<GetMyFavChannelListRsp>(listener.get(), uniPacket)
+				.setup(listener, new GetMyFavChannelListRsp())
+				.setShowErrorMsg(false).setShowProgressDialog(false).execute();
 	}
 
 	public static void updateMyFavChannelList(FragmentActivity activity,
@@ -190,8 +109,6 @@ public class ChannelModel extends CommonModel {
 	public static void updateMyFavChannelList(FragmentActivity activity,
 			final ResponseListener<UpdateMyFavChannelListRsp> responseListener,
 			ArrayList<Channel> channels, boolean showDialog) {
-		UniPacket uniPacket = createUniPacket("UpdateMyFavChannelList");
-
 		ArrayList<Integer> channelIds = new ArrayList<Integer>();
 		if (channels != null) {
 			for (Channel channel : channels) {
@@ -200,13 +117,8 @@ public class ChannelModel extends CommonModel {
 		}
 		UpdateMyFavChannelListReq req = new UpdateMyFavChannelListReq();
 		req.setChannelList(channelIds);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("UpdateMyFavChannelList", req);
 
-		// String cacheKey = null;
-		// if (useCache) {
-		// cacheKey = String.format("%s-%s", uniPacket.getServantName(),
-		// uniPacket.getFuncName());
-		// }
 		Request request = new Request(activity, uniPacket) {
 			@Override
 			public void onResponse(UniPacket response) {
@@ -232,11 +144,10 @@ public class ChannelModel extends CommonModel {
 	}
 
 	public static void pushInit(String userId) {
-		UniPacket uniPacket = createUniPacket("PushInit");
-
 		PushInitReq req = new PushInitReq();
 		req.setUserId(userId);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("PushInit", req);
+
 		Request request = new Request(uniPacket) {
 			@Override
 			public void onResponse(UniPacket response) {
@@ -257,13 +168,12 @@ public class ChannelModel extends CommonModel {
 			ToastUtil.showToast(R.string.http_not_connected);
 			return;
 		}
-		UniPacket uniPacket = createUniPacket("FeedBack");
-
 		FeedBackReq req = new FeedBackReq();
 		req.setAppVersion(appVersion);
 		req.setPlatformInfo(platformInfo);
 		req.setContent(msg);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("FeedBack", req);
+
 		Request request = new Request(uniPacket) {
 			@Override
 			public void onResponse(UniPacket response) {
@@ -279,5 +189,16 @@ public class ChannelModel extends CommonModel {
 			};
 		};
 		request.execute();
+	}
+
+	public static void getChannelById(
+			final ResponseListener<GetChannelDetailRsp> listener, int id) {
+
+		GetChannelDetailReq req = new GetChannelDetailReq();
+		req.setId(id);
+		UniPacket packet = createUniPacket("GetChannelDetail", req);
+
+		new CommonRequest<GetChannelDetailRsp>(listener.get(), packet).setup(
+				listener, new GetChannelDetailRsp()).execute();
 	}
 }

@@ -43,8 +43,8 @@ public class CartDetailImageFragment extends BaseListFragment<Object> {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle bundle = getArguments();
-		mId = bundle.getLong(SingleFragmentActivity.TAG_FGMT_CARTID, 0);
-		mTitle = bundle.getString(SingleFragmentActivity.TAG_FGMT_CAR_COLUMN);
+		mId = bundle.getLong(CartDetailActivity.TAG_FGMT_CARTID, 0);
+		mTitle = bundle.getString(CartDetailImageActivity.TAG_FGMT_CAR_COLUMN);
 	}
 
 	@Override
@@ -89,10 +89,7 @@ public class CartDetailImageFragment extends BaseListFragment<Object> {
 
 			@Override
 			public void onClick(View v) {
-				Activity activity = getActivity();
-				if (activity != null) {
-					activity.onBackPressed();
-				}
+				onActivityBackPressed();
 			}
 		});
 		View mActionBarBg = mActionBar.findViewById(R.id.actionbar_container);
@@ -121,7 +118,7 @@ public class CartDetailImageFragment extends BaseListFragment<Object> {
 					@Override
 					public void onError(Exception e) {
 						super.onError(e);
-						requestFinish(refreType, null, false, true);
+						requestFinish(refreType, null, false, true, false);
 					}
 				}, (int) mId, "");
 
@@ -171,15 +168,15 @@ public class CartDetailImageFragment extends BaseListFragment<Object> {
 					list.add(columnDoubleItem);
 				}
 			}
-			requestFinish(refreType, list, false, true);
+			requestFinish(refreType, list, false, true, false);
 		}
 
 	}
 
 	@Override
 	protected void requestFinish(int refresh, ArrayList<Object> data,
-			boolean hasMore, boolean replace) {
-		super.requestFinish(refresh, data, hasMore, replace);
+			boolean hasMore, boolean replace, boolean error) {
+		super.requestFinish(refresh, data, hasMore, replace, error);
 		if (data != null & data.size() > 0) {
 			showView(VIEW_TYPE_DATA);
 		} else {

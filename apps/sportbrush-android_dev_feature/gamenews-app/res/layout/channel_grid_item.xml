@@ -26,10 +26,6 @@
             android:visibility="invisible" >
 
             <ImageView
-                style="@style/channelsDepotGridsItem"
-                android:background="@drawable/mask_white_rect" />
-
-            <ImageView
                 android:id="@+id/channel_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,12 +40,12 @@
         android:id="@+id/channel_name"
         android:layout_width="@dimen/gridview_img_width"
         android:layout_height="wrap_content"
-        android:layout_below="@id/channel_image"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:gravity="center"
         android:singleLine="true"
         android:textColor="@color/channel_name"
+        android:textIsSelectable="true"
         android:textSize="12.2sp" />
 
 </LinearLayout>

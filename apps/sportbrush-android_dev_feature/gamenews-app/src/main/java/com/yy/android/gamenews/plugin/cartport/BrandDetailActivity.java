@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.yy.android.gamenews.ui.BaseActivity;
+import com.yy.android.gamenews.ui.SingleFragmentActivity;
 import com.yy.android.sportbrush.R;
 
 public class BrandDetailActivity extends BaseActivity {

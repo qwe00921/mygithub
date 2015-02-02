@@ -9,10 +9,13 @@ import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.cache.disc.impl.LimitedAgeDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.TotalSizeLimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.FailReason.FailType;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.yy.android.gamenews.GameNewsApplication;
@@ -82,8 +85,8 @@ public class SwitchImageLoader {
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 				GameNewsApplication.getInstance())
 				.discCache(
-						new LimitedAgeDiscCache(individualCacheDir,
-								3600 * 24 * 7)).discCacheSize(1024 * 1024 * 10)
+						new TotalSizeLimitedDiscCache(individualCacheDir,
+								1024 * 1024 * 10))
 				.defaultDisplayImageOptions(DEFAULT_DISPLAYER).build();
 		ImageLoader.getInstance().init(config);
 	}
@@ -119,19 +122,52 @@ public class SwitchImageLoader {
 	public void displayImage(String url, ImageView view,
 			DisplayImageOptions options, boolean forceUpdate) {
 
-		// TODO:: bug
+		displayImage(url, view, options, null, forceUpdate);
+	}
+
+	public void displayImage(String url, ImageView imageView,
+			ImageLoadingListener listener) {
+
+		displayImage(url, imageView, null, listener, false);
+	}
+
+	public void displayImage(String url, ImageView imageView,
+			DisplayImageOptions options, ImageLoadingListener listener,
+			boolean forceUpdate) {
+
 		if (needLoadImage() || forceUpdate
 				|| mImageLoader.getDiscCache().get(url).exists()) {
-			mImageLoader.displayImage(url, view, options);
+			mImageLoader.displayImage(url, imageView, options, listener);
 		} else {
-			
+
 			// 如果不加载图片，则显示默认图
 			Drawable drawable = null;
-			if(options != null) {
-				drawable = options.getImageOnFail(GameNewsApplication.getInstance().getResources());
+			if (options != null) {
+				drawable = options.getImageOnFail(GameNewsApplication
+						.getInstance().getResources());
 			}
-			view.setImageDrawable(drawable);
+			imageView.setImageDrawable(drawable);
 		}
+	}
+
+	public void loadImage(String url, ImageLoadingListener listener) {
+		loadImage(url, listener, false);
+	}
+
+	public void loadImage(String url, ImageLoadingListener listener,
+			boolean forceUpdate) {
+
+		if (needLoadImage() || forceUpdate
+				|| mImageLoader.getDiscCache().get(url).exists()) {
+			mImageLoader.loadImage(url, listener);
+		} else {
+			if (listener != null) {
+				listener.onLoadingFailed(url, null, new FailReason(
+						FailType.NETWORK_DENIED, new Throwable(
+								"当前仅在wifi下加载图片，加载失败")));
+			}
+		}
+
 	}
 
 	public boolean needLoadImage() {

@@ -57,6 +57,8 @@
     <color name="global_lv_secondary_text_dark">#999999</color>
     <color name="divider_line">#7ba71c</color>
     <color name="global_dialog_title">#3c3c3c</color>
+    <color name="global_head_photo_color">#e85d40</color>
+    
     <!-- 个人中心 -->
     <color name="my_favor_text_color">#7ba71c</color>
     <color name="my_favor_text_color_dark">#ff43802f</color>
@@ -69,8 +71,10 @@
     <!-- 频道仓库 -->
     <color name="channel_depot_tips">#b3a4a4</color>
     <color name="channel_depot_lable">#7ba71c</color>
+    <color name="channel_depot_edit">#ffffff</color>
     <color name="channel_name">#2c2828</color>
     <color name="channel_header_bg">#eaffe4</color>
+    <color name="hot_channel_bg">#f2f2f2</color>
     <!-- 详情页 -->
     <color name="article_detail_comment_primary_text">#544c4c</color>
     <color name="article_detail_comment_divider">#e4d4d1</color>
@@ -106,5 +110,14 @@
     <color name="race_topic_listview_bg_color">#fff5e5</color>
     <color name="wondlerful_race_title_color">#d7c0ab</color>
     <color name="union_race_item_color">#fff5e5</color>
+
+    <!-- 秀场 -->
+    <color name="show_detail_bg">#fff2f2f2</color>
+
+    <!-- 社区 -->
+    <color name="list_bg">#f2f2f2</color>
+    <color name="adv_bg">#aaf2f2f2</color>
+    <color name="tag_list_item_tag_name_bg">#30000000</color>
+    <color name="topic_comment_info">#88665e</color>
 
 </resources>

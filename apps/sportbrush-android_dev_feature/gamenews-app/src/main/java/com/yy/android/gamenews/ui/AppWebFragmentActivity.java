@@ -1,10 +1,7 @@
 package com.yy.android.gamenews.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import com.yy.android.gamenews.plugin.cartport.FragmentMessageListener;

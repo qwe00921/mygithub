@@ -21,6 +21,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RetryPolicy;
 import com.duowan.Comm.AppUA;
 import com.duowan.Comm.CommUserbase;
 import com.duowan.Comm.EPlatform;
@@ -35,7 +37,7 @@ import de.greenrobot.event.EventBus;
 public abstract class BaseModel {
 
 	// online
-	public static String HOST = "http://proxy.shua.duowan.com";
+	public static String HOST = "http://proxy.shua.duowan.com/";
 
 	public static void setYYuid(Context context, int yyuid) {
 		SharedPreferences shared = context.getSharedPreferences("CommUserbase",
@@ -136,11 +138,22 @@ public abstract class BaseModel {
 	}
 
 	public static abstract class Request {
+		/** Socket timeout in milliseconds for WUP requests */
+		private static final int WUP_TIMEOUT_MS = 30000;
+
+		/** Default number of retries for WUP requests */
+		private static final int WUP_MAX_RETRIES = 1;
+
+		/** Default backoff multiplier for WUP requests */
+		private static final float WUP_BACKOFF_MULT = 1f;
+
 		private WeakReference<FragmentActivity> activityReference;
 		private UniPacket uniPacket;
 		private String host = HOST;
 		private String cacheKey;
 		private String tag;
+		private RetryPolicy retryPolicy = new DefaultRetryPolicy(
+				WUP_TIMEOUT_MS, WUP_MAX_RETRIES, WUP_BACKOFF_MULT);
 		private boolean showProgressDialog = true;
 		private long cacheHitButRefreshed = 10 * 60 * 1000; // in 10 minutes
 															// cache
@@ -185,6 +198,11 @@ public abstract class BaseModel {
 			return this;
 		}
 
+		public Request setRetryPolicy(RetryPolicy retryPolicy) {
+			this.retryPolicy = retryPolicy;
+			return this;
+		}
+
 		public Request setShowProgressDialog(boolean showProgressDialog) {
 			this.showProgressDialog = showProgressDialog;
 			return this;
@@ -204,8 +222,8 @@ public abstract class BaseModel {
 			if (showProgressDialog) {
 				showProgressDialog();
 			}
-			VolleyClient.newRequestQueue(host, uniPacket, cacheKey, tag, 2500,
-					cacheHitButRefreshed, cacheExpired,
+			VolleyClient.newRequestQueue(host, uniPacket, cacheKey, tag,
+					cacheHitButRefreshed, cacheExpired, retryPolicy,
 					new VolleyClient.Listener() {
 						@Override
 						public void onResponse(UniPacket response) {
@@ -219,13 +237,13 @@ public abstract class BaseModel {
 									code = response.getByClass("code", 0);
 									subCode = response.get("subcode", 0);
 									msg = response.get("msg", "");
-									result = response.get("result",
-											new Object());
+									// result = response.get("result",
+									// new Object());
 									LocalLog.d(
 											"",
 											String.format(
-													"[onResponse], code = %d, subcode = %d, msg = %s, result = %s, response = %s",
-													code, subCode, msg, result,
+													"[onResponse], code = %d, subcode = %d, msg = %s, result = %s",
+													code, subCode, msg,
 													response));
 								} catch (Exception e) {
 

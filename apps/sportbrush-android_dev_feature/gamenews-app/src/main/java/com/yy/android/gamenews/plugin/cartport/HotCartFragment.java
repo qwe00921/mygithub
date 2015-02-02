@@ -135,7 +135,7 @@ public class HotCartFragment extends BaseListFragment<CarListInfo> {
 					if (refreType == RefreshType._REFRESH_TYPE_REFRESH) {
 						replace = true;
 					}
-					requestFinish(refreType, hotCarList, hasMore, replace);
+					requestFinish(refreType, hotCarList, hasMore, replace, false);
 				}
 
 			}
@@ -143,7 +143,7 @@ public class HotCartFragment extends BaseListFragment<CarListInfo> {
 			@Override
 			public void onError(Exception e) {
 				super.onError(e);
-				requestFinish(refreType, null, false, false);
+				requestFinish(refreType, null, false, false, false);
 			}
 		}, COUNT, attachInfo);
 
@@ -151,8 +151,8 @@ public class HotCartFragment extends BaseListFragment<CarListInfo> {
 
 	@Override
 	protected synchronized void requestFinish(int refresh,
-			ArrayList<CarListInfo> data, boolean hasMore, boolean replace) {
-		super.requestFinish(refresh, data, hasMore, replace);
+			ArrayList<CarListInfo> data, boolean hasMore, boolean replace, boolean error) {
+		super.requestFinish(refresh, data, hasMore, replace, error);
 		if (data != null && data.size() > 0) {
 			showView(VIEW_TYPE_DATA);
 		} else {
@@ -239,7 +239,7 @@ public class HotCartFragment extends BaseListFragment<CarListInfo> {
 
 			showView(VIEW_TYPE_DATA);
 			requestFinish(RefreshType._REFRESH_TYPE_REFRESH,
-					mRspCache.getHotCarList(), false, false);
+					mRspCache.getHotCarList(), false, false, false);
 
 			super.onPostExecute(needReload);
 		}

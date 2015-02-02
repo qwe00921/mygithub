@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@color/global_bg_light"
     android:gravity="center" >
 
     <LinearLayout
@@ -34,8 +35,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:visibility="gone"
-        android:background="@drawable/article_detail_loading_bg" >
+        android:background="@drawable/article_detail_loading_bg"
+        android:visibility="gone" >
 
         <ImageView
             android:id="@+id/reload_progressbar_inner"

@@ -14,7 +14,8 @@ import com.duowan.gamenews.Channel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
-import com.yy.android.gamenews.event.FirstButtomTabEvent;
+import com.yy.android.gamenews.event.MainTabEvent;
+import com.yy.android.gamenews.ui.AppWebActivity;
 import com.yy.android.gamenews.ui.ArticleListActivity;
 import com.yy.android.gamenews.ui.MainActivity;
 import com.yy.android.gamenews.ui.NewsFragment;
@@ -28,18 +29,22 @@ import com.yy.android.sportbrush.R;
  * @author liuchaoqun
  * 
  */
-public class MainTab1 extends MainFragmentTab {
+public class MainTab1 extends MainTab {
 
-	public MainTab1(MainActivity context, View button, ActionBar actionbar,
+	public MainTab1(MainActivity context, ActionBar actionbar,
 			Bundle savedInstance) {
-		super(context, button, actionbar, FirstButtomTabEvent.HEAD_INFO,
-				savedInstance);
+		super(context, actionbar, MainTabEvent.TAB_HEAD_INFO, savedInstance);
+	}
+
+	public MainTab1(MainActivity context, ActionBar actionbar, String fromTab,
+			Bundle savedInstance) {
+		super(context, actionbar, fromTab, savedInstance);
 	}
 
 	private List<ActiveInfo> mActiveChannelList;
 
 	@Override
-	protected void customizeActionbar() {
+	protected void onChildCustActionBar() {
 		if (mActiveBitmap == null) {
 			mActiveChannelList = mPref.getActiveChannelList();
 			if (mActiveChannelList != null && mActiveChannelList.size() > 0) {
@@ -112,7 +117,9 @@ public class MainTab1 extends MainFragmentTab {
 							channel);
 				} else if (info.getType() == ActiveInfoType._ENUM_ACTIVEINFO_TYPE_URL) {
 					String url = info.getUrl();
-					mContext.startWebWithYYToken(url);
+
+					AppWebActivity.startWebActivityWithYYToken(mContext, url,
+							true);
 				}
 			}
 		}
@@ -132,8 +139,19 @@ public class MainTab1 extends MainFragmentTab {
 	}
 
 	@Override
-	public String getTabName() {
+	public String getDisplayName() {
 		return mContext.getString(R.string.square);
 	}
 
+	@Override
+	protected int getButtonDrawableResource() {
+		return R.drawable.main_my_info_btn_selector;
+	}
+
+	public static final int INDEX = 0;
+
+	@Override
+	public int getId() {
+		return INDEX;
+	}
 }

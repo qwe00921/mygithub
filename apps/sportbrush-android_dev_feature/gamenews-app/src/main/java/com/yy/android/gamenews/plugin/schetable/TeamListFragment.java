@@ -26,12 +26,11 @@ import com.duowan.gamenews.TeamFlag;
 import com.duowan.gamenews.bean.TeamListItemObject;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.event.AlarmTeamChangedEvent;
-import com.yy.android.gamenews.model.TeamModel;
+import com.yy.android.gamenews.model.ScheduleTableModel;
 import com.yy.android.gamenews.ui.BaseListFragment;
 import com.yy.android.gamenews.ui.common.DataViewConverterFactory;
 import com.yy.android.gamenews.ui.common.ImageAdapter;
 import com.yy.android.gamenews.util.AlarmUtil;
-import com.yy.android.gamenews.util.IPageCache;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.Util;
 import com.yy.android.gamenews.util.thread.BackgroundTask;
@@ -114,7 +113,7 @@ public class TeamListFragment  extends BaseListFragment<TeamListItemObject> {
 		if (mRsp != null) {
 			attachInfo = mRsp.getAttachInfo();
 		}
-		TeamModel.getTeamRsp(
+		ScheduleTableModel.getTeamRsp(
 				new ResponseListener<GetTeamListRsp>(mActivity) {
 
 					@Override
@@ -123,14 +122,15 @@ public class TeamListFragment  extends BaseListFragment<TeamListItemObject> {
 						if (param != null && param.getTeamList() != null 
 								&& !param.getTeamList().isEmpty()) {
 							saveListToDisk(param);
-							requestFinish(refreType, getResource(param), false, true);
+							requestFinish(refreType, getResource(param), false, true, false);
 						}else{
-							ArrayList<TeamListItemObject> dataSource = mTeamAdapter.getDataSource();
-							if (dataSource != null && dataSource.size() > 0) {
-								showView(VIEW_TYPE_DATA);
-							} else {
-								showView(VIEW_TYPE_EMPTY);
-							}
+							requestFinish(refreType, null,false, false, false);
+//							ArrayList<TeamListItemObject> dataSource = mTeamAdapter.getDataSource();
+//							if (dataSource != null && dataSource.size() > 0) {
+//								showView(VIEW_TYPE_DATA);
+//							} else {
+//								showView(VIEW_TYPE_EMPTY);
+//							}
 						}
 					}
 
@@ -138,7 +138,7 @@ public class TeamListFragment  extends BaseListFragment<TeamListItemObject> {
 					public void onError(Exception e) {
 						super.onError(e);
 						requestFinish(refreType,
-								null, false, true);
+								null, false, true, false);
 					}
 
 				}, attachInfo);
@@ -251,8 +251,8 @@ public class TeamListFragment  extends BaseListFragment<TeamListItemObject> {
 
 	@Override
 	protected void requestFinish(int refresh, ArrayList<TeamListItemObject> sourceList, 
-			boolean hasMore, boolean replace) {
-		super.requestFinish(refresh, sourceList, hasMore, replace);
+			boolean hasMore, boolean replace, boolean error) {
+		super.requestFinish(refresh, sourceList, hasMore, replace, error);
 		if (sourceList != null && sourceList.size() > 0) {
 			showView(VIEW_TYPE_DATA);
 		} else {
@@ -331,7 +331,7 @@ public class TeamListFragment  extends BaseListFragment<TeamListItemObject> {
 			}
 
 			requestFinish(RefreshType._REFRESH_TYPE_REFRESH, getResource(mRsp),
-					false, true);
+					false, true, false);
 
 			super.onPostExecute(needReload);
 		}

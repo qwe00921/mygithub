@@ -20,11 +20,17 @@
         gamenews:drawableRight="@drawable/article_detail_loading"
         gamenews:title="@string/article_webview" />
 
-    <WebView
-        android:id="@+id/app_webview"
+    <FrameLayout
+        android:id="@+id/app_webview_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1" >
+
+        <WebView
+            android:id="@+id/app_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/menu"

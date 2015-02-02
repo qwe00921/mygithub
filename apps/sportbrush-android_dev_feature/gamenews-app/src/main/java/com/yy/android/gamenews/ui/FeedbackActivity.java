@@ -15,11 +15,11 @@ import android.widget.TextView;
 
 import com.duowan.android.base.model.BaseModel.ResponseListener;
 import com.duowan.android.base.util.LocalLog;
-import com.yy.android.sportbrush.R;
 import com.yy.android.gamenews.model.ChannelModel;
 import com.yy.android.gamenews.ui.view.ActionBar;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.ToastUtil;
+import com.yy.android.sportbrush.R;
 
 public class FeedbackActivity extends BaseActivity {
 	private static final int mMaxWordsNum = 160;

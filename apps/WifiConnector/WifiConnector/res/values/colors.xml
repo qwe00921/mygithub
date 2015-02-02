@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="global_bg_light">#00000000</color>
+    <color name="global_button_bg">#00000000</color>
+    <color name="global_button_bg_selected">#ff999999</color>
+    <color name="main_menu_text_pressed">#e85d40</color>
+    <color name="main_menu_text_normal">#cfbaa6</color>
+    <color name="news_title_bg_normal">#ff000000</color>
+    <color name="news_title_text_selected">#e85d40</color>
+    <color name="news_title_text_normal">#b3a08f</color>
+
+</resources>

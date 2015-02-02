@@ -83,6 +83,7 @@ public class UpdateManager {
 
 	public void onEvent(Object event) {
 		if (event == null) {
+			ToastUtil.showToast(R.string.my_check_update_fail);
 			mOnUpdateInfoListener.onCheckFinish(false, false);
 			return;
 		}
@@ -124,6 +125,16 @@ public class UpdateManager {
 									Toast.makeText(mContext,
 											R.string.upgrade_start,
 											Toast.LENGTH_SHORT).show();
+
+									String eventId = "stat_user_click_update";
+									String key = "download_path";
+									String value = String.valueOf(url);
+									StatsUtil.statsReport(mContext, eventId,
+											key, value);
+									StatsUtil.statsReportByMta(mContext,
+											eventId, key, value);
+									StatsUtil.statsReportByHiido(eventId, key
+											+ value);
 								}
 							}
 
@@ -148,6 +159,17 @@ public class UpdateManager {
 								if (nButtonId == AppDialog.BUTTON_POSITIVE) {
 									Intent intent = new Intent(mContext,
 											UpdateService.class);
+
+									String eventId = "stat_user_click_update";
+									String key = "download_path";
+									String value = String.valueOf(url);
+									StatsUtil.statsReport(mContext, eventId,
+											key, value);
+									StatsUtil.statsReportByMta(mContext,
+											eventId, key, value);
+									StatsUtil.statsReportByHiido(eventId, key
+											+ value);
+
 									intent.putExtra("downloadUrl", url);
 									mContext.startService(intent);
 									Toast.makeText(mContext,

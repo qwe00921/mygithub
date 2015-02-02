@@ -1,18 +1,17 @@
 package com.yy.android.gamenews.ui.common;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 
+import com.yy.android.gamenews.Constants;
+import com.yy.android.gamenews.plugin.show.TagListActivity;
+import com.yy.android.gamenews.ui.MyHomeActivity;
 //import com.tencent.djcity.R;
 //import com.tencent.djcity.R;
 //import com.tencent.djcity.lib.ui.RadioDialog.OnRadioSelectListener;
@@ -21,6 +20,7 @@ import android.widget.PopupWindow;
 //import com.tencent.djcity.util.ImageLoadListener;
 //import com.tencent.djcity.util.ImageLoader;
 import com.yy.android.gamenews.ui.view.AppDialog;
+import com.yy.android.gamenews.util.Preference;
 import com.yy.android.sportbrush.R;
 
 public class UiUtils {
@@ -150,7 +150,7 @@ public class UiUtils {
 		return mLoginingDialog;
 	}
 
-	public static Dialog cleanCacheDialogShow(Context context, String message) {
+	public static Dialog loadingDialogShow(Context context, String message) {
 		ProgressDialog mDialog = new ProgressDialog(context, R.style.BaseDialog);
 		mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);// 设置风格为圆形进度条
 		mDialog.setMessage(message);
@@ -164,6 +164,43 @@ public class UiUtils {
 	public static void dialogDismiss(Dialog mDialog) {
 		if (mDialog != null) {
 			mDialog.dismiss();
+		}
+	}
+
+	/**
+	 * 发表post检查登录状态
+	 * 
+	 * @param mContext
+	 * @param onClickListener
+	 */
+	public static void sendTopicCheckLogin(final Activity mContext) {
+		if (Preference.getInstance().isUserLogin()) {
+			TagListActivity.startTagListActivity(mContext);
+		} else {
+			UiUtils.showDialog(
+					mContext, 
+					mContext.getResources().getString(R.string.global_please_login),
+//					mContext.getResources().getString(R.string.global_please_login), 
+					"",
+					mContext
+							.getResources().getString(R.string.global_login),
+					mContext.getResources().getString(R.string.global_cancel),
+					new AppDialog.OnClickListener() {
+
+						@Override
+						public void onDismiss() {
+
+						}
+
+						@Override
+						public void onDialogClick(int nButtonId) {
+							if (nButtonId == AppDialog.BUTTON_POSITIVE) {
+								MyHomeActivity.startMyHomeActivityForResult(
+										mContext,
+										Constants.REQUEST_LOGIN_REDIRECT);
+							}
+						}
+					});
 		}
 	}
 }

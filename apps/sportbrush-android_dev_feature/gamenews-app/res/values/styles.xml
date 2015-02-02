@@ -2,7 +2,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="android:Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@color/global_bg_light</item>
     </style>
 
     <style name="text_settings_title">
@@ -30,6 +29,12 @@
         <item name="android:background">@color/global_divider_color_1</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">@dimen/global_divider_height</item>
+    </style>
+
+    <style name="global_divider_vertical">
+        <item name="android:background">@color/global_divider_color</item>
+        <item name="android:layout_width">@dimen/global_divider_height</item>
+        <item name="android:layout_height">fill_parent</item>
     </style>
 
     <style name="global_divider_2">

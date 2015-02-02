@@ -15,5 +15,6 @@
 		<module>pla</module>
 		<module>social_sdk_library_project</module>
 		<module>UdbSdkShell</module>
+		<module>tea</module>
 	</modules>
 </project>

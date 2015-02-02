@@ -1,9 +1,7 @@
 package com.yy.android.gamenews.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import u.aly.E;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -13,7 +11,6 @@ import com.duowan.autonews.GetCarDetailReq;
 import com.duowan.autonews.GetCarDetailRsp;
 import com.duowan.autonews.ItemDetail;
 import com.duowan.autonews.SubItemDetail;
-import com.duowan.gamenews.MeRsp;
 import com.duowan.jce.wup.UniPacket;
 import com.yy.android.gamenews.util.ToastUtil;
 import com.yy.android.gamenews.util.Util;
@@ -27,7 +24,8 @@ public class CartModel extends CommonModel {
 	}
 
 	public static void getCarDetailRsp(
-			final ResponseListener<GetCarDetailRsp> responseListener, int carId,int count,String attachInfo) {
+			final ResponseListener<GetCarDetailRsp> responseListener,
+			int carId, int count, String attachInfo) {
 
 		if (TEST_DATA) {
 			sHandler.postDelayed(new Runnable() {
@@ -80,14 +78,12 @@ public class CartModel extends CommonModel {
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetCarDetail");
-
 		GetCarDetailReq req = new GetCarDetailReq();
 
 		req.setCarId(carId);
 		req.setAttachInfo(attachInfo);
 		req.setCount(count);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetCarDetail", req);
 
 		// String cacheKey = String.format("%s-%s", uniPacket.getServantName(),
 		// uniPacket.getFuncName());

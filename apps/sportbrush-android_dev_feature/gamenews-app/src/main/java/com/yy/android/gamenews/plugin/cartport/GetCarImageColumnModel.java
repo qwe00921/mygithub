@@ -73,12 +73,10 @@ public class GetCarImageColumnModel extends CommonModel {
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetCarImageColumn");
-
 		GetCarImageColumnReq req = new GetCarImageColumnReq();
 		req.setAttachInfo(attachInfo);
 		req.setId(id);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetCarImageColumn", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override

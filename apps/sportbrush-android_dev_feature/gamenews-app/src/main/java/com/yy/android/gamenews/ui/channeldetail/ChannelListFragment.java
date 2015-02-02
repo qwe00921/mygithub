@@ -15,7 +15,6 @@ import com.duowan.android.base.model.BaseModel.ResponseListener;
 import com.duowan.gamenews.Channel;
 import com.duowan.gamenews.GetMyFavChannelListRsp;
 import com.duowan.gamenews.RefreshType;
-import com.duowan.gamenews.UpdateMyFavChannelListRsp;
 import com.yy.android.gamenews.event.FragmentCallbackEvent;
 import com.yy.android.gamenews.event.SubscribeEvent;
 import com.yy.android.gamenews.event.UpdateChannelListEvent;
@@ -74,13 +73,13 @@ public class ChannelListFragment extends BaseListFragment<Channel> {
 		}
 		if (mChannelList.size() == 0) {
 			setEmptyText(strEmptyAddChannel);
-			requestFinish(refreType, mChannelList, false, true);
+			requestFinish(refreType, mChannelList, false, true, false);
 			notifyListener(FragmentCallbackEvent.FRGMT_LIST_SCROLL_TO_HEAD,
 					null);
 			return;
 		}
 
-		requestFinish(refreType, mChannelList, false, true);
+		requestFinish(refreType, mChannelList, false, true, false);
 		ChannelModel
 				.getMyFavChannelList(new ResponseListener<GetMyFavChannelListRsp>(
 						(FragmentActivity) getActivity()) {
@@ -92,7 +91,7 @@ public class ChannelListFragment extends BaseListFragment<Channel> {
 							mChannelList.addAll(rsp.getChannelList());
 						}
 						updateChannel(mChannelList);
-						requestFinish(refreType, mChannelList, false, true);
+						requestFinish(refreType, mChannelList, false, true, false);
 					}
 				});
 	}
@@ -160,14 +159,14 @@ public class ChannelListFragment extends BaseListFragment<Channel> {
 		if (mChannelList.size() == 0) {
 			setEmptyText(strEmptyAddChannel);
 			requestFinish(RefreshType._REFRESH_TYPE_REFRESH, mChannelList,
-					false, true);
+					false, true, false);
 			notifyListener(FragmentCallbackEvent.FRGMT_LIST_SCROLL_TO_HEAD,
 					null);
 			return;
 		}
 
 		requestFinish(RefreshType._REFRESH_TYPE_REFRESH, mChannelList, false,
-				true);
+				true, false);
 	}
 
 	@Override

@@ -24,15 +24,21 @@ public abstract class BackgroundTask<PARAMS, PROGRESS, RESULT> {
 		mExecutor = TaskExecutor.getInstance(mExecutorId);
 	}
 
+	/**
+	 * 返回当前任务所在的executor，须在调用{@link #setExecutorId(int)}或者
+	 * {@link #execute(Object...)} 或者{@link #executeNow(Object...)} 之后
+	 * 
+	 * @return the executor for current task, will be null if task not
+	 *         initialized
+	 */
+	public TaskExecutor getExecutor() {
+		return mExecutor;
+	}
+
 	private void ensureExecutor() {
 		if (mExecutor == null) {
 			mExecutor = TaskExecutor.getInstance(mExecutorId);
 		}
-	}
-
-	public final void cancel() {
-		mIsCanceled = true;
-		mExecutor.remove(this);
 	}
 
 	public boolean isCanceled() {
@@ -54,8 +60,38 @@ public abstract class BackgroundTask<PARAMS, PROGRESS, RESULT> {
 	/**
 	 * 当doInBackground调用完毕后，会调用onPosExecute方法回到UI线程
 	 */
-	void backToUIThread() {
+	void onPostExecute() {
 		onPostExecute(result);
+	}
+
+	/**
+	 * return progress in ui thread
+	 * 
+	 * @see #publishProgress(Object)
+	 * 
+	 * @param progress
+	 */
+	protected void onProgressUpdate(PROGRESS progress) {
+
+	}
+
+	/**
+	 * call this method in {@link #doInBackground(Object...)}
+	 * 
+	 * @param progress
+	 */
+	protected void publishProgress(final PROGRESS progress) {
+		mExecutor.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				onProgressUpdate(progress);
+			}
+		});
+	}
+
+	protected void onPreExecute(boolean pending) {
+
 	}
 
 	protected abstract RESULT doInBackground(PARAMS... params);
@@ -88,4 +124,5 @@ public abstract class BackgroundTask<PARAMS, PROGRESS, RESULT> {
 		ensureExecutor();
 		mExecutor.executeNow(this);
 	}
+
 }

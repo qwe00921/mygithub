@@ -2,6 +2,7 @@ package com.yy.android.gamenews.plugin.gamerace;
 
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -79,6 +80,7 @@ public class PersonalRaceTopicFragment extends
 		checkExpire();
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	protected RefreshableViewWrapper<?> getViewWrapper() {
 		headerView = mInflater.inflate(R.layout.race_topic_header, null);
@@ -154,7 +156,7 @@ public class PersonalRaceTopicFragment extends
 						}
 						super.onError(e);
 					}
-				}, raceTopicId, String.valueOf(attachInfo));
+				}, raceTopicId, (String)attachInfo, refresh);
 	}
 
 	@Override
@@ -172,7 +174,7 @@ public class PersonalRaceTopicFragment extends
 		return new GetRaceTopicRsp();
 	}
 
-	protected String getKey() {
+	protected String getCacheKey() {
 		if (raceTopicId < 0) {
 			return null;
 		}
@@ -185,7 +187,7 @@ public class PersonalRaceTopicFragment extends
 	protected boolean isExpire() {
 		List<ArticleInfo> dataList = getDataSource();
 		if (dataList != null && dataList.size() > 0) { // 如果列表为空，不需要刷新
-			if (mPageCache.isExpire(getKey())) {
+			if (mPageCache.isExpire(getCacheKey())) {
 				return true;
 			}
 		}

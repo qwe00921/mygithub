@@ -85,7 +85,7 @@ public class CartDetailParamFragment extends
 		}
 
 		requestFinish(RefreshType._REFRESH_TYPE_REFRESH,
-				getCartDetailParamItemList(detailList), false, true);
+				getCartDetailParamItemList(detailList), false, true, false);
 	}
 
 	private ArrayList<CartDetailParamItem> getCartDetailParamItemList(

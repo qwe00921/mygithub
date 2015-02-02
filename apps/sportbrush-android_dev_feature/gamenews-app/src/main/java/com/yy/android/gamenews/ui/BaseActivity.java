@@ -3,6 +3,7 @@ package com.yy.android.gamenews.ui;
 import java.util.List;
 import java.util.Stack;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
@@ -44,6 +46,42 @@ public class BaseActivity extends FragmentActivity {
 		HiidoSDK.instance().onPause(this, REPORT);
 		// 腾讯云统计
 		com.tencent.stat.StatService.onPause(this);
+	}
+
+	protected boolean mIsStopped;
+
+	public boolean isStopped() {
+		return mIsStopped;
+	}
+
+	@Override
+	protected void onStart() {
+		mIsStopped = false;
+		super.onStart();
+	}
+
+	@Override
+	protected void onStop() {
+		mIsStopped = true;
+		super.onStop();
+	}
+
+	private boolean mIsOnSaveInstanceStateCalled;
+
+	public boolean isOnSaveInstanceStateCalled() {
+		return mIsOnSaveInstanceStateCalled;
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		mIsOnSaveInstanceStateCalled = false;
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		mIsOnSaveInstanceStateCalled = true;
+		super.onSaveInstanceState(outState);
 	}
 
 	private View mEmptyLayout;
@@ -203,6 +241,11 @@ public class BaseActivity extends FragmentActivity {
 		}
 	}
 
+	public void hideInputMethod(View view) {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -222,12 +265,14 @@ public class BaseActivity extends FragmentActivity {
 		super.startActivityFromFragment(fragment, intent, requestCode);
 	}
 
-	//mQueue以栈形式保存fragment的index，在onActivityResult时pop出来得到fragment
-	private Stack<Integer> mIndexStack = new Stack<Integer>(); 
+	// mQueue以栈形式保存fragment的index，在onActivityResult时pop出来得到fragment
+	private Stack<Integer> mIndexStack = new Stack<Integer>();
 
 	/**
 	 * 从当前fragment开始，到Activity为止，得到路径的index
-	 * @param fragment  调用startActivityForResult的fragment
+	 * 
+	 * @param fragment
+	 *            调用startActivityForResult的fragment
 	 */
 	private void buildIndex(Fragment fragment) {
 
@@ -252,6 +297,7 @@ public class BaseActivity extends FragmentActivity {
 
 	/**
 	 * 得到之前调用startActivityForResult的fragment
+	 * 
 	 * @return 调用startActivityForResult的Fragment
 	 */
 	private Fragment getFragmentByIndex() {
@@ -286,5 +332,29 @@ public class BaseActivity extends FragmentActivity {
 			return;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onBackPressed() {
+
+		FragmentManager manager = getSupportFragmentManager();
+
+		List<Fragment> fragments = manager.getFragments();
+		if (fragments != null) {
+			for (Fragment fragment : fragments) {
+				if (fragment != null) {
+					if (fragment instanceof BaseFragment) {
+						if (((BaseFragment) fragment).onBackPressed()) {
+							return;
+						}
+					}
+				}
+			}
+		}
+		onBackPressedAfterFragment();
+	}
+
+	public void onBackPressedAfterFragment() {
+		super.onBackPressed();
 	}
 }

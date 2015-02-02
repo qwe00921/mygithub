@@ -10,26 +10,36 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewStub;
 import android.widget.Button;
+import android.widget.RadioGroup;
 
+import com.duowan.Comm.ECommAppType;
 import com.duowan.android.base.model.BaseModel;
 import com.yy.android.gamenews.Constants;
+import com.yy.android.gamenews.ServerConstants;
 import com.yy.android.gamenews.ui.common.UiUtils;
 import com.yy.android.gamenews.util.AppDetailUpgradeTask;
 import com.yy.android.gamenews.util.AppInitTask;
 import com.yy.android.gamenews.util.AppInitTask.OnAppInitTaskListener;
 import com.yy.android.gamenews.util.FileUtil;
+import com.yy.android.gamenews.util.MessageAsyncTask;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.gamenews.util.ToastUtil;
+import com.yy.android.gamenews.util.Util;
 import com.yy.android.sportbrush.R;
 
 public class WelcomeActivity extends BaseActivity implements OnClickListener {
 	private static final String TAG = WelcomeActivity.class.getSimpleName();
 	private boolean mFromNotice = false;
 	private AppInitTask mAppInitTask;
-	private Button mDev;
-	private Button mPre;
-	private Button mIdc;
+	// private Button mDev;
+	// private Button mPre;
+	// private Button mIdc;
+
+	private RadioGroup mEnvGroup;
+	private RadioGroup mAppGroup;
+	private Button mCustOkBtn;
 	private String ipUrl = null;
 
 	@Override
@@ -39,29 +49,36 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener {
 		// StatService.trackCustomEvent(this, "onCreate", "");
 		setContentView(R.layout.activity_welcome);
 		String channelName = getString(R.string.channelname);
-		if ("test".equals(channelName) || "dev".equals(channelName)) {
-			initTest();
+		if (Util.inTest(channelName)) {
+			initTest("dev".equals(channelName));
 		} else {
 			init();
 		}
 	}
 
-	private void initTest() {
+	private void initTest(boolean showChangeAppBtn) {
 		String ip = Preference.getInstance().getTestIp();
 		String url = Preference.getInstance().getTestUrl();
+		int appType = Preference.getInstance().getTestAppType();
 		if (TextUtils.isEmpty(url)) {
-			mDev = (Button) findViewById(R.id.dev);
-			mPre = (Button) findViewById(R.id.pre);
-			mIdc = (Button) findViewById(R.id.idc);
-			mDev.setVisibility(View.VISIBLE);
-			mPre.setVisibility(View.VISIBLE);
-			mIdc.setVisibility(View.VISIBLE);
-			mDev.setOnClickListener(this);
-			mPre.setOnClickListener(this);
-			mIdc.setOnClickListener(this);
+
+			ViewStub stub = (ViewStub) findViewById(R.id.app_custom_stub);
+			stub.inflate();
+
+			mCustOkBtn = (Button) findViewById(R.id.ok);
+			mCustOkBtn.setOnClickListener(this);
+			mEnvGroup = (RadioGroup) findViewById(R.id.cust_env_group);
+			mAppGroup = (RadioGroup) findViewById(R.id.cust_app_group);
+
+			if (!showChangeAppBtn) {
+				mAppGroup.setVisibility(View.GONE);
+			}
 		} else {
 			BaseModel.HOST = url;
-			showEnvToast(ip);
+			String app = initAppType(appType);
+			String env = getEnvToast(ip);
+
+			ToastUtil.showToast(app + " " + env);
 			init();
 		}
 
@@ -71,9 +88,11 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener {
 		mAppInitTask = new AppInitTask(this);
 		mAppInitTask.setOnAppInitTaskListener(mOnAppInitTaskListener);
 		mAppInitTask.execute();
+		if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
+			new MessageAsyncTask(this).execute();
+		}
 		copyAssetsData();
 		handleIntent();
-
 		String[] channelNames = getResources().getStringArray(
 				R.array.custom_channel_name);
 		if (channelNames != null && channelNames.length > 0) {
@@ -144,22 +163,21 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.dev:
+		switch (mEnvGroup.getCheckedRadioButtonId()) {
+		case R.id.cust_env_test:
 			ipUrl = Constants.APP_DEV_IP;
 			break;
-		case R.id.pre:
+		case R.id.cust_env_pre:
 			ipUrl = Constants.APP_PRE_IP;
 			break;
-		case R.id.idc:
+		case R.id.cust_env_idc:
 			ipUrl = Constants.APP_IDC_IP;
 			break;
 		default:
 			break;
 		}
-		mDev.setClickable(false);
-		mPre.setClickable(false);
-		mIdc.setClickable(false);
+
+		mCustOkBtn.setClickable(false);
 		EnvironmentAsynTask asyntast = new EnvironmentAsynTask(ipUrl);
 		asyntast.execute();
 	}
@@ -175,7 +193,7 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener {
 
 		@Override
 		protected void onPreExecute() {
-			urlDialogShow = UiUtils.cleanCacheDialogShow(WelcomeActivity.this,
+			urlDialogShow = UiUtils.loadingDialogShow(WelcomeActivity.this,
 					getResources().getString(R.string.app_url_loading_title));
 			super.onPreExecute();
 		}
@@ -194,13 +212,35 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener {
 			super.onPostExecute(result);
 			UiUtils.dialogDismiss(urlDialogShow);
 			if (result) {
-				showEnvToast(ipUrl);
+				String env = getEnvToast(ipUrl);
+
+				int appType = Constants.ECOMM_APP_TYPE;
+
+				if (mAppGroup.getVisibility() == View.VISIBLE) {
+					switch (mAppGroup.getCheckedRadioButtonId()) {
+					case R.id.cust_app_game: {
+						appType = ECommAppType._Comm_APP_GAMENEWS;
+						break;
+					}
+					case R.id.cust_app_sport: {
+						appType = ECommAppType._Comm_APP_SPORTBRUSH;
+						break;
+					}
+					case R.id.cust_app_auto: {
+						appType = ECommAppType._Comm_APP_CARBRUSH;
+						break;
+					}
+					}
+				}
+
+				Preference.getInstance().setTestAppType(appType);
+				String app = initAppType(appType);
+
+				ToastUtil.showToast(app + " " + env);
 				init();
 			} else {
 				ToastUtil.showToast("获取当前环境失败，请选择其它环境");
-				mDev.setClickable(true);
-				mPre.setClickable(true);
-				mIdc.setClickable(true);
+				mCustOkBtn.setClickable(true);
 			}
 		}
 
@@ -221,7 +261,36 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	private void showEnvToast(String url) {
+	private String initAppType(int id) {
+		String message = null;
+		switch (id) {
+		case ECommAppType._Comm_APP_GAMENEWS: {
+			Constants.ECOMM_APP_TYPE = ECommAppType._Comm_APP_GAMENEWS;
+			Constants.APP_SERVANT_NAME = ServerConstants.SERVANT_NAME.GAME;
+
+			message = "游戏刷子";
+			break;
+		}
+		case ECommAppType._Comm_APP_SPORTBRUSH: {
+			Constants.ECOMM_APP_TYPE = ECommAppType._Comm_APP_SPORTBRUSH;
+			Constants.APP_SERVANT_NAME = ServerConstants.SERVANT_NAME.SPORT;
+
+			message = "体育刷子";
+			break;
+		}
+		case ECommAppType._Comm_APP_CARBRUSH: {
+			Constants.ECOMM_APP_TYPE = ECommAppType._Comm_APP_CARBRUSH;
+			Constants.APP_SERVANT_NAME = ServerConstants.SERVANT_NAME.AUTO;
+
+			message = "汽车刷子";
+			break;
+		}
+		}
+
+		return message;
+	}
+
+	private String getEnvToast(String url) {
 		String message = null;
 		if (Constants.APP_DEV_IP.equals(url)) {
 			message = "测试环境";
@@ -230,7 +299,8 @@ public class WelcomeActivity extends BaseActivity implements OnClickListener {
 		} else if (Constants.APP_IDC_IP.equals(url)) {
 			message = "正式环境";
 		}
-		ToastUtil.showToast(message);
+
+		return message;
 	}
 
 }

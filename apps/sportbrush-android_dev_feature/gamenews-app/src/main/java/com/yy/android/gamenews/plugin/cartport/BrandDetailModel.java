@@ -64,13 +64,11 @@ public class BrandDetailModel extends CommonModel {
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetCarList");
-
 		GetCarListReq req = new GetCarListReq();
 		req.setBrandId(brandId);
 		req.setCount(count); // 默认10个
 		req.setAttachInfo(attachInfo);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetCarList", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override

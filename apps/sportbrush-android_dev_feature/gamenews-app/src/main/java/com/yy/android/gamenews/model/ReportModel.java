@@ -44,14 +44,13 @@ public class ReportModel extends CommonModel {
 			return;
 			// articleId = 5136;
 		}
-		
-		UniPacket uniPacket = CommonModel
-				.createUniPacket("NotInterestedArticle");
 
 		NotInterestedArticleReq req = new NotInterestedArticleReq();
 
 		req.setArticleId(articleId);
-		uniPacket.put("request", req);
+
+		UniPacket uniPacket = CommonModel.createUniPacket(
+				"NotInterestedArticle", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override
@@ -72,12 +71,10 @@ public class ReportModel extends CommonModel {
 
 	public static void ReportArticle(
 			final ResponseListener<Boolean> responseListener, long articleId) {
-		UniPacket uniPacket = CommonModel.createUniPacket("ReportArticle");
-
 		ReportArticleReq req = new ReportArticleReq();
 
 		req.setArticleId(articleId);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = CommonModel.createUniPacket("ReportArticle", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override
@@ -99,48 +96,49 @@ public class ReportModel extends CommonModel {
 	public static void LikeArticle(
 			final ResponseListener<Boolean> responseListener, long articleId,
 			LikeType likeType) {
-		UniPacket uniPacket = CommonModel.createUniPacket("Like");
-
 		LikeReq req = new LikeReq();
 
 		req.setLikeType(likeType.value());
 		req.setArticleId(articleId);
-		uniPacket.put("request", req);
 
-		new Request(responseListener.get(), uniPacket) {
-			@Override
-			public void onError(Exception e) {
-				// TODO Auto-generated method stub
-				super.onError(e);
-				responseListener.onError(e);
-			}
-			@Override
-			public void onResponse(UniPacket response) {
-				String strType = "";
-				Integer intType = 0;
-				String msg = response.getByClass("msg", strType);
-				int code = response.getByClass("code", intType);
-				int subcode = response.getByClass("subcode", intType);
-				if (code == 0 && subcode == 0) {
-					responseListener.onResponse(true);
-				} else {
-					responseListener.onError(new Exception(msg));
-				}
-			}
-		}.setShowProgressDialog(false).execute();
+		UniPacket uniPacket = CommonModel.createUniPacket("Like", req);
+
+		new CommonRequest<Boolean>(responseListener.get(), uniPacket)
+				.setup(responseListener, Boolean.valueOf(false))
+				.setShowErrorMsg(true).setShowProgressDialog(false).execute();
+
+		// new Request(responseListener.get(), uniPacket) {
+		// @Override
+		// public void onError(Exception e) {
+		// // TODO Auto-generated method stub
+		// super.onError(e);
+		// responseListener.onError(e);
+		// }
+		// @Override
+		// public void onResponse(UniPacket response) {
+		// String strType = "";
+		// Integer intType = 0;
+		// String msg = response.getByClass("msg", strType);
+		// int code = response.getByClass("code", intType);
+		// int subcode = response.getByClass("subcode", intType);
+		// if (code == 0 && subcode == 0) {
+		// responseListener.onResponse(true);
+		// } else {
+		// responseListener.onError(new Exception(msg));
+		// }
+		// }
+		// }.setShowProgressDialog(false).execute();
 	}
 
 	public static void LikeComment(
 			final ResponseListener<Boolean> responseListener, long articleId,
 			String commentId, LikeType likeType) {
-		UniPacket uniPacket = CommonModel.createUniPacket("Like");
-
 		LikeReq req = new LikeReq();
 
 		req.setLikeType(likeType.value());
 		req.setCommentId(commentId);
 		req.setArticleId(articleId);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = CommonModel.createUniPacket("Like", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override
@@ -149,6 +147,7 @@ public class ReportModel extends CommonModel {
 				super.onError(e);
 				responseListener.onError(e);
 			}
+
 			@Override
 			public void onResponse(UniPacket response) {
 				String strType = "";
@@ -168,13 +167,11 @@ public class ReportModel extends CommonModel {
 	public static void AddFavArticle(
 			final ResponseListener<Boolean> responseListener, long articleId,
 			FavType type) {
-		UniPacket uniPacket = CommonModel.createUniPacket("AddFavArticle");
-
 		AddFavArticleReq req = new AddFavArticleReq();
 
 		req.setArticleId(articleId);
 		req.setType(type.value());
-		uniPacket.put("request", req);
+		UniPacket uniPacket = CommonModel.createUniPacket("AddFavArticle", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override
@@ -183,6 +180,7 @@ public class ReportModel extends CommonModel {
 				super.onError(e);
 				responseListener.onError(e);
 			}
+
 			@Override
 			public void onResponse(UniPacket response) {
 				String strType = "";
@@ -201,12 +199,10 @@ public class ReportModel extends CommonModel {
 
 	public static void ShareArticle(
 			final ResponseListener<Boolean> responseListener, long articleId) {
-		UniPacket uniPacket = CommonModel.createUniPacket("ShareArticle");
-
 		ShareArticleReq req = new ShareArticleReq();
 
 		req.setArticleId(articleId);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = CommonModel.createUniPacket("ShareArticle", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override

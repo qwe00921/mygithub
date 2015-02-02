@@ -103,16 +103,13 @@ public class CartDetailFragment extends BaseFragment implements
 
 			@Override
 			public void onClick(View v) {
-				Activity activity = getActivity();
-				if (activity != null) {
-					activity.onBackPressed();
-				}
+				onActivityBackPressed();
 			}
 		});
 		View mActionBarBg = mActionBar.findViewById(R.id.actionbar_container);
 		mActionBarBg.setBackgroundColor(0xff222528);
 		mActionBar.setTitle(getArguments().getString(
-				SingleFragmentActivity.TAG_FGMT_BRANDNAME));
+				CartDetailActivity.TAG_FGMT_BRANDNAME));
 		mViewPager = (ViewPager) view.findViewById(R.id.pager);
 		mViewPager.setOffscreenPageLimit(3);
 		SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -271,7 +268,7 @@ public class CartDetailFragment extends BaseFragment implements
 			} else if (TITLE_IMAGE.equals(channel)) {
 
 				int cartId = getArguments().getInt(
-						SingleFragmentActivity.TAG_FGMT_CARTID);
+						CartDetailActivity.TAG_FGMT_CARTID);
 				Channel c = new Channel();
 				c.setId(cartId);
 				// 正式代码

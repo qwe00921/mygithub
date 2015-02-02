@@ -140,7 +140,7 @@ public class BrandChooseFragment extends BaseListFragment<BrandListItemObject> {
 						if (param != null && param.getAllBrandInfo() != null) {
 							saveListToDisk(param);
 							requestFinish(refreType,
-									getResource(param), false, true);
+									getResource(param), false, true, false);
 						}
 					}
 
@@ -148,7 +148,7 @@ public class BrandChooseFragment extends BaseListFragment<BrandListItemObject> {
 					public void onError(Exception e) {
 						super.onError(e);
 						requestFinish(refreType,
-								null, false, true);
+								null, false, true, false);
 					}
 
 				}, COUNT, "");
@@ -200,8 +200,8 @@ public class BrandChooseFragment extends BaseListFragment<BrandListItemObject> {
 	@Override
 	protected void requestFinish(int refresh,
 			ArrayList<BrandListItemObject> sourceList, boolean hasMore,
-			boolean replace) {
-		super.requestFinish(refresh, sourceList, hasMore, replace);
+			boolean replace, boolean error) {
+		super.requestFinish(refresh, sourceList, hasMore, replace, error);
 		if (sourceList != null) {
 			showView(VIEW_TYPE_DATA);
 			mSideBar.setListView((ListView) getDataView());
@@ -290,7 +290,7 @@ public class BrandChooseFragment extends BaseListFragment<BrandListItemObject> {
 			}
 
 			requestFinish(RefreshType._REFRESH_TYPE_REFRESH, getResource(mRsp),
-					false, true);
+					false, true, false);
 
 			super.onPostExecute(needReload);
 		}

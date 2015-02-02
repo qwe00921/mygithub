@@ -68,24 +68,30 @@
 
                         <TextView
                             android:id="@+id/action_complete"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="51dip"
+                            android:layout_height="24dip"
                             android:layout_gravity="center_vertical"
-                            android:background="@drawable/channel_depot_more_selector"
-                            android:gravity="center_vertical"
-                            android:text="@string/channel_complete"
-                            android:textColor="@color/channel_depot_lable"
-                            android:textSize="14.66sp"
-                            android:visibility="invisible" />
+                            android:background="@drawable/channel_depot_edit_selector"
+                            android:gravity="center"
+                            android:text="@string/channel_depot_edit"
+                            android:textColor="@color/channel_depot_edit"
+                            android:textSize="13sp"
+                            android:visibility="visible" />
                     </LinearLayout>
+
+                    <!-- style="@style/channelDepotMarginWindowWithOffset" -->
 
                     <com.yy.android.gamenews.ui.view.CategoryFlowLayout
                         android:id="@+id/category_flow_layout"
-                        style="@style/channelDepotMarginWindowWithOffset"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dip"
+                        android:layout_marginStart="10dip"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dip"
+                        android:layout_marginEnd="10dip"
                         app:gfColumnWidth="@dimen/gridview_item_width"
                         app:gfMinHSpacing="4dp"
                         app:gfVSpacing="10dp" />

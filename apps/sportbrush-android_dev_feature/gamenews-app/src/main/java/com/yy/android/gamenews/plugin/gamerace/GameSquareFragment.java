@@ -1,14 +1,14 @@
 package com.yy.android.gamenews.plugin.gamerace;
 
-import java.util.ArrayList;
-
 import com.duowan.android.base.model.BaseModel.ResponseListener;
 import com.duowan.gamenews.ArticleInfo;
 import com.duowan.gamenews.ArticleType;
 import com.duowan.gamenews.GetRacePortalRsp;
+import com.yy.android.gamenews.event.MainTabEvent;
 import com.yy.android.gamenews.jcewrapper.GetRacePortalRspLocal;
-import com.yy.android.gamenews.model.AssociationModel;
+import com.yy.android.gamenews.model.UnionModel;
 import com.yy.android.gamenews.ui.ArticleListFragment;
+import com.yy.android.gamenews.util.MainTabStatsUtil;
 import com.yy.android.gamenews.util.ToastUtil;
 import com.yy.android.sportbrush.R;
 
@@ -18,7 +18,7 @@ public class GameSquareFragment extends
 	@Override
 	protected void requestDataImpl(final int refresh, Object attachInfo) {
 
-		AssociationModel.getRacePortalList(
+		UnionModel.getRacePortalList(
 				new ResponseListener<GetRacePortalRsp>(getActivity()) {
 
 					@Override
@@ -36,7 +36,7 @@ public class GameSquareFragment extends
 						}
 						super.onError(e);
 					}
-				}, (String) attachInfo);
+				}, (String) attachInfo, refresh);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class GameSquareFragment extends
 	}
 
 	@Override
-	protected String getKey() {
+	protected String getCacheKey() {
 		return "gamesquare";
 	}
 
@@ -71,6 +71,10 @@ public class GameSquareFragment extends
 				break;
 			}
 			}
+			
+			MainTabStatsUtil.statistics(getActivity(),
+					MainTabEvent.TAB_GAMERACE_INFO,
+					MainTabEvent.CLICK_RACEPORTAL, model.getTitle());
 		}
 
 		super.onItemClick(model, position, type);

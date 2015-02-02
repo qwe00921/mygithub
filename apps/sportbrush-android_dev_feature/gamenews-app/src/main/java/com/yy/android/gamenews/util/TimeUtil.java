@@ -1,6 +1,5 @@
 package com.yy.android.gamenews.util;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -87,19 +86,22 @@ public class TimeUtil {
 			timeIntoFormat = timePassed / ONE_HOUR;
 			String value = timeIntoFormat + "小时";
 			res = String.format(resources.getString(R.string.post_at), value);
-		} else if (timePassed < ONE_MONTH) {
-			timeIntoFormat = timePassed / ONE_DAY;
-			String value = timeIntoFormat + "天";
-			res = String.format(resources.getString(R.string.post_at), value);
-		} else if (timePassed < ONE_YEAR) {
-			timeIntoFormat = timePassed / ONE_MONTH;
-			String value = timeIntoFormat + "个月";
-			res = String.format(resources.getString(R.string.post_at), value);
-		} else {
-			timeIntoFormat = timePassed / ONE_YEAR;
-			String value = timeIntoFormat + "年";
-			res = String.format(resources.getString(R.string.post_at), value);
+		} else{
+			res = parseTime(createTime);
 		}
+//		else if (timePassed < ONE_MONTH) {
+//			timeIntoFormat = timePassed / ONE_DAY;
+//			String value = timeIntoFormat + "天";
+//			res = String.format(resources.getString(R.string.post_at), value);
+//		} else if (timePassed < ONE_YEAR) {
+//			timeIntoFormat = timePassed / ONE_MONTH;
+//			String value = timeIntoFormat + "个月";
+//			res = String.format(resources.getString(R.string.post_at), value);
+//		} else {
+//			timeIntoFormat = timePassed / ONE_YEAR;
+//			String value = timeIntoFormat + "年";
+//			res = String.format(resources.getString(R.string.post_at), value);
+//		}
 		return res;
 	}
 

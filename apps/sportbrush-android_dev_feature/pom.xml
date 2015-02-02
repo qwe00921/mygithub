@@ -108,7 +108,7 @@
 							<platform>${android-platform}</platform>
 						</sdk>
 						<proguard>
-							<skip>false</skip>
+							<skip>true</skip>
 							<configs>
 								<config>${env.ANDROID_HOME}/tools/proguard/proguard-android.txt</config>
 							</configs>

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gamenews="http://schemas.android.com/apk/res/com.yy.android.sportbrush"
+    android:id="@+id/ll_detail_footer_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="15dp"
+    android:visibility="gone" >
 
     <LinearLayout
         android:id="@+id/article_tag_container"
@@ -104,6 +110,142 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_recommend_article_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/article_detail_comment_divider" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recommend_article"
+            android:textColor="@color/actionbar_bg"
+            android:textSize="14.67sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/ll_article_view1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@drawable/article_list_item_selector"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <com.yy.android.gamenews.ui.view.AutoAdjustImageView
+                    android:id="@+id/iv_article_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/article_list_item_loading"
+                    gamenews:adjustType="auto_adjust_scale_height"
+                    gamenews:scaleRate="1.30" />
+
+                <TextView
+                    android:id="@+id/tv_article_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal"
+                    android:maxLines="2"
+                    android:text="@string/recommend_article"
+                    android:textColor="@color/global_lv_primary_text"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/recommand_divider1"
+                android:layout_width="10dp"
+                android:layout_height="match_parent" 
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/ll_article_view2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@drawable/article_list_item_selector"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <com.yy.android.gamenews.ui.view.AutoAdjustImageView
+                    android:id="@+id/iv_article_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/article_list_item_loading"
+                    gamenews:adjustType="auto_adjust_scale_height"
+                    gamenews:scaleRate="1.30" />
+
+                <TextView
+                    android:id="@+id/tv_article_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal"
+                    android:maxLines="2"
+                    android:text="@string/recommend_article"
+                    android:textColor="@color/global_lv_primary_text"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/recommand_divider2"
+                android:layout_width="10dp"
+                android:layout_height="match_parent" 
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/ll_article_view3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@drawable/article_list_item_selector"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <com.yy.android.gamenews.ui.view.AutoAdjustImageView
+                    android:id="@+id/iv_article_view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/article_list_item_loading"
+                    gamenews:adjustType="auto_adjust_scale_height"
+                    gamenews:scaleRate="1.30" />
+
+                <TextView
+                    android:id="@+id/tv_article_view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal"
+                    android:maxLines="2"
+                    android:text="@string/recommend_article"
+                    android:textColor="@color/global_lv_primary_text"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/title_comment_newest"
         android:layout_width="wrap_content"
@@ -111,15 +253,16 @@
         android:layout_marginTop="25.33dp"
         android:text="@string/article_detail_comment_newest"
         android:textColor="@color/actionbar_bg"
-        android:textSize="14.67sp"/>
+        android:textSize="14.67sp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/title_comment_empty"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:orientation="vertical"
         android:paddingTop="120dp"
-        android:orientation="vertical" 
         android:visibility="gone" >
 
         <ImageView

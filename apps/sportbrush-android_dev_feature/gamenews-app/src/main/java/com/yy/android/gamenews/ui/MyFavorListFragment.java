@@ -12,8 +12,6 @@ import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.jcewrapper.GetFavArticleListRspLocal;
 import com.yy.android.gamenews.model.ArticleModel;
 import com.yy.android.gamenews.ui.common.DataViewConverterFactory;
-import com.yy.android.gamenews.util.ToastUtil;
-import com.yy.android.sportbrush.R;
 
 public class MyFavorListFragment extends
 		ArticleListFragment<GetFavArticleListRsp, GetFavArticleListRspLocal> {
@@ -37,7 +35,7 @@ public class MyFavorListFragment extends
 		refreshData();
 		super.onResume();
 	}
-	
+
 	@Override
 	protected boolean needShowUpdatedCount() {
 		return false;
@@ -58,9 +56,6 @@ public class MyFavorListFragment extends
 						setEmptyText(strEmptyReload);
 						requestFinish(refresh, null, true);
 
-						if (e != null) {
-							ToastUtil.showToast(R.string.http_error);
-						}
 						super.onError(e);
 					}
 				}, // Listener
@@ -71,17 +66,17 @@ public class MyFavorListFragment extends
 	protected GetFavArticleListRsp newRspObject() {
 		return new GetFavArticleListRsp();
 	}
-	
+
 	@Override
 	protected boolean needShowViewedArticle() {
 		return false;
 	}
-	
+
 	@Override
 	protected boolean needSaveToDisk() {
 		return false;
 	}
-	
+
 	@Override
 	protected String getLastRefreshTimeKey() {
 		return Constants.CACHE_KEY_LAST_REFRSH_TIME_MYFAVOR;
@@ -96,7 +91,7 @@ public class MyFavorListFragment extends
 			dataList = data.getArticleList();
 			hasMore = data.hasMore;
 		}
-		requestFinish(refresh, dataList, hasMore, true);
+		requestFinish(refresh, dataList, hasMore, true, error);
 	}
 
 	@Override

@@ -38,7 +38,6 @@ public class UnionRaceTopicFragment extends BaseListFragment<UnionInfo> {
 	private SwitchImageLoader mImageLoader = SwitchImageLoader.getInstance();
 	public static final String RACE_TOPIC = "UnionRaceTopic";
 	private UnionListAdapter mUnionListAdapter;
-	private RaceTopicInfo mRaceTopicInfo;
 	private FragmentActivity mActivity;
 	protected IPageCache mPageCache;
 	protected Preference mPref;
@@ -58,7 +57,6 @@ public class UnionRaceTopicFragment extends BaseListFragment<UnionInfo> {
 	}
 
 	public void setData(RaceTopicInfo raceTopicInfo) {
-		this.mRaceTopicInfo = raceTopicInfo;
 		if (raceTopicInfo != null) {
 			mTopicId = raceTopicInfo.getId();
 		}
@@ -131,35 +129,35 @@ public class UnionRaceTopicFragment extends BaseListFragment<UnionInfo> {
 								&& arg0.getUnionList().size() > 0) {
 							saveListToDisk(arg0);
 						}
-						if (arg0 != null) {
+						if (arg0 != null && arg0.getUnionList() != null) {
 							mAttachInfo = arg0.getAttachInfo();
 							refreshHeader(arg0);
 						}
 						if (arg0 != null && arg0.getUnionList() != null) {
 							if (refreType == RefreshType._REFRESH_TYPE_LOAD_MORE) {
 								requestFinish(refreType, arg0.getUnionList(),
-										arg0.getHasMore(), false);
+										arg0.getHasMore(), false, false);
 							} else {
 								requestFinish(refreType, arg0.getUnionList(),
-										arg0.getHasMore(), true);
+										arg0.getHasMore(), true, false);
 							}
 						} else {
-							requestFinish(refreType, null, false, true);
+							requestFinish(refreType, null, false, true, false);
 						}
 					}
 
 					@Override
 					public void onError(Exception e) {
 						super.onError(e);
-						requestFinish(refreType, null, false, false);
+						requestFinish(refreType, null, false, false, false);
 					}
-				}, mTopicId, mAttachInfo);
+				}, mTopicId, mAttachInfo, refreType);
 	}
 
 	@Override
 	protected void requestFinish(int refresh, ArrayList<UnionInfo> data,
-			boolean hasMore, boolean replace) {
-		super.requestFinish(refresh, data, hasMore, replace);
+			boolean hasMore, boolean replace, boolean error) {
+		super.requestFinish(refresh, data, hasMore, replace, error);
 		if (IsFirstEnter && data != null && data.size() > 0) {
 			showView(VIEW_TYPE_DATA);
 			IsFirstEnter = false;
@@ -278,7 +276,7 @@ public class UnionRaceTopicFragment extends BaseListFragment<UnionInfo> {
 			// }
 			if (needReload) {
 				requestFinish(RefreshType._REFRESH_TYPE_REFRESH,
-						mRsp.getUnionList(), false, true);
+						mRsp.getUnionList(), false, true, false);
 			}
 			super.onPostExecute(needReload);
 		}

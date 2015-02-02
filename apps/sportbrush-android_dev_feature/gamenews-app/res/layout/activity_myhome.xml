@@ -22,6 +22,8 @@
         android:orientation="vertical"
         android:paddingRight="10dp" >
 
+        <!-- android:text="@string/my_favor" -->
+
         <TextView
             android:id="@+id/tv_favor_count"
             android:layout_width="wrap_content"
@@ -31,7 +33,6 @@
             android:drawablePadding="5dp"
             android:gravity="center"
             android:onClick="onClick"
-            android:text="@string/my_favor"
             android:textColor="@drawable/my_favor_text_color_selector"
             android:textSize="16sp" />
     </LinearLayout>
@@ -161,7 +162,7 @@
                     android:minHeight="44dp"
                     android:orientation="vertical" >
 
-                    <!-- 签到送T豆 -->
+                    <!-- 賺取T豆 -->
 
                     <LinearLayout
                         android:id="@+id/my_event_sign_btn"
@@ -169,30 +170,23 @@
                         android:layout_height="50.66dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/my_gift_bg_selector"
+                        android:background="@drawable/my_login_btn_selector"
                         android:clickable="true"
                         android:gravity="center"
                         android:onClick="onClick"
                         android:orientation="horizontal"
                         android:paddingLeft="13.33dp"
                         android:paddingRight="13.33dp"
-                        android:visibility="gone" >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginRight="13.33dp"
-                            android:src="@drawable/ic_sign" />
+                        android:visibility="visible" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:singleLine="true"
-                            android:text="@string/my_event_sign"
-                            android:textAppearance="@style/MySettingPrimaryText" />
+                            android:text="@string/get_tdou"
+                            android:textColor="@color/global_white"
+                            android:textSize="16dp" />
                     </LinearLayout>
 
                     <!-- 活动按钮 -->
@@ -213,7 +207,6 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="13.33dp"
                             android:src="@drawable/ic_gift" />
@@ -254,9 +247,9 @@
                     android:background="@drawable/my_setting_bg_selector"
                     android:clickable="true"
                     android:onClick="onClick"
-                    android:visibility="gone"
                     android:paddingLeft="@dimen/my_list_item_padding_left"
-                    android:paddingRight="@dimen/my_list_item_padding_right" >
+                    android:paddingRight="@dimen/my_list_item_padding_right"
+                    android:visibility="gone" >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -404,8 +397,9 @@
                     android:textAppearance="@style/MySettingPrimaryText" />
 
                 <View style="@style/global_divider" />
-				
+
                 <!-- 推荐 -->
+
                 <TextView
                     android:id="@+id/share_to"
                     android:layout_width="match_parent"

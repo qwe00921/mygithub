@@ -25,7 +25,7 @@ public class HotCartModel extends CommonModel {
 
 	public static void getHotcartList(
 			final ResponseListener<GetHotCarListRsp> responseListener,
-			int count,String attachInfo) {
+			int count, String attachInfo) {
 		if (TEST_DATA) {
 			sHandler.postDelayed(new Runnable() {
 
@@ -56,12 +56,10 @@ public class HotCartModel extends CommonModel {
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetHotCarList");
-
 		GetHotCarListReq req = new GetHotCarListReq();
 		req.setAttachInfo(attachInfo);
 		req.setCount(count);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetHotCarList", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override

@@ -2,19 +2,20 @@ package com.yy.android.gamenews.util;
 
 import java.util.List;
 
-import android.app.Dialog;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.duowan.Comm.ECommAppType;
 import com.duowan.android.base.model.BaseModel.ResponseListener;
 import com.duowan.gamenews.Button;
 import com.duowan.gamenews.ButtonType;
 import com.duowan.gamenews.CheckInActionRsp;
 import com.duowan.gamenews.CheckInButton;
 import com.duowan.gamenews.CheckInIndexRsp;
+import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.model.SignModel;
 import com.yy.android.gamenews.ui.AppWebActivity;
 import com.yy.android.gamenews.ui.LoginYYActivity;
@@ -40,9 +41,12 @@ public class SignUtil {
 	 * 检查是否每天第一次进入，如果是，则请求签到
 	 */
 	public void requestSignDaily() {
+		// 只有游戏刷子有签到
+		if (!Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
+			return;
+		}
 		if (mPref.isFirstLaunchDaily()) {
 			requestSign();
-			mPref.finishFirstLaunchDaily();
 		}
 	}
 
@@ -53,6 +57,9 @@ public class SignUtil {
 			@Override
 			public void onResponse(CheckInIndexRsp rsp) {
 
+				if(mPref.isFirstLaunchDaily()) {
+					mPref.finishFirstLaunchDaily();
+				}
 				showSignDialog(rsp.checkInButton, rsp.button, rsp.desc);
 			}
 
@@ -105,7 +112,6 @@ public class SignUtil {
 		String btn1 = "";
 		String btn2 = "";
 
-		OnClickListener listener = mListener;
 		if (btnList != null && btnList.size() > 0) {
 			btn1 = btnList.get(0).name;
 			if (btnList.size() > 1) {
@@ -161,9 +167,13 @@ public class SignUtil {
 	private void showResultAfterSign(CheckInActionRsp response) {
 		Builder builder = new Builder(mContext);
 		if (!TextUtils.isEmpty(response.getGiftCode())) {
-			builder.setCopyViewText(response.getGiftCode());
+			builder.addTextView(response.getGiftCode(), true);
+		}
+		if (!TextUtils.isEmpty(response.getCopyValue())) {
+			builder.setCopyViewText(response.getCopyValue());
 			builder.showCopyView(true);
 		}
+
 		builder.setCaption(response.getDesc());
 		showDialogWithButtons("", builder, response.getButton(),
 				R.string.global_ok);
@@ -232,17 +242,22 @@ public class SignUtil {
 			break;
 		}
 		case ButtonType._GO_USER_CENTER: {
-			MyHomeActivity.startMyHomeActivity(mContext);
+			MyHomeActivity.startMyHomeActivityForResult(mContext);
 			break;
 		}
 		case ButtonType._GO_WEB: {
-			AppWebActivity.startWebActivityWithYYToken(mContext, btn.url);
+			AppWebActivity.startWebActivityWithYYToken(mContext, btn.url,true);
 			break;
 		}
 		case ButtonType._GO_YY_LOGIN: {
 			LoginYYActivity.startLoginActivityForResult(mContext);
 			break;
 		}
+		case ButtonType._GO_CANCEL_MSG: {
+			ToastUtil.showToast(btn.desc);
+			break;
+		}
+
 		}
 	}
 

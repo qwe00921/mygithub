@@ -12,8 +12,12 @@
         <!-- 背景颜色 -->
         <attr name="drawableLeft" format="reference|integer" />
         <!-- 左边图片 -->
+        <attr name="show_loading" format="boolean" />
+        <!-- actionbar show loading bar or not -->
         <attr name="drawableRight" format="reference|integer" />
         <!-- 右边图片 -->
+        <attr name="drawableCenter" format="reference|integer" />
+        <!-- 中间图片 -->
         <attr name="rightBorderColor" format="color" />
         <!-- 右边图片边框颜色 -->
         <attr name="leftBorderColor" format="color" />

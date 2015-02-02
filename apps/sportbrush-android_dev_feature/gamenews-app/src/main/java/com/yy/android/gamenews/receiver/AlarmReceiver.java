@@ -1,11 +1,11 @@
 package com.yy.android.gamenews.receiver;
 
-import com.yy.android.gamenews.util.AlarmUtil;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.yy.android.gamenews.util.AlarmUtil;
 
 public class AlarmReceiver extends BroadcastReceiver {
 	private static final String TAG = "AlarmReceiver";

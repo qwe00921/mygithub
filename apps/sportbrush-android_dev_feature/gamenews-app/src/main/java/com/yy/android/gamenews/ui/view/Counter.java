@@ -6,19 +6,7 @@ import java.util.List;
 import android.os.Handler;
 
 public class Counter {
-
-	// private float mStartValue;
-	// private float mEndValue;
-	// private float mCurrentValue;
-	// private float mValueInterval;
-	// private int mDuration;
 	private Handler mHandler = new Handler();
-	// private int mStatus;
-	// private static final int STATUS_START = 0;
-	// private static final int STATUS_CANCEL = 1;
-	// private static final int STATUS_PAUSE = 2;
-	// private static final int STATUS_FINISH = 3;
-	// private static final String TAG = "Timer";
 	private List<CounterItem> mItemList;
 
 	public void setValue(CounterItem... itemList) {
@@ -36,7 +24,6 @@ public class Counter {
 
 	private Runnable mRunnable = new Runnable() {
 		public void run() {
-
 			mOnTimerCallback.onUpdate(mItemList);
 			boolean needContinue = false;
 			for (CounterItem item : mItemList) {
@@ -56,18 +43,10 @@ public class Counter {
 		}
 	};
 
-	// public void setDuration(int duration) {
-	// mDuration = duration;
-	// }
-
 	public void start() {
+		mIsRunning = true;
 		mHandler.post(mRunnable);
 	}
-
-	// private void goStop() {
-	// mCurrentValue = mEndValue;
-	// mOnTimerCallback.onUpdate(mEndValue);
-	// }
 
 	private void checkEnd() {
 		if (mOnTimerCallback != null) {
@@ -75,9 +54,16 @@ public class Counter {
 		}
 	}
 
+	private boolean mIsRunning;
+
+	public boolean isStopped() {
+		return !mIsRunning;
+	}
+
 	public void stop() {
 		// goStop();
 		checkEnd();
+		mIsRunning = false;
 	}
 
 	public void pause() {

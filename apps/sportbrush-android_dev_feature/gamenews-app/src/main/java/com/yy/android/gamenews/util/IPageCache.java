@@ -160,7 +160,7 @@ public class IPageCache {
 	 * @return 根据字符串反序列化生成的对象
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends Serializable> T getObject(String key, Class<T> whichClass) {
+	public <T extends Serializable> T getObject(String key) {
 		String body = get(key);
 
 		if (null == body) {

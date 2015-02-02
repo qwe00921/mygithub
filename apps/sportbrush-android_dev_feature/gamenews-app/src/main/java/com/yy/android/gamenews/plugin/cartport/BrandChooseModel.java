@@ -83,12 +83,10 @@ public class BrandChooseModel extends CommonModel {
 			return;
 		}
 
-		UniPacket uniPacket = createUniPacket("GetCarBrandList");
-
 		GetCarBrandListReq req = new GetCarBrandListReq();
 		req.setCount(count); // 默认10个
 		req.setAttachInfo(attachInfo);
-		uniPacket.put("request", req);
+		UniPacket uniPacket = createUniPacket("GetCarBrandList", req);
 
 		new Request(responseListener.get(), uniPacket) {
 			@Override

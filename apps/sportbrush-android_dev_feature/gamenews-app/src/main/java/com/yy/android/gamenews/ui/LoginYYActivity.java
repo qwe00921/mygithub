@@ -23,7 +23,6 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.duowan.android.base.model.BaseModel.ResponseListener;
-import com.duowan.gamenews.LoginActionFlag;
 import com.duowan.gamenews.PlatType;
 import com.duowan.gamenews.UserInitReq;
 import com.duowan.gamenews.UserInitRsp;
@@ -38,11 +37,7 @@ import com.yy.udbsdk.UICalls;
 import com.yy.udbsdk.UIError;
 import com.yy.udbsdk.UIListener;
 
-public class LoginYYActivity extends FragmentActivity implements
-		OnClickListener {
-
-	public static final int REQUEST_LOGIN = 1001;
-	public static final String EXTRA_USER_INIT_RSP = "user_init_rsp";
+public class LoginYYActivity extends BaseActivity implements OnClickListener {
 
 	private static final int ERROR_CODE_LOGIN_FAIL = -9;
 
@@ -68,7 +63,7 @@ public class LoginYYActivity extends FragmentActivity implements
 
 	public static void startLoginActivityForResult(Activity context) {
 		Intent intent = new Intent(context, LoginYYActivity.class);
-		context.startActivityForResult(intent, LoginYYActivity.REQUEST_LOGIN);
+		context.startActivityForResult(intent, Constants.REQUEST_LOGIN);
 	}
 
 	@Override
@@ -215,10 +210,9 @@ public class LoginYYActivity extends FragmentActivity implements
 				map.put(1, yyuid + "");
 				req.setSocialAccessToken(map);
 				// req.setUserIcon("http://mtq.yy.com/static/yylogo/1.jpg");
-				Preference.getInstance().setLoginType(PlatType._PLAT_TYPE_YY);
 
 				InitModel.sendUserInitReq(LoginYYActivity.this, mRspListener,
-						req, false);
+						req, true);
 			}
 			Log.d(LOG_TAG, "msg = " + msg);
 
@@ -239,7 +233,7 @@ public class LoginYYActivity extends FragmentActivity implements
 			Preference.getInstance().saveInitRsp(rsp);
 			if (rsp != null) {
 				Intent intent = new Intent();
-				intent.putExtra(EXTRA_USER_INIT_RSP, rsp);
+				intent.putExtra(Constants.EXTRA_USER_INIT_RSP, rsp);
 				setResult(RESULT_OK, intent);
 				finish();
 			}

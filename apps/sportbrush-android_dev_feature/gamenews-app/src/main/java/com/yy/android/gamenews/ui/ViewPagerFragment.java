@@ -1,6 +1,8 @@
 package com.yy.android.gamenews.ui;
 
-import android.content.res.Configuration;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,13 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.view.ViewParent;
 
+import com.yy.android.gamenews.ui.view.ViewPagerHeader;
+import com.yy.android.gamenews.ui.view.ViewPagerHeader.OnCheckedChangeListener;
 import com.yy.android.gamenews.util.Preference;
 import com.yy.android.sportbrush.R;
 
@@ -34,9 +33,11 @@ public abstract class ViewPagerFragment extends BaseFragment {
 	private static final String TAG = ViewPagerFragment.class.getSimpleName();
 
 	public static final String KEY_NEWS_TYPE = "type";
-	Runnable mTitleSelector;
-	public HorizontalScrollView mTitleContainer;
-	protected RadioGroup mTitles;
+	// Runnable mTitleSelector;
+	// public HorizontalScrollView mTitleContainer;
+	// protected RadioGroup mTitles;
+
+	public ViewPagerHeader mTitles;
 	protected CustomDurationViewPager mViewPager;
 	private LayoutInflater mInflater;
 	protected Preference mPref;
@@ -65,11 +66,12 @@ public abstract class ViewPagerFragment extends BaseFragment {
 	}
 
 	protected abstract PagerAdapter getAdapter();
-	public void showTab(int pos) {
 
-		if (mTitles != null) {
-			mTitles.check(pos);
-		}
+	public void showTab(int pos) {
+		mTitles.check(pos);
+		// if (mTitles != null) {
+		// mTitles.check(pos);
+		// }
 	}
 
 	@Override
@@ -95,35 +97,36 @@ public abstract class ViewPagerFragment extends BaseFragment {
 				Log.v(TAG, "onPageSelected " + position);
 				mTitles.setOnCheckedChangeListener(null);
 				showTab(position);
-				animateToTitle(position);
 				onViewPageSelected(position);
 				mTitles.setOnCheckedChangeListener(onCheckedChangeListener);
 			}
 		};
-	    mViewPager.setOnPageChangeListener(onPageChangeListener);
+		mViewPager.setOnPageChangeListener(onPageChangeListener);
 
-		mTitleContainer = (HorizontalScrollView) view
-				.findViewById(R.id.title_container);
+		// mTitleContainer = (HorizontalScrollView) view
+		// .findViewById(R.id.title_container);
 
-		mTitles = (RadioGroup) view.findViewById(R.id.titles);
+		mTitles = (ViewPagerHeader) view.findViewById(R.id.head);
 		onCheckedChangeListener = new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
+			public void onCheckedChanged(ViewParent group, int checkedId) {
 				Log.v(TAG, "onCheckedChanged " + checkedId);
 				if (checkedId != -1) {
 					mViewPager.setOnPageChangeListener(null);
 					mViewPager.setCurrentItem(checkedId);
-					animateToTitle(checkedId);
+					// animateToTitle(checkedId);
+					onViewPageSelected(checkedId);
 					mViewPager.setOnPageChangeListener(onPageChangeListener);
 				}
 			}
 		};
 		mTitles.setOnCheckedChangeListener(onCheckedChangeListener);
-		
-		if (needCheckDivide()) {
-			mTitles.getViewTreeObserver().addOnGlobalLayoutListener(
-					mOnGlobalLayoutListener);
-		}
+
+		mTitles.setNeedCheckEqually(needCheckDivide());
+		// if (needCheckDivide()) {
+		// mHeader.getViewTreeObserver().addOnGlobalLayoutListener(
+		// mOnGlobalLayoutListener);
+		// }
 		refreshTitleIndicators();
 
 		mAddTitle = view.findViewById(R.id.add_title);
@@ -152,43 +155,44 @@ public abstract class ViewPagerFragment extends BaseFragment {
 		return false;
 	}
 
-	private OnGlobalLayoutListener mOnGlobalLayoutListener = new OnGlobalLayoutListener() {
-
-		@Override
-		public void onGlobalLayout() {
-			int orientation = getResources().getConfiguration().orientation;
-			if (Configuration.ORIENTATION_LANDSCAPE == orientation) {
-				return;
-			}
-			int width = mTitles.getWidth();
-			View parent = (View) mTitles.getParent();
-			int parentWidth = parent.getWidth();
-			if (width < parentWidth) {
-				int childCount = mTitles.getChildCount();
-
-				// 总父视图宽度减去所有字的宽度（即child width的总和），再平分得出每个视图的margin
-				int totalChildWidth = 0;
-				for (int i = 0; i < childCount; i++) {
-					View child = mTitles.getChildAt(i);
-					int childWidth = child.getWidth();
-					totalChildWidth += childWidth;
-				}
-
-				int remainWidth = parentWidth - totalChildWidth;
-				int margin = remainWidth / childCount / 2;
-
-				for (int i = 0; i < childCount; i++) {
-					View child = mTitles.getChildAt(i);
-
-					LayoutParams childParams = (LayoutParams) child
-							.getLayoutParams();
-					childParams.leftMargin = margin;
-					childParams.rightMargin = margin;
-				}
-				mTitles.requestLayout();
-			}
-		}
-	};
+	// private OnGlobalLayoutListener mOnGlobalLayoutListener = new
+	// OnGlobalLayoutListener() {
+	//
+	// @Override
+	// public void onGlobalLayout() {
+	// int orientation = getResources().getConfiguration().orientation;
+	// if (Configuration.ORIENTATION_LANDSCAPE == orientation) {
+	// return;
+	// }
+	// int width = mTitles.getWidth();
+	// View parent = (View) mTitles.getParent();
+	// int parentWidth = parent.getWidth();
+	// if (width < parentWidth) {
+	// int childCount = mTitles.getChildCount();
+	//
+	// // 总父视图宽度减去所有字的宽度（即child width的总和），再平分得出每个视图的margin
+	// int totalChildWidth = 0;
+	// for (int i = 0; i < childCount; i++) {
+	// View child = mTitles.getChildAt(i);
+	// int childWidth = child.getWidth();
+	// totalChildWidth += childWidth;
+	// }
+	//
+	// int remainWidth = parentWidth - totalChildWidth;
+	// int margin = remainWidth / childCount / 2;
+	//
+	// for (int i = 0; i < childCount; i++) {
+	// View child = mTitles.getChildAt(i);
+	//
+	// LayoutParams childParams = (LayoutParams) child
+	// .getLayoutParams();
+	// childParams.leftMargin = margin;
+	// childParams.rightMargin = margin;
+	// }
+	// mTitles.requestLayout();
+	// }
+	// }
+	// };
 
 	@Override
 	protected View getDataView() {
@@ -206,51 +210,65 @@ public abstract class ViewPagerFragment extends BaseFragment {
 	}
 
 	protected void refreshTitleIndicators() {
-		mTitles.removeAllViews();
-		PagerAdapter mSectionsPagerAdapter = mViewPager.getAdapter();
 
-		if (mSectionsPagerAdapter.getCount() <= 1) {
-			mTitleContainer.setVisibility(View.GONE);
-		} else {
-			mTitleContainer.setVisibility(View.VISIBLE);
-		}
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			RadioButton btn = (RadioButton) mInflater.inflate(
-					R.layout.my_favor_news_title, mTitles, false);
-			btn.setId(i);
-			btn.setText(mSectionsPagerAdapter.getPageTitle(i));
-			mTitles.addView(btn);
+		List<String> titles = new ArrayList<String>();
+
+		PagerAdapter adapter = mViewPager.getAdapter();
+		for (int i = 0; i < adapter.getCount(); i++) {
+			titles.add(adapter.getPageTitle(i).toString());
 		}
 
-		mTitles.check(-1);
+		mTitles.update(titles);
+
+		// mTitles.removeAllViews();
+		// PagerAdapter mSectionsPagerAdapter = mViewPager.getAdapter();
+		//
+		// if (mSectionsPagerAdapter.getCount() <= 1) {
+		// mTitleContainer.setVisibility(View.GONE);
+		// } else {
+		// mTitleContainer.setVisibility(View.VISIBLE);
+		// }
+		// for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+		// RadioButton btn = (RadioButton) mInflater.inflate(
+		// R.layout.my_favor_news_title, mTitles, false);
+		// btn.setId(i);
+		// btn.setText(mSectionsPagerAdapter.getPageTitle(i));
+		// mTitles.addView(btn);
+		// }
+		//
+		// mTitles.check(-1);
 	}
 
-	private void animateToTitle(final int id) {
-		Log.v(TAG, "animateToTitle " + id);
-		final View titleView = mTitles.findViewById(id);
-		if (mTitleSelector != null) {
-			mTitleContainer.removeCallbacks(mTitleSelector);
-		}
-		if (titleView == null) {
-			return;
-		}
-		mTitleSelector = new Runnable() {
-			@Override
-			public void run() {
-				int x = titleView.getLeft()
-						- (mTitleContainer.getWidth() - titleView.getWidth())
-						/ 2;
-				Log.v(TAG, "animateToTitle " + id + " " + titleView.getLeft()
-						+ " " + titleView.getWidth() + " " + x);
-				mTitleContainer.smoothScrollTo(x, 0);
-				mTitleSelector = null;
-			}
-		};
-		mTitleContainer.post(mTitleSelector);
-	}
+	// private void animateToTitle(final int id) {
+	// Log.v(TAG, "animateToTitle " + id);
+	// final View titleView = mTitles.findViewById(id);
+	// if (mTitleSelector != null) {
+	// mTitleContainer.removeCallbacks(mTitleSelector);
+	// }
+	// if (titleView == null) {
+	// return;
+	// }
+	// mTitleSelector = new Runnable() {
+	// @Override
+	// public void run() {
+	// int x = titleView.getLeft()
+	// - (mTitleContainer.getWidth() - titleView.getWidth())
+	// / 2;
+	// Log.v(TAG, "animateToTitle " + id + " " + titleView.getLeft()
+	// + " " + titleView.getWidth() + " " + x);
+	// mTitleContainer.smoothScrollTo(x, 0);
+	// mTitleSelector = null;
+	// }
+	// };
+	// mTitleContainer.post(mTitleSelector);
+	// }
 
 	public int getCurrentItem() {
 		int currentItem = mViewPager.getCurrentItem();
 		return currentItem;
+	}
+
+	public void refreshCurrent() {
+		// For child implementation
 	}
 }

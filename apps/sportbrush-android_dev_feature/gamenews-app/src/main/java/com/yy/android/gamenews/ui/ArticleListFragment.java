@@ -4,46 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AbsListView.OnScrollListener;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ListAdapter;
 
-import com.duowan.android.base.model.BaseModel.ResponseListener;
-import com.duowan.gamenews.ArticleFlag;
+import com.duowan.Comm.ECommAppType;
 import com.duowan.gamenews.ArticleInfo;
-import com.duowan.gamenews.ArticleType;
-import com.duowan.gamenews.GetVideoUrlRsp;
-import com.duowan.gamenews.LoginActionFlag;
 import com.duowan.gamenews.RefreshType;
-import com.duowan.gamenews.UserInitRsp;
-import com.duowan.gamenews.VideoFlag;
 import com.duowan.taf.jce.JceStruct;
 import com.yy.android.gamenews.Constants;
 import com.yy.android.gamenews.event.CheckExpireEvent;
 import com.yy.android.gamenews.event.CommentEvent;
-import com.yy.android.gamenews.event.FirstButtomTabEvent;
 import com.yy.android.gamenews.event.FragmentCallbackEvent;
 import com.yy.android.gamenews.event.LikeEvent;
 import com.yy.android.gamenews.event.RefreshEvent;
-import com.yy.android.gamenews.event.SecondButtomTabEvent;
-import com.yy.android.gamenews.event.ThirdButtomTabEvent;
 import com.yy.android.gamenews.jcewrapper.GetArticleListRspLocal;
-import com.yy.android.gamenews.model.ArticleModel;
-import com.yy.android.gamenews.plugin.cartport.CartDetailImageActivity;
+import com.yy.android.gamenews.ui.common.DataViewConverterFactory;
 import com.yy.android.gamenews.ui.common.ImageAdapter;
-import com.yy.android.gamenews.ui.common.UiUtils;
-import com.yy.android.gamenews.ui.view.AppDialog;
-import com.yy.android.gamenews.ui.view.AppDialog.OnClickListener;
+import com.yy.android.gamenews.util.ArticleDetailSwitcher;
+import com.yy.android.gamenews.util.AsyncIPageCache;
+import com.yy.android.gamenews.util.AsyncIPageCache.OnCacheListener;
 import com.yy.android.gamenews.util.IPageCache;
 import com.yy.android.gamenews.util.Preference;
-import com.yy.android.gamenews.util.StatsUtil;
-import com.yy.android.gamenews.util.ToastUtil;
-import com.yy.android.gamenews.util.Util;
 import com.yy.android.gamenews.util.thread.BackgroundTask;
 import com.yy.android.sportbrush.R;
 
@@ -101,13 +88,14 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 			mCacheSize = bundle.getInt(KEY_CACHE_SIZE);
 		} else {
 			Bundle args = getArguments();
-			if(args != null) {
+			if (args != null) {
 				mCacheSize = args.getInt(KEY_CACHE_SIZE);
 			}
 		}
 		if (mCacheSize == 0) {
 			mCacheSize = Constants.CACH_SIZE_HOME_ARTI_LIST;
 		}
+
 	}
 
 	protected abstract WRAPPER initRspWrapper();
@@ -153,6 +141,13 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 	}
 
 	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		mClickListener = new ArticleClickHandler(getActivity());
+		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
+	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
 		if (mRspWrapper.getObject() == null && needLoadData()) { // 只有在第一次进入界面加载，避免因被系统杀掉而再次加载
@@ -162,6 +157,9 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 		if (mIsDarkTheme) {
 			getDataView().setBackgroundResource(
 					R.color.global_list_item_bg_dark);
+		} else if (Constants.isFunctionEnabled(ECommAppType._Comm_APP_GAMENEWS)) {
+			getDataView().setBackgroundResource(
+					R.color.global_waterfall_list_bg);
 		}
 		super.onViewCreated(view, savedInstanceState);
 		Log.d(LOG_TAG, "onViewCreated");
@@ -170,6 +168,7 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 	@Override
 	public void onDestroyView() {
 		setAdapter(null);
+		mClickListener = null;
 		super.onDestroyView();
 	}
 
@@ -181,30 +180,62 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 	@Override
 	public void onResume() {
 
-		checkInfoUpdate();
-
+		// checkInfoUpdate();
+		checkViewedListChanged();
 		super.onResume();
 	}
 
+	private void checkViewedListChanged() {
+		AsyncIPageCache.getInstance().readAsync(
+				Constants.CACHE_KEY_VIEWED_ARTICLE_LIST, null, false,
+				new OnCacheListener<List<Long>>() {
+
+					@Override
+					public void onRead(List<Long> idList) {
+						if (idList != null && !idList.equals(mViewedList)) {
+							mViewedList.clear();
+							mViewedList.addAll(idList);
+							mAdapter.setViewedArticleList(mViewedList);
+							mAdapter.notifyDataSetChanged();
+						}
+					}
+
+					@Override
+					public void onWrite() {
+
+					}
+				});
+	}
+
 	/**
-	 * 检查评论数，点赞数等是否有更新，若有更新，则刷新adapter
+	 * 评论更新
+	 * 
+	 * @param mCommentEvent
 	 */
-	private void checkInfoUpdate() {
+	private void commentCountChange(CommentEvent mCommentEvent) {
+		if (mCommentEvent == null) {
+			return;
+		}
+		Adapter adapter = getDataViewAdapter();
+		if (mSelectedPos == -1) {
+			long id = mCommentEvent.id;
+			for (int i = 0; i < adapter.getCount(); i++) {
+				ArticleInfo model = (ArticleInfo) adapter.getItem(i);
+				if (model != null && model.getId() == id) {
+					mSelectedPos = i;
+					break;
+				}
+			}
+		}
+
 		if (mSelectedPos != -1) {
-			Adapter adapter = getDataViewAdapter();
 			if (adapter != null) {
 				ArticleInfo model = (ArticleInfo) adapter.getItem(mSelectedPos);
 
 				boolean hasChanged = false;
-				int commentCount = model.commentCount;
-				int likeCount = model.praiseCount;
-
-				if (mCommentEvent != null) {
-					commentCount = mCommentEvent.commentCount;
-				}
-
-				if (mLikeEvent != null) {
-					likeCount = mLikeEvent.likeCount;
+				int commentCount = mCommentEvent.commentCount;
+				if (commentCount == CommentEvent.CMT_CNT_ADD) {
+					commentCount = model.getCommentCount() + 1;
 				}
 
 				if (commentCount != model.commentCount) {
@@ -213,8 +244,44 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 					hasChanged = true;
 				}
 
-				if (likeCount != model.praiseCount) {
+				if (hasChanged) {
+					mAdapter.notifyDataSetChanged();
+					saveListToDisk(getDataSource());
+				}
+			}
+			mSelectedPos = -1;
+		}
+	}
 
+	/**
+	 * 点赞更新
+	 * 
+	 * @param mLikeEvent
+	 */
+	private void likeCountChange(LikeEvent mLikeEvent) {
+		if (mLikeEvent == null) {
+			return;
+		}
+		Adapter adapter = getDataViewAdapter();
+		if (mSelectedPos == -1) {
+			long id = mLikeEvent.id;
+			for (int i = 0; i < adapter.getCount(); i++) {
+				ArticleInfo model = (ArticleInfo) adapter.getItem(i);
+				if (model != null && model.getId() == id) {
+					mSelectedPos = i;
+					break;
+				}
+			}
+		}
+
+		if (mSelectedPos != -1) {
+			if (adapter != null) {
+				ArticleInfo model = (ArticleInfo) adapter.getItem(mSelectedPos);
+
+				boolean hasChanged = false;
+				int likeCount = mLikeEvent.likeCount;
+
+				if (likeCount != model.praiseCount) {
 					model.setPraiseCount(likeCount);
 					hasChanged = true;
 				}
@@ -224,23 +291,54 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 					saveListToDisk(getDataSource());
 				}
 			}
-
-			mCommentEvent = null;
-			mLikeEvent = null;
 			mSelectedPos = -1;
 		}
 	}
 
-	private CommentEvent mCommentEvent;
+	/**
+	 * 检查评论数，点赞数等是否有更新，若有更新，则刷新adapter private void checkInfoUpdate() {
+	 * 
+	 * Adapter adapter = getDataViewAdapter(); if (mSelectedPos == -1 &&
+	 * (mCommentEvent != null || mLikeEvent != null)) { long id = 0; if
+	 * (mCommentEvent != null) { id = mCommentEvent.id; } else if (mLikeEvent !=
+	 * null) {
+	 * 
+	 * id = mLikeEvent.id; } for (int i = 0; i < adapter.getCount(); i++) {
+	 * ArticleInfo model = (ArticleInfo) adapter.getItem(i); if (model != null
+	 * && model.getId() == id) { mSelectedPos = i; break; } } }
+	 * 
+	 * if (mSelectedPos != -1) { if (adapter != null) { ArticleInfo model =
+	 * (ArticleInfo) adapter.getItem(mSelectedPos);
+	 * 
+	 * boolean hasChanged = false; int commentCount = model.commentCount; int
+	 * likeCount = model.praiseCount;
+	 * 
+	 * if (mCommentEvent != null) { commentCount = mCommentEvent.commentCount;
+	 * if (commentCount == CommentEvent.CMT_CNT_ADD) { commentCount =
+	 * model.getCommentCount() + 1; } }
+	 * 
+	 * if (mLikeEvent != null) { likeCount = mLikeEvent.likeCount; }
+	 * 
+	 * if (commentCount != model.commentCount) {
+	 * 
+	 * model.setCommentCount(commentCount); hasChanged = true; }
+	 * 
+	 * if (likeCount != model.praiseCount) {
+	 * 
+	 * model.setPraiseCount(likeCount); hasChanged = true; }
+	 * 
+	 * if (hasChanged) { mAdapter.notifyDataSetChanged();
+	 * saveListToDisk(getDataSource()); } }
+	 * 
+	 * mCommentEvent = null; mLikeEvent = null; mSelectedPos = -1; } }
+	 */
 
 	public void onEvent(CommentEvent event) {
-		mCommentEvent = event;
+		commentCountChange(event);
 	}
 
-	private LikeEvent mLikeEvent;
-
 	public void onEvent(LikeEvent event) {
-		mLikeEvent = event;
+		likeCountChange(event);
 	}
 
 	public void onEvent(RefreshEvent event) {
@@ -264,11 +362,6 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 
 	@Override
 	public void onScrollStateChanged(View view, int scrollState) {
-		if ((scrollState == OnScrollListener.SCROLL_STATE_FLING || scrollState == OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)) {
-			mAdapter.pause();
-		} else {
-			mAdapter.resume();
-		}
 		super.onScrollStateChanged(view, scrollState);
 
 	}
@@ -278,6 +371,7 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 	@Override
 	public void onItemClick(View parent, Adapter adapter, View view,
 			int position, long id) {
+		ArticleDetailSwitcher.getInstance().setArticleInfos(getDataSource());
 		ArticleInfo model = (ArticleInfo) adapter.getItem(position);
 		onItemClick(model, position, TYPE_LIST);
 		super.onItemClick(parent, adapter, view, position, id);
@@ -286,185 +380,18 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 	private static final int TYPE_BANNER = 1;
 	private static final int TYPE_LIST = 2;
 
-	@SuppressWarnings("unchecked")
+	private ArticleClickHandler mClickListener;
+
 	protected void onItemClick(final ArticleInfo model, int position, int type) {
 
 		if (model != null) {
 			if (TYPE_LIST == type) {
 				mSelectedPos = position;
 			}
-			if (mViewedList != null && !mViewedList.contains(model.getId())) {
-				if (mViewedList.size() >= Constants.CACHE_SIZE_VIEWED_ARTI_LIST) {
-					mViewedList.remove(0);
-				}
-				mViewedList.add(model.getId());
-
-				ArrayList<Long> savedList = (ArrayList<Long>) mViewedList
-						.clone();
-				mSaveCacheTask.execute(Constants.CACHE_KEY_VIEWED_ARTICLE_LIST,
-						savedList, Constants.CACHE_DURATION_FOREVER, false);
-				mAdapter.notifyDataSetChanged();
-			}
-			boolean isRedirect = (model.getFlag() & ArticleFlag._ARTICLE_FLAG_REDIRECT) != 0;
-			if (isRedirect) {
-				startWeb(model, "");
-				addStatisticsEvent(model.getId(), model.getTitle());
-				sendArticlestatics(FirstButtomTabEvent.HEAD_INFO);
-				return;
-			}
-
-			switch (model.getArticleType()) {
-			case ArticleType._ARTICLE_TYPE_ARTICLE: {
-
-				ArticleDetailActivity.startArticleDetailActivity(getActivity(),
-						model);
-				addStatisticsEvent(model.getId(), model.getTitle());
-				sendArticlestatics(SecondButtomTabEvent.ORDER_INFO);
-				break;
-			}
-			case ArticleType._ARTICLE_TYPE_CART_IMAGE_COLUMN: {
-				CartDetailImageActivity.startCartDetailActivity(getActivity(),
-						model.getId(), model.getTitle());
-				break;
-			}
-			case ArticleType._ARTICLE_TYPE_SPECIAL: {
-				ArticleListActivity.startSpecialListActivity(getActivity(),
-						model.getId());
-				addStatisticsEvent(model.getId(), model.getTitle());
-				sendArticlestatics(SecondButtomTabEvent.ORDER_INFO);
-				break;
-			}
-			case ArticleType._ARTICLE_TYPE_VIDEO: {
-				if (Util.isNetworkConnected()) {
-					if (!Util.isWifiConnected()) {
-						UiUtils.showDialog(getActivity(),
-								R.string.global_caption,
-								R.string.play_video_no_wifi,
-								R.string.global_ok, R.string.global_cancel,
-								new OnClickListener() {
-
-									@Override
-									public void onDismiss() {
-										// TODO Auto-generated method stub
-
-									}
-
-									@Override
-									public void onDialogClick(int nButtonId) {
-										if (nButtonId == AppDialog.BUTTON_POSITIVE) {
-											playVideo(model);
-										}
-									}
-								});
-					} else {
-						playVideo(model);
-					}
-				} else {
-					ToastUtil.showToast(R.string.global_network_error);
-				}
-				break;
-			}
-			case ArticleType._ARTICLE_TYPE_BANG:
-			case ArticleType._ARTICLE_TYPE_ACTIVITY:
-			case ArticleType._ARTICLE_TYPE_TEQUAN:
-			case ArticleType._ARTICLE_TYPE_CAIDAN: {
-				startWeb(model, AppWebActivity.TITLE_HD);
-				break;
-			}
+			if (mClickListener != null) {
+				mClickListener.onArticleItemClick(model);
 			}
 		}
-	}
-
-	private void playVideo(ArticleInfo model) {
-
-		ArticleModel.getVideoUrlReq(new ResponseListener<GetVideoUrlRsp>(
-				getActivity()) {
-			public void onResponse(GetVideoUrlRsp rsp) {
-				if (rsp != null) {
-					String url = rsp.url;
-					switch (rsp.videoFlag) {
-					case VideoFlag._VIDEO_FLAG_REDIRECT: {
-						AppWebActivity.startWebActivityFromNotice(
-								getActivity(), url);
-						break;
-					}
-					case VideoFlag._VIDEO_FLAG_SOURCE: {
-						VideoPlayerActivity.startVideoPlayerActivity(
-								getActivity(), rsp.getTitle(), rsp.getUrl());
-						break;
-					}
-					}
-				}
-			};
-		}, model.getId());
-	}
-
-	private void startWeb(ArticleInfo model, String title) {
-		Intent intent = new Intent(getActivity(), AppWebActivity.class);
-		String url = model.getSourceUrl();
-		if (model.getArticleType() == ArticleType._ARTICLE_TYPE_TEQUAN) {
-			UserInitRsp rsp = mPref.getInitRsp();
-			String token = "";
-			if (rsp != null) {
-				token = rsp.extraInfo
-						.get(LoginActionFlag._LOGIN_ACTION_FLAG_YY_TOKEN);
-			}
-			// String channelName = getString(R.string.channelname);
-			// if ("test".equals(channelName) || "dev".equals(channelName)) {
-			// url =
-			// "http://mtq.yy.com/utl/shuazilogin?url=http%3A%2F%2Fmtq.yy.com%2F%23detail.index%3Ftid%3D14853%26type%3Dissue&token="
-			// + token;// 测试地址
-			// } else {
-			// url = url + token;
-			// }
-			if (token != null && (!TextUtils.isEmpty(token))) {
-				url = url + token;
-			}
-		}
-		intent.putExtra(AppWebActivity.KEY_URL, url);
-		intent.putExtra(AppWebActivity.KEY_TITLE, title);
-		startActivity(intent);
-	}
-
-	private void sendArticlestatics(String tab) {
-		if (tab.equals(FirstButtomTabEvent.HEAD_INFO)) {
-			FirstButtomTabEvent event = new FirstButtomTabEvent();
-			event.setType(FirstButtomTabEvent._ARTICLE_INFO);
-			event.setEventId(FirstButtomTabEvent.HEAD_INFO);
-			event.setKey(FirstButtomTabEvent.ARTICLE_INFO);
-			event.setValue(FirstButtomTabEvent.ARTICLE_INFO_NAME);
-			EventBus.getDefault().post(event);
-		} else if (tab.equals(SecondButtomTabEvent.ORDER_INFO)) {
-			SecondButtomTabEvent event = new SecondButtomTabEvent();
-			event.setType(SecondButtomTabEvent._ARTICLE_INFO);
-			event.setEventId(SecondButtomTabEvent.ORDER_INFO);
-			event.setKey(SecondButtomTabEvent.ARTICLE_INFO);
-			event.setValue(SecondButtomTabEvent.ARTICLE_INFO_NAME);
-			EventBus.getDefault().post(event);
-		} else if (tab.equals(ThirdButtomTabEvent.THIRD_TAB_INFO)) {
-
-		}
-
-	}
-
-	public void addStatisticsEvent(long id, String title) {
-		// 下面tab统计（方案一）
-		StatsUtil.statsReport(getActivity(), "stats_read_article_tab",
-				ArticleDetailActivity.CURRENT_BUTTON_TAB, title);
-		StatsUtil.statsReportByMta(getActivity(), "stats_read_article_tab",
-				ArticleDetailActivity.CURRENT_BUTTON_TAB, "(" + id + ")"
-						+ title);
-		StatsUtil.statsReportByHiido("stats_read_article_tab",
-				ArticleDetailActivity.CURRENT_BUTTON_TAB + title);
-		// 下面tab统计（方案二）
-		StatsUtil.statsReport(getActivity(),
-				"stats_read_article_tab_second_method",
-				ArticleDetailActivity.CURRENT_BUTTON_TAB, title);
-		StatsUtil.statsReportByMta(getActivity(),
-				"stats_read_article_tab_second_method", "bottom_tab_name",
-				ArticleDetailActivity.CURRENT_BUTTON_TAB);
-		StatsUtil.statsReportByHiido("stats_read_article_tab_second_method",
-				ArticleDetailActivity.CURRENT_BUTTON_TAB);
 	}
 
 	@Override
@@ -529,13 +456,22 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 				dataList = mRspWrapper.getArticleList();
 			}
 
+			/**
+			 * 去重
+			 */
 			if (dataList != null && localList != null) {
-				for (ArticleInfo info : dataList) {
-					for (int i = 0; i < localList.size(); i++) {
-						ArticleInfo localInfo = localList.get(i);
-						if (localInfo.getId() == info.getId()) {
-							localList.remove(i);
+				for (int i = 0; i < dataList.size(); i++) {
+					ArticleInfo dataInfo = dataList.get(i);
+					for (int j = 0; j < localList.size(); j++) {
+						ArticleInfo localInfo = localList.get(j);
+						if (localInfo.getId() == dataInfo.getId()) {
+
+							// 如果有重复，用新拉下来的替换老数据，位置不变
+							localList.remove(j);
+							localList.add(j, dataInfo);
+							dataList.remove(i); // 从新列表中删除
 							i--;
+							break;
 						}
 					}
 				}
@@ -554,7 +490,7 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 			}
 		}
 
-		requestFinish(refresh, dataList, hasMore, false);
+		requestFinish(refresh, dataList, hasMore, false, error);
 
 		Log.d(LOG_TAG, "requestFinish");
 
@@ -644,23 +580,15 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 			return;
 		}
 		RSP savedRsp = mRspWrapper.clone();
-		String key = getKey();
+		String key = getCacheKey();
 		mSaveCacheTask.execute(key, savedRsp, getDuration(), true);
 	}
 
 	protected abstract RSP newRspObject();
 
 	protected RSP getResponseFromDisk() {
-		RSP rsp = mPageCache.getJceObject(getKey(), newRspObject());
+		RSP rsp = mPageCache.getJceObject(getCacheKey(), newRspObject());
 		return rsp;
-	}
-
-	// protected abstract ArrayList<ArticleInfo> getDataFromRsp(RSP rsp);
-
-	// protected abstract boolean hasMore(RSP rsp);
-
-	protected boolean isExpire() {
-		return false;
 	}
 
 	protected boolean needLoadData() {
@@ -676,13 +604,12 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 	}
 
 	private class BgTask extends BackgroundTask<Void, Void, Boolean> {
-		@SuppressWarnings("unchecked")
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			Log.d(LOG_TAG, "doInBackground+");
 			mRspWrapper.setObject(getResponseFromDisk());
-			List<Long> idList = mPageCache.getObject(
-					Constants.CACHE_KEY_VIEWED_ARTICLE_LIST, ArrayList.class);
+			List<Long> idList = mPageCache
+					.getObject(Constants.CACHE_KEY_VIEWED_ARTICLE_LIST);
 			if (idList != null) {
 
 				if (mViewedList != null) {
@@ -718,16 +645,20 @@ public abstract class ArticleListFragment<RSP extends JceStruct, WRAPPER extends
 		}
 	}
 
-	public void checkExpire() {
-		if (isExpire()) {
-			callRefresh();
-		}
+	/**
+	 * @return 将数据保存至本地cache的关键字，默认返回
+	 *         {@link Constants#CACHE_KEY_ARTICLE_LIST_DEFAULT} + "_" +
+	 *         FULL_CLASS_NAME
+	 */
+	protected String getCacheKey() {
+		return Constants.CACHE_KEY_ARTICLE_LIST_DEFAULT + "_"
+				+ getClass().getName();
 	}
 
-	protected String getKey() {
-		return "";
-	}
-
+	/**
+	 * 
+	 * @return 将数据保存至本地cache的过期时长，默认返回 {@link Constants#CACHE_DURATION_HOMELIST}
+	 */
 	protected int getDuration() {
 		return Constants.CACHE_DURATION_HOMELIST;
 	}

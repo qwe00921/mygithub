@@ -2,22 +2,17 @@ package com.yy.android.gamenews.ui.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.yy.android.gamenews.event.FirstButtomTabEvent;
-import com.yy.android.gamenews.event.SecondButtomTabEvent;
-import com.yy.android.gamenews.event.ThirdButtomTabEvent;
+import com.yy.android.gamenews.event.MainTabEvent;
 import com.yy.android.gamenews.plugin.schetable.SchedFragment;
 import com.yy.android.gamenews.ui.MyHomeActivity;
 import com.yy.android.gamenews.ui.NewsFragment;
-import com.yy.android.gamenews.util.StatsUtil;
-import com.yy.android.sportbrush.R;
+import com.yy.android.gamenews.util.MainTabStatsUtil;
 
 public class DispatchTouchEvent {
-	private static final String TAG = DispatchTouchEvent.class.getSimpleName();
 
 	private Context mContext;
 	private Fragment mNewsFragment;
@@ -140,17 +135,13 @@ public class DispatchTouchEvent {
 	}
 
 	private void infoToHomeActivity(String fromTab) {
-		MyHomeActivity.startMyHomeActivity((Activity) mContext);
-		if (fromTab.equals(FirstButtomTabEvent.HEAD_INFO)) {
-			StatsUtil.statsReportAllData(mContext, "into_my_home_center",
-					"my_hone_center", FirstButtomTabEvent.HEAD_INFO);
-		} else if (fromTab.equals(SecondButtomTabEvent.ORDER_INFO)) {
-			StatsUtil.statsReportAllData(mContext, "into_my_home_center",
-					"my_hone_center", SecondButtomTabEvent.ORDER_INFO);
-		} else if (fromTab.equals(ThirdButtomTabEvent.THIRD_TAB_INFO)) {
-			StatsUtil.statsReportAllData(mContext, "into_my_home_center",
-					"my_hone_center", ThirdButtomTabEvent.THIRD_TAB_INFO);
-		}
+		MyHomeActivity.startMyHomeActivityForResult((Activity) mContext);
+
+		MainTabEvent event = new MainTabEvent();
+		event.setEventId(fromTab);
+		event.setKey(MainTabEvent.INTO_MY_HOME_CENTER);
+		event.setValue(MainTabEvent.INTO_MY_HOME_CENTER_NAME);
+		MainTabStatsUtil.statistics(mContext, event);
 	}
 
 	/*

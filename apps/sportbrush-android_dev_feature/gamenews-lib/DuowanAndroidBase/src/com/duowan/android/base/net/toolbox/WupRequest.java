@@ -1,6 +1,11 @@
 package com.duowan.android.base.net.toolbox;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
@@ -9,6 +14,7 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.duowan.android.base.Tea;
 import com.duowan.jce.wup.UniPacket;
 
 /**
@@ -16,9 +22,12 @@ import com.duowan.jce.wup.UniPacket;
  */
 public class WupRequest extends Request<UniPacket> {
 
+	private static Tea TEA = new Tea();
+
 	private UniPacket uniPacket;
 	private Response.Listener<UniPacket> listener;
 	private String cacheKey = null;
+	private boolean encrypt = true;
 
 	private long cacheHitButRefreshed = 10 * 60 * 1000; // in 10 minutes cache
 														// will be hit, but
@@ -28,12 +37,13 @@ public class WupRequest extends Request<UniPacket> {
 														// entry expires
 														// completely
 
-	public WupRequest(String host, UniPacket uniPacket,
+	public WupRequest(String host, UniPacket uniPacket, boolean encrypt,
 			Response.Listener<UniPacket> listener,
 			Response.ErrorListener errorListener) {
 		super(Method.POST, host, errorListener);
 		this.uniPacket = uniPacket;
 		this.listener = listener;
+		this.encrypt = encrypt;
 
 		setShouldCache(false);
 	}
@@ -45,7 +55,8 @@ public class WupRequest extends Request<UniPacket> {
 
 	@Override
 	public byte[] getBody() throws AuthFailureError {
-		return uniPacket.encode();
+		byte[] data = uniPacket.encode();
+		return encrypt ? TEA.encrypt2(null, data) : data;
 	}
 
 	public void setCacheKey(String cacheKey) {
@@ -67,20 +78,49 @@ public class WupRequest extends Request<UniPacket> {
 		return cacheKey;
 	}
 
+	private byte[] ungzip(byte[] data) throws IOException {
+		GZIPInputStream zis = new GZIPInputStream(
+				new ByteArrayInputStream(data));
+		ByteArrayOutputStream os = new ByteArrayOutputStream(data.length);
+		byte[] buf = new byte[1024];
+		while (true) {
+			int len = zis.read(buf, 0, buf.length);
+			if (len == -1) {
+				break;
+			}
+			os.write(buf, 0, len);
+		}
+		return os.toByteArray();
+	}
+
 	@Override
 	protected Response<UniPacket> parseNetworkResponse(NetworkResponse response) {
+		byte[] data = response.data;
+		if ("qencrypt".equals(response.headers.get("Content-Encrypt"))) {
+			data = TEA.decrypt2(null, data);
+			if (data == null) {
+				return Response.error(new ParseError(new Exception(
+						"Tea.decrypt2() failed")));
+			}
+		}
+		if ("gzip".equals(response.headers.get("Content-Encoding"))) {
+			try {
+				data = ungzip(data);
+			} catch (IOException e) {
+				return Response.error(new ParseError(e));
+			}
+		}
+
 		try {
 			UniPacket uniPacket = new UniPacket();
-			uniPacket.decode(response.data);
+			uniPacket.decode(data);
 			return Response.success(
 					uniPacket,
 					parseIgnoreCacheHeaders(uniPacket, response,
 							cacheHitButRefreshed, cacheExpired));
 		} catch (RuntimeException e) {
-			e.printStackTrace();
 			return Response.error(new ParseError(e));
 		}
-
 	}
 
 	@Override
@@ -123,4 +163,14 @@ public class WupRequest extends Request<UniPacket> {
 		return entry;
 	}
 
+	@Override
+	public Map<String, String> getHeaders() throws AuthFailureError {
+		HashMap<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept-Encoding", "gzip");
+		if (encrypt) {
+			headers.put("Accept-Encrypt", "qencrypt");
+			headers.put("Content-Encrypt", "qencrypt");
+		}
+		return headers;
+	}
 }

@@ -3,7 +3,6 @@ package com.yy.android.gamenews.ui.channeldetail;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.SpannableString;
-import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
